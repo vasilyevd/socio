@@ -1,7 +1,6 @@
 ##############
 ## Yii
 #############
-
 assets/
 protected/runtime/
 .idea/
