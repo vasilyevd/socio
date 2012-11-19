@@ -1,0 +1,41 @@
+/* Main */
+body {
+    padding-top: 50px; /* navbar top height */
+}
+/* Set hover color for sidebar menu */
+.nav-list > li > a:hover {
+    background-color: #eeeeee;
+}
+
+/* Breadcrumbs */
+.breadcrumbs-wrap {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e5e5e5;
+}
+.breadcrumbs {
+    margin: 0;
+}
+
+/* Content */
+.content {
+    padding: 20px;
+}
+
+/* Footer */
+.footer {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+    padding: 40px;
+    color: #777;
+}
+.footer p {
+    margin-bottom: 0;
+}
+.footer ul {
+    margin: 10px 0;
+}
+.footer li {
+    display: inline;
+    margin-right: 10px;
+}

@@ -1,0 +1,13 @@
+<?php
+$this->menu_org = $model->organization;
+
+$this->breadcrumbs=array(
+    'Новости'=>array('index'),
+    $model->title=>array('view','id'=>$model->id),
+    'Изменить',
+);
+?>
+
+<h1>Изменить Новость</h1>
+
+<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
