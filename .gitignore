@@ -1,6 +1,7 @@
-##############
+#################
 ## Yii
-#############
+#################
+
 /assets/
 protected/runtime/
 protected/config/Config_DB.php
