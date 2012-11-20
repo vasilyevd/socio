@@ -19,8 +19,6 @@ $this->breadcrumbs=array(
 
 <?php else: ?>
 <?php else: ?>
-<?php else: ?>
-<?php else: ?>
 
 <p>
 If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
@@ -59,7 +57,7 @@ If you have business inquiries or other questions, please fill out the following
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model,'body'); ?>
+        <?php echo $form->labelEx($model,'boby'); ?>
         <?php echo $form->textArea($model,'body',array('rows'=>6, 'cols'=>50)); ?>
         <?php echo $form->error($model,'body'); ?>
     </div>
@@ -77,12 +75,15 @@ If you have business inquiries or other questions, please fill out the following
     </div>
     <?php endif; ?>
 
+
+
+
     <div class="row buttons">
-        <?php echo CHtml::submitButton('ГОГОГО'); ?>
+        <?php echo CHtml::submitButton('бла бла бла'); ?>
     </div>
 
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->
+</div>
 
 <?php endif; ?>
