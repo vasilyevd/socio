@@ -7,8 +7,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Мероприятия</h1>
-
 <?php if(!empty($model->events)): ?>
     <?php $this->widget('bootstrap.widgets.TbListView',array(
         'dataProvider' => new CArrayDataProvider($model->events, array('pagination'=>array('pageSize'=>9))),
