@@ -6,7 +6,7 @@ $this->menu = array(
 );
 ?>
 
-<?php $this->beginContent('//layouts/column2'); ?>
+<?php $this->beginContent('//layouts/organization'); ?>
 
 <?php $this->widget('bootstrap.widgets.TbMenu', array(
     'type' => 'tabs', // '', 'tabs', 'pills' (or 'list')
