@@ -2,8 +2,8 @@
 ## Yii
 #################
 
-/assets/
-protected/runtime/
+/assets/*
+protected/runtime/*
 protected/config/Config_DB.php
 .idea/
 cgi-bin/
