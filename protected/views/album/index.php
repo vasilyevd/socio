@@ -42,6 +42,6 @@ Yii::app()->clientScript->registerCssFile(
         'itemView' => '_imagePreview',
         // 'viewData' => array('albumId' => $model->id),
         'template' => '{items}{pager}', // Hide summary header.
-        // 'itemsCssClass' => 'row', // Change items container class. Default: items.
+        // 'itemsCssClass' => 'row', // Items container class. Default: items.
     )); ?>
 <?php endif; ?>

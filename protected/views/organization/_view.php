@@ -1,78 +1,14 @@
-<div class="view">
+<div class="org-listitem">
+    <div class="well">
+        <a href="<?php echo $data->getUploadUrl('logo', $data->logo); ?>"><img src="<?php echo $data->getUploadUrl('logo', $data->logo); ?>" alt="Logo"></a>
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-    <?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
-    <br />
+        <b><?php echo CHtml::link(CHtml::encode($data->name),array('view','id'=>$data->id)); ?></b>
+        (<?php echo CHtml::encode(Lookup::item('OrganizationActionArea',$data->action_area)); ?>)
+        <?php if (!empty($data->description)): ?>
+            <br />
+            <br />
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-    <?php echo CHtml::encode($data->name); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
-    <?php echo CHtml::encode($data->type); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('action_area')); ?>:</b>
-    <?php echo CHtml::encode($data->action_area); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('city_id')); ?>:</b>
-    <?php echo CHtml::encode($data->city_id); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('address_id')); ?>:</b>
-    <?php echo CHtml::encode($data->address_id); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('foundation_year')); ?>:</b>
-    <?php echo CHtml::encode($data->foundation_year); ?>
-    <br />
-
-    <?php /*
-    <b><?php echo CHtml::encode($data->getAttributeLabel('staff_size')); ?>:</b>
-    <?php echo CHtml::encode($data->staff_size); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-    <?php echo CHtml::encode($data->description); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('goal')); ?>:</b>
-    <?php echo CHtml::encode($data->goal); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('website')); ?>:</b>
-    <?php echo CHtml::encode($data->website); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('phone_num')); ?>:</b>
-    <?php echo CHtml::encode($data->phone_num); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
-    <?php echo CHtml::encode($data->email); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('logo')); ?>:</b>
-    <?php echo CHtml::encode($data->logo); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('author_id')); ?>:</b>
-    <?php echo CHtml::encode($data->author_id); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
-    <?php echo CHtml::encode($data->create_time); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-    <?php echo CHtml::encode($data->status); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('verified')); ?>:</b>
-    <?php echo CHtml::encode($data->verified); ?>
-    <br />
-
-    */ ?>
-
+            <?php echo mb_substr(CHtml::encode(strip_tags($data->description)), 0, 300, 'UTF-8'), '...'; ?>
+        <?php endif; ?>
+    </div>
 </div>

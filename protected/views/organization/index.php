@@ -39,7 +39,6 @@ $('input.fast-search').keyup(function(){
     300);
 });
 ");
-
 ?>
 
 <div class="search-form">
@@ -72,10 +71,13 @@ $('input.fast-search').keyup(function(){
 </div>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-    'id'=>'organization-listview',
-    'dataProvider'=>$model->search(),
-    'itemView'=>'_view',
-    'sortableAttributes'=>array(
+    'id' => 'organization-listview',
+    'dataProvider' => $model->search(),
+    'itemView' => '_view',
+    // 'viewData' => array('albumId' => $model->id),
+    // 'template' => '{items}{pager}', // Hide summary header.
+    // 'itemsCssClass' => 'row', // Items container class. Default: items.
+    'sortableAttributes' => array(
         'name',
         'type',
         'action_area',
