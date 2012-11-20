@@ -1,20 +1,12 @@
-Options +Indexes  
 Options +FollowSymLinks
-
 IndexIgnore */*
-
-<Files ".htaccess">
-deny from all
-</Files>
-
-DirectoryIndex index.html$ index.php
-
 <IfModule mod_rewrite.c>
-RewriteEngine On
+RewriteEngine on
 
-RewriteRule ^backend backend.php
-
-
+# if a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
 RewriteRule . index.php
+</IfModule>
