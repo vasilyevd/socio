@@ -18,9 +18,6 @@ $this->breadcrumbs=array(
 </div>
 
 <?php else: ?>
-<?php else: ?>
-<?php else: ?>
-<?php else: ?>
 
 <p>
 If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
@@ -78,7 +75,8 @@ If you have business inquiries or other questions, please fill out the following
     <?php endif; ?>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('ГОГОГО'); ?>
+        <?php echo CHtml::submitButton('CAAAATS'); ?>
+        <?php echo CHtml::submitButton('CAAAATS'); ?>
     </div>
 
 <?php $this->endWidget(); ?>
