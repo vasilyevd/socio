@@ -1,10 +1,10 @@
 <?php
 $this->menu_org = $model;
 
-$this->breadcrumbs=array(
-    'Организации'=>array('index'),
-    CHtml::encode($model->name),
-);
+// $this->breadcrumbs=array(
+//     'Организации'=>array('index'),
+//     CHtml::encode($model->name),
+// );
 
 $this->menu=array(
     array('label' => 'Управление Организацией'),

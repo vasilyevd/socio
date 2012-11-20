@@ -1,3 +1,10 @@
+<?php
+$this->breadcrumbs = array_merge(array(
+    'Организации' => array('organization/index'),
+    CHtml::encode($this->menu_org->name) => array('organization/view', 'id' => $this->menu_org->id),
+), $this->breadcrumbs);
+?>
+
 <?php $this->beginContent('//layouts/main'); ?>
 
 <div class="row">
