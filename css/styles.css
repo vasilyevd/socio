@@ -39,3 +39,8 @@ body {
     display: inline;
     margin-right: 10px;
 }
+
+/* Organization header */
+.org-header img {
+    height: 130px;
+}

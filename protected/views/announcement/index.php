@@ -12,6 +12,6 @@ $this->breadcrumbs=array(
         'dataProvider' => new CArrayDataProvider($model->announcements, array('pagination'=>array('pageSize'=>9))),
         'itemView' => '_view',
         'template' => '{items}{pager}', // Hide summary header.
-        'itemsCssClass' => 'row', // Change items container class. Default: items.
+        // 'itemsCssClass' => 'row', // Change items container class. Default: items.
     )); ?>
 <?php endif; ?>
