@@ -3,7 +3,7 @@ $this->menu_org = $model;
 $this->layout = '//layouts/feed';
 
 $this->breadcrumbs=array(
-    'Events',
+    'Мероприятия',
 );
 ?>
 
