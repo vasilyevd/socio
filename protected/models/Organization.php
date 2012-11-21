@@ -39,10 +39,6 @@ class Organization extends CActiveRecord
     const ACTION_AREA_DISTRICT = 3;
     const ACTION_AREA_CITY = 4;
 
-    const DIRECTION_FOO = 1;
-    const DIRECTION_BAR = 2;
-    const DIRECTION_BAZ = 3;
-
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
     const STATUS_MODERATION = 3;
@@ -91,7 +87,7 @@ class Organization extends CActiveRecord
                 'website, email',
                 'length', 'min'=>3, 'max'=>128, 'on'=>'update',
             ),
-            array('description, goal, phone_num, direction, problem', 'safe', 'on'=>'update'),
+            array('description, goal, phone_num, directions, problems', 'safe', 'on'=>'update'),
             // Upload handler.
             array(
                 'logo',
@@ -119,6 +115,8 @@ class Organization extends CActiveRecord
     public function relations()
     {
         return array(
+            'directions' => array(self::MANY_MANY, 'Direction', 'org_organization_direction(organization_id, direction_id)'),
+            'problems' => array(self::MANY_MANY, 'Problem', 'org_organization_problem(organization_id, problem_id)'),
             'verifications' => array(self::HAS_MANY, 'Verification', 'organization_id'),
             'announcements' => array(self::HAS_MANY, 'Announcement', 'organization_id'),
             'events' => array(self::HAS_MANY, 'Event', 'organization_id'),
@@ -133,9 +131,9 @@ class Organization extends CActiveRecord
     public function behaviors()
     {
         return array(
-            'ImplodeBehavior' => array(
-                'class' => 'application.components.behaviors.ImplodeBehavior',
-                'attributes' => array('direction', 'problem'),
+            // Many to many handler.
+            'CAdvancedArBehavior' => array(
+                'class' => 'application.components.behaviors.CAdvancedArBehavior',
             ),
             // Upload handler.
             'UploadBehavior' => array(
@@ -155,8 +153,6 @@ class Organization extends CActiveRecord
             'name' => 'Название',
             'type' => 'Тип',
             'action_area' => 'Область Действий',
-            'direction' => 'Направления',
-            'problem' => 'Проблемы',
             'city_id' => 'Город',
             'address_id' => 'Адрес',
             'foundation_year' => 'Год Основания',
@@ -171,6 +167,8 @@ class Organization extends CActiveRecord
             'create_time' => 'Время Создания',
             'status' => 'Статус',
             'verified' => 'Проверенно',
+            'directions' => 'Направления',
+            'problems' => 'Проблематики',
         );
     }
 

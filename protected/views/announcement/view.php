@@ -2,7 +2,7 @@
 $this->menu_org = $model->organization;
 
 $this->breadcrumbs=array(
-    'Уведомления'=>array('index'),
+    'Новости' => array('index', 'org' => $this->menu_org->id),
     $model->title,
 );
 
@@ -22,12 +22,14 @@ $this->menu=array(
     </div>
 </div>
 
-<div class='row'>
-    <div class='span9'>
-        <hr>
-        <b>Прикрепленные файлы:</b>
-        <?php foreach ($model->files as $f): ?>
-            <?php echo CHtml::link(CHtml::encode($f), $model->getUploadUrl('files', $f)); ?>
-        <?php endforeach; ?>
+<?php if (!empty($model->files)): ?>
+    <div class='row'>
+        <div class='span9'>
+            <hr>
+            <b>Прикрепленные файлы:</b>
+            <?php foreach ($model->files as $f): ?>
+                <?php echo CHtml::link(CHtml::encode($f), $model->getUploadUrl('files', $f)); ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
+<?php endif; ?>

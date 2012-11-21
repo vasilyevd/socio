@@ -1,4 +1,3 @@
-<?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -92,9 +91,7 @@
         <?php endif; ?>
 
         <div class="container content">
-            <div class="row">
-                <?php echo $content; ?>
-            </div>
+            <?php echo $content; ?>
         </div>
 
         <div class="footer">

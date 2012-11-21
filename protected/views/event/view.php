@@ -2,7 +2,7 @@
 $this->menu_org = $model->organization;
 
 $this->breadcrumbs=array(
-    'Events'=>array('index'),
+    'Мероприятия' => array('index', 'org' => $this->menu_org->id),
     $model->name,
 );
 
@@ -13,27 +13,11 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Event #<?php echo $model->id; ?></h1>
+<h1><?php echo $model->name; ?></h1>
+<h3><?php echo $model->start_time; ?></h3>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-    'data'=>$model,
-    'attributes'=>array(
-        'id',
-        'organization_id',
-        'author_id',
-        'name',
-        'category',
-        'type_id',
-        'type_other',
-        'create_time',
-        'start_time',
-        'end_time',
-        'city_id',
-        'address_id',
-        'address_other',
-        'address_description',
-        'description',
-        'status',
-        'invite_closed',
-    ),
-)); ?>
+<div class='row'>
+    <div class='span9'>
+        <?php echo $model->description; ?>
+    </div>
+</div>

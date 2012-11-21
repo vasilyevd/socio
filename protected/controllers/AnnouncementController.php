@@ -6,7 +6,7 @@ class AnnouncementController extends Controller
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/column2';
+    public $layout='//layouts/organization';
 
     /**
      * @return array action filters
@@ -139,9 +139,13 @@ class AnnouncementController extends Controller
         //     'dataProvider'=>$dataProvider,
         // ));
 
-        $model=Organization::model()->findByPk($org);
-        if($model===null)
-            throw new CHttpException(404,'Не найдено.');
+        $model=new Announcement('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Announcement']))
+            $model->attributes=$_GET['Announcement'];
+
+        // Limit search to only this organization.
+        $model->organization_id = $org;
 
         $this->render('index',array(
             'model'=>$model,

@@ -39,3 +39,11 @@ body {
     display: inline;
     margin-right: 10px;
 }
+
+/* Organization */
+.org-header img {
+    height: 130px;
+}
+.org-listitem img {
+    height: 50px;
+}

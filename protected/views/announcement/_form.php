@@ -34,15 +34,15 @@
     <?php echo $form->labelEx($model,'publication_time'); ?>
     <div class="input-append">
         <?php $this->widget('ext.EJuiDateTimePicker.EJuiDateTimePicker',array(
-                'model'=>$model,
-                'attribute'=>'publication_time',
-                'language'=>'ru',//default Yii::app()->language
-                'mode'=>'datetime',//'datetime' or 'time' ('datetime' default)
-                'options'=>array(
-                    'dateFormat'=>'yy-mm-dd',
-                    'timeFormat'=>'hh:mm:ss',
-                    'showSecond'=>true,
-                ), // jquery plugin options
+            'model' => $model,
+            'attribute' => 'publication_time',
+            'language' => 'ru',//default Yii::app()->language
+            'mode' => 'datetime',//'datetime' or 'time' ('datetime' default)
+            'options' => array(
+                'dateFormat' => 'yy-mm-dd',
+                'timeFormat' => 'hh:mm:ss',
+                'showSecond' => true,
+            ), // jquery plugin options
         )); ?>
         <span class="add-on"><i class="icon-calendar"></i></span>
     </div>

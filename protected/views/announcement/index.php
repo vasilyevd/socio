@@ -1,17 +1,57 @@
 <?php
-$this->menu_org = $model;
+$this->menu_org = Organization::model()->findByPk($_GET['org']);
 $this->layout = '//layouts/feed';
 
 $this->breadcrumbs=array(
-    'Уведомления',
+    'Новости',
 );
+
+Yii::app()->clientScript->registerScript('search', "
+// On select widget listview update.
+var ajaxUpdateTimeout;
+var ajaxRequest;
+// This is the id of the source.
+$('input.calendar-search').change(function(){
+    ajaxRequest = $(this).serialize();
+    clearTimeout(ajaxUpdateTimeout);
+    ajaxUpdateTimeout = setTimeout(function () {
+        $.fn.yiiListView.update(
+            // This is the id of the CListView.
+            'events-listview',
+            {data: ajaxRequest}
+        )
+    },
+    // This is the delay.
+    300);
+});
+");
 ?>
 
-<?php if(!empty($model->announcements)): ?>
-    <?php $this->widget('bootstrap.widgets.TbListView',array(
-        'dataProvider' => new CArrayDataProvider($model->announcements, array('pagination'=>array('pageSize'=>9))),
-        'itemView' => '_view',
-        'template' => '{items}{pager}', // Hide summary header.
-        'itemsCssClass' => 'row', // Change items container class. Default: items.
+<div class="input-append">
+    <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+        'model' => $model,
+        'attribute' => 'publication_time',
+        'language' => 'ru',
+        'options' => array(
+            'dateFormat' => 'yy-mm-dd',
+        ), // jquery plugin options
+        'htmlOptions' => array(
+            'class' => 'calendar-search',
+        ),
     )); ?>
-<?php endif; ?>
+    <span class="add-on"><i class="icon-calendar"></i></span>
+</div>
+
+<?php $this->widget('bootstrap.widgets.TbListView',array(
+    'id' => 'events-listview',
+    'dataProvider' => $model->search(),
+    'itemView' => '_view',
+    // 'viewData' => array('albumId' => $model->id),
+    // 'template' => '{items}{pager}', // Hide summary header.
+    // 'itemsCssClass' => 'row', // Change items container class. Default: items.
+    'sortableAttributes' => array(
+        'title',
+        'publication_time',
+        'category',
+    ),
+)); ?>
