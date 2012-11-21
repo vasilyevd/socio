@@ -1,26 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "{{problem}}".
+ * This is the model class for table "org_direction".
  *
- * The followings are the available columns in table '{{problem}}':
+ * The followings are the available columns in table 'org_direction':
  * @property integer $id
- * @property integer $group
  * @property string $name
- *
- * The followings are the available model relations:
- * @property OrganizationProblem[] $organizationProblems
  */
-class Problem extends CActiveRecord
+class Direction extends CActiveRecord
 {
-    const GROUP_SOME = 1;
-    const GROUP_ANOTHER = 2;
-    const GROUP_ONEMORE = 3;
-
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Problem the static model class
+     * @return Direction the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -32,7 +24,7 @@ class Problem extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_problem';
+        return 'org_direction';
     }
 
     /**
@@ -43,12 +35,11 @@ class Problem extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('group, name', 'required'),
-            array('group', 'numerical', 'integerOnly'=>true),
+            array('name', 'required'),
             array('name', 'length', 'max'=>128),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, group, name', 'safe', 'on'=>'search'),
+            array('id, name', 'safe', 'on'=>'search'),
         );
     }
 
@@ -58,7 +49,7 @@ class Problem extends CActiveRecord
     public function relations()
     {
         return array(
-            'organizations' => array(self::MANY_MANY, 'Organization', 'org_organization_problem(problem_id, organization_id)'),
+            'organizations' => array(self::MANY_MANY, 'Organization', 'org_organization_direction(direction_id, organization_id)'),
         );
     }
 
@@ -69,7 +60,6 @@ class Problem extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'group' => 'Group',
             'name' => 'Name',
         );
     }
@@ -86,7 +76,6 @@ class Problem extends CActiveRecord
         $criteria=new CDbCriteria;
 
         $criteria->compare('id',$this->id);
-        $criteria->compare('group',$this->group);
         $criteria->compare('name',$this->name,true);
 
         return new CActiveDataProvider($this, array(

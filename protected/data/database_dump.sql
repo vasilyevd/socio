@@ -102,8 +102,32 @@ CREATE TABLE `org_announcement` (
 
 LOCK TABLES `org_announcement` WRITE;
 /*!40000 ALTER TABLE `org_announcement` DISABLE KEYS */;
-INSERT INTO `org_announcement` VALUES (1,'Первая новость','<p><strike>Lorem ipsum dolor</strike> sit amet, consetetur sadipsci<span style=\"background-color:rgb(146,205,220);\">ng elitr, sed diam nonumy eirmod\ntempor invidunt ut <i>labore et dolore</i> magna aliquyam e</span>rat, sed diam voluptua. At\nvero eos et accusam et justo <i>duo dolores et ea rebum. </i>Stet clita kasd gubergren,\nno sea takimata sanctus es<br /><br />\n\nsdf dsfsdf sdfsdffsdfsdfsdfsdf\n</p><p><img style=\"width:217.036px;height:207px;float:left;margin:0px 10px 10px 0px;\" alt=\"\" src=\"/socio-org/uploads/announcement/files/50966002c2a3a.jpg\" /></p>\n\n<p>The domestic cat[1][2] (Felis catus[2] or Felis silvestris catus[4]) is a small, usually <b>furry, domesticated</b>, carnivorous mammal. It is often called the housecat when kept as an indoor pet,[6] or simply the cat when there is no need to distinguish it from other felids and felines. Cats are valued by humans for companionship and ability to hunt vermin and household pests.</p>\n\n<p> C<img style=\"width:209.684px;height:166px;float:right;margin:0px 0px 10px 10px;\" alt=\"\" src=\"http://localhost/socio-org/uploads/announcement/files/5096603e3a9d5.jpg\" />ats are similar in anatomy to the other felids, with strong, flexible bodies, quick reflexes, sharp retractable claws, and teeth adapted to killing small prey. Cat senses fit a crepuscular and predatory ecological niche. Cats can hear sounds too faint or too high in frequency for human ears, such as those made by mice and other small game. They can see in near darkness. Like most mammals, cats have poorer color vision and a better sense of smell than humans.<br /></p>\n\n<p><br />\n\nDespite being solitary hunters, cats are a social species, and cat communication includes the use of a variety of vocalizations (meowing, purring, trilling, hissing, growling and grunting) as well as pheromones and types of cat-specific body language.[7] </p><p><img style=\"width:313.333px;height:235px;\" src=\"http://localhost/socio-org/uploads/image/file/509bb626ea826.jpg\" alt=\"509bb626ea826.jpg\" /></p><p><br /></p>\n','2012-11-03 03:13:17','2012-11-03 19:19:23',1,1,1,'50966002c2a3a.jpg,5096603e3a9d5.jpg,50966081e08b8.jpg,509661285fda4.js,509665b6c8d91.htm',1),(2,'Без файлов','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти.','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(3,'Ещё Новость','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти[22] подвидов дикой кошки Felis silvestris, и её правильное международное научное название — Felis silvestris catus[5][23]. ','2012-11-04 15:20:51','2012-11-04 15:20:44',1,1,1,'50966bb36a767.js,50966e27e36b7.jpeg',1),(4,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(6,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(7,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(8,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(10,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(11,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(12,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(13,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(14,'НОвая новость!','sdfsdf','2012-11-05 12:00:33','2012-11-05 12:00:30',1,1,1,'',1),(15,'sdfsdf !','sdfsdf','2012-11-05 12:01:32','2012-11-05 12:01:30',1,6,1,'',1);
+INSERT INTO `org_announcement` VALUES (1,'Первая новость','<p></p><p><strike>Lorem ipsum dolor</strike> sit amet, consetetur sadipsci<span style=\"background-color:rgb(146,205,220);\">ng elitr, sed diam nonumy eirmod\ntempor invidunt ut <i>labore et dolore</i> magna aliquyam e</span>rat, sed diam voluptua. At\nvero eos et accusam et justo <i>duo dolores et ea rebum. </i>Stet clita kasd gubergren,\nno sea takimata sanctus es<br /><br />\n\nsdf dsfsdf sdfsdffsdfsdfsdfsdf\n</p><p></p>\n\n<p><img style=\"width:237.379px;height:225px;float:left;margin:0px 10px 10px 0px;\" alt=\"\" src=\"/socio/uploads/image/file/50a10241b6e3d.jpg\" />The domestic cat[1][2] (Felis catus[2] or Felis silvestris catus[4]) is a small, usually <b>furry, domesticated</b>, carnivorous mammal. It is often called the housecat when kept as an indoor pet,[6] or simply the cat when there is no need to distinguish it from other felids and felines. Cats are valued by humans for companionship and ability to hunt vermin and household pests.</p>\n\n<p> Cats are similar in anatomy to the other felids, with strong, flexible bodies, quick reflexes, sharp retractable claws, and teeth adapted to killing small prey. Cat senses fit a crepuscular and predatory ecological niche. Cats can hear sounds too faint or too high in frequency for human ears, such as those made by mice and other small game. They can see in near darkness. Like most mammals, cats have poorer color vision and a better sense of smell than humans.<br /></p>\n\n<p><br />\n\nDespite being solitary hunters, cats are a social species, and cat communication includes the use of a variety of vocalizations (meowing, purring, trilling, hissing, growling and grunting) as well as pheromones and types of cat-specific body language.[7] </p><p><img style=\"width:313.333px;height:235px;\" src=\"http://localhost/socio-org/uploads/image/file/509bb626ea826.jpg\" alt=\"509bb626ea826.jpg\" /></p><p><br /></p>\n','2012-11-03 03:13:17','2012-11-03 19:19:23',1,1,1,'509661285fda4.js,509665b6c8d91.htm',1),(2,'Без файлов','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти.','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(3,'Ещё Новость','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти[22] подвидов дикой кошки Felis silvestris, и её правильное международное научное название — Felis silvestris catus[5][23]. ','2012-11-04 15:20:51','2012-11-04 15:20:44',1,1,1,'50966bb36a767.js',1),(4,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(6,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(7,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(8,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(10,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(11,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(12,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(13,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(14,'НОвая новость!','sdfsdf','2012-11-05 12:00:33','2012-11-05 12:00:30',1,1,1,'',1),(15,'sdfsdf !','sdfsdf','2012-11-05 12:01:32','2012-11-05 12:01:30',1,6,1,'',1);
 /*!40000 ALTER TABLE `org_announcement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_direction`
+--
+
+DROP TABLE IF EXISTS `org_direction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_direction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_direction`
+--
+
+LOCK TABLES `org_direction` WRITE;
+/*!40000 ALTER TABLE `org_direction` DISABLE KEYS */;
+INSERT INTO `org_direction` VALUES (1,'Направление один'),(2,'Направление два'),(3,'Ещё направление'),(4,'And more'),(5,'And more 2'),(6,'And more 3');
+/*!40000 ALTER TABLE `org_direction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -226,7 +250,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Неформальная',1,'OrganizationType',1),(7,'Коммерческая',2,'OrganizationType',2),(8,'Некоммерческая',3,'OrganizationType',3),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(18,'Foo',1,'OrganizationDirection',1),(19,'Bar',2,'OrganizationDirection',2),(20,'Baz',3,'OrganizationDirection',3),(21,'Some',1,'ProblemGroup',1),(22,'Anoter',2,'ProblemGroup',2),(23,'Onemore',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Гранты',2,'AnnouncementCategory',2),(28,'Ещё что-то',3,'AnnouncementCategory',3),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EventCategory',1),(32,'Внутренние',2,'EventCategory',2),(33,'Публичные',3,'EventCategory',3);
+INSERT INTO `org_lookup` VALUES (6,'Неформальная',1,'OrganizationType',1),(7,'Коммерческая',2,'OrganizationType',2),(8,'Некоммерческая',3,'OrganizationType',3),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Some',1,'ProblemGroup',1),(22,'Anoter',2,'ProblemGroup',2),(23,'Onemore',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Гранты',2,'AnnouncementCategory',2),(28,'Ещё что-то',3,'AnnouncementCategory',3),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EventCategory',1),(32,'Внутренние',2,'EventCategory',2),(33,'Публичные',3,'EventCategory',3);
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,8 +266,6 @@ CREATE TABLE `org_organization` (
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `type` int(11) NOT NULL,
   `action_area` int(11) NOT NULL,
-  `direction` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `problem` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `city_id` int(11) DEFAULT NULL,
   `address_id` int(11) DEFAULT NULL,
   `foundation_year` int(11) DEFAULT NULL,
@@ -268,8 +290,66 @@ CREATE TABLE `org_organization` (
 
 LOCK TABLES `org_organization` WRITE;
 /*!40000 ALTER TABLE `org_organization` DISABLE KEYS */;
-INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',2,4,'1,2,3','1,2,5',12,6,2010,560,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\r\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\r\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\r\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\r\n','Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\n','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,2,'','',NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf',2,2,'','',NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',2,1,'','',NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',3,2,'','',NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,2,'','',NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0);
+INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',2,4,12,6,2010,560,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\r\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\r\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\r\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\r\n','Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\n','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,2,NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf',2,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',2,1,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',3,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0);
 /*!40000 ALTER TABLE `org_organization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_organization_direction`
+--
+
+DROP TABLE IF EXISTS `org_organization_direction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_organization_direction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `direction_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`organization_id`),
+  KEY `image_id` (`direction_id`),
+  CONSTRAINT `org_organization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_organization_direction_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_organization_direction`
+--
+
+LOCK TABLES `org_organization_direction` WRITE;
+/*!40000 ALTER TABLE `org_organization_direction` DISABLE KEYS */;
+INSERT INTO `org_organization_direction` VALUES (2,1,2),(3,1,3),(4,1,4);
+/*!40000 ALTER TABLE `org_organization_direction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_organization_problem`
+--
+
+DROP TABLE IF EXISTS `org_organization_problem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_organization_problem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `problem_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`organization_id`),
+  KEY `image_id` (`problem_id`),
+  CONSTRAINT `org_organization_problem_ibfk_2` FOREIGN KEY (`problem_id`) REFERENCES `org_problem` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_organization_problem_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_organization_problem`
+--
+
+LOCK TABLES `org_organization_problem` WRITE;
+/*!40000 ALTER TABLE `org_organization_problem` DISABLE KEYS */;
+INSERT INTO `org_organization_problem` VALUES (3,6,1),(4,6,4),(5,6,3),(12,1,4),(13,1,3);
+/*!40000 ALTER TABLE `org_organization_problem` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -336,4 +416,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-20 13:59:53
+-- Dump completed on 2012-11-21 17:28:45

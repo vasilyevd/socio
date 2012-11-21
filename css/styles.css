@@ -40,7 +40,10 @@ body {
     margin-right: 10px;
 }
 
-/* Organization header */
+/* Organization */
 .org-header img {
     height: 130px;
+}
+.org-listitem img {
+    height: 50px;
 }

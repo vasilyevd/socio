@@ -2,7 +2,7 @@
 $this->menu_org = $model->organization;
 
 $this->breadcrumbs=array(
-    'Events'=>array('index'),
+    'Мероприятия' => array('index', 'org' => $this->menu_org->id),
     $model->name,
 );
 
