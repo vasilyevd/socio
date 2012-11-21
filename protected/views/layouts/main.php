@@ -59,19 +59,17 @@
                         ),
                     ),
                 ),
-                    array(
-                        'class'=>'bootstrap.widgets.TbMenu',
-                        'htmlOptions'=>array('class'=>'pull-right'),
-                        'items'=>array(
-                            array('label'=>'Организации', 'icon'=>'globe', 'url'=>array('/organization/index')),
-                            array('label'=>'Доступность', 'icon'=>'list-alt', 'url'=>'http://sddf.ru', 'items'=>array(
-                                array('label'=>'Карта', 'url'=>'#'),
-                                array('label'=>'Инфраструктура', 'url'=>'#'),
-                            )),
-                            array('label'=>'Справка', 'url'=>array('/site/page', 'view'=>'faq')),
-                            array('label'=>'О проекте', 'icon'=>'star', 'url'=>array('/site/about', 'page'=>'comanda')),
-                        ),
-                    ),
+                array(
+	                'class'=>'bootstrap.widgets.TbMenu',
+                  'htmlOptions'=>array('class'=>'pull-right'),
+                  'items'=>array(
+                    array('label'=>'Организации', 'icon'=>'globe', 'url'=>array('/organization/index')),
+	                  array('label'=>'Доступность', 'icon'=>'list-alt', 'url'=>array('/object/index')),
+                    array('label'=>'Справка', 'url'=>array('/site/page', 'view'=>'faq')),
+                    array('label'=>'О проекте', 'icon'=>'star', 'url'=>array('/site/about', 'page'=>'comanda')),
+                   ),
+                ),
+
 
             ),
         ));

@@ -31,6 +31,7 @@ return array(
     // autoloading model and component classes
     'import'=>array(
         'application.models.*',
+	      'application.models.dostup.*',
         'application.components.*',
                 'application.extensions.*',
                 'application.extensions.widgets.*',
