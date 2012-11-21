@@ -139,9 +139,13 @@ class AnnouncementController extends Controller
         //     'dataProvider'=>$dataProvider,
         // ));
 
-        $model=Organization::model()->findByPk($org);
-        if($model===null)
-            throw new CHttpException(404,'Не найдено.');
+        $model=new Announcement('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Announcement']))
+            $model->attributes=$_GET['Announcement'];
+
+        // Limit search to only this organization.
+        $model->organization_id = $org;
 
         $this->render('index',array(
             'model'=>$model,

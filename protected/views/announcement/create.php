@@ -2,7 +2,7 @@
 $this->menu_org = Organization::model()->findByPk($_GET['org']);
 
 $this->breadcrumbs=array(
-    'Новости'=>array('index'),
+    'Новости' => array('index', 'org' => $this->menu_org->id),
     'Создать',
 );
 ?>

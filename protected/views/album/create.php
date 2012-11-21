@@ -2,8 +2,8 @@
 $this->menu_org = Organization::model()->findByPk($_GET['org']);
 
 $this->breadcrumbs=array(
-    'Albums'=>array('index'),
-    'Create',
+    'Галерея' => array('index', 'org' => $this->menu_org->id),
+    'Создать',
 );
 ?>
 

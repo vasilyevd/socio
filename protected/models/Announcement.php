@@ -127,16 +127,16 @@ class Announcement extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
 
         $criteria->compare('id',$this->id);
         $criteria->compare('title',$this->title,true);
         $criteria->compare('content',$this->content,true);
         $criteria->compare('create_time',$this->create_time);
-        $criteria->compare('publication_time',$this->publication_time);
+
+        // Check for whole day.
+        $criteria->compare('date(publication_time)',$this->publication_time);
+
         $criteria->compare('status',$this->status);
         $criteria->compare('organization_id',$this->organization_id);
         $criteria->compare('author_id',$this->author_id);

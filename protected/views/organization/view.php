@@ -1,10 +1,10 @@
 <?php
 $this->menu_org = $model;
 
-$this->breadcrumbs=array(
-    'Организации'=>array('index'),
-    CHtml::encode($model->name),
-);
+// $this->breadcrumbs=array(
+//     'Организации'=>array('index'),
+//     CHtml::encode($model->name),
+// );
 
 $this->menu=array(
     array('label' => 'Управление Организацией'),
@@ -24,16 +24,16 @@ $this->menu=array(
         <b><?php echo CHtml::encode($model->getAttributeLabel('action_area')); ?>:</b>
         <?php echo CHtml::encode(Lookup::item('OrganizationActionArea',$model->action_area)); ?>
     </div>
-    <?php if(!empty($model->direction)): ?>
+    <?php if(!empty($model->directions)): ?>
         <div class="span9">
-            <b><?php echo CHtml::encode($model->getAttributeLabel('direction')); ?>:</b>
-            <?php echo CHtml::encode(implode(', ', Lookup::itemsByCodes('OrganizationDirection', $model->direction))); ?>
+            <b><?php echo CHtml::encode($model->getAttributeLabel('directions')); ?>:</b>
+            <?php echo CHtml::encode(implode(', ', CHtml::listData($model->directions, 'id', 'name'))); ?>
         </div>
     <?php endif; ?>
-    <?php if(!empty($model->problem)): ?>
+    <?php if(!empty($model->problems)): ?>
         <div class="span9">
-            <b><?php echo CHtml::encode($model->getAttributeLabel('problem')); ?>:</b>
-            <?php echo CHtml::encode(implode(', ', CHtml::listData(Problem::model()->findAllByPk($model->problem), 'id', 'name'))); ?>
+            <b><?php echo CHtml::encode($model->getAttributeLabel('problems')); ?>:</b>
+            <?php echo CHtml::encode(implode(', ', CHtml::listData($model->problems, 'id', 'name'))); ?>
         </div>
     <?php endif; ?>
 </div>

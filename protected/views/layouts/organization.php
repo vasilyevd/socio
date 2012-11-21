@@ -1,3 +1,10 @@
+<?php
+$this->breadcrumbs = array_merge(array(
+    'Организации' => array('organization/index'),
+    CHtml::encode($this->menu_org->name) => array('organization/view', 'id' => $this->menu_org->id),
+), $this->breadcrumbs);
+?>
+
 <?php $this->beginContent('//layouts/main'); ?>
 
 <div class="row">
@@ -6,11 +13,9 @@
             <div class="org-header">
                 <div class="row">
                     <div class="span3">
-                        <?php if(!empty($this->menu_org->logo)): ?>
-                            <a href="<?php echo $this->menu_org->getUploadUrl('logo', $this->menu_org->logo); ?>">
-                                <img src="<?php echo $this->menu_org->getUploadUrl('logo', $this->menu_org->logo); ?>" alt="Logo">
-                            </a>
-                        <?php endif; ?>
+                        <a href="<?php echo $this->menu_org->getUploadUrl('logo', $this->menu_org->logo); ?>">
+                            <img src="<?php echo $this->menu_org->getUploadUrl('logo', $this->menu_org->logo); ?>" alt="Logo">
+                        </a>
                     </div>
 
                     <div class="span3">
@@ -19,7 +24,9 @@
 
                     <div class="span2 pull-right">
                         <h3><?php echo CHtml::encode(Lookup::item('OrganizationActionArea',$this->menu_org->action_area)); ?></h3>
-                        <h3>г. <?php echo CHtml::encode($this->menu_org->city_id); ?></h3>
+                        <?php if (!empty($this->menu_org->city_id)): ?>
+                            <h3>г. <?php echo CHtml::encode($this->menu_org->city_id); ?></h3>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

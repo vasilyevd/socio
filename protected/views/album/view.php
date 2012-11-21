@@ -2,7 +2,7 @@
 $this->menu_org = $model->organization;
 
 $this->breadcrumbs=array(
-    'Albums'=>array('index'),
+    'Галерея' => array('index', 'org' => $this->menu_org->id),
     $model->name,
 );
 
