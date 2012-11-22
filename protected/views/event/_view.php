@@ -1,5 +1,5 @@
 <b><?php echo CHtml::link(CHtml::encode($data->name),array('view','id'=>$data->id)); ?></b>
-(<?php echo CHtml::encode(Lookup::item('EventCategory', $data->category)); ?>)
+(<?php echo CHtml::encode(Lookup::item('EvtypeCategory', $data->category)); ?>)
 <br />
 
 <?php echo CHtml::encode($data->start_time); ?>

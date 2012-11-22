@@ -30,8 +30,8 @@ $('#Event_type_id').change(function(){
         'type_id',
         CHtml::listData(
             Lookup::itemsListReplace(
-                'EventCategory',
-                EventType::model()->findAll(array('order' => 'position')),
+                'EvtypeCategory',
+                Evtype::model()->findAll(array('order' => 'position')),
                 'category'
             ),
             'id',

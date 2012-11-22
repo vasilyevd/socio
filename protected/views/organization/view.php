@@ -17,8 +17,12 @@ $this->menu=array(
 <hr>
 <div class="row">
     <div class="span4">
-        <b><?php echo CHtml::encode($model->getAttributeLabel('type')); ?>:</b>
-        <?php echo CHtml::encode(Lookup::item('OrganizationType',$model->type)); ?>
+        <b><?php echo CHtml::encode($model->getAttributeLabel('type_group')); ?>:</b>
+        <?php echo CHtml::encode(Lookup::item('OrgtypeGroup', $model->type_group)); ?>
+    </div>
+    <div class="span4">
+        <b><?php echo CHtml::encode($model->getAttributeLabel('type_id')); ?>:</b>
+        <?php echo CHtml::encode($model->type->name); ?>
     </div>
     <div class="span4">
         <b><?php echo CHtml::encode($model->getAttributeLabel('action_area')); ?>:</b>
