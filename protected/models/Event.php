@@ -31,10 +31,6 @@ class Event extends CActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
 
-    const CATEGORY_ORGANIZATIONAL = 1;
-    const CATEGORY_INTERNAL = 2;
-    const CATEGORY_PUBLIC = 3;
-
     const TYPE_OTHER_ORGANIZATIONAL = 1;
     const TYPE_OTHER_INTERNAL = 2;
     const TYPE_OTHER_PUBLIC = 3;
@@ -82,10 +78,8 @@ class Event extends CActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
-            'type' => array(self::BELONGS_TO, 'EventType', 'type_id'),
+            'type' => array(self::BELONGS_TO, 'Evtype', 'type_id'),
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
         );
     }

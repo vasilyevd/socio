@@ -30,10 +30,6 @@
  */
 class Organization extends CActiveRecord
 {
-    const TYPE_INFORMAL = 1;
-    const TYPE_COMMERCIAL = 2;
-    const TYPE_NONPROFIT = 3;
-
     const ACTION_AREA_NATION = 1;
     const ACTION_AREA_REGION = 2;
     const ACTION_AREA_DISTRICT = 3;
@@ -67,13 +63,9 @@ class Organization extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name, type, action_area', 'required'),
-            array('type, action_area', 'numerical', 'integerOnly'=>true),
+            array('name, type_id, action_area', 'required'),
+            array('type_id, action_area', 'numerical', 'integerOnly'=>true),
             array('name', 'length', 'min'=>3, 'max'=>128),
-            array('type', 'in', 'range' => array(
-                self::TYPE_INFORMAL, self::TYPE_COMMERCIAL,
-                self::TYPE_NONPROFIT,
-            )),
             array('action_area', 'in', 'range' => array(
                 self::ACTION_AREA_NATION, self::ACTION_AREA_REGION,
                 self::ACTION_AREA_DISTRICT, self::ACTION_AREA_CITY,
@@ -105,7 +97,7 @@ class Organization extends CActiveRecord
 
             array('status, verified', 'safe', 'on'=>'editable'),
 
-            array('id, name, type, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
+            array('id, name, type_group, type_id, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
     }
 
@@ -115,6 +107,7 @@ class Organization extends CActiveRecord
     public function relations()
     {
         return array(
+            'type' => array(self::BELONGS_TO, 'Orgtype', 'type_id'),
             'directions' => array(self::MANY_MANY, 'Direction', 'org_organization_direction(organization_id, direction_id)'),
             'problems' => array(self::MANY_MANY, 'Problem', 'org_organization_problem(organization_id, problem_id)'),
             'verifications' => array(self::HAS_MANY, 'Verification', 'organization_id'),
@@ -151,7 +144,8 @@ class Organization extends CActiveRecord
         return array(
             'id' => 'ID',
             'name' => 'Название',
-            'type' => 'Тип',
+            'type_group' => 'Группа Типа',
+            'type_id' => 'Тип',
             'action_area' => 'Область Действий',
             'city_id' => 'Город',
             'address_id' => 'Адрес',
@@ -185,7 +179,8 @@ class Organization extends CActiveRecord
 
         $criteria->compare('id',$this->id);
         $criteria->compare('name',$this->name,true);
-        $criteria->compare('type',$this->type);
+        $criteria->compare('type_group',$this->type_group);
+        $criteria->compare('type_id',$this->type_id);
         $criteria->compare('action_area',$this->action_area);
         $criteria->compare('city_id',$this->city_id);
         $criteria->compare('address_id',$this->address_id);
@@ -224,9 +219,13 @@ class Organization extends CActiveRecord
             $this->author_id = 1;
         }
 
+        // Set default logo.
         if (empty($this->logo)) {
             $this->logo = 'placeholder.jpg';
         }
+
+        // Get group from type relation.
+        $this->type_group = $this->type->group;
 
         return parent::beforeSave();
     }

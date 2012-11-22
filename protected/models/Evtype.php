@@ -12,8 +12,12 @@
  * The followings are the available model relations:
  * @property Event[] $events
  */
-class EventType extends CActiveRecord
+class Evtype extends CActiveRecord
 {
+    const CATEGORY_ORGANIZATIONAL = 1;
+    const CATEGORY_INTERNAL = 2;
+    const CATEGORY_PUBLIC = 3;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -29,7 +33,7 @@ class EventType extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_event_type';
+        return 'org_evtype';
     }
 
     /**
@@ -42,8 +46,8 @@ class EventType extends CActiveRecord
             array('category, position', 'numerical', 'integerOnly'=>true),
             array('name', 'length', 'max'=>128),
             array('category', 'in', 'range' => array(
-                Event::CATEGORY_ORGANIZATIONAL, Event::CATEGORY_INTERNAL,
-                Event::CATEGORY_PUBLIC,
+                self::CATEGORY_ORGANIZATIONAL, self::CATEGORY_INTERNAL,
+                self::CATEGORY_PUBLIC,
             )),
 
             array('id, name, category, position', 'safe', 'on'=>'search'),
