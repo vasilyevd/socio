@@ -79,7 +79,7 @@ $('input.fast-search').keyup(function(){
     // 'itemsCssClass' => 'row', // Items container class. Default: items.
     'sortableAttributes' => array(
         'name',
-        'type',
+        'type_id',
         'action_area',
         'foundation_year',
     ),

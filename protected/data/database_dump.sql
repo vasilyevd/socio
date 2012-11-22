@@ -117,7 +117,7 @@ CREATE TABLE `org_direction` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `org_direction` (
 
 LOCK TABLES `org_direction` WRITE;
 /*!40000 ALTER TABLE `org_direction` DISABLE KEYS */;
-INSERT INTO `org_direction` VALUES (1,'Направление один'),(2,'Направление два'),(3,'Ещё направление'),(4,'And more'),(5,'And more 2'),(6,'And more 3');
+INSERT INTO `org_direction` VALUES (1,'Религия'),(2,'Благотворительность'),(3,'Политика'),(4,'Здоровье'),(5,'Спорт'),(6,'Аналитика'),(7,'Право'),(8,'Культура'),(9,'Молодежь'),(10,'Экология'),(11,'Волонтерство'),(12,'Донорство'),(13,'Образование'),(14,'Развитие общества'),(15,'СМИ'),(16,'Евроинтеграция');
 /*!40000 ALTER TABLE `org_direction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `org_event` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   KEY `type_id` (`type_id`),
-  CONSTRAINT `org_event_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `org_event_type` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_event_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `org_evtype` (`id`) ON DELETE SET NULL,
   CONSTRAINT `org_event_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -169,18 +169,18 @@ CREATE TABLE `org_event` (
 
 LOCK TABLES `org_event` WRITE;
 /*!40000 ALTER TABLE `org_event` DISABLE KEYS */;
-INSERT INTO `org_event` VALUES (1,1,1,'Мероприятие с обычным типом',1,5,'','2012-11-19 10:35:57','2012-11-19 10:35:43','2012-11-19 10:35:43',1,NULL,'','','<p>Некоторые специалисты считают, что кошачье поведение находится в состоянии перехода от независимости к взаимозависимости. Действительно, каждый из нас не раз наблюдал, как кошка радостно встречает вечером отсутствовавших хозяев, всячески жемонстрируя, что она соскучилась и не прочь получить изрядный кус вашего внимания. На самом деле личность кошки и ее последующее социальное поведение во многом определяются ее ранним опытом, а также зависит от плотности популяции и количества пищи. <br /></p>',1,0),(2,1,1,'Мероприятие с кастомным типом',2,2,'Мой кастом тип','2012-11-19 10:41:51','2012-11-19 10:00:00','2012-11-19 10:00:00',23,NULL,'','','Lorem <strike>ipsum dolor sit amet, consetetur</strike> sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',2,0),(3,1,1,'Новое мероприятие',1,4,'','2012-11-22 11:41:03','2012-11-22 11:40:56','2012-11-22 11:40:56',43,NULL,'','','<p> sdf sdfsdfsdf<br /></p>',1,0);
+INSERT INTO `org_event` VALUES (1,1,1,'Мероприятие с обычным типом',1,4,'','2012-11-19 10:35:57','2012-11-19 10:35:43','2012-11-19 10:35:43',1,NULL,'','','<p>Некоторые специалисты считают, что кошачье поведение находится в состоянии перехода от независимости к взаимозависимости. Действительно, каждый из нас не раз наблюдал, как кошка радостно встречает вечером отсутствовавших хозяев, всячески жемонстрируя, что она соскучилась и не прочь получить изрядный кус вашего внимания. На самом деле личность кошки и ее последующее социальное поведение во многом определяются ее ранним опытом, а также зависит от плотности популяции и количества пищи. <br /></p>',1,0),(2,1,1,'Мероприятие с кастомным типом',2,2,'Мой кастом тип','2012-11-19 10:41:51','2012-11-19 10:00:00','2012-11-19 10:00:00',23,NULL,'','','Lorem <strike>ipsum dolor sit amet, consetetur</strike> sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',2,0),(3,1,1,'Новое мероприятие',1,4,'','2012-11-22 11:41:03','2012-11-22 11:40:56','2012-11-22 11:40:56',43,NULL,'','','<p> sdf sdfsdfsdf<br /></p>',1,0);
 /*!40000 ALTER TABLE `org_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `org_event_type`
+-- Table structure for table `org_evtype`
 --
 
-DROP TABLE IF EXISTS `org_event_type`;
+DROP TABLE IF EXISTS `org_evtype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `org_event_type` (
+CREATE TABLE `org_evtype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `category` int(11) NOT NULL,
@@ -190,13 +190,13 @@ CREATE TABLE `org_event_type` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `org_event_type`
+-- Dumping data for table `org_evtype`
 --
 
-LOCK TABLES `org_event_type` WRITE;
-/*!40000 ALTER TABLE `org_event_type` DISABLE KEYS */;
-INSERT INTO `org_event_type` VALUES (1,'Другой...',1,999),(2,'Другой...',2,999),(3,'Другой...',3,999),(4,'Какой-то тип',1,1),(5,'Ещё тип',1,2);
-/*!40000 ALTER TABLE `org_event_type` ENABLE KEYS */;
+LOCK TABLES `org_evtype` WRITE;
+/*!40000 ALTER TABLE `org_evtype` DISABLE KEYS */;
+INSERT INTO `org_evtype` VALUES (1,'Другой...',1,999),(2,'Другой...',2,999),(3,'Другой...',3,999),(4,'Какой-то тип',1,1),(5,'Ещё тип',1,2);
+/*!40000 ALTER TABLE `org_evtype` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -250,7 +250,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Неформальная',1,'OrganizationType',1),(7,'Коммерческая',2,'OrganizationType',2),(8,'Некоммерческая',3,'OrganizationType',3),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Some',1,'ProblemGroup',1),(22,'Anoter',2,'ProblemGroup',2),(23,'Onemore',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Гранты',2,'AnnouncementCategory',2),(28,'Ещё что-то',3,'AnnouncementCategory',3),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EventCategory',1),(32,'Внутренние',2,'EventCategory',2),(33,'Публичные',3,'EventCategory',3);
+INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Some',1,'ProblemGroup',1),(22,'Anoter',2,'ProblemGroup',2),(23,'Onemore',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Гранты',2,'AnnouncementCategory',2),(28,'Ещё что-то',3,'AnnouncementCategory',3),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3);
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +264,8 @@ DROP TABLE IF EXISTS `org_organization`;
 CREATE TABLE `org_organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL,
+  `type_group` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
   `action_area` int(11) NOT NULL,
   `city_id` int(11) DEFAULT NULL,
   `address_id` int(11) DEFAULT NULL,
@@ -280,8 +281,10 @@ CREATE TABLE `org_organization` (
   `create_time` datetime NOT NULL,
   `status` int(11) NOT NULL,
   `verified` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `type_id` (`type_id`),
+  CONSTRAINT `org_organization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +293,7 @@ CREATE TABLE `org_organization` (
 
 LOCK TABLES `org_organization` WRITE;
 /*!40000 ALTER TABLE `org_organization` DISABLE KEYS */;
-INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',2,4,12,6,2010,560,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\r\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\r\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\r\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\r\n','Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\n','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,2,NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf',2,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',2,1,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',3,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0);
+INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',1,2,4,12,6,2010,560,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\r\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\r\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\r\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\r\n','Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\r\n','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,1,2,NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',1,1,1,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',1,'2012-11-22 15:42:24',3,0);
 /*!40000 ALTER TABLE `org_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +313,7 @@ CREATE TABLE `org_organization_direction` (
   KEY `image_id` (`direction_id`),
   CONSTRAINT `org_organization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_direction_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +322,7 @@ CREATE TABLE `org_organization_direction` (
 
 LOCK TABLES `org_organization_direction` WRITE;
 /*!40000 ALTER TABLE `org_organization_direction` DISABLE KEYS */;
-INSERT INTO `org_organization_direction` VALUES (2,1,2),(3,1,3),(4,1,4);
+INSERT INTO `org_organization_direction` VALUES (24,1,10),(25,1,12),(26,1,13);
 /*!40000 ALTER TABLE `org_organization_direction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +342,7 @@ CREATE TABLE `org_organization_problem` (
   KEY `image_id` (`problem_id`),
   CONSTRAINT `org_organization_problem_ibfk_2` FOREIGN KEY (`problem_id`) REFERENCES `org_problem` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_problem_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,8 +351,33 @@ CREATE TABLE `org_organization_problem` (
 
 LOCK TABLES `org_organization_problem` WRITE;
 /*!40000 ALTER TABLE `org_organization_problem` DISABLE KEYS */;
-INSERT INTO `org_organization_problem` VALUES (3,6,1),(4,6,4),(5,6,3),(12,1,4),(13,1,3);
+INSERT INTO `org_organization_problem` VALUES (16,6,1),(17,6,4),(18,6,3),(29,1,4),(30,1,3);
 /*!40000 ALTER TABLE `org_organization_problem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_orgtype`
+--
+
+DROP TABLE IF EXISTS `org_orgtype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_orgtype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group` int(11) NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_orgtype`
+--
+
+LOCK TABLES `org_orgtype` WRITE;
+/*!40000 ALTER TABLE `org_orgtype` DISABLE KEYS */;
+INSERT INTO `org_orgtype` VALUES (1,1,'Общественные организации'),(2,1,'Благотворительные фонды'),(3,1,'Партии'),(4,1,'Общественные фонды'),(5,1,'Общественные центры'),(6,1,'Общественные комитеты'),(7,1,'Клубы\r'),(8,2,'Инициативная группа\r'),(9,2,'Движение\r'),(10,2,'Неформальные объединения\r');
+/*!40000 ALTER TABLE `org_orgtype` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -416,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-22 11:47:22
+-- Dump completed on 2012-11-22 17:33:47
