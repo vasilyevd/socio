@@ -11,30 +11,47 @@ $this->menu=array(
 );
 
 ?>
+<!-- GLOBAL ROW -->
+<div class="row">
 
+	<!-- C1 -->
+	<div class="span8">
 
-<div class="span8">
-	<?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-		'title' => 'Информационная часть',
-		'headerIcon' => 'icon-th-list',
-		//'htmlOptions' => array('class'=>'bootstrap-widget-table')
-	));?>
-	<p>Описание раздела</p>
-	<p> Кнопка добавления своей организации</p>
-	<?php $this->endWidget();?>
+		<!-- C1 R1 -->
+		<div class="row show-grid">
+			<!-- R1.1 -->
+			<div class="span2">
+				<img src="/images/other/orgmain.jpg" class="img-polaroid">
+			</div>
+			<!-- R1.2 -->
+			<div class="span6">
+				<p>Описание раздела</p>
+				<p> Кнопка добавления своей организации</p>
+			</div>
+		</div>
 
+	<!-- C1 R2 -->
+	<div class="row">
+		<!-- R2.1 -->
+		<div class="span6">
+				<?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+					'title' => 'Категории',
+					'headerIcon' => 'icon-th-list',
+					//'htmlOptions' => array('class'=>'bootstrap-widget-table')
+				));?>
+					asdasdasd
+				<?php $this->endWidget();?>
+		</div>
+		<!-- R2.2 -->
+		<div class="span2">
+				span2
+		</div>
 
+	</div>
 
-	<?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-		'title' => 'Категории',
-		'headerIcon' => 'icon-th-list',
-		//'htmlOptions' => array('class'=>'bootstrap-widget-table')
-	));?>
-	<p>Список категорий организаций<</p>
-	<p> Название категории с неколькими аватарками организаций из этой категории (пока по дате добавления)</p>
-	<?php $this->endWidget();?>
-
-
+	<!-- C1 R3 -->
+	<div class="row">
+	<div class="span8">
 	<?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 		'title' => 'Проблематики',
 		'headerIcon' => 'icon-th-list',
@@ -42,10 +59,12 @@ $this->menu=array(
 	));?>
 	Список проблематик организаций
 	<?php $this->endWidget();?>
-
+	</div>
+	</div>
 
 </div>
 
+<!-- C2 -->
 <div class="span4">
 
 	<div class="well well-small">
@@ -71,11 +90,6 @@ $this->menu=array(
 	<p>sdfgsdfgsdgfsdf ssdfsdf </p>
 	<?php $this->endWidget();?>
 
-</div>
-
-
-
-<div class="span4">
 	<?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
 		'title' => 'Новые организации',
 		'headerIcon' => 'icon-th-list',
@@ -88,6 +102,11 @@ $this->menu=array(
 	<p>sdfgsdfgsdgfsdf ssdfsdf </p>
 	<?php $this->endWidget();?>
 </div>
+
+</div>
+
+
+
 
 
 
