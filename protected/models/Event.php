@@ -135,7 +135,11 @@ class Event extends CActiveRecord
         $criteria->compare('type_id',$this->type_id);
         $criteria->compare('type_other',$this->type_other,true);
         $criteria->compare('create_time',$this->create_time,true);
-        $criteria->compare('start_time',$this->start_time,true);
+
+        // Check for whole day.
+        // $criteria->compare('start_time',$this->start_time,true);
+        $criteria->compare('date(start_time)',$this->start_time);
+
         $criteria->compare('end_time',$this->end_time,true);
         $criteria->compare('city_id',$this->city_id);
         $criteria->compare('address_id',$this->address_id);
