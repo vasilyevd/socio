@@ -19,7 +19,7 @@ return array(
 
     // Application default language.
     'language' => 'ru',
-    'sourceLanguage' => 'ru',
+    'sourceLanguage' => 'en',
 
     // preloading 'log' component
     'preload'=>array(

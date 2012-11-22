@@ -47,3 +47,20 @@ body {
 .org-listitem img {
     height: 50px;
 }
+
+/* socio */
+
+.rel {
+    position: relative;
+}
+
+.angel-br {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.items .row{
+border-top: 1px solid;
+}
+

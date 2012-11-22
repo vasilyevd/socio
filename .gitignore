@@ -3,6 +3,7 @@
 #################
 
 /assets/*
+/foto/*
 protected/runtime/*
 protected/config/Config_DB.php
 .idea/
