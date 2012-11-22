@@ -160,7 +160,7 @@ CREATE TABLE `org_event` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_event_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `org_event_type` (`id`) ON DELETE SET NULL,
   CONSTRAINT `org_event_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +169,7 @@ CREATE TABLE `org_event` (
 
 LOCK TABLES `org_event` WRITE;
 /*!40000 ALTER TABLE `org_event` DISABLE KEYS */;
-INSERT INTO `org_event` VALUES (1,1,1,'Мероприятие с обычным типом',1,5,'','2012-11-19 10:35:57','2012-11-19 10:35:43','2012-11-19 10:35:43',1,NULL,'','','<p>Некоторые специалисты считают, что кошачье поведение находится в состоянии перехода от независимости к взаимозависимости. Действительно, каждый из нас не раз наблюдал, как кошка радостно встречает вечером отсутствовавших хозяев, всячески жемонстрируя, что она соскучилась и не прочь получить изрядный кус вашего внимания. На самом деле личность кошки и ее последующее социальное поведение во многом определяются ее ранним опытом, а также зависит от плотности популяции и количества пищи. <br /></p>',1,0),(2,1,1,'Мероприятие с кастомным типом',2,2,'Мой кастом тип','2012-11-19 10:41:51','2012-11-19 10:00:00','2012-11-19 10:00:00',23,NULL,'','','Lorem <strike>ipsum dolor sit amet, consetetur</strike> sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',2,0);
+INSERT INTO `org_event` VALUES (1,1,1,'Мероприятие с обычным типом',1,5,'','2012-11-19 10:35:57','2012-11-19 10:35:43','2012-11-19 10:35:43',1,NULL,'','','<p>Некоторые специалисты считают, что кошачье поведение находится в состоянии перехода от независимости к взаимозависимости. Действительно, каждый из нас не раз наблюдал, как кошка радостно встречает вечером отсутствовавших хозяев, всячески жемонстрируя, что она соскучилась и не прочь получить изрядный кус вашего внимания. На самом деле личность кошки и ее последующее социальное поведение во многом определяются ее ранним опытом, а также зависит от плотности популяции и количества пищи. <br /></p>',1,0),(2,1,1,'Мероприятие с кастомным типом',2,2,'Мой кастом тип','2012-11-19 10:41:51','2012-11-19 10:00:00','2012-11-19 10:00:00',23,NULL,'','','Lorem <strike>ipsum dolor sit amet, consetetur</strike> sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',2,0),(3,1,1,'Новое мероприятие',1,4,'','2012-11-22 11:41:03','2012-11-22 11:40:56','2012-11-22 11:40:56',43,NULL,'','','<p> sdf sdfsdfsdf<br /></p>',1,0);
 /*!40000 ALTER TABLE `org_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,4 +416,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-21 17:28:45
+-- Dump completed on 2012-11-22 11:47:22

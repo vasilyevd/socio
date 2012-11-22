@@ -137,9 +137,13 @@ class EventController extends Controller
         //     'dataProvider'=>$dataProvider,
         // ));
 
-        $model=Organization::model()->findByPk($org);
-        if($model===null)
-            throw new CHttpException(404,'Не найдено.');
+        $model=new Event('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Event']))
+            $model->attributes=$_GET['Event'];
+
+        // Limit search to only this organization.
+        $model->organization_id = $org;
 
         $this->render('index',array(
             'model'=>$model,
