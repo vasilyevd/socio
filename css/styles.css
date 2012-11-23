@@ -60,7 +60,24 @@ body {
     bottom: 0;
 }
 
-.items .row{
+.items .item-row{
 border-top: 1px solid;
+    margin: 5px 0;
 }
 
+
+/* object page */
+
+.list-view.inline-info .summary {
+    float: left;
+}
+
+.list-view.inline-info .pagination {
+    float: right;
+    margin: 0;
+    height: auto;
+}
+
+.list-view.inline-info .items {
+    clear: both;
+}
