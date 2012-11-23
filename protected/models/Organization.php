@@ -30,6 +30,8 @@
  */
 class Organization extends CActiveRecord
 {
+    public $directionSearch;
+
     const ACTION_AREA_NATION = 1;
     const ACTION_AREA_REGION = 2;
     const ACTION_AREA_DISTRICT = 3;
@@ -97,7 +99,7 @@ class Organization extends CActiveRecord
 
             array('status, verified', 'safe', 'on'=>'editable'),
 
-            array('id, name, type_group, type_id, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
+            array('directionSearch, id, name, type_group, type_id, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
     }
 
@@ -172,10 +174,14 @@ class Organization extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
+
+        // Many to many search. Filters out not linked relations, so don't use
+        // if want to get all elements.
+        if (!empty($this->directionSearch)) {
+            $criteria->with = array('directions' => array('together' => true));
+            $criteria->compare('directions.id',$this->directionSearch);
+        }
 
         $criteria->compare('id',$this->id);
         $criteria->compare('name',$this->name,true);

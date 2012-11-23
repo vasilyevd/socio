@@ -63,6 +63,10 @@ $('input.fast-search').keyup(function(){
     <?php $this->endWidget(); ?>
 </div>
 
+<?php if (!empty($model->directionSearch)): ?>
+    <h1>Поиск по категории <?php echo CHtml::encode(Direction::model()->findByPk($model->directionSearch)->name); ?></h1>
+<?php endif; ?>
+
 <div class="search-form" style="display:none">
     <?php echo CHtml::link('Обычный поиск','#',array('class'=>'search-button')); ?>
     <?php $this->renderPartial('_search',array(

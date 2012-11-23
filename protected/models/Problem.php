@@ -13,9 +13,15 @@
  */
 class Problem extends CActiveRecord
 {
-    const GROUP_SOME = 1;
-    const GROUP_ANOTHER = 2;
-    const GROUP_ONEMORE = 3;
+    const GROUP_LAW = 1;
+    const GROUP_EDUCATION = 2;
+    const GROUP_SOCIAL_PROBLEMS = 3;
+    const GROUP_SOCIETY = 4;
+    const GROUP_HEALTH = 5;
+    const GROUP_CULTURE = 6;
+    const GROUP_GLOBAL_PROBLEMS = 7;
+    const GROUP_DISABILITY = 8;
+    const GROUP_MEDIA = 9;
 
     /**
      * Returns the static model of the specified AR class.
