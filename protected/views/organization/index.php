@@ -63,11 +63,11 @@ $('input.fast-search').keyup(function(){
     <?php $this->endWidget(); ?>
 </div>
 
-<?php if (!empty($model->directionSearch)): ?>
-    <h1>Поиск по категории &laquo;<?php echo CHtml::encode(Direction::model()->findByPk($model->directionSearch)->name); ?>&raquo;</h1>
+<?php if (!empty($model->directions)): ?>
+    <h1>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h1>
 <?php endif; ?>
-<?php if (!empty($model->problemSearch)): ?>
-    <h1>Поиск по проблематику &laquo;<?php echo CHtml::encode(Problem::model()->findByPk($model->problemSearch)->name); ?>&raquo;</h1>
+<?php if (!empty($model->problems)): ?>
+    <h1>Поиск по проблематику &laquo;<?php echo CHtml::encode($model->problems[0]->name); ?>&raquo;</h1>
 <?php endif; ?>
 <?php if (!empty($model->type)): ?>
     <h1>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h1>

@@ -2,7 +2,7 @@
     <div class="span2">
         <?php echo CHtml::link(
             CHtml::encode($data->name),
-            array('search', 'Organization[directionSearch]' => $data->id)
+            array('search', 'Organization[directions][]' => $data->id)
         ); ?>
     </div>
 

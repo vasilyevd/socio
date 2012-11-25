@@ -8,7 +8,7 @@
     <div class="span2">
         <?php echo CHtml::link(
             CHtml::encode($data->name),
-            array('search', 'Organization[problemSearch]' => $data->id)
+            array('search', 'Organization[problems]' => $data->id)
         ); ?>
     </div>
 
