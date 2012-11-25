@@ -70,6 +70,10 @@ class OrganizationController extends Controller
         if(isset($_POST['Organization']))
         {
             $model->attributes=$_POST['Organization'];
+
+            // Relations.
+            $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+
             if($model->save())
                 $this->redirect(array('update','id'=>$model->id));
         }
@@ -86,8 +90,8 @@ class OrganizationController extends Controller
      */
     public function actionUpdate($id)
     {
-	    /** @var $model Organization */
-	    $model=$this->loadModel($id);
+        /** @var $model Organization */
+        $model=$this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
@@ -95,6 +99,12 @@ class OrganizationController extends Controller
         if(isset($_POST['Organization']))
         {
             $model->attributes=$_POST['Organization'];
+
+            // Relations.
+            $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            $model->directions = isset($_POST['Organization']['directions']) ? Direction::model()->findAllByPk($model->directions) : array();
+            $model->problems = isset($_POST['Organization']['problems']) ? Problem::model()->findAllByPk($model->problems) : array();
+
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
@@ -118,42 +128,48 @@ class OrganizationController extends Controller
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
-	/**
-	 * main page of organizations.
-	 */
-	public function actionIndex()
-	{
-		$this->render('main',array(
-	));
+    /**
+     * main page of organizations.
+     */
+    public function actionIndex()
+    {
+        $this->render('main',array(
+    ));
 
-		// $dataProvider=new CActiveDataProvider('Organization');
-		// $this->render('index',array(
-		//     'dataProvider'=>$dataProvider,
-		// ));
-	}
+        // $dataProvider=new CActiveDataProvider('Organization');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+    }
 
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionSearch()
-	{
-		$model=new Organization('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Organization']))
-			$model->attributes=$_GET['Organization'];
+    /**
+     * Lists all models.
+     */
+    public function actionSearch()
+    {
+        $model=new Organization('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Organization'])) {
+            $model->attributes=$_GET['Organization'];
 
-		$this->render('index',array(
-				'model'=>$model,
-			));
+            // Relations.
+            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            $model->directions = isset($_GET['Organization']['directions']) ? Direction::model()->findAllByPk($model->directions) : array();
+            $model->problems = isset($_GET['Organization']['problems']) ? Problem::model()->findAllByPk($model->problems) : array();
+        }
 
-		// $dataProvider=new CActiveDataProvider('Organization');
-		// $this->render('index',array(
-		//     'dataProvider'=>$dataProvider,
-		// ));
-	}
+        $this->render('index',array(
+            'model'=>$model,
+        ));
 
-	/**
+        // $dataProvider=new CActiveDataProvider('Organization');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+    }
+
+    /**
      * Manages all models.
      */
     public function actionAdmin()

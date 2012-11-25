@@ -63,8 +63,8 @@ class Organization extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name, type_id, action_area', 'required'),
-            array('type_id, action_area', 'numerical', 'integerOnly'=>true),
+            array('name, type, action_area', 'required'),
+            array('action_area', 'numerical', 'integerOnly'=>true),
             array('name', 'length', 'min'=>3, 'max'=>128),
             array('action_area', 'in', 'range' => array(
                 self::ACTION_AREA_NATION, self::ACTION_AREA_REGION,
@@ -97,7 +97,7 @@ class Organization extends CActiveRecord
 
             array('status, verified', 'safe', 'on'=>'editable'),
 
-            array('id, name, type_group, type_id, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
+            array('directions, problems, id, name, type_group, type, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
     }
 
@@ -124,10 +124,14 @@ class Organization extends CActiveRecord
     public function behaviors()
     {
         return array(
-            // Many to many handler.
-            'CAdvancedArBehavior' => array(
-                'class' => 'application.components.behaviors.CAdvancedArBehavior',
+            // Advanced relations
+            'EAdvancedArBehavior' => array(
+                'class' => 'application.components.behaviors.EAdvancedArBehavior'
             ),
+            // // Many to many handler.
+            // 'CAdvancedArBehavior' => array(
+            //     'class' => 'application.components.behaviors.CAdvancedArBehavior',
+            // ),
             // Upload handler.
             'UploadBehavior' => array(
                 'class' => 'application.components.behaviors.UploadBehavior',
@@ -145,7 +149,7 @@ class Organization extends CActiveRecord
             'id' => 'ID',
             'name' => 'Название',
             'type_group' => 'Группа Типа',
-            'type_id' => 'Тип',
+            'type' => 'Тип',
             'action_area' => 'Область Действий',
             'city_id' => 'Город',
             'address_id' => 'Адрес',
@@ -172,15 +176,39 @@ class Organization extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
+
+        // Relation MANY_MANY search. Filters out not linked relations, so
+        // don't use if want to get all elements.
+        // if (!empty($this->directions)) {
+        //     $criteria->with = array('directions' => array(
+        //         'together' => true,
+        //         'group' => 'organization_id',
+        //         'having' => 'COUNT(*)=' . count($this->directions),
+        //     ));
+        //     $criteria->addInCondition('directions.id', Chtml::listData($this->directions, 'id', 'id'));
+        // }
+        if (!empty($this->directions)) {
+            $criteria->with = array('directions' => array('together' => true));
+            $criteria->compare('directions.id', $this->directions[0]->id);
+        }
+
+        // Relation MANY_MANY search. Filters out not linked relations, so
+        // don't use if want to get all elements.
+        if (!empty($this->problems)) {
+            $criteria->with = array('problems' => array('together' => true));
+            $criteria->compare('problems.id', $this->problems[0]->id);
+        }
+
+        // Relation BELONGS_TO search.
+        if (!empty($this->type)) {
+            $criteria->with = array('type');
+            $criteria->compare('type.id', $this->type->id);
+        }
 
         $criteria->compare('id',$this->id);
         $criteria->compare('name',$this->name,true);
         $criteria->compare('type_group',$this->type_group);
-        $criteria->compare('type_id',$this->type_id);
         $criteria->compare('action_area',$this->action_area);
         $criteria->compare('city_id',$this->city_id);
         $criteria->compare('address_id',$this->address_id);

@@ -63,6 +63,16 @@ $('input.fast-search').keyup(function(){
     <?php $this->endWidget(); ?>
 </div>
 
+<?php if (!empty($model->directions)): ?>
+    <h1>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h1>
+<?php endif; ?>
+<?php if (!empty($model->problems)): ?>
+    <h1>Поиск по проблематику &laquo;<?php echo CHtml::encode($model->problems[0]->name); ?>&raquo;</h1>
+<?php endif; ?>
+<?php if (!empty($model->type)): ?>
+    <h1>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h1>
+<?php endif; ?>
+
 <div class="search-form" style="display:none">
     <?php echo CHtml::link('Обычный поиск','#',array('class'=>'search-button')); ?>
     <?php $this->renderPartial('_search',array(
