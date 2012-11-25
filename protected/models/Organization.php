@@ -31,6 +31,7 @@
 class Organization extends CActiveRecord
 {
     public $directionSearch;
+    public $problemSearch;
 
     const ACTION_AREA_NATION = 1;
     const ACTION_AREA_REGION = 2;
@@ -99,7 +100,7 @@ class Organization extends CActiveRecord
 
             array('status, verified', 'safe', 'on'=>'editable'),
 
-            array('directionSearch, id, name, type_group, type_id, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
+            array('directionSearch, problemSearch, id, name, type_group, type_id, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
     }
 
@@ -181,6 +182,13 @@ class Organization extends CActiveRecord
         if (!empty($this->directionSearch)) {
             $criteria->with = array('directions' => array('together' => true));
             $criteria->compare('directions.id',$this->directionSearch);
+        }
+
+        // Many to many search. Filters out not linked relations, so don't use
+        // if want to get all elements.
+        if (!empty($this->problemSearch)) {
+            $criteria->with = array('problems' => array('together' => true));
+            $criteria->compare('problems.id',$this->problemSearch);
         }
 
         $criteria->compare('id',$this->id);

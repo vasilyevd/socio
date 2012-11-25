@@ -65,6 +65,12 @@ class Problem extends CActiveRecord
     {
         return array(
             'organizations' => array(self::MANY_MANY, 'Organization', 'org_organization_problem(problem_id, organization_id)'),
+            'organizationsList' => array(
+                self::MANY_MANY,
+                'Organization',
+                'org_organization_problem(problem_id, organization_id)',
+                'limit' => 3,
+            ),
         );
     }
 

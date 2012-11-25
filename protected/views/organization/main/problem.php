@@ -1,8 +1,14 @@
 <div class="row">
     <div class="span2">
+        <?php if ($groupMarker != $data->group): ?>
+            <strong><?php echo Lookup::item('ProblemGroup', $data->group); ?></strong>
+        <?php endif; ?>
+    </div>
+
+    <div class="span2">
         <?php echo CHtml::link(
             CHtml::encode($data->name),
-            array('search', 'Organization[directionSearch]' => $data->id)
+            array('search', 'Organization[problemSearch]' => $data->id)
         ); ?>
     </div>
 
@@ -23,3 +29,5 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+<?php $widget->viewData['groupMarker'] = $data->group; ?>

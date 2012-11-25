@@ -47,7 +47,22 @@ $this->breadcrumbs=array(
         </div>
         <!-- R2.2 -->
         <div class="span2">
-                span2
+                <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
+                    'title' => 'Типы',
+                    'headerIcon' => 'icon-th-list',
+                    //'htmlOptions' => array('class'=>'bootstrap-widget-table')
+                ));?>
+                    <?php $this->widget('bootstrap.widgets.TbListView',array(
+                        'dataProvider' => new CArrayDataProvider(
+                            Orgtype::model()->findAll(),
+                            array('pagination'=>false)
+                        ),
+                        'itemView' => 'main/type',
+                        'template' => '{items}{pager}', // Hide summary header.
+                        // 'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
+                        'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
+                    )); ?>
+                <?php $this->endWidget();?>
         </div>
 
     </div>
@@ -60,7 +75,16 @@ $this->breadcrumbs=array(
         'headerIcon' => 'icon-th-list',
         //'htmlOptions' => array('class'=>'bootstrap-widget-table')
     ));?>
-    Список проблематик организаций
+        <?php $this->widget('bootstrap.widgets.TbListView',array(
+            'dataProvider' => new CArrayDataProvider(
+                Problem::model()->findAll()
+            ),
+            'itemView' => 'main/problem',
+            'viewData' => array('groupMarker' => 0),
+            'template' => '{items}{pager}', // Hide summary header.
+            'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
+            'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
+        )); ?>
     <?php $this->endWidget();?>
     </div>
     </div>
