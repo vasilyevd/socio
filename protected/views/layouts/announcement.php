@@ -12,8 +12,8 @@ $this->menu = array(
     'type' => 'tabs', // '', 'tabs', 'pills' (or 'list')
     // 'stacked' => true, // stacked state for tabs and pills
     'items' => array(
-        array('label' => 'Лента', 'url' => array('organization/feed', 'id' => $this->menu_org->id)),
-        array('label' => 'Новости', 'url' => array('announcement/index', 'org' => $this->menu_org->id)),
+        array('label' => 'Лента', 'url' => array('announcement/index', 'org' => $this->menu_org->id)),
+        array('label' => 'Новости', 'url' => array('announcement/news', 'org' => $this->menu_org->id)),
         array('label' => 'Мероприятия', 'url' => array('event/index', 'org' => $this->menu_org->id)),
     ),
 )); ?>

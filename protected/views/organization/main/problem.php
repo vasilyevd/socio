@@ -1,33 +1,13 @@
-<div class="row">
-    <div class="span2">
-        <?php if ($groupMarker != $data->group): ?>
-            <strong><?php echo Lookup::item('ProblemGroup', $data->group); ?></strong>
-        <?php endif; ?>
+<?php if ($groupMarker != $data->group): ?>
     </div>
+    <strong><?php echo Lookup::item('ProblemGroup', $data->group); ?>:</strong>
+    <div class="org-main-problem-group">
+<?php endif; ?>
 
-    <div class="span2">
-        <?php echo CHtml::link(
-            CHtml::encode($data->name),
-            array('search', 'Organization[problems]' => $data->id)
-        ); ?>
-    </div>
-
-    <?php foreach ($data->organizationsList as $o): ?>
-        <div class="span1">
-            <?php echo CHtml::link(
-                CHtml::image(
-                    $o->getUploadUrl('logo', $o->logo),
-                    'Organization logo'
-                ),
-                array('view', 'id' => $o->id),
-                array(
-                    'class' => 'thumbnail',
-                    'rel' => 'tooltip',
-                    'data-title' => CHtml::encode($o->name),
-                )
-            ); ?>
-        </div>
-    <?php endforeach; ?>
-</div>
+<?php echo CHtml::link(
+    CHtml::encode($data->name),
+    array('search', 'Organization[problems]' => $data->id)
+); ?>
+<br />
 
 <?php $widget->viewData['groupMarker'] = $data->group; ?>

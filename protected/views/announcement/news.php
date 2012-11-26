@@ -3,7 +3,7 @@ $this->menu_org = Organization::model()->findByPk($_GET['org']);
 $this->layout = '//layouts/announcement';
 
 $this->breadcrumbs=array(
-    'Мероприятия',
+    'Новости',
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -30,7 +30,7 @@ $('input.calendar-search').change(function(){
 <div class="input-append">
     <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
         'model' => $model,
-        'attribute' => 'start_time',
+        'attribute' => 'publication_time',
         'language' => 'ru',
         'options' => array(
             'dateFormat' => 'yy-mm-dd',
@@ -45,14 +45,13 @@ $('input.calendar-search').change(function(){
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     'id' => 'events-listview',
     'dataProvider' => $model->search(),
-    'itemView' => '_view',
+    'itemView' => '_news',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
     // 'itemsCssClass' => 'row', // Change items container class. Default: items.
     'sortableAttributes' => array(
-        'name',
-        'start_time',
-        'end_time',
+        'title',
+        'publication_time',
         'category',
     ),
 )); ?>

@@ -64,13 +64,13 @@ $('input.fast-search').keyup(function(){
 </div>
 
 <?php if (!empty($model->directions)): ?>
-    <h1>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h1>
+    <h3>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h3>
 <?php endif; ?>
 <?php if (!empty($model->problems)): ?>
-    <h1>Поиск по проблематику &laquo;<?php echo CHtml::encode($model->problems[0]->name); ?>&raquo;</h1>
+    <h3>Поиск по проблематику &laquo;<?php echo CHtml::encode($model->problems[0]->name); ?>&raquo;</h3>
 <?php endif; ?>
 <?php if (!empty($model->type)): ?>
-    <h1>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h1>
+    <h3>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h3>
 <?php endif; ?>
 
 <div class="search-form" style="display:none">
