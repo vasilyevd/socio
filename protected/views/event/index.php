@@ -1,6 +1,6 @@
 <?php
 $this->menu_org = Organization::model()->findByPk($_GET['org']);
-$this->layout = '//layouts/feed';
+$this->layout = '//layouts/announcement';
 
 $this->breadcrumbs=array(
     'Мероприятия',

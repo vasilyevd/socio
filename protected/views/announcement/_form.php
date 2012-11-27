@@ -24,7 +24,10 @@
             // Add image upload.
             // 'imageUpload' => null,
             // Add image gallery.
-            'imageGetJson' => Yii::app()->createAbsoluteUrl('site/dynamicImageGetJson', array('org' => $model->organization_id)),
+            'imageGetJson' => Yii::app()->createAbsoluteUrl(
+                'site/dynamicImageGetJson',
+                array('org' => $model->isNewRecord ? $_GET['org'] : $model->organization_id)
+            ),
             // Add file upload.
             // 'fileUpload' => null,
         ),

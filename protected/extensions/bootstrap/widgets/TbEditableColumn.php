@@ -112,6 +112,7 @@ class TbEditableColumn extends CDataColumn
     */
     protected function isEditable($model)
     {
+         //TODO: ALERT! IFS ZEPHYR CRITICAL FIX!
          // return $model->isAttributeSafe($this->name) && (!array_key_exists('enabled', $this->editable) || $this->editable['enabled'] === true);
          return true;
     }

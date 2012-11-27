@@ -115,6 +115,7 @@ class Organization extends CActiveRecord
             'events' => array(self::HAS_MANY, 'Event', 'organization_id'),
             'albums' => array(self::HAS_MANY, 'Album', 'organization_id'),
             'images' => array(self::HAS_MANY, 'Image', 'organization_id'),
+            'achievements' => array(self::HAS_MANY, 'Achievement', 'organization_id'),
         );
     }
 
@@ -206,24 +207,25 @@ class Organization extends CActiveRecord
             $criteria->compare('type.id', $this->type->id);
         }
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('type_group',$this->type_group);
-        $criteria->compare('action_area',$this->action_area);
-        $criteria->compare('city_id',$this->city_id);
-        $criteria->compare('address_id',$this->address_id);
-        $criteria->compare('foundation_year',$this->foundation_year);
-        $criteria->compare('staff_size',$this->staff_size);
+        $criteria->compare('t.name',$this->name,true);
+        $criteria->compare('t.action_area',$this->action_area);
+        $criteria->compare('t.city_id',$this->city_id);
+        $criteria->compare('t.address_id',$this->address_id);
+        $criteria->compare('t.foundation_year',$this->foundation_year);
+
+        // $criteria->compare('id',$this->id);
+        // $criteria->compare('type_group',$this->type_group);
+        // $criteria->compare('staff_size',$this->staff_size);
         // $criteria->compare('description',$this->description,true);
         // $criteria->compare('goal',$this->goal,true);
-        $criteria->compare('website',$this->website,true);
+        // $criteria->compare('website',$this->website,true);
         // $criteria->compare('phone_num',$this->phone_num,true);
-        $criteria->compare('email',$this->email,true);
+        // $criteria->compare('email',$this->email,true);
         // $criteria->compare('logo',$this->logo,true);
-        $criteria->compare('author_id',$this->author_id);
-        $criteria->compare('create_time',$this->create_time);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('verified',$this->verified);
+        // $criteria->compare('author_id',$this->author_id);
+        // $criteria->compare('create_time',$this->create_time);
+        // $criteria->compare('status',$this->status);
+        // $criteria->compare('verified',$this->verified);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
