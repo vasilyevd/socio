@@ -28,7 +28,7 @@ class AnnouncementController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view'),
+                'actions'=>array('index', 'news', 'view'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -148,6 +148,25 @@ class AnnouncementController extends Controller
         $model->organization_id = $org;
 
         $this->render('index',array(
+            'model'=>$model,
+        ));
+    }
+
+    /**
+     * Lists only big announcements (news) models.
+     * @param integer $org the ID of the organization model.
+     */
+    public function actionNews($org)
+    {
+        $model=new Announcement('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Announcement']))
+            $model->attributes=$_GET['Announcement'];
+
+        // Limit search to only this organization.
+        $model->organization_id = $org;
+
+        $this->render('news',array(
             'model'=>$model,
         ));
     }

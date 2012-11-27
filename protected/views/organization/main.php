@@ -27,11 +27,11 @@ $this->breadcrumbs=array(
     <!-- C1 R2 -->
     <div class="row">
         <!-- R2.1 -->
-        <div class="span6">
+        <div class="span5">
                 <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'title' => 'Категории',
                     'headerIcon' => 'icon-th-list',
-                    //'htmlOptions' => array('class'=>'bootstrap-widget-table')
+                    // 'htmlOptions' => array('class'=>'bootstrap-widget-table') // Remove padding.
                 ));?>
                     <?php $this->widget('bootstrap.widgets.TbListView',array(
                         'dataProvider' => new CArrayDataProvider(
@@ -46,7 +46,7 @@ $this->breadcrumbs=array(
                 <?php $this->endWidget();?>
         </div>
         <!-- R2.2 -->
-        <div class="span2">
+        <div class="span3">
                 <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                     'title' => 'Типы',
                     'headerIcon' => 'icon-th-list',
@@ -58,8 +58,9 @@ $this->breadcrumbs=array(
                             array('pagination'=>false)
                         ),
                         'itemView' => 'main/type',
+                        'viewData' => array('groupMarker' => 0),
                         'template' => '{items}{pager}', // Hide summary header.
-                        // 'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
+                        'itemsCssClass' => 'org-main-type-items', // Items container class. Default: items.
                         'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
                     )); ?>
                 <?php $this->endWidget();?>
@@ -77,12 +78,13 @@ $this->breadcrumbs=array(
     ));?>
         <?php $this->widget('bootstrap.widgets.TbListView',array(
             'dataProvider' => new CArrayDataProvider(
-                Problem::model()->findAll()
+                Problem::model()->findAll(),
+                array('pagination'=>false)
             ),
             'itemView' => 'main/problem',
             'viewData' => array('groupMarker' => 0),
             'template' => '{items}{pager}', // Hide summary header.
-            'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
+            'itemsCssClass' => 'org-main-problem-items', // Items container class. Default: items.
             'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
         )); ?>
     <?php $this->endWidget();?>

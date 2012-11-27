@@ -28,7 +28,7 @@ class OrganizationController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','feed', 'search'),
+                'actions'=>array('index','view','search'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -181,17 +181,6 @@ class OrganizationController extends Controller
 
         $this->render('admin',array(
             'model'=>$model,
-        ));
-    }
-
-    /**
-     * Displays news feed for this organization.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionFeed($id)
-    {
-        $this->render('feed',array(
-            'model'=>$this->loadModel($id),
         ));
     }
 
