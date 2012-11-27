@@ -63,6 +63,13 @@ $('input.fast-search').keyup(function(){
     <?php $this->endWidget(); ?>
 </div>
 
+<div class="search-form" style="display:none">
+    <?php echo CHtml::link('Обычный поиск','#',array('class'=>'search-button')); ?>
+    <?php $this->renderPartial('_search',array(
+        'model'=>$model,
+    )); ?>
+</div>
+
 <?php if (!empty($model->directions)): ?>
     <h3>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h3>
 <?php endif; ?>
@@ -73,23 +80,15 @@ $('input.fast-search').keyup(function(){
     <h3>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h3>
 <?php endif; ?>
 
-<div class="search-form" style="display:none">
-    <?php echo CHtml::link('Обычный поиск','#',array('class'=>'search-button')); ?>
-    <?php $this->renderPartial('_search',array(
-        'model'=>$model,
-    )); ?>
-</div>
-
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     'id' => 'organization-listview',
     'dataProvider' => $model->search(),
     'itemView' => '_view',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
-    // 'itemsCssClass' => 'row', // Items container class. Default: items.
+    'itemsCssClass' => 'org-search-list', // Items container class. Default: items.
     'sortableAttributes' => array(
         'name',
-        'type_id',
         'action_area',
         'foundation_year',
     ),

@@ -46,12 +46,15 @@ body {
     height: 130px;
 }
 /* organization/index */
-.org-listitem img {
+.org-search-list img {
     height: 50px;
+}
+.org-search-list .span5 {
+    line-height: 60px;
 }
 /* organization/main */
 .org-main-direction-items .row {
-    line-height: 50px;
+    line-height: 60px;
     margin-bottom: 5px;
 }
 .org-main-direction-items .span1 {
@@ -61,7 +64,7 @@ body {
     height: 50px;
 }
 .org-main-type-items {
-    line-height: 50px;
+    line-height: 60px;
 }
 .org-main-problem-group {
     -moz-column-count: 3;

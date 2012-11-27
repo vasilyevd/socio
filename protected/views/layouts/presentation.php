@@ -1,7 +1,7 @@
 <?php
 $this->menu=array(
     array('label' => 'Управление Организацией'),
-    array('label' => 'Изменить Организацию', 'icon' => 'cog', 'url' => array('announcement/update', 'id' => $this->menu_org->id)),
+    array('label' => 'Изменить Организацию', 'icon' => 'cog', 'url' => array('organization/update', 'id' => $this->menu_org->id)),
     array('label' => 'Добавить Достижение', 'icon' => 'cog', 'url' => array('achievement/create', 'org' => $this->menu_org->id)),
 );
 ?>
