@@ -21,8 +21,7 @@ class Announcement extends CActiveRecord
     const STATUS_INACTIVE = 2;
 
     const CATEGORY_GENERAL = 1;
-    const CATEGORY_GRANT = 2;
-    const CATEGORY_ANOTHER = 3;
+    const CATEGORY_NEWS = 2;
 
     /**
      * Returns the static model of the specified AR class.
@@ -64,8 +63,7 @@ class Announcement extends CActiveRecord
             ),
             array('publication_time', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
             array('category', 'in', 'range' => array(
-                self::CATEGORY_GENERAL, self::CATEGORY_GRANT,
-                self::CATEGORY_ANOTHER,
+                self::CATEGORY_GENERAL, self::CATEGORY_NEWS,
             )),
             array('status', 'in', 'range' => array(
                 self::STATUS_ACTIVE, self::STATUS_INACTIVE,
@@ -129,19 +127,49 @@ class Announcement extends CActiveRecord
     {
         $criteria=new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('title',$this->title,true);
-        $criteria->compare('content',$this->content,true);
-        $criteria->compare('create_time',$this->create_time);
+        // Check for whole day.
+        $criteria->compare('date(publication_time)',$this->publication_time);
+
+        // $criteria->compare('id',$this->id);
+        // $criteria->compare('title',$this->title,true);
+        // $criteria->compare('content',$this->content,true);
+        // $criteria->compare('create_time',$this->create_time);
+        // $criteria->compare('status',$this->status);
+        // $criteria->compare('organization_id',$this->organization_id);
+        // $criteria->compare('author_id',$this->author_id);
+        // $criteria->compare('files',$this->files,true);
+        // $criteria->compare('category',$this->category);
+
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'pagination' => array(
+                'pageSize' => 9,
+            ),
+        ));
+    }
+
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function searchNews()
+    {
+        $criteria=new CDbCriteria;
 
         // Check for whole day.
         $criteria->compare('date(publication_time)',$this->publication_time);
 
-        $criteria->compare('status',$this->status);
-        $criteria->compare('organization_id',$this->organization_id);
-        $criteria->compare('author_id',$this->author_id);
-        $criteria->compare('files',$this->files,true);
-        $criteria->compare('category',$this->category);
+        // Only find news.
+        $criteria->compare('category',self::CATEGORY_NEWS);
+
+        // $criteria->compare('id',$this->id);
+        // $criteria->compare('title',$this->title,true);
+        // $criteria->compare('content',$this->content,true);
+        // $criteria->compare('create_time',$this->create_time);
+        // $criteria->compare('status',$this->status);
+        // $criteria->compare('organization_id',$this->organization_id);
+        // $criteria->compare('author_id',$this->author_id);
+        // $criteria->compare('files',$this->files,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

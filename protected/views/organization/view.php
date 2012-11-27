@@ -1,14 +1,9 @@
 <?php
 $this->menu_org = $model;
+$this->layout = '//layouts/presentation';
 
-// $this->breadcrumbs=array(
-//     'Организации'=>array('index'),
-//     CHtml::encode($model->name),
-// );
-
-$this->menu=array(
-    array('label' => 'Управление Организацией'),
-    array('label' => 'Изменить Организацию', 'icon' => 'cog', 'url' => array('update', 'id' => $model->id)),
+$this->breadcrumbs=array(
+    'О Нас',
 );
 ?>
 

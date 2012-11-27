@@ -115,6 +115,7 @@ class Organization extends CActiveRecord
             'events' => array(self::HAS_MANY, 'Event', 'organization_id'),
             'albums' => array(self::HAS_MANY, 'Album', 'organization_id'),
             'images' => array(self::HAS_MANY, 'Image', 'organization_id'),
+            'achievements' => array(self::HAS_MANY, 'Achievement', 'organization_id'),
         );
     }
 

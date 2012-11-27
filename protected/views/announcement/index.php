@@ -48,7 +48,7 @@ $('input.calendar-search').change(function(){
     'itemView' => '_view',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
-    'itemsCssClass' => 'row', // Change items container class. Default: items.
+    // 'itemsCssClass' => 'row', // Change items container class. Default: items.
     'sortableAttributes' => array(
         'title',
         'publication_time',

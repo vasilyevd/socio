@@ -1,11 +1,6 @@
 <div class="row feed-list">
     <div class="span7">
         <strong><?php echo CHtml::link(CHtml::encode($data->title),array('view','id'=>$data->id)); ?></strong>
-        (<?php echo CHtml::encode(Lookup::item('AnnouncementCategory', $data->category)); ?>)
-    </div>
-
-    <div class="pull-right">
-        <?php echo CHtml::encode($data->publication_time); ?>
     </div>
 
     <div class="span9">

@@ -44,7 +44,7 @@ $('input.calendar-search').change(function(){
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     'id' => 'events-listview',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model->searchNews(),
     'itemView' => '_news',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
