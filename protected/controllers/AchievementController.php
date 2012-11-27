@@ -132,7 +132,17 @@ class AchievementController extends Controller
      */
     public function actionIndex($org)
     {
-        $dataProvider=new CActiveDataProvider('Achievement');
+        // $dataProvider=new CActiveDataProvider('Achievement');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+
+        $criteria=new CDbCriteria;
+        $criteria->compare('organization_id',$org);
+        $dataProvider=new CActiveDataProvider('Achievement', array(
+            'criteria'=>$criteria,
+        ));
+
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));

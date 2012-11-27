@@ -49,7 +49,7 @@ body {
 .org-search-list img {
     height: 50px;
 }
-.org-search-list .span5 {
+.org-search-list .item-header {
     line-height: 60px;
 }
 /* organization/main */

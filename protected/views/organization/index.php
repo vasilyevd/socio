@@ -64,8 +64,7 @@ $('input.fast-search').keyup(function(){
 </div>
 
 <div class="search-form" style="display:none">
-    <?php echo CHtml::link('Обычный поиск','#',array('class'=>'search-button')); ?>
-    <?php $this->renderPartial('_search',array(
+    <?php $this->renderPartial('_searchUserFilter',array(
         'model'=>$model,
     )); ?>
 </div>
@@ -89,7 +88,7 @@ $('input.fast-search').keyup(function(){
     'itemsCssClass' => 'org-search-list', // Items container class. Default: items.
     'sortableAttributes' => array(
         'name',
+        'type',
         'action_area',
-        'foundation_year',
     ),
 )); ?>

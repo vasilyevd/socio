@@ -127,6 +127,7 @@ class Announcement extends CActiveRecord
     {
         $criteria=new CDbCriteria;
 
+        $criteria->compare('organization_id',$this->organization_id);
         // Check for whole day.
         $criteria->compare('date(publication_time)',$this->publication_time);
 
@@ -135,7 +136,6 @@ class Announcement extends CActiveRecord
         // $criteria->compare('content',$this->content,true);
         // $criteria->compare('create_time',$this->create_time);
         // $criteria->compare('status',$this->status);
-        // $criteria->compare('organization_id',$this->organization_id);
         // $criteria->compare('author_id',$this->author_id);
         // $criteria->compare('files',$this->files,true);
         // $criteria->compare('category',$this->category);
@@ -156,9 +156,9 @@ class Announcement extends CActiveRecord
     {
         $criteria=new CDbCriteria;
 
+        $criteria->compare('organization_id',$this->organization_id);
         // Check for whole day.
         $criteria->compare('date(publication_time)',$this->publication_time);
-
         // Only find news.
         $criteria->compare('category',self::CATEGORY_NEWS);
 
@@ -167,7 +167,6 @@ class Announcement extends CActiveRecord
         // $criteria->compare('content',$this->content,true);
         // $criteria->compare('create_time',$this->create_time);
         // $criteria->compare('status',$this->status);
-        // $criteria->compare('organization_id',$this->organization_id);
         // $criteria->compare('author_id',$this->author_id);
         // $criteria->compare('files',$this->files,true);
 
