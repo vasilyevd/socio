@@ -79,7 +79,12 @@ class Organization extends CActiveRecord
                 'website, email',
                 'length', 'min'=>3, 'max'=>128, 'on'=>'update',
             ),
-            array('description, goal, phone_num, directions, problems', 'safe', 'on'=>'update'),
+            array(
+                'description, goal',
+                'filter',
+                'filter' => array($obj = new CHtmlPurifier(), 'purify')
+            ),
+            array('phone_num, directions, problems', 'safe', 'on'=>'update'),
             // Upload handler.
             array(
                 'logo',
