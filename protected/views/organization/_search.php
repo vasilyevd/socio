@@ -7,7 +7,7 @@
 
     <?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
 
-    <?php echo $form->textFieldRow($model,'type',array('class'=>'span5')); ?>
+    <?php echo $form->textFieldRow($model,'type_id',array('class'=>'span5')); ?>
 
     <?php echo $form->textFieldRow($model,'action_area',array('class'=>'span5')); ?>
 

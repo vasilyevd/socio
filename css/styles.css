@@ -41,10 +41,22 @@ body {
 }
 
 /* Organization */
+/* layouts/organization */
 .org-header img {
     height: 130px;
 }
+/* organization/index */
 .org-listitem img {
+    height: 50px;
+}
+/* organization/main */
+.org-main-direction-items {
+    line-height: 50px;
+}
+.org-main-direction-items .row {
+    margin-bottom: 5px;
+}
+.org-main-direction-items img {
     height: 50px;
 }
 

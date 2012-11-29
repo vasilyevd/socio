@@ -49,7 +49,17 @@ class Direction extends CActiveRecord
     public function relations()
     {
         return array(
-            'organizations' => array(self::MANY_MANY, 'Organization', 'org_organization_direction(direction_id, organization_id)'),
+            'organizations' => array(
+                self::MANY_MANY,
+                'Organization',
+                'org_organization_direction(direction_id, organization_id)',
+            ),
+            'organizationsList' => array(
+                self::MANY_MANY,
+                'Organization',
+                'org_organization_direction(direction_id, organization_id)',
+                'limit' => 3,
+            ),
         );
     }
 

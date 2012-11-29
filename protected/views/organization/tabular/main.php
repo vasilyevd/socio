@@ -1,6 +1,6 @@
 <?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
 
-<?php echo $form->dropDownListRow($model,'type_id',CHtml::listData(Orgtype::model()->findAll(), 'id', 'name'),array('prompt'=>'')); ?>
+<?php echo $form->dropDownListRow($model,'type',CHtml::listData(Orgtype::model()->findAll(), 'id', 'name'),array('prompt'=>'')); ?>
 
 <?php echo $form->dropDownListRow($model,'action_area',Lookup::items('OrganizationActionArea'),array('prompt'=>'')); ?>
 

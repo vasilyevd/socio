@@ -21,7 +21,7 @@ $this->menu=array(
         <?php echo CHtml::encode(Lookup::item('OrgtypeGroup', $model->type_group)); ?>
     </div>
     <div class="span4">
-        <b><?php echo CHtml::encode($model->getAttributeLabel('type_id')); ?>:</b>
+        <b><?php echo CHtml::encode($model->getAttributeLabel('type')); ?>:</b>
         <?php echo CHtml::encode($model->type->name); ?>
     </div>
     <div class="span4">
