@@ -184,32 +184,31 @@ class Organization extends CActiveRecord
     {
         $criteria=new CDbCriteria;
 
-        // Relation MANY_MANY search. Filters out not linked relations, so
-        // don't use if want to get all elements.
-        // if (!empty($this->directions)) {
-        //     $criteria->with = array('directions' => array(
-        //         'together' => true,
-        //         'group' => 'organization_id',
-        //         'having' => 'COUNT(*)=' . count($this->directions),
-        //     ));
-        //     $criteria->addInCondition('directions.id', Chtml::listData($this->directions, 'id', 'id'));
-        // }
-        if (!empty($this->directions)) {
-            $criteria->with = array('directions' => array('together' => true));
-            $criteria->compare('directions.id', $this->directions[0]->id);
-        }
-
-        // Relation MANY_MANY search. Filters out not linked relations, so
-        // don't use if want to get all elements.
-        if (!empty($this->problems)) {
-            $criteria->with = array('problems' => array('together' => true));
-            $criteria->compare('problems.id', $this->problems[0]->id);
-        }
+        // Relation.
+        $criteria->with = array();
 
         // Relation BELONGS_TO search.
         if (!empty($this->type)) {
-            $criteria->with = array('type');
+            $criteria->with = array_merge($criteria->with, array(
+                'type',
+            ));
             $criteria->compare('type.id', $this->type->id);
+        }
+
+        // Relation MANY_MANY search.
+        if (!empty($this->directions)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'directions' => array('together' => true),
+            ));
+            $criteria->addInCondition('directions.id', Chtml::listData($this->directions, 'id', 'id'));
+        }
+
+        // Relation MANY_MANY search.
+        if (!empty($this->problems)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'problems' => array('together' => true),
+            ));
+            $criteria->addInCondition('problems.id', Chtml::listData($this->problems, 'id', 'id'));
         }
 
         $criteria->compare('t.name',$this->name,true);
@@ -234,6 +233,16 @@ class Organization extends CActiveRecord
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'sort' => array(
+                'attributes' => array(
+                    'type' => array(
+                        'asc' => 'type.id',
+                        'desc' => 'type.id DESC',
+                    ),
+                    'name',
+                    'action_area',
+                ),
+            ),
         ));
     }
 
