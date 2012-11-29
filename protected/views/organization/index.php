@@ -63,22 +63,21 @@ $('input.fast-search').keyup(function(){
     <?php $this->endWidget(); ?>
 </div>
 
-<?php if (!empty($model->directions)): ?>
-    <h1>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h1>
-<?php endif; ?>
-<?php if (!empty($model->problems)): ?>
-    <h1>Поиск по проблематику &laquo;<?php echo CHtml::encode($model->problems[0]->name); ?>&raquo;</h1>
-<?php endif; ?>
-<?php if (!empty($model->type)): ?>
-    <h1>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h1>
-<?php endif; ?>
-
 <div class="search-form" style="display:none">
-    <?php echo CHtml::link('Обычный поиск','#',array('class'=>'search-button')); ?>
-    <?php $this->renderPartial('_search',array(
+    <?php $this->renderPartial('_searchUserFilter',array(
         'model'=>$model,
     )); ?>
 </div>
+
+<?php if (!empty($model->directions)): ?>
+    <h3>Поиск по категории &laquo;<?php echo CHtml::encode($model->directions[0]->name); ?>&raquo;</h3>
+<?php endif; ?>
+<?php if (!empty($model->problems)): ?>
+    <h3>Поиск по проблематику &laquo;<?php echo CHtml::encode($model->problems[0]->name); ?>&raquo;</h3>
+<?php endif; ?>
+<?php if (!empty($model->type)): ?>
+    <h3>Поиск по типу &laquo;<?php echo CHtml::encode($model->type->name); ?>&raquo;</h3>
+<?php endif; ?>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     'id' => 'organization-listview',
@@ -86,11 +85,10 @@ $('input.fast-search').keyup(function(){
     'itemView' => '_view',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
-    // 'itemsCssClass' => 'row', // Items container class. Default: items.
+    'itemsCssClass' => 'org-search-list', // Items container class. Default: items.
     'sortableAttributes' => array(
         'name',
-        'type_id',
+        'type',
         'action_area',
-        'foundation_year',
     ),
 )); ?>

@@ -42,7 +42,7 @@ $this->breadcrumbs = array_merge(array(
             'htmlOptions' => array('class' => 'well'), // bg for list
             'items' => array_merge(array(
                 array('label' => 'Организация'),
-                array('label' => 'События', 'icon' => 'book', 'url' => array('organization/feed', 'id' => $this->menu_org->id)),
+                array('label' => 'События', 'icon' => 'book', 'url' => array('announcement/index', 'org' => $this->menu_org->id)),
                 array('label' => 'Пресса', 'icon' => 'wrench', 'url' => array('organization/index')),
                 '---',
                 array('label' => 'Презентация', 'icon' => 'list', 'url' => array('organization/view', 'id' => $this->menu_org->id)),

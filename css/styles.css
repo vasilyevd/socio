@@ -46,18 +46,43 @@ body {
     height: 130px;
 }
 /* organization/index */
-.org-listitem img {
+.org-search-list img {
     height: 50px;
 }
-/* organization/main */
-.org-main-direction-items {
-    line-height: 50px;
+.org-search-list .item-header {
+    line-height: 60px;
 }
+/* organization/main */
 .org-main-direction-items .row {
+    line-height: 60px;
     margin-bottom: 5px;
+}
+.org-main-direction-items .span1 {
+    margin-left: 15px;
 }
 .org-main-direction-items img {
     height: 50px;
+}
+.org-main-type-items {
+    line-height: 60px;
+}
+.org-main-problem-group {
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+/* Announcements, feed, events */
+.feed-list .btn {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.5s,opacity 0.5s linear;
+}
+.feed-list:hover .btn {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
 }
 
 /* socio */
