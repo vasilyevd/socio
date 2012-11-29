@@ -284,6 +284,87 @@ INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'Or
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_massmedia`
+--
+
+DROP TABLE IF EXISTS `org_massmedia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_massmedia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `create_time` datetime NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  KEY `organization_id_2` (`organization_id`),
+  CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_massmedia`
+--
+
+LOCK TABLES `org_massmedia` WRITE;
+/*!40000 ALTER TABLE `org_massmedia` DISABLE KEYS */;
+INSERT INTO `org_massmedia` VALUES (1,'cat,moo,dog,hungry','sdfs dfsdfs dfsdfsdfsdf','2012-11-29 16:18:32',1);
+/*!40000 ALTER TABLE `org_massmedia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_massmedia_mmtag`
+--
+
+DROP TABLE IF EXISTS `org_massmedia_mmtag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_massmedia_mmtag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `massmedia_id` int(11) NOT NULL,
+  `mmtag_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`massmedia_id`),
+  KEY `image_id` (`mmtag_id`),
+  CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_massmedia_mmtag`
+--
+
+LOCK TABLES `org_massmedia_mmtag` WRITE;
+/*!40000 ALTER TABLE `org_massmedia_mmtag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_massmedia_mmtag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_mmtag`
+--
+
+DROP TABLE IF EXISTS `org_mmtag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_mmtag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_mmtag`
+--
+
+LOCK TABLES `org_mmtag` WRITE;
+/*!40000 ALTER TABLE `org_mmtag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_mmtag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_organization`
 --
 
@@ -473,4 +554,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-29 13:53:25
+-- Dump completed on 2012-11-29 17:52:51

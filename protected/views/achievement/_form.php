@@ -1,6 +1,6 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'achievement-form',
-    'enableAjaxValidation'=>false,
+    'enableAjaxValidation'=>true,
 )); ?>
 
     <p class="help-block">Поля с <span class="required">*</span> обязательны.</p>
