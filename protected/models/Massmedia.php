@@ -40,7 +40,7 @@ class Massmedia extends CActiveRecord
     public function rules()
     {
         return array(
-            array('title, content', 'required'),
+            array('title, content, tags', 'required'),
             array('title', 'length', 'max'=>128),
 
             // array('id, title, content, create_time, organization_id', 'safe', 'on'=>'search'),
@@ -82,7 +82,7 @@ class Massmedia extends CActiveRecord
             'content' => 'Содержимое',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
-            'tags' => 'Таги',
+            'tags' => 'Теги',
         );
     }
 
@@ -123,47 +123,53 @@ class Massmedia extends CActiveRecord
     }
 
     /**
-     * Handle tags.
-     * Implode tags relation array to plain string.
-     * @param array $tags the list of tag models.
-     * @return string tag string, tags separated by ','.
-     */
-    public static function tagsToString($tags)
+    * Implode relation array to plain string.
+    * @param array $relation the list of relation models.
+    * @param string $attribute name of relation attribute.
+    * @param string $glue the combine string.
+    * @return string relation string, elements separated by $glue.
+    */
+    public static function relationToString($relation, $attribute, $glue)
     {
-        if (empty($tags)) {
+        if (empty($relation)) {
             return '';
+        } elseif (is_string($relation)) {
+            return $relation;
         } else {
-            return implode(',', CHtml::listData($tags, 'name', 'name'));
+            return implode($glue, CHtml::listData($relation, 'id', $attribute));
         }
     }
 
     /**
-     * Handle tags.
-     * Create and save all tags for this model from string.
-     * @param string $tagsString the tag string, tags separated by ','.
-     * @return array list of tag models.
-     */
-    public static function stringToTags($tagsString)
+    * Create and save all relations for this model from string.
+    * @param string $relationString the relation string, separated by $glue.
+    * @param string $modelName the name of relation model.
+    * @param string $attribute name of relation attribute.
+    * @param string $glue the combine string.
+    * @return array list of relation models.
+    */
+    public static function stringToRelation($relationString, $modelName, $attribute, $glue)
     {
-        if (empty($tagsString)) {
-            return array();
-        } else {
-            $tagsArray = explode(',', $tagsString);
+        $relationArray = array();
 
-            // Create new tag models if don't exists.
-            foreach ($tagsArray as $t) {
-                $tag = Mmtag::model()->find(
-                    'name=:name',
-                    array(':name' => $t)
+        if (!empty($relationString)) {
+            $relationNames = explode(',', $relationString);
+
+            // Create new models if don't exists.
+            foreach ($relationNames as $n) {
+                $relation = $modelName::model()->find(
+                    $attribute . '=:attribute',
+                    array(':attribute' => $n)
                 );
-                if ($tag === null) {
-                    $tag = new Mmtag;
-                    $tag->name = $t;
-                    $tag->save();
+                if ($relation === null) {
+                    $relation = new $modelName;
+                    $relation->$attribute = $n;
+                    $relation->save();
                 }
+                $relationArray[] = $relation;
             }
-
-            return Mmtag::model()->findAllByPk($tagsArray);
         }
+
+        return $relationArray;
     }
 }

@@ -11,7 +11,7 @@
         'asDropDownList' => false, // Tag mode.
         'prompt' => '', // Blank for all drop.
         'options' => array(
-            'tags' => array('cat', 'mouse', 'dog'), // Tag mode.
+            'tags' => array_values(CHtml::listData(Mmtag::model()->findAll(), 'id', 'name')), // Tag mode.
             'tokenSeparators' => array(',', ' '), // Tag mode.
             'placeholder' => 'Выбрать...', // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
