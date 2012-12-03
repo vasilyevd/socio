@@ -72,30 +72,17 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            $model->organization_id = $org;
-
-            if($model->save()) {
-                // Handle links.
-                // $model->links = Massmedia::stringToRelation($model->links, 'Mmlink', 'name', "\n");
-                // Handle tags.
-                $model->tags = Massmedia::stringToRelation($model->tags, 'Mmtag', 'name', ',');
-                $model->save();
-                // Handle links.
-                // $model->linksSetType();
-
-                // $model->setRealation('links', array(1, 2, 3));
-                // $model->saveRelation('links');
-
-                // $model->setRealation('tags', Massmedia::stringToRelation($))
-
-                $this->redirect(array('view','id'=>$model->id));
+            $model->organization = $org;
+            // Handle create new models.
+            if ($model->validate()) {
+                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
             }
+
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Handle links.
-        // $model->links = Massmedia::relationToString($model->links, 'name', "\n");
-        // Handle tags.
-        $model->tags = Massmedia::relationToString($model->tags, 'name', ',');
+        $model->tagsToString();
 
         $this->render('create',array(
             'model'=>$model,
@@ -117,17 +104,17 @@ class MassmediaController extends Controller
         if(isset($_POST['Massmedia']))
         {
             $model->attributes=$_POST['Massmedia'];
-            if($model->save()) {
-                // // Handle tags.
-                // $model->tags = Massmedia::stringToRelation($model->tags, 'Mmtag', 'name', ',');
-                // $model->save();
 
-                $this->redirect(array('view','id'=>$model->id));
+            // Handle create new models.
+            if ($model->validate()) {
+                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
             }
+
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Handle tags.
-        $model->tags = Massmedia::relationToString($model->tags, 'name', ',');
+        $model->tagsToString();
 
         $this->render('update',array(
             'model'=>$model,

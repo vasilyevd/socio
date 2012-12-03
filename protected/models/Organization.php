@@ -131,8 +131,8 @@ class Organization extends CActiveRecord
     {
         return array(
             // Advanced relations
-            'EAdvancedArBehavior' => array(
-                'class' => 'application.components.behaviors.EAdvancedArBehavior'
+            'EActiveRecordRelationBehavior' => array(
+                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
             // // Many to many handler.
             // 'CAdvancedArBehavior' => array(

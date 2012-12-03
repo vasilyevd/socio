@@ -42,6 +42,7 @@ class Massmedia extends CActiveRecord
         return array(
             array('title, content, tags', 'required'),
             array('title', 'length', 'max'=>128),
+            array('content','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 
             // array('id, title, content, create_time, organization_id', 'safe', 'on'=>'search'),
         );
@@ -65,8 +66,8 @@ class Massmedia extends CActiveRecord
     {
         return array(
             // Advanced relations
-            'EAdvancedArBehavior' => array(
-                'class' => 'application.components.behaviors.EAdvancedArBehavior'
+            'EActiveRecordRelationBehavior' => array(
+                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
         );
     }
@@ -123,32 +124,24 @@ class Massmedia extends CActiveRecord
     }
 
     /**
-    * Implode relation array to plain string.
-    * @param array $relation the list of relation models.
-    * @param string $attribute name of relation attribute.
-    * @param string $glue the combine string.
-    * @return string relation string, elements separated by $glue.
+    * Implodes relation array to plain string.
     */
-    public static function relationToString($relation, $attribute, $glue)
+    public function tagsToString()
     {
-        if (empty($relation)) {
-            return '';
-        } elseif (is_string($relation)) {
-            return $relation;
-        } else {
-            return implode($glue, CHtml::listData($relation, 'id', $attribute));
+        if (empty($this->tags)) {
+            $this->tags = '';
+        } elseif (!is_string($this->tags)) {
+            $this->tags = implode(
+                ',',
+                CHtml::listData($this->tags, 'id', 'name')
+            );
         }
     }
 
     /**
-    * Create and save all relations for this model from string.
-    * @param string $relationString the relation string, separated by $glue.
-    * @param string $modelName the name of relation model.
-    * @param string $attribute name of relation attribute.
-    * @param string $glue the combine string.
-    * @return array list of relation models.
+    * Finds and creates all relations for this model from string.
     */
-    public static function stringToRelation($relationString, $modelName, $attribute, $glue)
+    public function tagsFromStringCreate($relationString)
     {
         $relationArray = array();
 
@@ -157,19 +150,19 @@ class Massmedia extends CActiveRecord
 
             // Create new models if don't exists.
             foreach ($relationNames as $n) {
-                $relation = $modelName::model()->find(
-                    $attribute . '=:attribute',
-                    array(':attribute' => $n)
+                $relation = Mmtag::model()->find(
+                    'name=:name',
+                    array(':name' => $n)
                 );
                 if ($relation === null) {
-                    $relation = new $modelName;
-                    $relation->$attribute = $n;
+                    $relation = new Mmtag;
+                    $relation->name = $n;
                     $relation->save();
                 }
                 $relationArray[] = $relation;
             }
         }
 
-        return $relationArray;
+        $this->tags = $relationArray;
     }
 }

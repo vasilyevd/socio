@@ -7,6 +7,27 @@
 
     <?php echo $form->errorSummary($model); ?>
 
+    <?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>128)); ?>
+
+    <?php echo $form->labelEx($model,'content'); ?>
+    <?php $this->widget('bootstrap.widgets.TbRedactorJs', array(
+        'model' => $model,
+        'attribute' => 'content',
+        'lang' => 'ru',
+        'editorOptions' => array(
+            // Add image upload.
+            // 'imageUpload' => null,
+            // Add image gallery.
+            'imageGetJson' => Yii::app()->createAbsoluteUrl(
+                'site/dynamicImageGetJson',
+                array('org' => $model->isNewRecord ? $_GET['org'] : $model->organization_id)
+            ),
+            // Add file upload.
+            // 'fileUpload' => null,
+        ),
+    )); ?>
+    <?php echo $form->error($model,'content'); ?>
+
     <?php echo $form->select2Row($model, 'tags', array(
         'asDropDownList' => false, // Tag mode.
         'prompt' => '', // Blank for all drop.
@@ -18,10 +39,6 @@
             'width' => '300px',
         ),
     )); ?>
-
-    <?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>128)); ?>
-
-    <?php echo $form->textAreaRow($model,'content',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(

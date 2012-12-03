@@ -300,7 +300,7 @@ CREATE TABLE `org_massmedia` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `org_massmedia` (
 
 LOCK TABLES `org_massmedia` WRITE;
 /*!40000 ALTER TABLE `org_massmedia` DISABLE KEYS */;
-INSERT INTO `org_massmedia` VALUES (1,'cat,moo,dog,hungry','sdfs dfsdfs dfsdfsdfsdf','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1);
+INSERT INTO `org_massmedia` VALUES (1,'Первый элемент','<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf','sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs','dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ','dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs','dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss','sdfsdfsd fsdf','2012-12-03 16:38:29',1);
 /*!40000 ALTER TABLE `org_massmedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,7 +329,7 @@ CREATE TABLE `org_massmedia_mmtag` (
   KEY `image_id` (`mmtag_id`),
   CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +338,7 @@ CREATE TABLE `org_massmedia_mmtag` (
 
 LOCK TABLES `org_massmedia_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_massmedia_mmtag` DISABLE KEYS */;
-INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5);
+INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7);
 /*!40000 ALTER TABLE `org_massmedia_mmtag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -380,7 +380,7 @@ CREATE TABLE `org_mmtag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,7 +389,7 @@ CREATE TABLE `org_mmtag` (
 
 LOCK TABLES `org_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_mmtag` DISABLE KEYS */;
-INSERT INTO `org_mmtag` VALUES (1,'cat'),(2,'hello'),(3,'you'),(4,'dog'),(5,'yolo'),(6,'публикации'),(7,'анонс'),(8,'swag'),(9,'hug'),(10,'top');
+INSERT INTO `org_mmtag` VALUES (1,'cat'),(2,'hello'),(3,'you'),(4,'dog'),(5,'yolo'),(6,'публикации'),(7,'анонс'),(8,'swag'),(9,'hug'),(10,'top'),(11,'honk'),(12,'honks');
 /*!40000 ALTER TABLE `org_mmtag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,7 +423,7 @@ CREATE TABLE `org_organization` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_organization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +432,7 @@ CREATE TABLE `org_organization` (
 
 LOCK TABLES `org_organization` WRITE;
 /*!40000 ALTER TABLE `org_organization` DISABLE KEYS */;
-INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',1,3,4,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,1,2,NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',1,1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',1,'2012-11-22 15:42:24',3,0);
+INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',1,3,4,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,1,2,NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',1,1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2012-12-03 16:56:46',3,0);
 /*!40000 ALTER TABLE `org_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,7 +452,7 @@ CREATE TABLE `org_organization_direction` (
   KEY `image_id` (`direction_id`),
   CONSTRAINT `org_organization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_direction_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -461,7 +461,7 @@ CREATE TABLE `org_organization_direction` (
 
 LOCK TABLES `org_organization_direction` WRITE;
 /*!40000 ALTER TABLE `org_organization_direction` DISABLE KEYS */;
-INSERT INTO `org_organization_direction` VALUES (33,1,10),(34,1,12),(35,1,13),(50,6,2),(51,6,3),(52,6,10),(53,6,11),(57,7,9),(58,7,10),(59,7,11),(62,8,2),(63,8,4),(68,11,1),(71,8,10),(72,8,11),(73,1,1),(74,7,1),(75,1,5),(76,9,15),(77,9,16);
+INSERT INTO `org_organization_direction` VALUES (33,1,10),(34,1,12),(35,1,13),(50,6,2),(51,6,3),(52,6,10),(53,6,11),(57,7,9),(58,7,10),(59,7,11),(62,8,2),(63,8,4),(68,11,1),(71,8,10),(72,8,11),(73,1,1),(74,7,1),(75,1,5),(76,9,15),(77,9,16),(78,6,6);
 /*!40000 ALTER TABLE `org_organization_direction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,7 +481,7 @@ CREATE TABLE `org_organization_problem` (
   KEY `image_id` (`problem_id`),
   CONSTRAINT `org_organization_problem_ibfk_2` FOREIGN KEY (`problem_id`) REFERENCES `org_problem` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_problem_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,7 +490,7 @@ CREATE TABLE `org_organization_problem` (
 
 LOCK TABLES `org_organization_problem` WRITE;
 /*!40000 ALTER TABLE `org_organization_problem` DISABLE KEYS */;
-INSERT INTO `org_organization_problem` VALUES (41,1,33),(42,1,41),(43,1,42),(44,1,43),(46,6,33),(47,6,34),(48,6,35),(52,7,33),(53,7,35),(54,7,37),(62,8,35),(68,11,33),(70,1,45),(71,9,40);
+INSERT INTO `org_organization_problem` VALUES (41,1,33),(42,1,41),(43,1,42),(44,1,43),(46,6,33),(47,6,34),(48,6,35),(52,7,33),(53,7,35),(54,7,37),(62,8,35),(68,11,33),(70,1,45),(71,9,40),(72,6,42);
 /*!40000 ALTER TABLE `org_organization_problem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -583,4 +583,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-30 17:30:14
+-- Dump completed on 2012-12-03 17:26:59
