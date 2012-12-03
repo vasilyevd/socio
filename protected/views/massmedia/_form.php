@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-    'id'=>'achievement-form',
+    'id'=>'massmedia-form',
     'enableAjaxValidation'=>true,
 )); ?>
 
@@ -27,6 +27,18 @@
         ),
     )); ?>
     <?php echo $form->error($model,'content'); ?>
+
+    <?php echo $form->select2Row($model, 'tags', array(
+        'asDropDownList' => false, // Tag mode.
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'tags' => array_values(CHtml::listData(Mmtag::model()->findAll(), 'id', 'name')), // Tag mode.
+            'tokenSeparators' => array(',', ' '), // Tag mode.
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
