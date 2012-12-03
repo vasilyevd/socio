@@ -25,10 +25,8 @@ $('#Event_type_id').change(function(){
 
     <?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
 
-    <?php echo $form->dropDownListRow(
-        $model,
-        'type_id',
-        CHtml::listData(
+    <?php echo $form->select2Row($model, 'type_id', array(
+        'data' => CHtml::listData(
             Lookup::itemsListReplace(
                 'EvtypeCategory',
                 Evtype::model()->findAll(array('order' => 'position')),
@@ -38,14 +36,29 @@ $('#Event_type_id').change(function(){
             'name',
             'category'
         ),
-        array('prompt' => '')
-    ); ?>
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
     <div class="type-toggle"<?php echo !empty($model->type_other) ? '' : ' style="display:none"'; ?>>
         <?php echo $form->textFieldRow($model,'type_other',array('class'=>'span5','maxlength'=>128)); ?>
     </div>
 
-    <?php echo $form->dropDownListRow($model,'status',Lookup::items('EventStatus'),array('prompt'=>'')); ?>
+    <?php echo $form->select2Row($model, 'status', array(
+        'data' => Lookup::items('EventStatus'),
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
     <?php echo $form->labelEx($model,'description'); ?>
     <?php $this->widget('bootstrap.widgets.TbRedactorJs', array(

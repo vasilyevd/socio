@@ -1,6 +1,6 @@
 <?php
 
-class OrganizationController extends Controller
+class MassmediaController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -28,7 +28,7 @@ class OrganizationController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','search'),
+                'actions'=>array('index','view'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -36,7 +36,7 @@ class OrganizationController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('admin', 'dynamicAdminUpdate', 'delete'),
+                'actions'=>array('admin','delete'),
                 'users'=>array('*'),
             ),
             array('deny',  // deny all users
@@ -59,24 +59,30 @@ class OrganizationController extends Controller
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param integer $org the ID of the parent organization.
      */
-    public function actionCreate()
+    public function actionCreate($org)
     {
-        $model=new Organization;
+        $model=new Massmedia;
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Organization']))
+        if(isset($_POST['Massmedia']))
         {
-            $model->attributes=$_POST['Organization'];
+            $model->attributes=$_POST['Massmedia'];
 
-            // Set type relation for later group data extraction.
-            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            $model->organization = $org;
+            // Handle create new models.
+            if ($model->validate()) {
+                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
+            }
 
             if($model->save())
-                $this->redirect(array('update','id'=>$model->id));
+                $this->redirect(array('view','id'=>$model->id));
         }
+
+        $model->tagsToString();
 
         $this->render('create',array(
             'model'=>$model,
@@ -90,22 +96,25 @@ class OrganizationController extends Controller
      */
     public function actionUpdate($id)
     {
-        /** @var $model Organization */
         $model=$this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Organization']))
+        if(isset($_POST['Massmedia']))
         {
-            $model->attributes=$_POST['Organization'];
+            $model->attributes=$_POST['Massmedia'];
 
-            // Set type relation for later group data extraction.
-            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            // Handle create new models.
+            if ($model->validate()) {
+                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
+            }
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        $model->tagsToString();
 
         $this->render('update',array(
             'model'=>$model,
@@ -119,52 +128,28 @@ class OrganizationController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->loadModel($id)->delete();
+        // $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        // // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        // if(!isset($_GET['ajax']))
+        //     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+
+        $model = $this->loadModel($id);
+        $model->delete();
         if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            $this->redirect(array('index','org' => $model->organization_id));
     }
-
-    /**
-     * main page of organizations.
-     */
-    public function actionIndex()
-    {
-        $this->render('main',array(
-    ));
-
-        // $dataProvider=new CActiveDataProvider('Organization');
-        // $this->render('index',array(
-        //     'dataProvider'=>$dataProvider,
-        // ));
-    }
-
 
     /**
      * Lists all models.
+     * @param integer $org the ID of the organization model.
      */
-    public function actionSearch()
+    public function actionIndex($org)
     {
-        $model=new Organization('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Organization'])) {
-            $model->attributes=$_GET['Organization'];
-
-            // Relations.
-            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
-            $model->directions = isset($_GET['Organization']['directions']) ? Direction::model()->findAllByPk($model->directions) : array();
-            $model->problems = isset($_GET['Organization']['problems']) ? Problem::model()->findAllByPk($model->problems) : array();
-        }
-
+        $dataProvider=new CActiveDataProvider('Massmedia');
         $this->render('index',array(
-            'model'=>$model,
+            'dataProvider'=>$dataProvider,
         ));
-
-        // $dataProvider=new CActiveDataProvider('Organization');
-        // $this->render('index',array(
-        //     'dataProvider'=>$dataProvider,
-        // ));
     }
 
     /**
@@ -172,10 +157,10 @@ class OrganizationController extends Controller
      */
     public function actionAdmin()
     {
-        $model=new Organization('search');
+        $model=new Massmedia('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Organization']))
-            $model->attributes=$_GET['Organization'];
+        if(isset($_GET['Massmedia']))
+            $model->attributes=$_GET['Massmedia'];
 
         $this->render('admin',array(
             'model'=>$model,
@@ -183,42 +168,13 @@ class OrganizationController extends Controller
     }
 
     /**
-     * AJAX model manipulation from administrator panel.
-     */
-    public function actionDynamicAdminUpdate()
-    {
-        Yii::import('bootstrap.widgets.TbEditableSaver'); //or you can add import 'ext.editable.*' to config
-        $es = new TbEditableSaver('Organization'); // 'User' is classname of model to be updated
-        $es->update();
-
-//
-//         if (!isset($_POST['id'])) {
-//             return;
-//         }
-//
-//         $model = $this->loadModel($_POST['id']);
-//
-//         // Set all administrator fields to model.
-//         if (isset($_POST['status'])) {
-//             $model->status = $_POST['status'];
-//         }
-//         if (isset($_POST['verified'])) {
-//             $model->verified = $_POST['verified'] === 'true' ? true: false;
-//         }
-//
-//         $model->save();
-    }
-
-    /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
-     * @param integer $id the ID of the model to be loaded
-     * @return Organization
-     * @throws CHttpException
-     **/
+     * @param integer the ID of the model to be loaded
+     */
     public function loadModel($id)
     {
-        $model=Organization::model()->findByPk($id);
+        $model=Massmedia::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -226,11 +182,11 @@ class OrganizationController extends Controller
 
     /**
      * Performs the AJAX validation.
-     * @param CModel $model the model to be validated
+     * @param CModel the model to be validated
      */
     protected function performAjaxValidation($model)
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='organization-form')
+        if(isset($_POST['ajax']) && $_POST['ajax']==='massmedia-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

@@ -11,9 +11,27 @@
 
     <?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>128)); ?>
 
-    <?php echo $form->dropDownListRow($model,'category',Lookup::items('AnnouncementCategory'),array('prompt'=>'')); ?>
+    <?php echo $form->select2Row($model, 'category', array(
+        'data' => Lookup::items('AnnouncementCategory'),
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
-    <?php echo $form->dropDownListRow($model,'status',Lookup::items('AnnouncementStatus'),array('prompt'=>'')); ?>
+    <?php echo $form->select2Row($model, 'status', array(
+        'data' => Lookup::items('AnnouncementStatus'),
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
     <?php echo $form->labelEx($model,'content'); ?>
     <?php $this->widget('bootstrap.widgets.TbRedactorJs', array(

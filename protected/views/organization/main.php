@@ -20,7 +20,6 @@ $this->breadcrumbs=array(
             <!-- R1.2 -->
             <div class="span6">
                 <p>Описание раздела</p>
-                <p> Кнопка добавления своей организации</p>
             </div>
         </div>
 
@@ -95,18 +94,10 @@ $this->breadcrumbs=array(
 
 <!-- C2 -->
 <div class="span4">
-
     <div class="well well-small">
-        <?php
-        $this->widget('bootstrap.widgets.TbButton',array(
-        'label' => 'Поиск организаций',
-        'type'=>'success',
-        'url'=>array('/organization/search'),
-        'htmlOptions'=>array(
-            'class'=>'btn-block',
-        ),
-        ));
-        ?>
+        <?php echo CHtml::link('Поиск организаций', array('organization/search'), array('class'=>'btn btn-success btn-block')); ?>
+        <?php echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-success btn-block')); ?>
+        <?php echo CHtml::link('Управление организациями', array('organization/admin'), array('class'=>'btn btn-success btn-block')); ?>
     </div>
 
     <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
@@ -133,9 +124,3 @@ $this->breadcrumbs=array(
 </div>
 
 </div>
-
-
-
-
-
-

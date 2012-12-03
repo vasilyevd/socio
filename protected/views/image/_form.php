@@ -9,7 +9,17 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->dropDownListRow($model,'defaultAlbum',CHtml::listData($albums, 'id', 'name')); ?>
+    <?php echo $form->select2Row($model, 'defaultAlbum', array(
+        'data' => CHtml::listData($albums, 'id', 'name'),
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
+
 
     <?php echo $form->fileFieldRow($model,'file'); ?>
 

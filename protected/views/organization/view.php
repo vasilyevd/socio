@@ -61,13 +61,13 @@ $this->breadcrumbs=array(
         <?php if(!empty($model->description)): ?>
             <div class="span9">
                 <b><?php echo CHtml::encode($model->getAttributeLabel('description')); ?>:</b><br />
-                <?php echo CHtml::encode($model->description); ?>
+                <?php echo $model->description; ?>
             </div>
         <?php endif; ?>
         <?php if(!empty($model->goal)): ?>
             <div class="span9">
                 <b><?php echo CHtml::encode($model->getAttributeLabel('goal')); ?>:</b><br />
-                <?php echo CHtml::encode($model->goal); ?>
+                <?php echo $model->goal; ?>
             </div>
         <?php endif; ?>
         <?php if(!empty($model->foundation_year)): ?>
