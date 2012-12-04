@@ -300,7 +300,7 @@ CREATE TABLE `org_massmedia` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `org_massmedia` (
 
 LOCK TABLES `org_massmedia` WRITE;
 /*!40000 ALTER TABLE `org_massmedia` DISABLE KEYS */;
-INSERT INTO `org_massmedia` VALUES (1,'Первый элемент','<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf','sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs','dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ','dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs','dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss','sdfsdfsd fsdf','2012-12-03 16:38:29',1);
+INSERT INTO `org_massmedia` VALUES (1,'Первый элемент','<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf','sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs','dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ','dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs','dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss','sdfsdfsd fsdf','2012-12-03 16:38:29',1),(13,'test','<p> sdfsdfsdfsdf</p>','2012-12-04 16:35:39',1),(14,'test','<p> sdfsdfsdf</p>','2012-12-04 16:38:29',1),(15,'sdfsdf','<p> sdfsdf</p>','2012-12-04 16:42:14',1),(16,'test','<p> sdfsdfd</p>','2012-12-04 16:43:54',1),(19,'this cat','<p> sdfsdf</p>','2012-12-04 17:59:49',1),(20,'sdfsdf','<p> sdfsdf</p>','2012-12-04 18:09:54',1);
 /*!40000 ALTER TABLE `org_massmedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,7 +329,7 @@ CREATE TABLE `org_massmedia_mmtag` (
   KEY `image_id` (`mmtag_id`),
   CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +338,7 @@ CREATE TABLE `org_massmedia_mmtag` (
 
 LOCK TABLES `org_massmedia_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_massmedia_mmtag` DISABLE KEYS */;
-INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7);
+INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7),(29,19,8);
 /*!40000 ALTER TABLE `org_massmedia_mmtag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,7 +357,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,6 +366,7 @@ CREATE TABLE `org_mmlink` (
 
 LOCK TABLES `org_mmlink` WRITE;
 /*!40000 ALTER TABLE `org_mmlink` DISABLE KEYS */;
+INSERT INTO `org_mmlink` VALUES (5,'https://github.com/vasilyevd/socio/network',0,19);
 /*!40000 ALTER TABLE `org_mmlink` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -583,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-03 17:26:59
+-- Dump completed on 2012-12-04 18:13:34
