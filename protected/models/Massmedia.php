@@ -126,16 +126,49 @@ class Massmedia extends CActiveRecord
     }
 
     /**
-     * Finds and creates models from tabular input.
-     * @param $tabularInput for current model.
-     * @return boolean whether models are valid.
+     * This is invoked before the record is validated.
      */
-    public function tagsTabular($tabularInput)
+    public function beforeValidate()
     {
-        $modelArray = array();
+        // Relations with new models handler.
+        $this->tagsTabular();
+        $this->linksTabular();
+        $this->withoutRelations('tags', 'links');
 
-        if (!empty($tabularInput)) {
-            $tagsNames = explode(',', $tabularInput);
+        return parent::beforeValidate();
+    }
+
+    /**
+     * This is invoked after the record is saved.
+     */
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        // Relations with new models handler.
+        $this->isNewRecord = false;
+        $this->resetRelations();
+        foreach ($this->tags as $m) {
+            $m->save();
+        }
+        foreach ($this->links as $m) {
+            $m->massmedia = $this;
+            $m->save();
+        }
+        $this->saveRelation('tags', $this->relations['tags']);
+        $this->saveRelation('links', $this->relations['links']);
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds and creates models from tabular input.
+     */
+    public function tagsTabular()
+    {
+        // Models finder.
+        $modelArray = array();
+        if (!empty($this->tags)) {
+            $tagsNames = explode(',', $this->tags);
 
             // Create new models if don't exists.
             foreach ($tagsNames as $n) {
@@ -151,7 +184,6 @@ class Massmedia extends CActiveRecord
                 $modelArray[] = $model;
             }
         }
-
         $this->tags = $modelArray;
 
         // Validation.
@@ -159,19 +191,23 @@ class Massmedia extends CActiveRecord
         foreach ($this->tags as $item) {
             $valid = $item->validate() && $valid;
         }
-        return $valid;
+        if (!$valid) {
+            $this->addError(
+                'tags',
+                'Неверно задано поле ' . $this->getAttributeLabel('tags')
+            );
+        }
     }
 
     /**
+     * Relations with new models handler.
      * Finds and creates models from tabular input.
-     * @param $tabularInput for current model.
-     * @return boolean whether models are valid.
      */
-    public function linksTabular($tabularInput)
+    public function linksTabular()
     {
+        // Models finder.
         $modelArray = array();
-
-        foreach ($tabularInput as $attributes) {
+        foreach ($this->links as $attributes) {
             $model = Mmlink::model()->findByPk($attributes['id']);
             if ($model === null) {
                 $model = new Mmlink;
@@ -185,7 +221,6 @@ class Massmedia extends CActiveRecord
                 $modelArray[] = $model;
             }
         }
-
         $this->links = $modelArray;
 
         // Validation.
@@ -193,7 +228,12 @@ class Massmedia extends CActiveRecord
         foreach ($this->links as $item) {
             $valid = $item->validate() && $valid;
         }
-        return $valid;
+        if (!$valid) {
+            $this->addError(
+                'links',
+                'Неверно задано поле ' . $this->getAttributeLabel('links')
+            );
+        }
     }
 
     /**

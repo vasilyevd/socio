@@ -72,33 +72,14 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // No new models relations.
+            // Relations
             $model->organization = $org;
+            $model->links = $_POST['Mmlink'];
 
-            // Create and validate new models relations.
-            $valid = true;
-            $valid = $model->tagsTabular($_POST['Massmedia']['tags']) && $valid;
-            $valid = $model->linksTabular($_POST['Mmlink']) && $valid;
-            $valid = $model->validate() && $valid;
-            $model->withoutRelations('tags', 'links');
-
-            if($valid && $model->save()) {
-                // Save new models relations.
-                $model->resetRelations();
-                foreach ($model->tags as $m) {
-                    $m->save();
-                }
-                foreach ($model->links as $m) {
-                    $m->massmedia = $model;
-                    $m->save();
-                }
-                $model->save();
-
+            if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
-            }
         }
 
-        // Transform model for view.
         // Have at least one empty element for links.
         if (empty($model->links)) {
             $model->links = array(new Mmlink);
@@ -127,15 +108,18 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // Handle create new models.
-            if ($model->validate()) {
-                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
-            }
+            // Relations
+            $model->links = $_POST['Mmlink'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Have at least one empty element for links.
+        if (empty($model->links)) {
+            $model->links = array(new Mmlink);
+        }
+        // Show tags relation as imploded string.
         $model->tagsToString();
 
         $this->render('update',array(

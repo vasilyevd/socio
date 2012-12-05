@@ -29,13 +29,24 @@
     <?php echo $form->error($model,'content'); ?>
 
     <br />
+    <?php $this->widget('ext.jqrelcopy.JQRelcopy', array(
+       'id' => 'copylink',
+       // 'removeText' => 'remove' //uncomment to add remove link
+    )); ?>
+    <a id="copylink" href="#" rel=".copy">Copy</a>
+
+
     <div class="well">
         <?php echo $form->labelEx($model,'links'); ?>
         <?php foreach ($model->links as $i => $l): ?>
-            <?php echo $form->errorSummary($l); ?>
             <?php echo $form->hiddenField($l,"[$i]id"); ?>
             <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
         <?php endforeach; ?>
+
+        <div class="copy">
+            <?php echo $form->hiddenField(new Mmlink,"[]id"); ?>
+            <?php echo $form->textFieldRow(new Mmlink,'[]name',array('class'=>'span5','maxlength'=>128)); ?>
+        </div>
     </div>
 
     <?php echo $form->select2Row($model, 'tags', array(
