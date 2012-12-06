@@ -20,3 +20,18 @@ $this->menu=array(
         <?php echo $model->content; ?>
     </div>
 </div>
+
+<hr>
+<p class="lead">Ссылки</p>
+Show youtube vids.
+<?php foreach ($model->links as $l): ?>
+    <?php echo CHtml::link(CHtml::encode($l->name), $l->name, array('target' => '_blank')); ?>
+    <br />
+<?php endforeach; ?>
+
+<hr>
+<p class="lead">Теги</p>
+Search by tags here.
+<?php foreach ($model->tags as $t): ?>
+    [<?php echo CHtml::link(CHtml::encode($t->name), array('view', 'id' => $t->id)); ?>]
+<?php endforeach; ?>

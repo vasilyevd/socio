@@ -80,10 +80,6 @@ class MassmediaController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Have at least one empty element for links.
-        if (empty($model->links)) {
-            $model->links = array(new Mmlink);
-        }
         // Show tags relation as imploded string.
         $model->tagsToString();
 
@@ -115,10 +111,6 @@ class MassmediaController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Have at least one empty element for links.
-        if (empty($model->links)) {
-            $model->links = array(new Mmlink);
-        }
         // Show tags relation as imploded string.
         $model->tagsToString();
 

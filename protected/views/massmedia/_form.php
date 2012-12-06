@@ -1,3 +1,14 @@
+<?php
+// Handle element copy.
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/jquery.relcopy.1.1.js'
+);
+Yii::app()->getClientScript()->registerScript('relCopy', "
+    jQuery('#copylink').relCopy();
+");
+?>
+
+
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'massmedia-form',
     'enableAjaxValidation'=>true,
@@ -29,13 +40,6 @@
     <?php echo $form->error($model,'content'); ?>
 
     <br />
-    <?php $this->widget('ext.jqrelcopy.JQRelcopy', array(
-       'id' => 'copylink',
-       // 'removeText' => 'remove' //uncomment to add remove link
-    )); ?>
-    <a id="copylink" href="#" rel=".copy">Copy</a>
-
-
     <div class="well">
         <?php echo $form->labelEx($model,'links'); ?>
         <?php foreach ($model->links as $i => $l): ?>
@@ -44,9 +48,10 @@
         <?php endforeach; ?>
 
         <div class="copy">
-            <?php echo $form->hiddenField(new Mmlink,"[]id"); ?>
-            <?php echo $form->textFieldRow(new Mmlink,'[]name',array('class'=>'span5','maxlength'=>128)); ?>
+            <?php echo $form->hiddenField(new Mmlink,'['.count($model->links).']id'); ?>
+            <?php echo $form->textFieldRow(new Mmlink,'['.count($model->links).']name',array('class'=>'span5','maxlength'=>128)); ?>
         </div>
+        <a href="#" id="copylink" rel=".copy">Добавить</a>
     </div>
 
     <?php echo $form->select2Row($model, 'tags', array(
