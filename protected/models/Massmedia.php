@@ -16,6 +16,14 @@
  */
 class Massmedia extends CActiveRecord
 {
+    const CATEGORY_PUBLICATION = 1;
+    const CATEGORY_PRESS_ANNOUNCEMENT = 2;
+    const CATEGORY_PRESS_CONFERENCE = 3;
+    const CATEGORY_PUBLIC_SPEAKING = 4;
+    const CATEGORY_TV_PROJECT = 5;
+    const CATEGORY_RADIO_PROJECT = 6;
+    const CATEGORY_SOCIAL_ADVERTISING = 7;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
