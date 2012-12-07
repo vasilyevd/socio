@@ -23,11 +23,14 @@ $this->menu=array(
 
 <hr>
 <p class="lead">Ссылки</p>
-Show youtube vids.
-<?php foreach ($model->links as $l): ?>
-    <?php echo CHtml::link(CHtml::encode($l->name), $l->name, array('target' => '_blank')); ?>
-    <br />
-<?php endforeach; ?>
+<ul class="unstyled">
+    <?php foreach ($model->linksYoutube as $l): ?>
+        <li><?php $this->widget('ext.Yiitube.Yiitube', array('v' => $l->name)); ?></li>
+    <?php endforeach; ?>
+    <?php foreach ($model->linksGeneral as $l): ?>
+        <li><?php echo CHtml::link(CHtml::encode($l->name), $l->name, array('target' => '_blank')); ?></li>
+    <?php endforeach; ?>
+</ul>
 
 <hr>
 <p class="lead">Теги</p>

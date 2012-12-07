@@ -14,6 +14,9 @@
  */
 class Mmlink extends CActiveRecord
 {
+    const TYPE_GENERAL = 1;
+    const TYPE_YOUTUBE = 2;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -101,5 +104,22 @@ class Mmlink extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is saved.
+     * @return boolean whether the record should be saved.
+     */
+    public function beforeSave()
+    {
+        // If link is youtube type.
+        if(preg_match('~(http://www\.youtube\.com/watch\?v=[%&=#\w-]*)~', $this->name)){
+            $this->type = self::TYPE_YOUTUBE;
+        // Else just general link
+        } else {
+            $this->type = self::TYPE_GENERAL;
+        }
+
+        return parent::beforeSave();
     }
 }

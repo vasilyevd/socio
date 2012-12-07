@@ -357,7 +357,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,7 +366,7 @@ CREATE TABLE `org_mmlink` (
 
 LOCK TABLES `org_mmlink` WRITE;
 /*!40000 ALTER TABLE `org_mmlink` DISABLE KEYS */;
-INSERT INTO `org_mmlink` VALUES (5,'https://github.com/vasilyevd/socio/network',0,19),(6,'https://github.com/vasilyevd/socio/network',0,33),(7,'https://github.com/vasilyevd/socio/network',0,35),(8,'https://github.com/vasilyevd/socio/network',0,36),(9,'https://github.com/vasilyevd/socio/networkssss',0,37),(11,'https://github.com/vasilyevd/socio/ssssdfsdf',0,39),(12,'https://github.com/vasilyevd/socio/sssdfsdf',0,38),(13,'https://github.com/vasilyevd/socio/networ',0,37),(14,'https://github.com/vasilyevd/socio/new',0,37),(15,'https://github.com/vasilyevd/socio/hello',0,37),(16,'https://github.com/vasilyevd/socio/network',0,40),(17,'https://github.com/vasilyevd/socio/networksdfsd',0,40),(19,'https://github.com/vasilyevd/socio/2',0,40),(20,'https://github.com/vasilyevd/socio/3333',0,40),(21,'https://github.com/vasilyevd/socio/network',0,41);
+INSERT INTO `org_mmlink` VALUES (5,'https://github.com/vasilyevd/socio/network',1,19),(6,'https://github.com/vasilyevd/socio/network',1,33),(7,'https://github.com/vasilyevd/socio/network',1,35),(8,'https://github.com/vasilyevd/socio/network',1,36),(9,'https://github.com/vasilyevd/socio/networkssss',1,37),(11,'https://github.com/vasilyevd/socio/ssssdfsdf',1,39),(12,'https://github.com/vasilyevd/socio/sssdfsdf',1,38),(13,'https://github.com/vasilyevd/socio/networ',1,37),(14,'https://github.com/vasilyevd/socio/new',1,37),(15,'https://github.com/vasilyevd/socio/hello',1,37),(16,'https://github.com/vasilyevd/socio/network',1,40),(17,'https://github.com/vasilyevd/socio/networksdfsd',1,40),(19,'https://github.com/vasilyevd/socio/2',1,40),(20,'https://github.com/vasilyevd/socio/3333',1,40),(21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(25,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40);
 /*!40000 ALTER TABLE `org_mmlink` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -584,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-07 12:53:39
+-- Dump completed on 2012-12-07 14:35:06

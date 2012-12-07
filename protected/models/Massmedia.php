@@ -57,6 +57,18 @@ class Massmedia extends CActiveRecord
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
             'tags' => array(self::MANY_MANY, 'Mmtag', 'org_massmedia_mmtag(massmedia_id, mmtag_id)'),
             'links' => array(self::HAS_MANY, 'Mmlink', 'massmedia_id'),
+            'linksGeneral' => array(
+                self::HAS_MANY,
+                'Mmlink',
+                'massmedia_id',
+                'condition' => 'linksGeneral.type=' . Mmlink::TYPE_GENERAL,
+            ),
+            'linksYoutube' => array(
+                self::HAS_MANY,
+                'Mmlink',
+                'massmedia_id',
+                'condition' => 'linksYoutube.type=' . Mmlink::TYPE_YOUTUBE,
+            ),
         );
     }
 
