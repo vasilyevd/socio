@@ -270,7 +270,7 @@ CREATE TABLE `org_lookup` (
   `type` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,6 +293,8 @@ DROP TABLE IF EXISTS `org_massmedia`;
 CREATE TABLE `org_massmedia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `category` int(11) NOT NULL,
+  `direction` tinyint(1) NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `create_time` datetime NOT NULL,
   `organization_id` int(11) NOT NULL,
@@ -309,7 +311,7 @@ CREATE TABLE `org_massmedia` (
 
 LOCK TABLES `org_massmedia` WRITE;
 /*!40000 ALTER TABLE `org_massmedia` DISABLE KEYS */;
-INSERT INTO `org_massmedia` VALUES (1,'Первый элемент','<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf','sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs','dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ','dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs','dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss','sdfsdfsd fsdf','2012-12-03 16:38:29',1),(13,'test','<p> sdfsdfsdfsdf</p>','2012-12-04 16:35:39',1),(14,'test','<p> sdfsdfsdf</p>','2012-12-04 16:38:29',1),(15,'sdfsdf','<p> sdfsdf</p>','2012-12-04 16:42:14',1),(16,'test','<p> sdfsdfd</p>','2012-12-04 16:43:54',1),(19,'this cat','<p> sdfsdf</p>','2012-12-04 17:59:49',1),(20,'sdfsdf','<p> sdfsdf</p>','2012-12-04 18:09:54',1),(21,'dsfsdfsd','<p> sdfsdf</p>','2012-12-05 12:26:36',1),(22,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:04',1),(23,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:47',1),(24,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:12:34',1),(25,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:10',1),(26,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:43',1),(27,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:23:38',1),(28,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:25:48',1),(29,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:34:35',1),(30,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:36:03',1),(31,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:37:02',1),(32,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:37:25',1),(33,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:47:21',1),(34,'test news','<p> sdfsdf</p>','2012-12-05 15:39:15',1),(35,'test news','<p> sdfsdf</p>','2012-12-05 15:43:48',1),(36,'sdfsdf','<p> sdfsdfsdf</p>','2012-12-05 15:44:25',1),(37,'sdfsdf 2222','<p>sdfsdf <br /></p>','2012-12-05 15:52:42',1),(38,'hope it works','<p> sdfsdfsd</p>','2012-12-05 16:15:58',1),(39,'another test','<p> sdfsdf</p>','2012-12-05 16:24:40',1),(40,'Latest','<p>Nunc iaculis convallis dolor, sollicitudin varius erat fringilla a. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Proin sem augue, consectetur non lobortis at, \nhendrerit vel turpis. Sed lobortis elit id nulla venenatis tincidunt ut \nid enim. Sed eleifend orci non enim lacinia id consectetur tellus \npellentesque. Maecenas id magna sapien, sit amet placerat erat. Vivamus \nvel enim at lorem commodo venenatis nec et ligula. Phasellus libero \nmagna, feugiat nec vestibulum at, volutpat sed dolor. Sed ultrices \nvenenatis varius. Vestibulum tempus lacinia dui sed egestas. Nunc \nfaucibus, eros et egestas interdum, mauris lectus porta odio, sit amet \nfeugiat sem nibh eu velit. Proin ut sapien nibh, at pellentesque sem. \nAliquam velit odio, suscipit in luctus facilisis, tincidunt sed magna. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Nulla interdum, ipsum sit amet semper fringilla, \nmassa risus dictum sem, et molestie ipsum quam eget turpis.\n</p>\n<p>\nProin lobortis dignissim euismod. Aliquam velit arcu, pharetra nec \nconsectetur et, rutrum at urna. Pellentesque ac nisi lorem, vitae \nbibendum nisl. Curabitur pharetra egestas urna interdum iaculis. Proin \ntempus, erat ut malesuada pulvinar, dui justo luctus quam, eget \nelementum turpis urna congue nulla. Pellentesque iaculis suscipit mi in \nsollicitudin. Mauris facilisis diam sed leo posuere cursus. Aliquam erat\n volutpat. Vivamus nec dolor erat. Duis turpis nibh, lacinia ut \npellentesque in, fringilla at sapien. Pellentesque eu gravida elit. \nPellentesque id tempor dui. Nam imperdiet risus vel augue consequat \nmattis. Vivamus volutpat ultrices eros non vehicula. Donec fermentum \nviverra enim, vel feugiat arcu tincidunt quis.\n</p>\n<p>\nMaecenas nec feugiat metus. Aenean luctus, eros et pharetra faucibus, \nligula nulla dictum urna, et egestas est urna id lacus. Aliquam erat \nvolutpat. Sed sed enim vel nisi euismod laoreet. Nullam adipiscing justo\n in elit porttitor molestie. Nam lectus orci, auctor congue pharetra a, \nimperdiet a enim. Vestibulum varius est id nisi posuere vulputate. \nPraesent eu nulla ante, quis sodales nisl.\n</p>\n','2012-12-06 16:04:56',1),(41,'test overlap','<p> sdfsdf</p>','2012-12-07 12:05:01',6);
+INSERT INTO `org_massmedia` VALUES (1,'Первый элемент',0,0,'<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест',0,0,'ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22',0,0,'sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333',0,0,'ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more',0,0,'sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf',0,0,'sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs',0,0,'dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ',0,0,'dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs',0,0,'dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss',0,0,'sdfsdfsd fsdf','2012-12-03 16:38:29',1),(13,'test',0,0,'<p> sdfsdfsdfsdf</p>','2012-12-04 16:35:39',1),(14,'test',0,0,'<p> sdfsdfsdf</p>','2012-12-04 16:38:29',1),(15,'sdfsdf',0,0,'<p> sdfsdf</p>','2012-12-04 16:42:14',1),(16,'test',0,0,'<p> sdfsdfd</p>','2012-12-04 16:43:54',1),(19,'this cat',0,0,'<p> sdfsdf</p>','2012-12-04 17:59:49',1),(20,'sdfsdf',0,0,'<p> sdfsdf</p>','2012-12-04 18:09:54',1),(21,'dsfsdfsd',0,0,'<p> sdfsdf</p>','2012-12-05 12:26:36',1),(22,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:04',1),(23,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:47',1),(24,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:12:34',1),(25,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:10',1),(26,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:43',1),(27,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:23:38',1),(28,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:25:48',1),(29,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:34:35',1),(30,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:36:03',1),(31,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:37:02',1),(32,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:37:25',1),(33,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:47:21',1),(34,'test news',0,0,'<p> sdfsdf</p>','2012-12-05 15:39:15',1),(35,'test news',0,0,'<p> sdfsdf</p>','2012-12-05 15:43:48',1),(36,'sdfsdf',0,0,'<p> sdfsdfsdf</p>','2012-12-05 15:44:25',1),(37,'sdfsdf 2222',0,0,'<p>sdfsdf <br /></p>','2012-12-05 15:52:42',1),(38,'hope it works',0,0,'<p> sdfsdfsd</p>','2012-12-05 16:15:58',1),(39,'another test',0,0,'<p> sdfsdf</p>','2012-12-05 16:24:40',1),(40,'Latest',0,0,'<p>Nunc iaculis convallis dolor, sollicitudin varius erat fringilla a. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Proin sem augue, consectetur non lobortis at, \nhendrerit vel turpis. Sed lobortis elit id nulla venenatis tincidunt ut \nid enim. Sed eleifend orci non enim lacinia id consectetur tellus \npellentesque. Maecenas id magna sapien, sit amet placerat erat. Vivamus \nvel enim at lorem commodo venenatis nec et ligula. Phasellus libero \nmagna, feugiat nec vestibulum at, volutpat sed dolor. Sed ultrices \nvenenatis varius. Vestibulum tempus lacinia dui sed egestas. Nunc \nfaucibus, eros et egestas interdum, mauris lectus porta odio, sit amet \nfeugiat sem nibh eu velit. Proin ut sapien nibh, at pellentesque sem. \nAliquam velit odio, suscipit in luctus facilisis, tincidunt sed magna. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Nulla interdum, ipsum sit amet semper fringilla, \nmassa risus dictum sem, et molestie ipsum quam eget turpis.\n</p>\n<p>\nProin lobortis dignissim euismod. Aliquam velit arcu, pharetra nec \nconsectetur et, rutrum at urna. Pellentesque ac nisi lorem, vitae \nbibendum nisl. Curabitur pharetra egestas urna interdum iaculis. Proin \ntempus, erat ut malesuada pulvinar, dui justo luctus quam, eget \nelementum turpis urna congue nulla. Pellentesque iaculis suscipit mi in \nsollicitudin. Mauris facilisis diam sed leo posuere cursus. Aliquam erat\n volutpat. Vivamus nec dolor erat. Duis turpis nibh, lacinia ut \npellentesque in, fringilla at sapien. Pellentesque eu gravida elit. \nPellentesque id tempor dui. Nam imperdiet risus vel augue consequat \nmattis. Vivamus volutpat ultrices eros non vehicula. Donec fermentum \nviverra enim, vel feugiat arcu tincidunt quis.\n</p>\n<p>\nMaecenas nec feugiat metus. Aenean luctus, eros et pharetra faucibus, \nligula nulla dictum urna, et egestas est urna id lacus. Aliquam erat \nvolutpat. Sed sed enim vel nisi euismod laoreet. Nullam adipiscing justo\n in elit porttitor molestie. Nam lectus orci, auctor congue pharetra a, \nimperdiet a enim. Vestibulum varius est id nisi posuere vulputate. \nPraesent eu nulla ante, quis sodales nisl.\n</p>\n','2012-12-06 16:04:56',1),(41,'test overlap',0,0,'<p> sdfsdf</p>','2012-12-07 12:05:01',6);
 /*!40000 ALTER TABLE `org_massmedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,6 +342,33 @@ LOCK TABLES `org_massmedia_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_massmedia_mmtag` DISABLE KEYS */;
 INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7),(29,19,8),(31,33,7),(32,38,7),(34,39,8),(35,39,5),(36,38,8),(37,37,6),(39,37,5),(40,37,9),(41,40,6),(42,40,7),(45,41,7),(47,40,1),(48,41,13);
 /*!40000 ALTER TABLE `org_massmedia_mmtag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_mmfile`
+--
+
+DROP TABLE IF EXISTS `org_mmfile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_mmfile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `category` int(11) NOT NULL,
+  `massmedia_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `massmedia_id` (`massmedia_id`),
+  CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_mmfile`
+--
+
+LOCK TABLES `org_mmfile` WRITE;
+/*!40000 ALTER TABLE `org_mmfile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_mmfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -584,4 +613,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-07 16:48:26
+-- Dump completed on 2012-12-07 17:46:00
