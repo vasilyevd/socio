@@ -7,7 +7,27 @@ $this->breadcrumbs=array(
 );
 ?>
 
+<p class="lead">Теги</p>
+<?php foreach (Mmtag::model()->with('massmedias')->findAll('massmedias.organization_id=:organization_id', array(':organization_id' => $_GET['org'])) as $t): ?>
+    [<?php echo CHtml::link(
+        CHtml::encode($t->name),
+        array(
+            'index',
+            'org' => $_GET['org'],
+            'Massmedia[tags][]' => $t->id,
+        )
+    ); ?>]
+<?php endforeach; ?>
+
+<hr>
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-    'dataProvider'=>$dataProvider,
-    'itemView'=>'_view',
+    // 'id' => 'massmedia-listview',
+    'dataProvider' => $model->search(),
+    'itemView' => '_view',
+    // 'viewData' => array('albumId' => $model->id),
+    // 'template' => '{items}{pager}', // Hide summary header.
+    // 'itemsCssClass' => 'row', // Change items container class. Default: items.
+    'sortableAttributes' => array(
+        'title',
+    ),
 )); ?>
