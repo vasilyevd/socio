@@ -16,6 +16,14 @@
  */
 class Massmedia extends CActiveRecord
 {
+    const CATEGORY_PUBLICATION = 1;
+    const CATEGORY_PRESS_ANNOUNCEMENT = 2;
+    const CATEGORY_PRESS_CONFERENCE = 3;
+    const CATEGORY_PUBLIC_SPEAKING = 4;
+    const CATEGORY_TV_PROJECT = 5;
+    const CATEGORY_RADIO_PROJECT = 6;
+    const CATEGORY_SOCIAL_ADVERTISING = 7;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -40,9 +48,16 @@ class Massmedia extends CActiveRecord
     public function rules()
     {
         return array(
-            array('title, content, tags, links', 'required'),
+            array('title, content, tags, links, category, direction, files', 'required'),
             array('title', 'length', 'max'=>128),
             array('content','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+            array('category', 'in', 'range' => array(
+                self::CATEGORY_PUBLICATION, self::CATEGORY_PRESS_ANNOUNCEMENT,
+                self::CATEGORY_PRESS_CONFERENCE, self::CATEGORY_PUBLIC_SPEAKING,
+                self::CATEGORY_TV_PROJECT, self::CATEGORY_RADIO_PROJECT,
+                self::CATEGORY_SOCIAL_ADVERTISING,
+            )),
+            array('direction', 'boolean'),
 
             array('title, tags', 'safe', 'on'=>'search'),
         );
@@ -98,6 +113,9 @@ class Massmedia extends CActiveRecord
             'organization_id' => 'Организация',
             'tags' => 'Теги',
             'links' => 'Ссылки',
+            'category' => 'Категория',
+            'direction' => 'Направление',
+            'files' => 'Файлы',
         );
     }
 

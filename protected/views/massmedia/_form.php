@@ -20,6 +20,16 @@ Yii::app()->getClientScript()->registerScript('relCopy', "
 
     <?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>128)); ?>
 
+    <?php echo $form->radioButtonListRow($model, 'category', Lookup::items('MassmediaCategory')); ?>
+
+    <?php echo $form->toggleButtonRow($model, 'direction', array(
+        'options' => array(
+            'enabledLabel' => 'Мы в СМИ',
+            'disabledLabel' => 'СМИ о нас',
+            'width' => 200,
+        ),
+    )); ?>
+
     <?php echo $form->labelEx($model,'content'); ?>
     <?php $this->widget('bootstrap.widgets.TbRedactorJs', array(
         'model' => $model,
