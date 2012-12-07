@@ -300,7 +300,7 @@ CREATE TABLE `org_massmedia` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `org_massmedia` (
 
 LOCK TABLES `org_massmedia` WRITE;
 /*!40000 ALTER TABLE `org_massmedia` DISABLE KEYS */;
-INSERT INTO `org_massmedia` VALUES (1,'Первый элемент','<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf','sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs','dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ','dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs','dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss','sdfsdfsd fsdf','2012-12-03 16:38:29',1),(13,'test','<p> sdfsdfsdfsdf</p>','2012-12-04 16:35:39',1),(14,'test','<p> sdfsdfsdf</p>','2012-12-04 16:38:29',1),(15,'sdfsdf','<p> sdfsdf</p>','2012-12-04 16:42:14',1),(16,'test','<p> sdfsdfd</p>','2012-12-04 16:43:54',1),(19,'this cat','<p> sdfsdf</p>','2012-12-04 17:59:49',1),(20,'sdfsdf','<p> sdfsdf</p>','2012-12-04 18:09:54',1),(21,'dsfsdfsd','<p> sdfsdf</p>','2012-12-05 12:26:36',1),(22,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:04',1),(23,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:47',1),(24,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:12:34',1),(25,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:10',1),(26,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:43',1),(27,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:23:38',1),(28,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:25:48',1),(29,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:34:35',1),(30,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:36:03',1),(31,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:37:02',1),(32,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:37:25',1),(33,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:47:21',1),(34,'test news','<p> sdfsdf</p>','2012-12-05 15:39:15',1),(35,'test news','<p> sdfsdf</p>','2012-12-05 15:43:48',1),(36,'sdfsdf','<p> sdfsdfsdf</p>','2012-12-05 15:44:25',1),(37,'sdfsdf 2222','<p>sdfsdf <br /></p>','2012-12-05 15:52:42',1),(38,'hope it works','<p> sdfsdfsd</p>','2012-12-05 16:15:58',1),(39,'another test','<p> sdfsdf</p>','2012-12-05 16:24:40',1),(40,'Latest','<p>Nunc iaculis convallis dolor, sollicitudin varius erat fringilla a. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Proin sem augue, consectetur non lobortis at, \nhendrerit vel turpis. Sed lobortis elit id nulla venenatis tincidunt ut \nid enim. Sed eleifend orci non enim lacinia id consectetur tellus \npellentesque. Maecenas id magna sapien, sit amet placerat erat. Vivamus \nvel enim at lorem commodo venenatis nec et ligula. Phasellus libero \nmagna, feugiat nec vestibulum at, volutpat sed dolor. Sed ultrices \nvenenatis varius. Vestibulum tempus lacinia dui sed egestas. Nunc \nfaucibus, eros et egestas interdum, mauris lectus porta odio, sit amet \nfeugiat sem nibh eu velit. Proin ut sapien nibh, at pellentesque sem. \nAliquam velit odio, suscipit in luctus facilisis, tincidunt sed magna. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Nulla interdum, ipsum sit amet semper fringilla, \nmassa risus dictum sem, et molestie ipsum quam eget turpis.\n</p>\n<p>\nProin lobortis dignissim euismod. Aliquam velit arcu, pharetra nec \nconsectetur et, rutrum at urna. Pellentesque ac nisi lorem, vitae \nbibendum nisl. Curabitur pharetra egestas urna interdum iaculis. Proin \ntempus, erat ut malesuada pulvinar, dui justo luctus quam, eget \nelementum turpis urna congue nulla. Pellentesque iaculis suscipit mi in \nsollicitudin. Mauris facilisis diam sed leo posuere cursus. Aliquam erat\n volutpat. Vivamus nec dolor erat. Duis turpis nibh, lacinia ut \npellentesque in, fringilla at sapien. Pellentesque eu gravida elit. \nPellentesque id tempor dui. Nam imperdiet risus vel augue consequat \nmattis. Vivamus volutpat ultrices eros non vehicula. Donec fermentum \nviverra enim, vel feugiat arcu tincidunt quis.\n</p>\n<p>\nMaecenas nec feugiat metus. Aenean luctus, eros et pharetra faucibus, \nligula nulla dictum urna, et egestas est urna id lacus. Aliquam erat \nvolutpat. Sed sed enim vel nisi euismod laoreet. Nullam adipiscing justo\n in elit porttitor molestie. Nam lectus orci, auctor congue pharetra a, \nimperdiet a enim. Vestibulum varius est id nisi posuere vulputate. \nPraesent eu nulla ante, quis sodales nisl.\n</p>\n','2012-12-06 16:04:56',1);
+INSERT INTO `org_massmedia` VALUES (1,'Первый элемент','<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест','ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22','sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333','ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more','sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf','sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs','dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ','dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs','dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss','sdfsdfsd fsdf','2012-12-03 16:38:29',1),(13,'test','<p> sdfsdfsdfsdf</p>','2012-12-04 16:35:39',1),(14,'test','<p> sdfsdfsdf</p>','2012-12-04 16:38:29',1),(15,'sdfsdf','<p> sdfsdf</p>','2012-12-04 16:42:14',1),(16,'test','<p> sdfsdfd</p>','2012-12-04 16:43:54',1),(19,'this cat','<p> sdfsdf</p>','2012-12-04 17:59:49',1),(20,'sdfsdf','<p> sdfsdf</p>','2012-12-04 18:09:54',1),(21,'dsfsdfsd','<p> sdfsdf</p>','2012-12-05 12:26:36',1),(22,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:04',1),(23,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:47',1),(24,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:12:34',1),(25,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:10',1),(26,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:43',1),(27,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:23:38',1),(28,'New test','<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:25:48',1),(29,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:34:35',1),(30,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:36:03',1),(31,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:37:02',1),(32,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:37:25',1),(33,'sdfsdfsd','<p> sdffd</p>','2012-12-05 14:47:21',1),(34,'test news','<p> sdfsdf</p>','2012-12-05 15:39:15',1),(35,'test news','<p> sdfsdf</p>','2012-12-05 15:43:48',1),(36,'sdfsdf','<p> sdfsdfsdf</p>','2012-12-05 15:44:25',1),(37,'sdfsdf 2222','<p>sdfsdf <br /></p>','2012-12-05 15:52:42',1),(38,'hope it works','<p> sdfsdfsd</p>','2012-12-05 16:15:58',1),(39,'another test','<p> sdfsdf</p>','2012-12-05 16:24:40',1),(40,'Latest','<p>Nunc iaculis convallis dolor, sollicitudin varius erat fringilla a. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Proin sem augue, consectetur non lobortis at, \nhendrerit vel turpis. Sed lobortis elit id nulla venenatis tincidunt ut \nid enim. Sed eleifend orci non enim lacinia id consectetur tellus \npellentesque. Maecenas id magna sapien, sit amet placerat erat. Vivamus \nvel enim at lorem commodo venenatis nec et ligula. Phasellus libero \nmagna, feugiat nec vestibulum at, volutpat sed dolor. Sed ultrices \nvenenatis varius. Vestibulum tempus lacinia dui sed egestas. Nunc \nfaucibus, eros et egestas interdum, mauris lectus porta odio, sit amet \nfeugiat sem nibh eu velit. Proin ut sapien nibh, at pellentesque sem. \nAliquam velit odio, suscipit in luctus facilisis, tincidunt sed magna. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Nulla interdum, ipsum sit amet semper fringilla, \nmassa risus dictum sem, et molestie ipsum quam eget turpis.\n</p>\n<p>\nProin lobortis dignissim euismod. Aliquam velit arcu, pharetra nec \nconsectetur et, rutrum at urna. Pellentesque ac nisi lorem, vitae \nbibendum nisl. Curabitur pharetra egestas urna interdum iaculis. Proin \ntempus, erat ut malesuada pulvinar, dui justo luctus quam, eget \nelementum turpis urna congue nulla. Pellentesque iaculis suscipit mi in \nsollicitudin. Mauris facilisis diam sed leo posuere cursus. Aliquam erat\n volutpat. Vivamus nec dolor erat. Duis turpis nibh, lacinia ut \npellentesque in, fringilla at sapien. Pellentesque eu gravida elit. \nPellentesque id tempor dui. Nam imperdiet risus vel augue consequat \nmattis. Vivamus volutpat ultrices eros non vehicula. Donec fermentum \nviverra enim, vel feugiat arcu tincidunt quis.\n</p>\n<p>\nMaecenas nec feugiat metus. Aenean luctus, eros et pharetra faucibus, \nligula nulla dictum urna, et egestas est urna id lacus. Aliquam erat \nvolutpat. Sed sed enim vel nisi euismod laoreet. Nullam adipiscing justo\n in elit porttitor molestie. Nam lectus orci, auctor congue pharetra a, \nimperdiet a enim. Vestibulum varius est id nisi posuere vulputate. \nPraesent eu nulla ante, quis sodales nisl.\n</p>\n','2012-12-06 16:04:56',1),(41,'test overlap','<p> sdfsdf</p>','2012-12-07 12:05:01',6);
 /*!40000 ALTER TABLE `org_massmedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,7 +329,7 @@ CREATE TABLE `org_massmedia_mmtag` (
   KEY `image_id` (`mmtag_id`),
   CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -338,7 +338,7 @@ CREATE TABLE `org_massmedia_mmtag` (
 
 LOCK TABLES `org_massmedia_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_massmedia_mmtag` DISABLE KEYS */;
-INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7),(29,19,8),(31,33,7),(32,38,7),(34,39,8),(35,39,5),(36,38,8),(37,37,6),(39,37,5),(40,37,9),(41,40,6),(42,40,7),(43,40,2);
+INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7),(29,19,8),(31,33,7),(32,38,7),(34,39,8),(35,39,5),(36,38,8),(37,37,6),(39,37,5),(40,37,9),(41,40,6),(42,40,7),(45,41,7),(47,40,1),(48,41,13);
 /*!40000 ALTER TABLE `org_massmedia_mmtag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,7 +357,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,7 +366,7 @@ CREATE TABLE `org_mmlink` (
 
 LOCK TABLES `org_mmlink` WRITE;
 /*!40000 ALTER TABLE `org_mmlink` DISABLE KEYS */;
-INSERT INTO `org_mmlink` VALUES (5,'https://github.com/vasilyevd/socio/network',0,19),(6,'https://github.com/vasilyevd/socio/network',0,33),(7,'https://github.com/vasilyevd/socio/network',0,35),(8,'https://github.com/vasilyevd/socio/network',0,36),(9,'https://github.com/vasilyevd/socio/networkssss',0,37),(11,'https://github.com/vasilyevd/socio/ssssdfsdf',0,39),(12,'https://github.com/vasilyevd/socio/sssdfsdf',0,38),(13,'https://github.com/vasilyevd/socio/networ',0,37),(14,'https://github.com/vasilyevd/socio/new',0,37),(15,'https://github.com/vasilyevd/socio/hello',0,37),(16,'https://github.com/vasilyevd/socio/network',0,40),(17,'https://github.com/vasilyevd/socio/networksdfsd',0,40),(19,'https://github.com/vasilyevd/socio/2',0,40),(20,'https://github.com/vasilyevd/socio/3333',0,40);
+INSERT INTO `org_mmlink` VALUES (5,'https://github.com/vasilyevd/socio/network',0,19),(6,'https://github.com/vasilyevd/socio/network',0,33),(7,'https://github.com/vasilyevd/socio/network',0,35),(8,'https://github.com/vasilyevd/socio/network',0,36),(9,'https://github.com/vasilyevd/socio/networkssss',0,37),(11,'https://github.com/vasilyevd/socio/ssssdfsdf',0,39),(12,'https://github.com/vasilyevd/socio/sssdfsdf',0,38),(13,'https://github.com/vasilyevd/socio/networ',0,37),(14,'https://github.com/vasilyevd/socio/new',0,37),(15,'https://github.com/vasilyevd/socio/hello',0,37),(16,'https://github.com/vasilyevd/socio/network',0,40),(17,'https://github.com/vasilyevd/socio/networksdfsd',0,40),(19,'https://github.com/vasilyevd/socio/2',0,40),(20,'https://github.com/vasilyevd/socio/3333',0,40),(21,'https://github.com/vasilyevd/socio/network',0,41);
 /*!40000 ALTER TABLE `org_mmlink` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,7 +381,7 @@ CREATE TABLE `org_mmtag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -390,7 +390,7 @@ CREATE TABLE `org_mmtag` (
 
 LOCK TABLES `org_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_mmtag` DISABLE KEYS */;
-INSERT INTO `org_mmtag` VALUES (1,'cat'),(2,'hello'),(3,'you'),(4,'dog'),(5,'yolo'),(6,'публикации'),(7,'анонс'),(8,'swag'),(9,'hug'),(10,'top'),(11,'honk'),(12,'honks');
+INSERT INTO `org_mmtag` VALUES (1,'cat'),(2,'hello'),(3,'you'),(4,'dog'),(5,'yolo'),(6,'публикации'),(7,'анонс'),(8,'swag'),(9,'hug'),(10,'top'),(11,'honk'),(12,'honks'),(13,'overlaptag');
 /*!40000 ALTER TABLE `org_mmtag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -584,4 +584,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-06 17:35:11
+-- Dump completed on 2012-12-07 12:53:39

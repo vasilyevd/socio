@@ -44,7 +44,7 @@ class Massmedia extends CActiveRecord
             array('title', 'length', 'max'=>128),
             array('content','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 
-            // array('id, title, content, create_time, organization_id', 'safe', 'on'=>'search'),
+            array('title, tags', 'safe', 'on'=>'search'),
         );
     }
 
@@ -95,16 +95,33 @@ class Massmedia extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('title',$this->title,true);
-        $criteria->compare('content',$this->content,true);
-        $criteria->compare('create_time',$this->create_time,true);
-        $criteria->compare('organization_id',$this->organization_id);
+        // Relation.
+        $criteria->with = array();
+
+        // Relation BELONGS_TO search.
+        if (!empty($this->organization)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'organization',
+            ));
+            $criteria->compare('organization.id', $this->organization);
+        }
+
+        // Relation MANY_MANY search.
+        if (!empty($this->tags)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'tags' => array('together' => true),
+            ));
+            $criteria->addInCondition('tags.id', $this->tags);
+        }
+
+        $criteria->compare('t.title',$this->title,true);
+
+        // $criteria->compare('id',$this->id);
+        // $criteria->compare('content',$this->content,true);
+        // $criteria->compare('create_time',$this->create_time,true);
+        // $criteria->compare('organization_id',$this->organization_id);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

@@ -144,9 +144,21 @@ class MassmediaController extends Controller
      */
     public function actionIndex($org)
     {
-        $dataProvider=new CActiveDataProvider('Massmedia');
+        // $dataProvider=new CActiveDataProvider('Massmedia');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+
+        $model=new Massmedia('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Massmedia']))
+            $model->attributes=$_GET['Massmedia'];
+
+        // Limit search to only this organization.
+        $model->organization = $org;
+
         $this->render('index',array(
-            'dataProvider'=>$dataProvider,
+            'model'=>$model,
         ));
     }
 

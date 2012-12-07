@@ -31,7 +31,13 @@ Show youtube vids.
 
 <hr>
 <p class="lead">Теги</p>
-Search by tags here.
 <?php foreach ($model->tags as $t): ?>
-    [<?php echo CHtml::link(CHtml::encode($t->name), array('view', 'id' => $t->id)); ?>]
+    [<?php echo CHtml::link(
+        CHtml::encode($t->name),
+        array(
+            'index',
+            'org' => $model->organization->id,
+            'Massmedia[tags][]' => $t->id,
+        )
+    ); ?>]
 <?php endforeach; ?>
