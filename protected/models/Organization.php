@@ -200,7 +200,7 @@ class Organization extends CActiveRecord
             $criteria->with = array_merge($criteria->with, array(
                 'directions' => array('together' => true),
             ));
-            $criteria->addInCondition('directions.id', Chtml::listData($this->directions, 'id', 'id'));
+            $criteria->addInCondition('directions.id', CHtml::listData($this->directions, 'id', 'id'));
         }
 
         // Relation MANY_MANY search.
@@ -208,7 +208,7 @@ class Organization extends CActiveRecord
             $criteria->with = array_merge($criteria->with, array(
                 'problems' => array('together' => true),
             ));
-            $criteria->addInCondition('problems.id', Chtml::listData($this->problems, 'id', 'id'));
+            $criteria->addInCondition('problems.id', CHtml::listData($this->problems, 'id', 'id'));
         }
 
         $criteria->compare('t.name',$this->name,true);

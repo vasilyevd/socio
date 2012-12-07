@@ -1,3 +1,14 @@
+<?php
+// Handle element copy.
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/jquery.relcopy.1.1.js'
+);
+Yii::app()->getClientScript()->registerScript('relCopy', "
+    jQuery('#copylink').relCopy();
+");
+?>
+
+
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'massmedia-form',
     'enableAjaxValidation'=>true,
@@ -27,6 +38,21 @@
         ),
     )); ?>
     <?php echo $form->error($model,'content'); ?>
+
+    <br />
+    <div class="well">
+        <?php echo $form->labelEx($model,'links'); ?>
+        <?php foreach ($model->links as $i => $l): ?>
+            <?php echo $form->hiddenField($l,"[$i]id"); ?>
+            <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
+        <?php endforeach; ?>
+
+        <div class="copy">
+            <?php echo $form->hiddenField(new Mmlink,'['.count($model->links).']id'); ?>
+            <?php echo $form->textFieldRow(new Mmlink,'['.count($model->links).']name',array('class'=>'span5','maxlength'=>128)); ?>
+        </div>
+        <a href="#" id="copylink" rel=".copy">Добавить</a>
+    </div>
 
     <?php echo $form->select2Row($model, 'tags', array(
         'asDropDownList' => false, // Tag mode.

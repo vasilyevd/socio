@@ -72,16 +72,15 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
+            // Relations
             $model->organization = $org;
-            // Handle create new models.
-            if ($model->validate()) {
-                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
-            }
+            $model->links = $_POST['Mmlink'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Show tags relation as imploded string.
         $model->tagsToString();
 
         $this->render('create',array(
@@ -105,15 +104,14 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // Handle create new models.
-            if ($model->validate()) {
-                $model->tagsFromStringCreate($_POST['Massmedia']['tags']);
-            }
+            // Relations
+            $model->links = $_POST['Mmlink'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Show tags relation as imploded string.
         $model->tagsToString();
 
         $this->render('update',array(
@@ -146,9 +144,21 @@ class MassmediaController extends Controller
      */
     public function actionIndex($org)
     {
-        $dataProvider=new CActiveDataProvider('Massmedia');
+        // $dataProvider=new CActiveDataProvider('Massmedia');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+
+        $model=new Massmedia('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Massmedia']))
+            $model->attributes=$_GET['Massmedia'];
+
+        // Limit search to only this organization.
+        $model->organization = $org;
+
         $this->render('index',array(
-            'dataProvider'=>$dataProvider,
+            'model'=>$model,
         ));
     }
 
