@@ -1,10 +1,10 @@
 <?php
 // Handle element copy.
 Yii::app()->clientScript->registerScriptFile(
-    Yii::app()->baseUrl.'/js/jquery.relcopy.1.1.js'
+    Yii::app()->baseUrl.'/js/jquery.relcopy.js'
 );
 Yii::app()->getClientScript()->registerScript('relCopy', "
-    jQuery('#copylink').relCopy();
+    jQuery('.copylink').relCopy();
 ");
 ?>
 
@@ -48,20 +48,48 @@ Yii::app()->getClientScript()->registerScript('relCopy', "
         ),
     )); ?>
     <?php echo $form->error($model,'content'); ?>
-
     <br />
+
+    <div class="well">
+        <?php echo $form->labelEx($model,'files'); ?>
+        <?php $lastIndex = count($model->files) - 1; ?>
+        <?php foreach ($model->files as $i => $f): ?>
+            <?php if ($i == $lastIndex): ?>
+                <div class="copy-files">
+            <?php endif; ?>
+
+            <?php echo $form->hiddenField($f,"[$i]id"); ?>
+            <?php echo $form->labelEx($f,"[$i]name"); ?>
+            <?php echo $form->fileField($f,"[$i]name"); ?>
+            <?php echo $form->dropDownList($f,"[$i]category",Lookup::items('MmfileCategory'),array('prompt'=>'')); ?>
+            <?php echo $form->error($f,"[$i]name"); ?>
+            <?php echo $form->error($f,"[$i]category"); ?>
+
+            <?php if ($i == $lastIndex): ?>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <a href="#" class="copylink" rel=".copy-files">Добавить</a>
+        <?php echo $form->error($model,'files'); ?>
+    </div>
+
     <div class="well">
         <?php echo $form->labelEx($model,'links'); ?>
+        <?php $lastIndex = count($model->links) - 1; ?>
         <?php foreach ($model->links as $i => $l): ?>
+            <?php if ($i == $lastIndex): ?>
+                <div class="copy-links">
+            <?php endif; ?>
+
             <?php echo $form->hiddenField($l,"[$i]id"); ?>
             <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
-        <?php endforeach; ?>
 
-        <div class="copy">
-            <?php echo $form->hiddenField(new Mmlink,'['.count($model->links).']id'); ?>
-            <?php echo $form->textFieldRow(new Mmlink,'['.count($model->links).']name',array('class'=>'span5','maxlength'=>128)); ?>
-        </div>
-        <a href="#" id="copylink" rel=".copy">Добавить</a>
+            <?php if ($i == $lastIndex): ?>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <a href="#" class="copylink" rel=".copy-links">Добавить</a>
+        <?php echo $form->error($model,'links'); ?>
     </div>
 
     <?php echo $form->select2Row($model, 'tags', array(

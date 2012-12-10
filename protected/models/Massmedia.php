@@ -58,6 +58,16 @@ class Massmedia extends CActiveRecord
                 self::CATEGORY_SOCIAL_ADVERTISING,
             )),
             array('direction', 'boolean'),
+            array(
+                'files',
+                'file',
+                'allowEmpty' => true,
+                'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                // 'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+            ),
 
             array('title, tags', 'safe', 'on'=>'search'),
         );
@@ -84,6 +94,7 @@ class Massmedia extends CActiveRecord
                 'massmedia_id',
                 'condition' => 'linksYoutube.type=' . Mmlink::TYPE_YOUTUBE,
             ),
+            'files' => array(self::HAS_MANY, 'Mmfile', 'massmedia_id'),
         );
     }
 
@@ -180,7 +191,7 @@ class Massmedia extends CActiveRecord
         // Relations with new models handler.
         $this->tagsTabular();
         $this->linksTabular();
-        $this->withoutRelations('tags', 'links');
+        $this->withoutRelations('tags', 'links', 'files');
 
         return parent::beforeValidate();
     }
