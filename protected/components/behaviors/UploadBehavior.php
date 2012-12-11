@@ -5,24 +5,23 @@ class UploadBehavior extends CActiveRecordBehavior
     public $attributes = array();
 
     /**
-     * Saves upload file with model and removes old one.
+     * Saves upload file with model attributes and removes old one.
      */
     public function beforeSave()
     {
         foreach ($this->attributes as $attr) {
             $upload = CUploadedFile::getInstance($this->owner, $attr);
 
-            if ($upload) {
+            if (!empty($upload)) {
                 // Remove old upload.
-                // if (isset($this->owner->$attr)) {
-                if ($this->owner->$attr) {
+                if (!empty($this->owner->$attr)) {
                     $this->deleteUpload($attr);
                 }
 
                 // Save new upload.
-                $filename = uniqid() . '.' . $upload->getExtensionName();
-                $upload->saveAs($this->getUploadPath($attr, $filename));
-                $this->owner->$attr = $filename;
+                $this->owner->$attr = uniqid() . '.'
+                    . $upload->getExtensionName();
+                $upload->saveAs($this->getUploadPath($attr));
             }
         }
     }
@@ -39,65 +38,45 @@ class UploadBehavior extends CActiveRecordBehavior
 
     /**
      * Creates full path for upload file.
+     * @param string $attribute the name of upload model attribute.
+     * @return string unix path.
      */
-    public function getUploadPath($attribute, $filename)
+    public function getUploadPath($attribute)
     {
         return Yii::getPathOfAlias('webroot')
             . '/uploads/'
             . strtolower(get_class($this->owner)) . '/'
             . $attribute . '/'
-            . $filename;
+            . $this->owner->$attribute;
     }
 
     /**
      * Creates relative URL for upload file.
+     * @param string $attribute the name of upload model attribute.
+     * @return string full URL.
      */
-    public function getUploadUrl($attribute, $filename)
+    public function getUploadUrl($attribute)
     {
         return Yii::app()->createUrl('uploads/'
             . strtolower(get_class($this->owner)) . '/'
             . $attribute . '/'
-            . $filename);
+            . $this->owner->$attribute
+        );
     }
 
     /**
-     * Finds uploaded files by their attribute or name and deletes them.
+     * Finds and deletes uploaded file by its attribute.
+     * @param string $attribute the name of upload model attribute.
      */
-    public function deleteUpload($attribute, $filename = '')
+    public function deleteUpload($attribute)
     {
         // Don't delete with empty attribute field.
-        if (empty($this->owner->$attribute)) {
-            return;
-        }
+        // Don't delete placeholder image.
+        if (!empty($this->owner->$attribute) && $this->owner->$attribute != 'placeholder.jpg') {
+            // Remove file.
+            unlink($this->getUploadPath($attribute));
 
-        // Multi upload: attribute got several files.
-        if (is_array($this->owner->$attribute)) {
-            // No specific name, remove all files from attribute.
-            if (empty($filename)) {
-                foreach ($this->owner->$attribute as $f) {
-                    // Don't delete placeholder image.
-                    if ($f != 'placeholder.jpg') {
-                        unlink($this->getUploadPath($attribute, $f));
-                    }
-                }
-                // Empty whole attribute.
-                $this->owner->$attribute = array();
-            // Name specified, delete only one file from attribute.
-            } else {
-                // Don't delete placeholder image.
-                if ($filename != 'placeholder.jpg') {
-                    unlink($this->getUploadPath($attribute, $filename));
-                }
-                // Empty one element from attribute.
-                $this->owner->$attribute = array_diff($this->owner->$attribute, array($filename));
-            }
-        // Regular upload: attribute got single file.
-        } else {
-            // Don't delete placeholder image.
-            if ($this->owner->$attribute != 'placeholder.jpg') {
-                unlink($this->getUploadPath($attribute, $this->owner->$attribute));
-            }
-            // Empty whole attribute.
+            // Empty attribute.
             $this->owner->$attribute = '';
         }
     }

@@ -354,6 +354,7 @@ DROP TABLE IF EXISTS `org_mmfile`;
 CREATE TABLE `org_mmfile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
+  `type` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `massmedia_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -613,4 +614,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-10 17:32:54
+-- Dump completed on 2012-12-11 13:13:49

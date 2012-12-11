@@ -17,8 +17,8 @@
         )
     ); ?>
 
-    <a href="<?php echo $data->getUploadUrl('file', $data->file); ?>" class="thumbnail" rel="lightbox[default]" title="<?php echo CHtml::encode($data->getAlbumComment($albumId)); ?>">
-        <img src="<?php echo $data->getUploadUrl('file', $data->file); ?>" alt="Image">
+    <a href="<?php echo $data->getUploadUrl('file'); ?>" class="thumbnail" rel="lightbox[default]" title="<?php echo CHtml::encode($data->getAlbumComment($albumId)); ?>">
+        <img src="<?php echo $data->getUploadUrl('file'); ?>" alt="Image">
     </a>
 </li>
 

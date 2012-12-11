@@ -14,6 +14,10 @@
  */
 class Mmfile extends CActiveRecord
 {
+    const TYPE_GENERAL = 1;
+    const TYPE_IMAGE = 2;
+    const TYPE_DOCUMENT = 3;
+
     const CATEGORY_GENERAL = 1;
     const CATEGORY_PRESS_RELEASE = 2;
     const CATEGORY_PRESENTATION = 3;
@@ -43,12 +47,22 @@ class Mmfile extends CActiveRecord
     {
         return array(
             array('name, category', 'required'),
-            array('name', 'length', 'max'=>128),
             array('category', 'numerical', 'integerOnly'=>true),
             array('category', 'in', 'range' => array(
                 self::CATEGORY_GENERAL, self::CATEGORY_PRESS_RELEASE,
                 self::CATEGORY_PRESENTATION,
             )),
+            // Upload handler.
+            array(
+                'name',
+                'file',
+                'allowEmpty' => true,
+                // 'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                // 'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+            ),
 
             // array('id, name, category, massmedia_id', 'safe', 'on'=>'search'),
         );
@@ -74,6 +88,11 @@ class Mmfile extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
+            // Upload handler.
+            'UploadBehavior' => array(
+                'class' => 'application.components.behaviors.UploadBehavior',
+                'attributes' => array('name'),
+            ),
         );
     }
 
@@ -85,6 +104,7 @@ class Mmfile extends CActiveRecord
         return array(
             'id' => 'ID',
             'name' => 'Файл',
+            'type' => 'Тип',
             'category' => 'Категория',
             'massmedia_id' => 'Элемент СМИ',
         );
@@ -109,5 +129,25 @@ class Mmfile extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is saved.
+     * @return boolean whether the record should be saved.
+     */
+    public function beforeSave()
+    {
+        // If this file is image.
+        if(preg_match('~(http://www\.youtube\.com/watch\?v=[%&=#\w-]*)~', $this->name)){
+            $this->type = self::TYPE_IMAGE;
+        // If this file document.
+        } elseif(preg_match('~(http://www\.youtube\.com/watch\?v=[%&=#\w-]*)~', $this->name)){
+            $this->type = self::TYPE_DOCUMENT;
+        // Else just general file
+        } else {
+            $this->type = self::TYPE_GENERAL;
+        }
+
+        return parent::beforeSave();
     }
 }
