@@ -189,9 +189,10 @@ class Massmedia extends CActiveRecord
     public function beforeValidate()
     {
         // Relations with new models handler.
+        $this->withoutRelations('tags', 'links', 'files');
         $this->tagsTabular();
         $this->linksTabular();
-        $this->withoutRelations('tags', 'links', 'files');
+        $this->filesTabular();
 
         return parent::beforeValidate();
     }
@@ -204,8 +205,8 @@ class Massmedia extends CActiveRecord
         parent::afterSave();
 
         // Relations with new models handler.
-        $this->isNewRecord = false;
         $this->resetRelations();
+        $this->isNewRecord = false;
         foreach ($this->tags as $m) {
             $m->save();
         }
@@ -213,8 +214,13 @@ class Massmedia extends CActiveRecord
             $m->massmedia = $this;
             $m->save();
         }
+        foreach ($this->files as $m) {
+            $m->massmedia = $this;
+            $m->save();
+        }
         $this->saveRelation('tags', $this->relations['tags']);
         $this->saveRelation('links', $this->relations['links']);
+        $this->saveRelation('files', $this->relations['files']);
     }
 
     /**
@@ -290,6 +296,37 @@ class Massmedia extends CActiveRecord
             $this->addError(
                 'links',
                 'Неверно задано поле ' . $this->getAttributeLabel('links')
+            );
+        }
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds and creates models from tabular input.
+     */
+    public function filesTabular()
+    {
+        $valid = true;
+        $modelArray = array();
+
+        foreach ($this->files as $i => $attributes) {
+            $model = Mmfile::model()->findByPk($attributes['id']);
+            if ($model === null) {
+                $model = new Mmfile;
+            }
+
+            $model->attributes = $attributes;
+            $model->name = CUploadedFile::getInstance($model, "[$i]name");
+
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
+        }
+
+        $this->files = $modelArray;
+        if (!$valid) {
+            $this->addError(
+                'files',
+                'Неверно задано поле ' . $this->getAttributeLabel('files')
             );
         }
     }

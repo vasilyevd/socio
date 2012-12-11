@@ -10,18 +10,21 @@ class UploadBehavior extends CActiveRecordBehavior
     public function beforeSave()
     {
         foreach ($this->attributes as $attr) {
-            $upload = CUploadedFile::getInstance($this->owner, $attr);
-
-            if (!empty($upload)) {
-                // Remove old upload.
-                if (!empty($this->owner->$attr)) {
-                    $this->deleteUpload($attr);
-                }
-
+            if ($this->owner->$attr instanceof CUploadedFile) {
                 // Save new upload.
-                $this->owner->$attr = uniqid() . '.'
-                    . $upload->getExtensionName();
+                $upload = $this->owner->$attr;
+                $filename = uniqid() . '.' . $upload->getExtensionName();
+                $this->owner->$attr = $filename;
                 $upload->saveAs($this->getUploadPath($attr));
+
+                // Remove old upload.
+                if (!$this->owner->isNewRecord) {
+                    $currentClass = get_class($this->owner);
+                    $current = $currentClass::findByPk($this->owner->id);
+                    if ($current !== null) {
+                        $current->deleteUpload($attr);
+                    }
+                }
             }
         }
     }

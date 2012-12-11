@@ -103,7 +103,7 @@ class Mmfile extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'name' => 'Файл',
+            'name' => 'Название',
             'type' => 'Тип',
             'category' => 'Категория',
             'massmedia_id' => 'Элемент СМИ',
