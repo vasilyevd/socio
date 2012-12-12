@@ -72,7 +72,10 @@ class ImageController extends Controller
         {
             $model->attributes=$_POST['Image'];
 
+            // Relations.
             $model->organization_id = $org;
+            // Upload handler.
+            $model->file = CUploadedFile::getInstance($model, 'file');
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
@@ -98,6 +101,10 @@ class ImageController extends Controller
         if(isset($_POST['Image']))
         {
             $model->attributes=$_POST['Image'];
+
+            // Upload handler.
+            $model->file = CUploadedFile::getInstance($model, 'file');
+
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }

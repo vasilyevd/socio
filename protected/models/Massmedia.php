@@ -225,16 +225,16 @@ class Massmedia extends CActiveRecord
 
     /**
      * Relations with new models handler.
-     * Finds and creates models from tabular input.
+     * Finds, creates and validates models from tabular input.
      */
     public function tagsTabular()
     {
-        // Models finder.
+        $valid = true;
         $modelArray = array();
+
         if (!empty($this->tags)) {
             $tagsNames = explode(',', $this->tags);
 
-            // Create new models if don't exists.
             foreach ($tagsNames as $n) {
                 $model = Mmtag::model()->find(
                     'name=:name',
@@ -243,18 +243,16 @@ class Massmedia extends CActiveRecord
                 if ($model === null) {
                     $model = new Mmtag;
                 }
+
                 $model->name = $n;
 
+                $valid = $model->validate() && $valid;
                 $modelArray[] = $model;
             }
         }
-        $this->tags = $modelArray;
 
-        // Validation.
-        $valid = true;
-        foreach ($this->tags as $item) {
-            $valid = $item->validate() && $valid;
-        }
+
+        $this->tags = $modelArray;
         if (!$valid) {
             $this->addError(
                 'tags',
@@ -265,33 +263,26 @@ class Massmedia extends CActiveRecord
 
     /**
      * Relations with new models handler.
-     * Finds and creates models from tabular input.
+     * Finds, creates and validates models from tabular input.
      */
     public function linksTabular()
     {
-        // Models finder.
+        $valid = true;
         $modelArray = array();
+
         foreach ($this->links as $attributes) {
             $model = Mmlink::model()->findByPk($attributes['id']);
             if ($model === null) {
                 $model = new Mmlink;
             }
+
             $model->attributes = $attributes;
-            // Don't forget foreign key constraint.
-            // $model->massmedia = $this;
 
-            // Don't include empty names elements.
-            if (!empty($model->name)) {
-                $modelArray[] = $model;
-            }
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
         }
+
         $this->links = $modelArray;
-
-        // Validation.
-        $valid = true;
-        foreach ($this->links as $item) {
-            $valid = $item->validate() && $valid;
-        }
         if (!$valid) {
             $this->addError(
                 'links',
@@ -302,7 +293,7 @@ class Massmedia extends CActiveRecord
 
     /**
      * Relations with new models handler.
-     * Finds and creates models from tabular input.
+     * Finds, creates and validates models from tabular input.
      */
     public function filesTabular()
     {

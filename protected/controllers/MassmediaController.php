@@ -72,7 +72,7 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // Relations
+            // Relations.
             $model->organization = $org;
             $model->links = $_POST['Mmlink'];
             $model->files = $_POST['Mmfile'];
@@ -113,7 +113,7 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // Relations
+            // Relations.
             $model->links = $_POST['Mmlink'];
             $model->files = $_POST['Mmfile'];
 

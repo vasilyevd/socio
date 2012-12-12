@@ -9,6 +9,11 @@ class UploadBehavior extends CActiveRecordBehavior
      */
     public function beforeSave()
     {
+        // Find current model in database. If update.
+        if (!$this->owner->isNewRecord) {
+            $current = call_user_func(get_class($this->owner) . '::model')->findByPk($this->owner->id);
+        }
+
         foreach ($this->attributes as $attr) {
             if ($this->owner->$attr instanceof CUploadedFile) {
                 // Save new upload.
@@ -17,13 +22,14 @@ class UploadBehavior extends CActiveRecordBehavior
                 $this->owner->$attr = $filename;
                 $upload->saveAs($this->getUploadPath($attr));
 
-                // Remove old upload.
-                if (!$this->owner->isNewRecord) {
-                    $currentClass = get_class($this->owner);
-                    $current = $currentClass::findByPk($this->owner->id);
-                    if ($current !== null) {
-                        $current->deleteUpload($attr);
-                    }
+                // Remove old upload on update.
+                if (isset($current)) {
+                    $current->deleteUpload($attr);
+                }
+            } else {
+                // Don't override attribute on update. Restore old filename.
+                if (isset($current)) {
+                    $this->owner->$attr = $current->$attr;
                 }
             }
         }
