@@ -1,10 +1,12 @@
 <?php
 // Handle element copy.
-Yii::app()->clientScript->registerScriptFile(
-    Yii::app()->baseUrl.'/js/jquery.relcopy.js'
-);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.relcopy.js');
 Yii::app()->getClientScript()->registerScript('relCopy', "
-    jQuery('.copylink').relCopy();
+jQuery('.copylink').relCopy();
+$('.removelink').click(function(){
+    $(this).parent().slideUp(function(){ $(this).remove() });
+    return false;
+});
 ");
 ?>
 
@@ -80,18 +82,14 @@ Yii::app()->getClientScript()->registerScript('relCopy', "
         <?php echo $form->labelEx($model,'links'); ?>
         <?php $lastIndex = count($model->links) - 1; ?>
         <?php foreach ($model->links as $i => $l): ?>
-            <?php if ($i == $lastIndex): ?>
-                <div class="copy-links">
-            <?php endif; ?>
+            <div class="<?php echo $i == $lastIndex ? 'copy-' : 'copy-'; ?>links-row">
+                <?php echo $form->hiddenField($l,"[$i]id"); ?>
+                <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
 
-            <?php echo $form->hiddenField($l,"[$i]id"); ?>
-            <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
-
-            <?php if ($i == $lastIndex): ?>
-                </div>
-            <?php endif; ?>
+                <?php echo CHtml::link('Убрать', '#', array('class' => 'removelink')); ?>
+            </div>
         <?php endforeach; ?>
-        <a href="#" class="copylink" rel=".copy-links">Добавить</a>
+        <?php echo CHtml::link('Добавить', '#', array('class' => 'copylink', 'rel' => '.copy-links-row')); ?>
         <?php echo $form->error($model,'links'); ?>
     </div>
 

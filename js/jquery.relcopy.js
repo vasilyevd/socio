@@ -21,6 +21,12 @@
 
 (function($) {
 
+    var maxCounter = 1;
+
+    function findMaxCounter(element){
+        alert(element.attr('class'));
+    }
+
     $.fn.relCopy = function(options) {
         var settings = jQuery.extend({
             excludeSelector: ".exclude",
@@ -40,6 +46,10 @@
             $(this).click(function(){
                 var rel = $(this).attr('rel'); // rel in jquery selector format
                 var counter = $(rel).length;
+                // maxCounter = 0;
+                // alert(rel);
+                // Array.every($(rel), findMaxCounter);
+                // var counter = maxCounter;
 
                 // stop limit
                 if (settings.limit != 0 && counter >= settings.limit){
