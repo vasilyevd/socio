@@ -60,14 +60,22 @@ $('.removelink').click(function(){
     <div class="well">
         <?php echo $form->labelEx($model,'files'); ?>
         <?php $lastIndex = count($model->files) - 1; ?>
-        <?php foreach ($model->files as $i => $f): ?>
+        <?php foreach ($model->files as $i => $m): ?>
             <div class="copy-files-row" rel="copy<?php echo $i; ?>">
-                <?php echo $form->hiddenField($f,"[$i]id"); ?>
-                <?php echo $form->fileFieldRow($f,"[$i]name"); ?>
-                <?php echo CHtml::link(CHtml::encode($f->name), $f->getUploadUrl('name'), array('target' => '_blank', 'class' => 'exclude')); ?>
-                <?php echo $form->dropDownListRow($f,"[$i]category",Lookup::items('MmfileCategory'),array('prompt'=>'')); ?>
+                <?php echo $form->hiddenField($m,"[$i]id"); ?>
+
+                <?php echo $form->labelEx($m,"[$i]name"); ?>
+
+                <?php if (!empty($m->name)): ?>
+                    <div class="exclude"><?php echo CHtml::link(CHtml::encode($m->name), $m->getUploadUrl('name'), array('target' => '_blank')); ?></div>
+                <?php endif; ?>
+                <?php echo $form->fileField($m,"[$i]name"); ?>
+                <?php echo $form->dropDownList($m,"[$i]category",Lookup::items('MmfileCategory'),array('prompt'=>'')); ?>
 
                 <?php echo CHtml::link('Убрать', '#', array('class' => 'removelink')); ?>
+
+                <?php echo $form->error($m,"[$i]name"); ?>
+                <?php echo $form->error($m,"[$i]category"); ?>
             </div>
         <?php endforeach; ?>
         <?php echo CHtml::link('Добавить', '#', array('class' => 'copylink btn btn-info btn-small', 'rel' => '.copy-files-row')); ?>
@@ -77,12 +85,16 @@ $('.removelink').click(function(){
     <div class="well">
         <?php echo $form->labelEx($model,'links'); ?>
         <?php $lastIndex = count($model->links) - 1; ?>
-        <?php foreach ($model->links as $i => $l): ?>
+        <?php foreach ($model->links as $i => $m): ?>
             <div class="copy-links-row" rel="copy<?php echo $i; ?>">
-                <?php echo $form->hiddenField($l,"[$i]id"); ?>
-                <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
+                <?php echo $form->hiddenField($m,"[$i]id"); ?>
 
+                <?php echo $form->labelEx($m,"[$i]name"); ?>
+
+                <?php echo $form->textField($m,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
                 <?php echo CHtml::link('Убрать', '#', array('class' => 'removelink')); ?>
+
+                <?php echo $form->error($m,"[$i]name"); ?>
             </div>
         <?php endforeach; ?>
         <?php echo CHtml::link('Добавить', '#', array('class' => 'copylink btn btn-info btn-small', 'rel' => '.copy-links-row')); ?>

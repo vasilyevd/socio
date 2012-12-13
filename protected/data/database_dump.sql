@@ -360,7 +360,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +369,7 @@ CREATE TABLE `org_mmfile` (
 
 LOCK TABLES `org_mmfile` WRITE;
 /*!40000 ALTER TABLE `org_mmfile` DISABLE KEYS */;
-INSERT INTO `org_mmfile` VALUES (3,'50c7564a59a8d.jpg',1,3,40);
+INSERT INTO `org_mmfile` VALUES (6,'50c9ff55367f6.jpg',1,2,40),(7,'50c9ff554c2b4.ogg',1,2,40);
 /*!40000 ALTER TABLE `org_mmfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,4 +615,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-13 14:29:52
+-- Dump completed on 2012-12-13 18:18:49
