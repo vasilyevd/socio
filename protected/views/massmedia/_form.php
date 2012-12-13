@@ -4,7 +4,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.r
 Yii::app()->getClientScript()->registerScript('relCopy', "
 jQuery('.copylink').relCopy();
 $('.removelink').click(function(){
-    $(this).parent().slideUp(function(){ $(this).remove() });
+    if ($('.' + $(this).parent().attr('class')).length > 1){
+        $(this).parent().slideUp(function(){ $(this).remove() });
+    };
     return false;
 });
 ");
@@ -59,22 +61,16 @@ $('.removelink').click(function(){
         <?php echo $form->labelEx($model,'files'); ?>
         <?php $lastIndex = count($model->files) - 1; ?>
         <?php foreach ($model->files as $i => $f): ?>
-            <?php if ($i == $lastIndex): ?>
-                <div class="copy-files">
-            <?php endif; ?>
+            <div class="copy-files-row" rel="copy<?php echo $i; ?>">
+                <?php echo $form->hiddenField($f,"[$i]id"); ?>
+                <?php echo $form->fileFieldRow($f,"[$i]name"); ?>
+                <?php echo CHtml::link(CHtml::encode($f->name), $f->getUploadUrl('name'), array('target' => '_blank', 'class' => 'exclude')); ?>
+                <?php echo $form->dropDownListRow($f,"[$i]category",Lookup::items('MmfileCategory'),array('prompt'=>'')); ?>
 
-            <?php echo $form->hiddenField($f,"[$i]id"); ?>
-            <?php echo $form->labelEx($f,"[$i]name"); ?>
-            <?php echo $form->fileField($f,"[$i]name"); ?>
-            <?php echo $form->dropDownList($f,"[$i]category",Lookup::items('MmfileCategory'),array('prompt'=>'')); ?>
-            <?php echo $form->error($f,"[$i]name"); ?>
-            <?php echo $form->error($f,"[$i]category"); ?>
-
-            <?php if ($i == $lastIndex): ?>
-                </div>
-            <?php endif; ?>
+                <?php echo CHtml::link('Убрать', '#', array('class' => 'removelink')); ?>
+            </div>
         <?php endforeach; ?>
-        <a href="#" class="copylink" rel=".copy-files">Добавить</a>
+        <?php echo CHtml::link('Добавить', '#', array('class' => 'copylink btn btn-info btn-small', 'rel' => '.copy-files-row')); ?>
         <?php echo $form->error($model,'files'); ?>
     </div>
 
@@ -82,14 +78,14 @@ $('.removelink').click(function(){
         <?php echo $form->labelEx($model,'links'); ?>
         <?php $lastIndex = count($model->links) - 1; ?>
         <?php foreach ($model->links as $i => $l): ?>
-            <div class="<?php echo $i == $lastIndex ? 'copy-' : 'copy-'; ?>links-row">
+            <div class="copy-links-row" rel="copy<?php echo $i; ?>">
                 <?php echo $form->hiddenField($l,"[$i]id"); ?>
                 <?php echo $form->textFieldRow($l,"[$i]name",array('class'=>'span5','maxlength'=>128)); ?>
 
                 <?php echo CHtml::link('Убрать', '#', array('class' => 'removelink')); ?>
             </div>
         <?php endforeach; ?>
-        <?php echo CHtml::link('Добавить', '#', array('class' => 'copylink', 'rel' => '.copy-links-row')); ?>
+        <?php echo CHtml::link('Добавить', '#', array('class' => 'copylink btn btn-info btn-small', 'rel' => '.copy-links-row')); ?>
         <?php echo $form->error($model,'links'); ?>
     </div>
 

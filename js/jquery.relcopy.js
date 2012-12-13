@@ -21,12 +21,6 @@
 
 (function($) {
 
-    var maxCounter = 1;
-
-    function findMaxCounter(element){
-        alert(element.attr('class'));
-    }
-
     $.fn.relCopy = function(options) {
         var settings = jQuery.extend({
             excludeSelector: ".exclude",
@@ -45,11 +39,16 @@
             // set click action
             $(this).click(function(){
                 var rel = $(this).attr('rel'); // rel in jquery selector format
-                var counter = $(rel).length;
-                // maxCounter = 0;
-                // alert(rel);
-                // Array.every($(rel), findMaxCounter);
-                // var counter = maxCounter;
+                // var counter = $(rel).length;
+
+                // *** Rei extension for resilient counter.
+                var counter = 0;
+                $(rel).each(function(index) {
+                    var currentCounter = parseInt($(this).attr('rel').match(/copy(\d+)/)[1], 10);
+                    if (currentCounter >= counter) {
+                        counter = currentCounter + 1;
+                    }
+                });
 
                 // stop limit
                 if (settings.limit != 0 && counter >= settings.limit){
@@ -58,7 +57,11 @@
 
                 var master = $(rel+":first");
                 var parent = $(master).parent();
-                var clone = $(master).clone(true).addClass(settings.copyClass+counter).append(settings.append);
+                // var clone = $(master).clone(true).addClass(settings.copyClass+counter).append(settings.append);
+
+                // *** Rei extension for resilient counter.
+                var clone = $(master).clone(true).append(settings.append);
+                $(clone).attr('rel', settings.copyClass+counter);
 
                 //Remove Elements with excludeSelector
                 if (settings.excludeSelector){
@@ -71,30 +74,26 @@
                 };
 
                 // Increment Clone IDs
-                var re = /_(\d+)/;
+                var re = /_\d+/;
                 if ( $(clone).attr('id') ){
-                    var prevCounter = parseInt($(clone).attr('id').match(re)[1], 10);
-                    var newattr = $(clone).attr('id').replace(re, "_" + (counter + prevCounter));
+                    var newattr = $(clone).attr('id').replace(re, "_" + counter);
                     $(clone).attr('id', newattr);
                 };
                 // Increment Clone Children IDs
                 $(clone).find('[id]').each(function(){
-                    var prevCounter = parseInt($(this).attr('id').match(re)[1], 10);
-                    var newattr = $(this).attr('id').replace(re, "_" + (counter + prevCounter));
+                    var newattr = $(this).attr('id').replace(re, "_" + counter);
                     $(this).attr('id', newattr);
                 });
 
                 // Increment Clone names
-                var re = /\[(\d+)\]\[/;
+                var re = /\[\d+\]\[/;
                 if ( $(clone).attr('name') ){
-                    var prevCounter = parseInt($(clone).attr('name').match(re)[1], 10);
-                    var newattr = $(clone).attr('name').replace(re, "[" + (counter + prevCounter) + "][");
+                    var newattr = $(clone).attr('name').replace(re, "[" + counter + "][");
                     $(clone).attr('name', newattr);
                 };
                 // Increment Clone Children names
                 $(clone).find('[name]').each(function(){
-                    var prevCounter = parseInt($(this).attr('name').match(re)[1], 10);
-                    var newattr = $(this).attr('name').replace(re, "[" + (counter + prevCounter) + "][");
+                    var newattr = $(this).attr('name').replace(re, "[" + counter + "][");
                     $(this).attr('name', newattr);
                 });
 
