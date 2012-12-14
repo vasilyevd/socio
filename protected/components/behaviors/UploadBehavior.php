@@ -3,13 +3,23 @@
 class UploadBehavior extends CActiveRecordBehavior
 {
     public $attributes = array();
+    public $originalModel;
     public $uploadOffset;
 
     /**
-     * Set uploads to attributes.
+     * Allow upload attributes to only store not empty 'CUploadedFile' or
+     * original filenames and not some random strings.
      */
     public function beforeValidate()
     {
+        // Remember original model.
+        $originalClass = get_class($this->owner);
+        if ($this->owner->isNewRecord) {
+            $this->originalModel = new $originalClass;
+        } else {
+            $this->originalModel = call_user_func($originalClass . '::model')->findByPk($this->owner->id);
+        }
+
         foreach ($this->attributes as $attr) {
             // Apply offset to upload.
             if (isset($this->uploadOffset)) {
@@ -18,25 +28,42 @@ class UploadBehavior extends CActiveRecordBehavior
                 $upload = CUploadedFile::getInstance($this->owner, $attr);
             }
 
-            if (!empty($upload)) {
+            // Override attribute only with 'CUploadedFile'.
+            if (empty($upload)) {
+                $this->owner->$attr = $this->originalModel->$attr;
+            } else {
                 $this->owner->$attr = $upload;
             }
         }
     }
 
     /**
-     * Saves upload files with model attributes.
+     * Saves files with model attributes and deletes old ones.
      */
     public function beforeSave()
     {
         foreach ($this->attributes as $attr) {
             if ($this->owner->$attr instanceof CUploadedFile) {
-                // Save new upload.
+                // Save new upload and set new filename to attribute.
                 $upload = $this->owner->$attr;
-                $filename = uniqid() . '.' . $upload->getExtensionName();
-                $this->owner->$attr = $filename;
+                $this->owner->$attr = uniqid() . '.' . $upload->getExtensionName();
                 $upload->saveAs($this->getUploadPath($attr));
+
+                // Delete old upload on update.
+                if (!$this->owner->isNewRecord) {
+                    $this->originalModel->deleteUpload($attr);
+                }
             }
+        }
+    }
+
+    /**
+     * Remove all uploads from all attributes.
+     */
+    public function afterDelete()
+    {
+        foreach ($this->attributes as $attr) {
+            $this->deleteUpload($attr);
         }
     }
 
@@ -66,5 +93,22 @@ class UploadBehavior extends CActiveRecordBehavior
             . $attribute . '/'
             . $this->owner->$attribute
         );
+    }
+
+    /**
+     * Finds and deletes uploaded file by its attribute.
+     * @param string $attribute the name of upload model attribute.
+     */
+    public function deleteUpload($attribute)
+    {
+        // Don't delete with empty attribute field.
+        // Don't delete placeholder image.
+        if (!empty($this->owner->$attribute) && $this->owner->$attribute != 'placeholder.jpg') {
+            // Remove file.
+            unlink($this->getUploadPath($attribute));
+
+            // Empty attribute.
+            $this->owner->$attribute = '';
+        }
     }
 }

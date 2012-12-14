@@ -40,13 +40,6 @@ class EActiveRecordRelationBehavior extends CActiveRecordBehavior
     private $_transaction;
 
     /**
-     *  WARNING!
-     *  REI EDIT.
-     *  Holds relations to be used
-     */
-    protected $_enabledRelations=null;
-
-    /**
      * Declares events and the corresponding event handler methods.
      * @return array events (array keys) and the corresponding event handler methods (array values).
      * @see CBehavior::events
@@ -125,9 +118,7 @@ class EActiveRecordRelationBehavior extends CActiveRecordBehavior
             /** @var CDbCommandBuilder $commandBuilder */
             $commandBuilder=$this->owner->dbConnection->commandBuilder;
 
-            // WARNING: REI EDIT.
-            // foreach($this->owner->relations() as $name => $relation)
-            foreach($this->getRelations() as $name => $relation)
+            foreach($this->owner->relations() as $name => $relation)
             {
                 switch($relation[0]) // relation type such as BELONGS_TO, HAS_ONE, HAS_MANY, MANY_MANY
                 {
@@ -212,10 +203,17 @@ class EActiveRecordRelationBehavior extends CActiveRecordBehavior
                         $criteria->addNotInCondition(CActiveRecord::model($relation[1])->tableSchema->primaryKey, $newPKs);
                         // @todo add support for composite primary keys
                         $criteria->addColumnCondition(array($relation[2]=>$this->owner->getPrimaryKey()));
-                        if (CActiveRecord::model($relation[1])->tableSchema->getColumn($relation[2])->allowNull) {
-                            CActiveRecord::model($relation[1])->updateAll(array($relation[2]=>null), $criteria);
-                        } else {
-                            CActiveRecord::model($relation[1])->deleteAll($criteria);
+                        // if (CActiveRecord::model($relation[1])->tableSchema->getColumn($relation[2])->allowNull) {
+                        //     CActiveRecord::model($relation[1])->updateAll(array($relation[2]=>null), $criteria);
+                        // } else {
+                        //     CActiveRecord::model($relation[1])->deleteAll($criteria);
+                        // }
+
+                        // REI EDIT: manually delete all 'HAS_MANY' models. To
+                        // preserve delete events ('afterDelete' etc.).
+                        $deleteModels = CActiveRecord::model($relation[1])->findAll($criteria);
+                        foreach ($deleteModels as $m) {
+                            $m->delete();
                         }
 
                         /** @var CActiveRecord $record */
@@ -365,187 +363,6 @@ class EActiveRecordRelationBehavior extends CActiveRecordBehavior
 
         return array($joinTable, $fks);
     }
-
-
-
-
-    // REI EDIT!
-
-    /**
-    * Scope: Resets the enabled relations to default (Owner's)
-    * @return CActiveRecord $owner
-    */
-    public function resetRelations()
-    {
-        $this->_enabledRelations=null;
-        return $this->owner;
-    }
-
-    /**
-    * Scope: Sets the enabled relations to be used
-    * @param String relation names
-    * @param String ...
-    *
-    * @return CActiveRecord $owner
-    */
-    public function withRelations()
-    {
-        $this->_enabledRelations=func_get_args();
-        return $this->owner;
-    }
-
-    /**
-    * Scope: Exclude relations from owner's to be used
-    * @param String relation name
-    * @param String ...
-    *
-    * @return CActiveRecord $owner
-    */
-    public function withoutRelations()
-    {
-        $this->_enabledRelations=array_diff(array_keys($this->owner->relations()),func_get_args());
-        return $this->owner;
-    }
-
-    /**
-    * Return the enabled relations
-    * @return Array filtered owner relations
-    */
-    protected function getRelations()
-    {
-        if (is_null($this->_enabledRelations))  return $this->owner->relations();
-
-        return array_intersect_key($this->owner->relations(), array_flip($this->_enabledRelations));
-    }
-
-
-
-
-    // REI EDIT!
-
-    public function saveRelation($name, $relation)
-    {
-        try {
-            /** @var CDbCommandBuilder $commandBuilder */
-            $commandBuilder=$this->owner->dbConnection->commandBuilder;
-
-            // WARNING: REI EDIT.
-            // foreach($this->owner->relations() as $name => $relation)
-            // {
-                switch($relation[0]) // relation type such as BELONGS_TO, HAS_ONE, HAS_MANY, MANY_MANY
-                {
-                    /* MANY_MANY: this corresponds to the many-to-many relationship in database.
-                     *            An associative table is needed to break a many-to-many relationship into one-to-many
-                     *            relationships, as most DBMS do not support many-to-many relationship directly.
-                     */
-                    case CActiveRecord::MANY_MANY:
-
-                        if (!$this->owner->hasRelated($name) || !$this->isRelationSupported($relation))
-                            break;
-
-                        Yii::trace('updating MANY_MANY table for relation '.get_class($this->owner).'.'.$name,'system.db.ar.CActiveRecord');
-
-                        // get table and fk information
-                        list($relationTable, $fks)=$this->parseManyManyFk($name, $relation);
-
-                        // get pks of the currently related records
-                        $newPKs=$this->getNewManyManyPks($name);
-
-
-                        // 1. delete relation table entries for records that have been removed from relation
-                        // @todo add support for composite primary keys
-                        $criteria=new CDbCriteria();
-                        $criteria->addNotInCondition($fks[1], $newPKs)
-                                 ->addColumnCondition(array($fks[0]=>$this->owner->getPrimaryKey()));
-                        $commandBuilder->createDeleteCommand($relationTable, $criteria)->execute();
-
-
-                        // 2. add new entries to relation table
-                        // @todo add support for composite primary keys
-                        $oldPKs=$this->getOldManyManyPks($name);
-                        foreach($newPKs as $fk) {
-                            if (!in_array($fk, $oldPKs)) {
-                                $commandBuilder->createInsertCommand($relationTable, array(
-                                    $fks[0] => $this->owner->getPrimaryKey(),
-                                    $fks[1] => $fk,
-                                ))->execute();
-                            }
-                        }
-
-                        // refresh relation data
-                        //$this->owner->getRelated($name, true); // will come back with github issue #4
-
-                    break;
-                    // HAS_MANY: if the relationship between table A and B is one-to-many, then A has many B
-                    //           (e.g. User has many Post);
-                    // HAS_ONE: this is special case of HAS_MANY where A has at most one B
-                    //          (e.g. User has at most one Profile);
-                    // need to change the foreign ARs attributes
-                    case CActiveRecord::HAS_MANY:
-                    case CActiveRecord::HAS_ONE:
-
-                        if (!$this->owner->hasRelated($name) || !$this->isRelationSupported($relation))
-                            break;
-
-                        Yii::trace(
-                            'updating '.(($relation[0]==CActiveRecord::HAS_ONE)?'HAS_ONE':'HAS_MANY').
-                            ' foreign-key field for relation '.get_class($this->owner).'.'.$name,
-                            'system.db.ar.CActiveRecord'
-                        );
-
-                        $newRelatedRecords=$this->owner->getRelated($name, false);
-
-                        if ($relation[0]==CActiveRecord::HAS_MANY && !is_array($newRelatedRecords))
-                            throw new CDbException('A HAS_MANY relation needs to be an array of records or primary keys!');
-
-                        // HAS_ONE is special case of HAS_MANY, so we have array with one or no element
-                        if ($relation[0]==CActiveRecord::HAS_ONE) {
-                            if ($newRelatedRecords===null)
-                                $newRelatedRecords=array();
-                            else
-                                $newRelatedRecords=array($newRelatedRecords);
-                        }
-
-                        // get related records as objects and primary keys
-                        $newRelatedRecords=$this->primaryKeysToObjects($newRelatedRecords, $relation[1]);
-                        $newPKs=$this->objectsToPrimaryKeys($newRelatedRecords);
-
-                        // update all not anymore related records
-                        $criteria=new ECompositeDbCriteria();
-                        $criteria->addNotInCondition(CActiveRecord::model($relation[1])->tableSchema->primaryKey, $newPKs);
-                        // @todo add support for composite primary keys
-                        $criteria->addColumnCondition(array($relation[2]=>$this->owner->getPrimaryKey()));
-                        if (CActiveRecord::model($relation[1])->tableSchema->getColumn($relation[2])->allowNull) {
-                            CActiveRecord::model($relation[1])->updateAll(array($relation[2]=>null), $criteria);
-                        } else {
-                            CActiveRecord::model($relation[1])->deleteAll($criteria);
-                        }
-
-                        /** @var CActiveRecord $record */
-                        foreach($newRelatedRecords as $record) {
-                            // only save if relation did not exist
-                            // @todo add support for composite primary keys
-                            if ($record->{$relation[2]}===null || $record->{$relation[2]} !=  $this->owner->getPrimaryKey()) {
-                                $record->saveAttributes(array($relation[2] => $this->owner->getPrimaryKey()));
-                            }
-                        }
-
-                    break;
-                }
-            // }
-            // // commit internal transaction if one exists
-            // if ($this->_transaction!==null)
-            //     $this->_transaction->commit();
-
-        } catch(Exception $e) {
-            // // roll back internal transaction if one exists
-            // if ($this->_transaction!==null)
-            //     $this->_transaction->rollback();
-            // re-throw exception
-            throw $e;
-        }
-    }
-
 }
 
 /**

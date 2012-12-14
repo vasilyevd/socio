@@ -170,6 +170,19 @@ class Massmedia extends CActiveRecord
     }
 
     /**
+     * This is invoked before the record is validated.
+     */
+    public function beforeValidate()
+    {
+        // Relations with new models handler.
+        $this->tagsTabular();
+        $this->linksTabular();
+        $this->filesTabular();
+
+        return parent::beforeValidate();
+    }
+
+    /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
      */
@@ -180,47 +193,12 @@ class Massmedia extends CActiveRecord
             $this->create_time = new CDbExpression('NOW()');
         }
 
+        // Relations with new models handler.
+        foreach ($this->tags as $m) $m->save();
+        foreach ($this->links as $m) $m->save();
+        foreach ($this->files as $m) $m->save();
+
         return parent::beforeSave();
-    }
-
-    /**
-     * This is invoked before the record is validated.
-     */
-    public function beforeValidate()
-    {
-        // Relations with new models handler.
-        $this->withoutRelations('tags', 'links', 'files');
-        $this->tagsTabular();
-        $this->linksTabular();
-        $this->filesTabular();
-
-        return parent::beforeValidate();
-    }
-
-    /**
-     * This is invoked after the record is saved.
-     */
-    public function afterSave()
-    {
-        parent::afterSave();
-
-        // Relations with new models handler.
-        $this->resetRelations();
-        $this->isNewRecord = false;
-        foreach ($this->tags as $m) {
-            $m->save();
-        }
-        foreach ($this->links as $m) {
-            $m->massmedia = $this;
-            $m->save();
-        }
-        foreach ($this->files as $m) {
-            $m->massmedia = $this;
-            $m->save();
-        }
-        $this->saveRelation('tags', $this->relations['tags']);
-        $this->saveRelation('links', $this->relations['links']);
-        $this->saveRelation('files', $this->relations['files']);
     }
 
     /**
@@ -251,14 +229,8 @@ class Massmedia extends CActiveRecord
             }
         }
 
-
         $this->tags = $modelArray;
-        if (!$valid) {
-            $this->addError(
-                'tags',
-                'Неверно задано поле ' . $this->getAttributeLabel('tags')
-            );
-        }
+        if (!$valid) $this->addError('tags', 'Неверно задано поле ' . $this->getAttributeLabel('tags'));
     }
 
     /**
@@ -283,12 +255,7 @@ class Massmedia extends CActiveRecord
         }
 
         $this->links = $modelArray;
-        if (!$valid) {
-            $this->addError(
-                'links',
-                'Неверно задано поле ' . $this->getAttributeLabel('links')
-            );
-        }
+        if (!$valid) $this->addError('links', 'Неверно задано поле ' . $this->getAttributeLabel('links'));
     }
 
     /**
@@ -307,7 +274,6 @@ class Massmedia extends CActiveRecord
             }
 
             $model->attributes = $attributes;
-            // $model->name = CUploadedFile::getInstance($model, "[$i]name");
             $model->uploadOffset = $i;
 
             $valid = $model->validate() && $valid;
@@ -315,12 +281,7 @@ class Massmedia extends CActiveRecord
         }
 
         $this->files = $modelArray;
-        if (!$valid) {
-            $this->addError(
-                'files',
-                'Неверно задано поле ' . $this->getAttributeLabel('files')
-            );
-        }
+        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
     }
 
     /**
