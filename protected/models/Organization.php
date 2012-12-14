@@ -261,11 +261,11 @@ class Organization extends CActiveRecord
 
             // TODO: get author form user model.
             $this->author_id = 1;
-        }
 
-        // Set default logo.
-        if (empty($this->logo)) {
-            $this->logo = 'placeholder.jpg';
+            // Set default logo.
+            if (empty($this->logo)) {
+                $this->logo = 'placeholder.jpg';
+            }
         }
 
         // Get group from type relation.

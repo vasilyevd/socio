@@ -72,9 +72,10 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // Relations
+            // Relations.
             $model->organization = $org;
             $model->links = $_POST['Mmlink'];
+            $model->files = $_POST['Mmfile'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
@@ -82,6 +83,14 @@ class MassmediaController extends Controller
 
         // Show tags relation as imploded string.
         $model->tagsToString();
+        // Need at least one link for copy.
+        if (empty($model->links)) {
+            $model->links = array(new Mmlink);
+        }
+        // Need at least one file for copy.
+        if (empty($model->files)) {
+            $model->files = array(new Mmfile);
+        }
 
         $this->render('create',array(
             'model'=>$model,
@@ -104,8 +113,9 @@ class MassmediaController extends Controller
         {
             $model->attributes=$_POST['Massmedia'];
 
-            // Relations
+            // Relations.
             $model->links = $_POST['Mmlink'];
+            $model->files = $_POST['Mmfile'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
@@ -113,6 +123,14 @@ class MassmediaController extends Controller
 
         // Show tags relation as imploded string.
         $model->tagsToString();
+        // Need at least one link for copy.
+        if (empty($model->links)) {
+            $model->links = array(new Mmlink);
+        }
+        // Need at least one file for copy.
+        if (empty($model->files)) {
+            $model->files = array(new Mmfile);
+        }
 
         $this->render('update',array(
             'model'=>$model,

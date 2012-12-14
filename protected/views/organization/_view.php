@@ -4,7 +4,7 @@
             <div class="span1">
                 <?php echo CHtml::link(
                     CHtml::image(
-                        $data->getUploadUrl('logo', $data->logo),
+                        $data->getUploadUrl('logo'),
                         'Organization logo'
                     ),
                     array('view', 'id' => $data->id),
