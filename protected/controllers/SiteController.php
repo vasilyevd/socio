@@ -120,8 +120,8 @@ class SiteController extends Controller
 
         foreach ($model->images as $img) {
             $jsonArray[] = array(
-                'thumb' => $img->getUploadUrl('file', $img->file),
-                'image' => $img->getUploadUrl('file', $img->file),
+                'thumb' => $img->getUploadUrl('file'),
+                'image' => $img->getUploadUrl('file'),
             );
         }
 

@@ -58,6 +58,16 @@ class Massmedia extends CActiveRecord
                 self::CATEGORY_SOCIAL_ADVERTISING,
             )),
             array('direction', 'boolean'),
+            array(
+                'files',
+                'file',
+                'allowEmpty' => true,
+                'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                // 'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+            ),
 
             array('title, tags', 'safe', 'on'=>'search'),
         );
@@ -84,6 +94,7 @@ class Massmedia extends CActiveRecord
                 'massmedia_id',
                 'condition' => 'linksYoutube.type=' . Mmlink::TYPE_YOUTUBE,
             ),
+            'files' => array(self::HAS_MANY, 'Mmfile', 'massmedia_id'),
         );
     }
 
@@ -159,6 +170,19 @@ class Massmedia extends CActiveRecord
     }
 
     /**
+     * This is invoked before the record is validated.
+     */
+    public function beforeValidate()
+    {
+        // Relations with new models handler.
+        $this->tagsTabular();
+        $this->linksTabular();
+        $this->filesTabular();
+
+        return parent::beforeValidate();
+    }
+
+    /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
      */
@@ -169,55 +193,26 @@ class Massmedia extends CActiveRecord
             $this->create_time = new CDbExpression('NOW()');
         }
 
+        // Relations with new models handler.
+        foreach ($this->tags as $m) $m->save();
+        foreach ($this->links as $m) $m->save();
+        foreach ($this->files as $m) $m->save();
+
         return parent::beforeSave();
     }
 
     /**
-     * This is invoked before the record is validated.
-     */
-    public function beforeValidate()
-    {
-        // Relations with new models handler.
-        $this->tagsTabular();
-        $this->linksTabular();
-        $this->withoutRelations('tags', 'links');
-
-        return parent::beforeValidate();
-    }
-
-    /**
-     * This is invoked after the record is saved.
-     */
-    public function afterSave()
-    {
-        parent::afterSave();
-
-        // Relations with new models handler.
-        $this->isNewRecord = false;
-        $this->resetRelations();
-        foreach ($this->tags as $m) {
-            $m->save();
-        }
-        foreach ($this->links as $m) {
-            $m->massmedia = $this;
-            $m->save();
-        }
-        $this->saveRelation('tags', $this->relations['tags']);
-        $this->saveRelation('links', $this->relations['links']);
-    }
-
-    /**
      * Relations with new models handler.
-     * Finds and creates models from tabular input.
+     * Finds, creates and validates models from tabular input.
      */
     public function tagsTabular()
     {
-        // Models finder.
+        $valid = true;
         $modelArray = array();
+
         if (!empty($this->tags)) {
             $tagsNames = explode(',', $this->tags);
 
-            // Create new models if don't exists.
             foreach ($tagsNames as $n) {
                 $model = Mmtag::model()->find(
                     'name=:name',
@@ -226,61 +221,67 @@ class Massmedia extends CActiveRecord
                 if ($model === null) {
                     $model = new Mmtag;
                 }
+
                 $model->name = $n;
 
+                $valid = $model->validate() && $valid;
                 $modelArray[] = $model;
             }
         }
-        $this->tags = $modelArray;
 
-        // Validation.
-        $valid = true;
-        foreach ($this->tags as $item) {
-            $valid = $item->validate() && $valid;
-        }
-        if (!$valid) {
-            $this->addError(
-                'tags',
-                'Неверно задано поле ' . $this->getAttributeLabel('tags')
-            );
-        }
+        $this->tags = $modelArray;
+        if (!$valid) $this->addError('tags', 'Неверно задано поле ' . $this->getAttributeLabel('tags'));
     }
 
     /**
      * Relations with new models handler.
-     * Finds and creates models from tabular input.
+     * Finds, creates and validates models from tabular input.
      */
     public function linksTabular()
     {
-        // Models finder.
+        $valid = true;
         $modelArray = array();
+
         foreach ($this->links as $attributes) {
             $model = Mmlink::model()->findByPk($attributes['id']);
             if ($model === null) {
                 $model = new Mmlink;
             }
+
             $model->attributes = $attributes;
-            // Don't forget foreign key constraint.
-            // $model->massmedia = $this;
 
-            // Don't include empty names elements.
-            if (!empty($model->name)) {
-                $modelArray[] = $model;
-            }
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
         }
+
         $this->links = $modelArray;
+        if (!$valid) $this->addError('links', 'Неверно задано поле ' . $this->getAttributeLabel('links'));
+    }
 
-        // Validation.
+    /**
+     * Relations with new models handler.
+     * Finds, creates and validates models from tabular input.
+     */
+    public function filesTabular()
+    {
         $valid = true;
-        foreach ($this->links as $item) {
-            $valid = $item->validate() && $valid;
+        $modelArray = array();
+
+        foreach ($this->files as $i => $attributes) {
+            $model = Mmfile::model()->findByPk($attributes['id']);
+            if ($model === null) {
+                $model = new Mmfile;
+            }
+
+            $model->attributes = $attributes;
+            $model->uploadOffset = $i;
+
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
         }
-        if (!$valid) {
-            $this->addError(
-                'links',
-                'Неверно задано поле ' . $this->getAttributeLabel('links')
-            );
-        }
+
+        $this->files = $modelArray;
+        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
     }
 
     /**
