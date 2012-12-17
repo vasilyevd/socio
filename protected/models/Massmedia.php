@@ -80,6 +80,7 @@ class Massmedia extends CActiveRecord
     {
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
+            'company' => array(self::BELONGS_TO, 'Mmcompany', 'mmcompany_id'),
             'tags' => array(self::MANY_MANY, 'Mmtag', 'org_massmedia_mmtag(massmedia_id, mmtag_id)'),
             'links' => array(self::HAS_MANY, 'Mmlink', 'massmedia_id'),
             'linksGeneral' => array(
@@ -174,7 +175,8 @@ class Massmedia extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Relations with new models handler.
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Find or create objects and validate.
         $this->tagsTabular();
         $this->linksTabular();
         $this->filesTabular();
@@ -193,12 +195,28 @@ class Massmedia extends CActiveRecord
             $this->create_time = new CDbExpression('NOW()');
         }
 
-        // Relations with new models handler.
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Save new models.
         foreach ($this->tags as $m) $m->save();
         foreach ($this->links as $m) $m->save();
         foreach ($this->files as $m) $m->save();
 
         return parent::beforeSave();
+    }
+
+    /**
+     * This is invoked after the record is saved.
+     */
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        // Relations with new models handler 'HAS_MANY'.
+        // Delete old models.
+        $deleteModels = Mmlink::model()->findAllByAttributes(array('massmedia_id' => null));
+        foreach ($deleteModels as $m) $m->delete();
+        $deleteModels = Mmfile::model()->findAllByAttributes(array('massmedia_id' => null));
+        foreach ($deleteModels as $m) $m->delete();
     }
 
     /**

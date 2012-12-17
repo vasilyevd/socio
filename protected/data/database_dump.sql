@@ -270,7 +270,7 @@ CREATE TABLE `org_lookup` (
   `type` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3);
+INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'MmcompanyType',1),(53,'Рекламная',2,'MmcompanyType',2),(54,'Правовая',3,'MmcompanyType',3),(55,'Пиар',4,'MmcompanyType',4);
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,11 +298,14 @@ CREATE TABLE `org_massmedia` (
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `create_time` datetime NOT NULL,
   `organization_id` int(11) NOT NULL,
+  `mmcompany_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
+  KEY `mmcompany_id` (`mmcompany_id`),
+  CONSTRAINT `org_massmedia_ibfk_2` FOREIGN KEY (`mmcompany_id`) REFERENCES `org_mmcompany` (`id`) ON DELETE SET NULL,
   CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +314,7 @@ CREATE TABLE `org_massmedia` (
 
 LOCK TABLES `org_massmedia` WRITE;
 /*!40000 ALTER TABLE `org_massmedia` DISABLE KEYS */;
-INSERT INTO `org_massmedia` VALUES (1,'Первый элемент',0,0,'<p>sdfs <b>dfsdfs</b> dfsdfsdfsdf\n</p>','2012-11-29 16:18:32',1),(2,'тест',0,0,'ываыв аываываыа','2012-11-30 12:48:29',1),(3,'sdf test22 22',0,0,'sdfs dfsdfsd fsdf','2012-11-30 12:50:47',1),(4,'тест 333',0,0,'ываы ваываыва ываыва','2012-11-30 13:32:06',1),(5,'test more',0,0,'sdf sdfs dfs df','2012-11-30 15:27:08',1),(6,'sdfsd fsdf sdf',0,0,'sd fsdfs dfsd fsdf','2012-12-03 14:26:39',1),(7,'sdf sdfs',0,0,'dfsdf sdf sdf','2012-12-03 14:29:06',1),(8,'sd fsdf sdfsd ',0,0,'dsfsdf sdfsdf sdf','2012-12-03 14:29:35',1),(9,'sdfsdfs',0,0,'dfsdfsdf','2012-12-03 15:43:22',1),(11,'sdfs dfsdsss',0,0,'sdfsdfsd fsdf','2012-12-03 16:38:29',1),(13,'test',0,0,'<p> sdfsdfsdfsdf</p>','2012-12-04 16:35:39',1),(14,'test',0,0,'<p> sdfsdfsdf</p>','2012-12-04 16:38:29',1),(15,'sdfsdf',0,0,'<p> sdfsdf</p>','2012-12-04 16:42:14',1),(16,'test',0,0,'<p> sdfsdfd</p>','2012-12-04 16:43:54',1),(19,'this cat',0,0,'<p> sdfsdf</p>','2012-12-04 17:59:49',1),(20,'sdfsdf',0,0,'<p> sdfsdf</p>','2012-12-04 18:09:54',1),(21,'dsfsdfsd',0,0,'<p> sdfsdf</p>','2012-12-05 12:26:36',1),(22,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:04',1),(23,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:09:47',1),(24,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:12:34',1),(25,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:10',1),(26,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:13:43',1),(27,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:23:38',1),(28,'New test',0,0,'<p> sdfsdf sdfsdfs dfsd<br /></p>','2012-12-05 14:25:48',1),(29,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:34:35',1),(30,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:36:03',1),(31,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:37:02',1),(32,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:37:25',1),(33,'sdfsdfsd',0,0,'<p> sdffd</p>','2012-12-05 14:47:21',1),(34,'test news',0,0,'<p> sdfsdf</p>','2012-12-05 15:39:15',1),(35,'test news',0,0,'<p> sdfsdf</p>','2012-12-05 15:43:48',1),(36,'sdfsdf',0,0,'<p> sdfsdfsdf</p>','2012-12-05 15:44:25',1),(37,'sdfsdf 2222',0,0,'<p>sdfsdf <br /></p>','2012-12-05 15:52:42',1),(38,'hope it works',0,0,'<p> sdfsdfsd</p>','2012-12-05 16:15:58',1),(39,'another test',0,0,'<p> sdfsdf</p>','2012-12-05 16:24:40',1),(40,'Latest working test',2,1,'<p>Nunc iaculis convallis dolor, sollicitudin varius erat fringilla a. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Proin sem augue, consectetur non lobortis at, \nhendrerit vel turpis. Sed lobortis elit id nulla venenatis tincidunt ut \nid enim. Sed eleifend orci non enim lacinia id consectetur tellus \npellentesque. Maecenas id magna sapien, sit amet placerat erat. Vivamus \nvel enim at lorem commodo venenatis nec et ligula. Phasellus libero \nmagna, feugiat nec vestibulum at, volutpat sed dolor. Sed ultrices \nvenenatis varius. Vestibulum tempus lacinia dui sed egestas. Nunc \nfaucibus, eros et egestas interdum, mauris lectus porta odio, sit amet \nfeugiat sem nibh eu velit. Proin ut sapien nibh, at pellentesque sem. \nAliquam velit odio, suscipit in luctus facilisis, tincidunt sed magna. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Nulla interdum, ipsum sit amet semper fringilla, \nmassa risus dictum sem, et molestie ipsum quam eget turpis.\n</p>\n<p>\nProin lobortis dignissim euismod. Aliquam velit arcu, pharetra nec \nconsectetur et, rutrum at urna. Pellentesque ac nisi lorem, vitae \nbibendum nisl. Curabitur pharetra egestas urna interdum iaculis. Proin \ntempus, erat ut malesuada pulvinar, dui justo luctus quam, eget \nelementum turpis urna congue nulla. Pellentesque iaculis suscipit mi in \nsollicitudin. Mauris facilisis diam sed leo posuere cursus. Aliquam erat\n volutpat. Vivamus nec dolor erat. Duis turpis nibh, lacinia ut \npellentesque in, fringilla at sapien. Pellentesque eu gravida elit. \nPellentesque id tempor dui. Nam imperdiet risus vel augue consequat \nmattis. Vivamus volutpat ultrices eros non vehicula. Donec fermentum \nviverra enim, vel feugiat arcu tincidunt quis.\n</p>\n<p>\nMaecenas nec feugiat metus. Aenean luctus, eros et pharetra faucibus, \nligula nulla dictum urna, et egestas est urna id lacus. Aliquam erat \nvolutpat. Sed sed enim vel nisi euismod laoreet. Nullam adipiscing justo\n in elit porttitor molestie. Nam lectus orci, auctor congue pharetra a, \nimperdiet a enim. Vestibulum varius est id nisi posuere vulputate. \nPraesent eu nulla ante, quis sodales nisl.\n</p>\n','2012-12-06 16:04:56',1),(41,'test overlap',0,0,'<p> sdfsdf</p>','2012-12-07 12:05:01',6);
+INSERT INTO `org_massmedia` VALUES (40,'Первый',2,1,'<p></p><p>Nunc iaculis convallis dolor, sollicitudin varius erat fringilla a. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Proin sem augue, consectetur non lobortis at, \nhendrerit vel turpis. Sed lobortis elit id nulla venenatis tincidunt ut \nid enim. Sed eleifend orci non enim lacinia id consectetur tellus \npellentesque. Maecenas id magna sapien, sit amet placerat erat. Vivamus \nvel enim at lorem commodo venenatis nec et ligula. Phasellus libero \nmagna, feugiat nec vestibulum at, volutpat sed dolor. Sed ultrices \nvenenatis varius. Vestibulum tempus lacinia dui sed egestas. Nunc \nfaucibus, eros et egestas interdum, mauris lectus porta odio, sit amet \nfeugiat sem nibh eu velit. Proin ut sapien nibh, at pellentesque sem. \nAliquam velit odio, suscipit in luctus facilisis, tincidunt sed magna. \nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per \ninceptos himenaeos. Nulla interdum, ipsum sit amet semper fringilla, \nmassa risus dictum sem, et molestie ipsum quam eget turpis.\n</p>\n<p>\n<img style=\"width:248px;height:186px;float:left;margin:0px 10px 10px 0px;\" alt=\"\" src=\"/socio/uploads/image/file/509bb626ea826.jpg\" />Proin lobortis dignissim euismod. Aliquam velit arcu, pharetra nec \nconsectetur et, rutrum at urna. Pellentesque ac nisi lorem, vitae \nbibendum nisl. Curabitur pharetra egestas urna interdum iaculis. Proin \ntempus, erat ut malesuada pulvinar, dui justo luctus quam, eget \nelementum turpis urna congue nulla. Pellentesque iaculis suscipit mi in \nsollicitudin. Mauris facilisis diam sed leo posuere cursus. Aliquam erat\n volutpat. Vivamus nec dolor erat. Duis turpis nibh, lacinia ut \npellentesque in, fringilla at sapien. Pellentesque eu gravida elit. \nPellentesque id tempor dui. Nam imperdiet risus vel augue consequat \nmattis. Vivamus volutpat ultrices eros non vehicula. Donec fermentum \nviverra enim, vel feugiat arcu tincidunt quis.\n</p>\n<p>\nMaecenas nec feugiat metus. Aenean luctus, eros et pharetra faucibus, \nligula nulla dictum urna, et egestas est urna id lacus. Aliquam erat \nvolutpat. Sed sed enim vel nisi euismod laoreet. Nullam adipiscing justo\n in elit porttitor molestie. Nam lectus orci, auctor congue pharetra a, \nimperdiet a enim. Vestibulum varius est id nisi posuere vulputate. \nPraesent eu nulla ante, quis sodales nisl.\n</p>\n','2012-12-06 16:04:56',1,1),(41,'test overlap',7,0,'<p> sdfsdf</p>','2012-12-07 12:05:01',6,NULL),(42,'Ещё один тест',4,0,'<p></p><p></p>Mauris eu nisi eget augue mollis suscipit molestie ut orci. Cras neque \nenim, suscipit in cursus blandit, egestas vel nisi. Suspendisse potenti.\n Morbi nibh tellus, lobortis et laoreet consectetur, ultricies tempor \nipsum. In hac habitasse platea dictumst. Nam fermentum feugiat mi, ut \nvenenatis ipsum suscipit ut. Vivamus quis justo diam. Integer est dolor,\n fermentum at porttitor in, pulvinar quis odio. Sed ut erat nec lectus \ntempus iaculis. Nam commodo, enim in placerat vulputate, libero tellus \nscelerisque neque, sit amet sagittis erat arcu sit amet orci.<br /><br /><p>\nNunc et tortor enim, a luctus lacus. Sed ultricies tristique mauris at \nmattis. Sed lacinia, elit porttitor feugiat ornare, dolor neque posuere \ntellus, quis gravida justo mauris non urna. Nunc pharetra elementum mi, \nnec lacinia nunc placerat at. Nunc viverra imperdiet aliquet. Nulla \nipsum mi, imperdiet a porta eu, volutpat a enim. In mattis, dui et \nadipiscing cursus, odio orci consectetur mauris, vitae euismod elit \nrisus vitae dolor. Fusce aliquet, augue a sollicitudin pulvinar, lacus \nmi rutrum est, sit amet tincidunt lacus dolor vel sapien. Praesent nec \nligula vitae leo scelerisque commodo. Proin dignissim ultrices augue vel\n adipiscing. Pellentesque dictum, felis quis egestas mollis, nisl est \nfaucibus quam, vel commodo velit orci a neque. Duis sed dolor at tellus \ngravida suscipit ut in justo. Pellentesque aliquet risus ac tellus \nmollis vitae consectetur nibh posuere.\n</p>\n','2012-12-14 17:56:41',1,6),(43,'Тест категория tv',5,1,'<p></p><p>Suspendisse magna lacus, ullamcorper at lobortis eget, volutpat et \nvelit. Donec porta euismod lacus at bibendum. Maecenas cursus fermentum \nante, non faucibus nisl blandit ut. Vestibulum turpis tortor, molestie a\n laoreet vel, cursus ac elit. Aliquam erat volutpat. Curabitur pretium \ndictum elit, eu congue felis porta non. Etiam ac turpis quis nulla \nfaucibus consectetur at eget mi. Curabitur consectetur nulla quis justo \niaculis fermentum. Nam vel enim justo. Morbi ut leo est. Aliquam erat \nvolutpat. Nunc justo urna, posuere quis gravida sed, tincidunt sit amet \nest. Praesent malesuada lectus vitae odio tristique adipiscing. Praesent\n quis nisl lacus, sit amet iaculis enim. Sed eget metus eros. Nulla et \nvarius urna.\n</p>\n','2012-12-14 18:00:04',1,1),(44,'Тест категория tv 2',5,0,'<p></p><p>Sed nec urna magna. Nullam a eros libero. Cum sociis natoque penatibus \net magnis dis parturient montes, nascetur ridiculus mus. Cras lobortis \nconvallis accumsan. Cras ut congue tellus. Ut sollicitudin velit non \nquam elementum tempus. Maecenas condimentum commodo massa, quis varius \nsem vestibulum id. Etiam tincidunt diam molestie elit blandit venenatis.\n Sed nisi sem, bibendum quis vestibulum a, luctus et magna. Phasellus \nlacinia hendrerit mi ut ornare. Cras aliquam dui a quam fringilla id \ndignissim justo tincidunt. Phasellus tincidunt semper sodales.\n</p>\n','2012-12-14 18:01:33',1,5),(45,'Элемент СМИ — Кошки',7,0,'<p> </p><p>\nPhasellus consequat arcu ut quam tincidunt et commodo ligula aliquam. \nInteger ullamcorper urna non sem porttitor porta. Cras dignissim ipsum \nrisus, eget pellentesque erat. Duis vitae est a neque varius volutpat at\n quis lacus. Vestibulum ante ipsum primis in faucibus orci luctus et \nultrices posuere cubilia Curae; In in tortor mauris, ac gravida nisi. In\n hac habitasse platea dictumst. Nam sollicitudin iaculis elit, non \nluctus metus facilisis fermentum. Quisque in auctor nibh. Sed nisi \nlorem, luctus vel suscipit eu, aliquet vitae nunc. Fusce semper auctor \ntellus, in tincidunt magna ornare ac. Duis euismod augue eget elit \nconsequat tempus. Donec gravida malesuada molestie.\n</p>\n<p>\nSed quis justo nunc, eu semper libero. Cum sociis natoque penatibus et \nmagnis dis parturient montes, nascetur ridiculus mus. Donec viverra, \npurus non volutpat adipiscing, arcu velit rhoncus est, vel elementum \nrisus massa id sem. Morbi luctus, felis vel volutpat pellentesque, sem \nerat vehicula arcu, vitae fringilla est sem ac quam. Etiam congue, odio \nconsequat viverra semper, dui diam rutrum metus, sed sollicitudin ligula\n arcu posuere purus. Mauris sagittis elit a odio imperdiet mollis quis \nquis nunc. Pellentesque nibh lectus, hendrerit at accumsan vel, \ncondimentum sed lorem. Aliquam ligula magna, adipiscing viverra posuere \nvitae, dignissim vitae ante. Donec sed mi et velit egestas sodales ut \nquis enim. Proin ac augue nisi. Curabitur bibendum est in orci placerat \nvenenatis. Vivamus malesuada adipiscing erat, sit amet fermentum dolor \nconsectetur quis. Aenean dui diam, feugiat quis iaculis eu, feugiat ut \nmassa. Duis quis eros tellus. Phasellus non velit libero, sit amet \ndictum elit. Pellentesque lacinia elementum placerat.\n</p>','2012-12-17 13:01:58',1,1);
 /*!40000 ALTER TABLE `org_massmedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,7 +334,7 @@ CREATE TABLE `org_massmedia_mmtag` (
   KEY `image_id` (`mmtag_id`),
   CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,8 +343,37 @@ CREATE TABLE `org_massmedia_mmtag` (
 
 LOCK TABLES `org_massmedia_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_massmedia_mmtag` DISABLE KEYS */;
-INSERT INTO `org_massmedia_mmtag` VALUES (1,4,2),(4,4,6),(7,4,7),(8,4,5),(9,4,8),(10,5,2),(12,5,9),(13,5,10),(14,5,5),(18,7,2),(23,11,2),(25,11,4),(26,1,6),(27,1,7),(29,19,8),(31,33,7),(32,38,7),(34,39,8),(35,39,5),(36,38,8),(37,37,6),(39,37,5),(40,37,9),(41,40,6),(42,40,7),(45,41,7),(47,40,1),(48,41,13);
+INSERT INTO `org_massmedia_mmtag` VALUES (41,40,6),(42,40,7),(45,41,7),(48,41,13),(49,40,14),(50,42,7),(52,43,15),(53,44,15),(54,45,6),(55,45,14);
 /*!40000 ALTER TABLE `org_massmedia_mmtag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_mmcompany`
+--
+
+DROP TABLE IF EXISTS `org_mmcompany`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_mmcompany` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `type` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `org_mmcompany_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_mmcompany`
+--
+
+LOCK TABLES `org_mmcompany` WRITE;
+/*!40000 ALTER TABLE `org_mmcompany` DISABLE KEYS */;
+INSERT INTO `org_mmcompany` VALUES (1,'Моя первая компания в СМИ',1,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquet lacus et ligula malesuada luctus. In non tellus vel leo ullamcorper gravida. Suspendisse et erat nibh, eget volutpat elit. Nulla facilisi. Cras sit amet arcu lacus. Aenean tellus magna, iaculis sed accumsan ac, ullamcorper sed purus. Sed id nulla sem. Morbi id dolor sit amet purus suscipit lacinia. Donec malesuada suscipit mi in congue. Curabitur molestie aliquam turpis eget dapibus. Morbi aliquet, felis quis auctor mollis, tortor leo lobortis sem, eget dictum elit sapien in dolor. Vestibulum vel arcu velit, a sollicitudin leo. Nunc sodales tortor sit amet erat facilisis ac elementum augue consectetur.',1),(5,'Еще одна компания',4,'Phasellus consequat arcu ut quam tincidunt et commodo ligula aliquam. Integer ullamcorper urna non sem porttitor porta. Cras dignissim ipsum risus, eget pellentesque erat. Duis vitae est a neque varius volutpat at quis lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In in tortor mauris, ac gravida nisi. In hac habitasse platea dictumst. Nam sollicitudin iaculis elit, non luctus metus facilisis fermentum. Quisque in auctor nibh. Sed nisi lorem, luctus vel suscipit eu, aliquet vitae nunc. Fusce semper auctor tellus, in tincidunt magna ornare ac. Duis euismod augue eget elit consequat tempus. Donec gravida malesuada molestie. ',1),(6,'Последняя компания',3,'Sed quis justo nunc, eu semper libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra, purus non volutpat adipiscing, arcu velit rhoncus est, vel elementum risus massa id sem. Morbi luctus, felis vel volutpat pellentesque, sem erat vehicula arcu, vitae fringilla est sem ac quam. Etiam congue, odio consequat viverra semper, dui diam rutrum metus, sed sollicitudin ligula arcu posuere purus. Mauris sagittis elit a odio imperdiet mollis quis quis nunc. Pellentesque nibh lectus, hendrerit at accumsan vel, condimentum sed lorem. Aliquam ligula magna, adipiscing viverra posuere vitae, dignissim vitae ante. Donec sed mi et velit egestas sodales ut quis enim. Proin ac augue nisi. Curabitur bibendum est in orci placerat venenatis. Vivamus malesuada adipiscing erat, sit amet fermentum dolor consectetur quis. Aenean dui diam, feugiat quis iaculis eu, feugiat ut massa. Duis quis eros tellus. Phasellus non velit libero, sit amet dictum elit. Pellentesque lacinia elementum placerat. ',1);
+/*!40000 ALTER TABLE `org_mmcompany` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -360,7 +392,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +401,7 @@ CREATE TABLE `org_mmfile` (
 
 LOCK TABLES `org_mmfile` WRITE;
 /*!40000 ALTER TABLE `org_mmfile` DISABLE KEYS */;
-INSERT INTO `org_mmfile` VALUES (13,'50cb0caf17369.jpg',1,2,40),(14,'50cb0c5ebd2f4.ogg',1,1,40);
+INSERT INTO `org_mmfile` VALUES (20,'50cb1df9a23e2.ogg',1,2,40),(21,'50cb1e922ff33.jpg',1,1,40),(22,'50cb1e9245d68.jpg',1,1,40),(23,'50cb4c3936aa1.jpg',1,1,42),(24,'50cb4c3946e7d.jpg',1,2,42),(25,'50cb4d04294b4.jpg',1,2,43),(26,'50cb4d5d5d8f5.jpg',1,1,44),(27,'50cefba631a1e.jpg',1,1,45);
 /*!40000 ALTER TABLE `org_mmfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,7 +420,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,7 +429,7 @@ CREATE TABLE `org_mmlink` (
 
 LOCK TABLES `org_mmlink` WRITE;
 /*!40000 ALTER TABLE `org_mmlink` DISABLE KEYS */;
-INSERT INTO `org_mmlink` VALUES (5,'https://github.com/vasilyevd/socio/network',1,19),(6,'https://github.com/vasilyevd/socio/network',1,33),(7,'https://github.com/vasilyevd/socio/network',1,35),(8,'https://github.com/vasilyevd/socio/network',1,36),(9,'https://github.com/vasilyevd/socio/networkssss',1,37),(11,'https://github.com/vasilyevd/socio/ssssdfsdf',1,39),(12,'https://github.com/vasilyevd/socio/sssdfsdf',1,38),(13,'https://github.com/vasilyevd/socio/networ',1,37),(14,'https://github.com/vasilyevd/socio/new',1,37),(15,'https://github.com/vasilyevd/socio/hello',1,37),(16,'https://github.com/vasilyevd/socio/network',1,40),(17,'https://github.com/vasilyevd/socio/networksdfsd',1,40),(21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(28,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40);
+INSERT INTO `org_mmlink` VALUES (16,'https://github.com/vasilyevd/socio/network',1,40),(21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(28,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40),(29,'https://github.com/vasilyevd/socio/3333',1,40),(30,'https://github.com/vasilyevd/socio/network',1,42),(31,'https://github.com/vasilyevd/socio/network',1,43),(32,'https://github.com/vasilyevd/socio/network',1,44),(33,'https://github.com/vasilyevd/socio/network',1,45);
 /*!40000 ALTER TABLE `org_mmlink` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,7 +444,7 @@ CREATE TABLE `org_mmtag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -421,7 +453,7 @@ CREATE TABLE `org_mmtag` (
 
 LOCK TABLES `org_mmtag` WRITE;
 /*!40000 ALTER TABLE `org_mmtag` DISABLE KEYS */;
-INSERT INTO `org_mmtag` VALUES (1,'cat'),(2,'hello'),(3,'you'),(4,'dog'),(5,'yolo'),(6,'публикации'),(7,'анонс'),(8,'swag'),(9,'hug'),(10,'top'),(11,'honk'),(12,'honks'),(13,'overlaptag');
+INSERT INTO `org_mmtag` VALUES (1,'cat'),(2,'hello'),(3,'you'),(4,'dog'),(5,'yolo'),(6,'публикации'),(7,'анонс'),(8,'swag'),(9,'hug'),(10,'top'),(11,'honk'),(12,'honks'),(13,'overlaptag'),(14,'пресса'),(15,'другое');
 /*!40000 ALTER TABLE `org_mmtag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,4 +647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-14 13:43:40
+-- Dump completed on 2012-12-17 13:04:40
