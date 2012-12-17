@@ -5,6 +5,20 @@ $this->breadcrumbs=array(
     'Организации',
 );
 ?>
+<div class="row-fluid">
+		<div class="page-header">
+			<div class="header-menu">
+				<?php echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-colored')); ?>
+			</div>
+			<h4>Организации</h4>
+		</div>
+		<div class="sub-header">
+			Список организаций, партий, движений, центров, гражданских акций и инициатив.
+			<div class="info">
+				Всего зарегистрировано <em>1478</em> организаций
+			</div>
+		</div>
+</div>
 <!-- GLOBAL ROW -->
 <div class="row">
 
@@ -12,15 +26,12 @@ $this->breadcrumbs=array(
     <div class="span8">
 
         <!-- C1 R1 -->
-        <div class="row show-grid">
+        <div class="row-fluid show-grid">
             <!-- R1.1 -->
-            <div class="span2">
-                <img src="<?php echo $this->createUrl('images/other/orgmain.jpg'); ?>" class="img-polaroid">
-            </div>
-            <!-- R1.2 -->
-            <div class="span6">
-                <p>Описание раздела</p>
-            </div>
+	            <div class="columns2">
+		            <img src="<?php echo $this->createUrl('images/other/orgmain.jpg'); ?>" class="pull-left" style="">
+		             <p>Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела </p> <p>Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела </p><p>Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела </p><p>Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела </p><p>Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела Описание раздела </p>
+	            </div>
         </div>
 
     <!-- C1 R2 -->
@@ -96,7 +107,6 @@ $this->breadcrumbs=array(
 <div class="span4">
     <div class="well well-small">
         <?php echo CHtml::link('Поиск организаций', array('organization/search'), array('class'=>'btn btn-success btn-block')); ?>
-        <?php echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-success btn-block')); ?>
         <?php echo CHtml::link('Управление организациями', array('organization/admin'), array('class'=>'btn btn-success btn-block')); ?>
     </div>
 
