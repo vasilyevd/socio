@@ -12,7 +12,6 @@ $('.removelink').click(function(){
 ");
 ?>
 
-
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'massmedia-form',
     'enableAjaxValidation'=>true,

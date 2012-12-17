@@ -13,14 +13,24 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Mmcompany #<?php echo $model->id; ?></h1>
+<h1><?php echo $model->name; ?></h1>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-    'data'=>$model,
-    'attributes'=>array(
-        'id',
-        'name',
-        'type',
-        'description',
-    ),
+<div class='row'>
+    <div class='span9'>
+        <?php echo CHtml::encode($model->description); ?>
+    </div>
+</div>
+
+<hr>
+<p class="lead">Элементы СМИ</p>
+<?php $this->widget('bootstrap.widgets.TbListView',array(
+    // 'id' => 'massmedia-listview',
+    'dataProvider' => new CArrayDataProvider($model->massmedias),
+    'itemView' => '//massmedia/_view',
+    // 'viewData' => array('albumId' => $model->id),
+    // 'template' => '{items}{pager}', // Hide summary header.
+    // 'itemsCssClass' => 'row', // Change items container class. Default: items.
+    // 'sortableAttributes' => array(
+    //     'title',
+    // ),
 )); ?>
