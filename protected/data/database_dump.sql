@@ -392,7 +392,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,7 +401,7 @@ CREATE TABLE `org_mmfile` (
 
 LOCK TABLES `org_mmfile` WRITE;
 /*!40000 ALTER TABLE `org_mmfile` DISABLE KEYS */;
-INSERT INTO `org_mmfile` VALUES (20,'50cb1df9a23e2.ogg',1,2,40),(21,'50cb1e922ff33.jpg',1,1,40),(22,'50cb1e9245d68.jpg',1,1,40),(23,'50cb4c3936aa1.jpg',1,1,42),(24,'50cb4c3946e7d.jpg',1,2,42),(25,'50cb4d04294b4.jpg',1,2,43),(26,'50cb4d5d5d8f5.jpg',1,1,44),(27,'50cefba631a1e.jpg',1,1,45);
+INSERT INTO `org_mmfile` VALUES (20,'50cb1df9a23e2.ogg',1,2,40),(21,'50cb1e922ff33.jpg',2,1,40),(22,'50cb1e9245d68.jpg',2,1,40),(23,'50cb4c3936aa1.jpg',1,1,42),(24,'50cb4c3946e7d.jpg',1,2,42),(25,'50cb4d04294b4.jpg',1,2,43),(26,'50cb4d5d5d8f5.jpg',1,1,44),(27,'50cefba631a1e.jpg',1,1,45),(28,'50cf3a377cd0d.doc',3,3,40);
 /*!40000 ALTER TABLE `org_mmfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -647,4 +647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-17 16:38:36
+-- Dump completed on 2012-12-17 17:54:11

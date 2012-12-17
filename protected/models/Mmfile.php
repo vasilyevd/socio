@@ -137,17 +137,22 @@ class Mmfile extends CActiveRecord
      */
     public function beforeSave()
     {
-        // // If this file is image.
-        // if(preg_match('~(http://www\.youtube\.com/watch\?v=[%&=#\w-]*)~', $this->name)){
-        //     $this->type = self::TYPE_IMAGE;
-        // // If this file document.
-        // } elseif(preg_match('~(http://www\.youtube\.com/watch\?v=[%&=#\w-]*)~', $this->name)){
-        //     $this->type = self::TYPE_DOCUMENT;
-        // // Else just general file
-        // } else {
-        //     $this->type = self::TYPE_GENERAL;
-        // }
-        $this->type = self::TYPE_GENERAL;
+        // Find file type by it's extension.
+        $fileExtension = strtolower(pathinfo($this->name, PATHINFO_EXTENSION));
+        switch ($fileExtension) {
+            case 'docx':
+            case 'doc':
+                $this->type = self::TYPE_DOCUMENT;
+                break;
+            case 'jpeg':
+            case 'jpg':
+            case 'gif':
+            case 'png':
+                $this->type = self::TYPE_IMAGE;
+                break;
+            default:
+                $this->type = self::TYPE_GENERAL;
+        }
 
         return parent::beforeSave();
     }
