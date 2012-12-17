@@ -13,8 +13,8 @@ $this->breadcrumbs = array_merge(array(
             <div class="org-header">
                 <div class="row">
                     <div class="span3">
-                        <a href="<?php echo $this->menu_org->getUploadUrl('logo', $this->menu_org->logo); ?>">
-                            <img src="<?php echo $this->menu_org->getUploadUrl('logo', $this->menu_org->logo); ?>" alt="Logo">
+                        <a href="<?php echo $this->menu_org->getUploadUrl('logo'); ?>">
+                            <img src="<?php echo $this->menu_org->getUploadUrl('logo'); ?>" alt="Logo">
                         </a>
                     </div>
 

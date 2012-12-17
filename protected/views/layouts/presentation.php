@@ -4,6 +4,7 @@ $this->menu=array(
     array('label' => 'Изменить Организацию', 'icon' => 'cog', 'url' => array('organization/update', 'id' => $this->menu_org->id)),
     array('label' => 'Добавить Достижение', 'icon' => 'cog', 'url' => array('achievement/create', 'org' => $this->menu_org->id)),
     array('label' => 'Добавить Элемент СМИ', 'icon' => 'cog', 'url' => array('massmedia/create', 'org' => $this->menu_org->id)),
+    array('label' => 'Добавить Компанию СМИ', 'icon' => 'cog', 'url' => array('mmcompany/create', 'org' => $this->menu_org->id)),
 );
 ?>
 

@@ -16,6 +16,14 @@
  */
 class Massmedia extends CActiveRecord
 {
+    const CATEGORY_PUBLICATION = 1;
+    const CATEGORY_PRESS_ANNOUNCEMENT = 2;
+    const CATEGORY_PRESS_CONFERENCE = 3;
+    const CATEGORY_PUBLIC_SPEAKING = 4;
+    const CATEGORY_TV_PROJECT = 5;
+    const CATEGORY_RADIO_PROJECT = 6;
+    const CATEGORY_SOCIAL_ADVERTISING = 7;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -40,11 +48,28 @@ class Massmedia extends CActiveRecord
     public function rules()
     {
         return array(
-            array('title, content, tags', 'required'),
+            array('title, content, tags, links, category, direction, files', 'required'),
             array('title', 'length', 'max'=>128),
             array('content','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+            array('category', 'in', 'range' => array(
+                self::CATEGORY_PUBLICATION, self::CATEGORY_PRESS_ANNOUNCEMENT,
+                self::CATEGORY_PRESS_CONFERENCE, self::CATEGORY_PUBLIC_SPEAKING,
+                self::CATEGORY_TV_PROJECT, self::CATEGORY_RADIO_PROJECT,
+                self::CATEGORY_SOCIAL_ADVERTISING,
+            )),
+            array('direction', 'boolean'),
+            array(
+                'files',
+                'file',
+                'allowEmpty' => true,
+                'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                // 'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+            ),
 
-            // array('id, title, content, create_time, organization_id', 'safe', 'on'=>'search'),
+            array('title, tags', 'safe', 'on'=>'search'),
         );
     }
 
@@ -55,7 +80,22 @@ class Massmedia extends CActiveRecord
     {
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
+            'company' => array(self::BELONGS_TO, 'Mmcompany', 'mmcompany_id'),
             'tags' => array(self::MANY_MANY, 'Mmtag', 'org_massmedia_mmtag(massmedia_id, mmtag_id)'),
+            'links' => array(self::HAS_MANY, 'Mmlink', 'massmedia_id'),
+            'linksGeneral' => array(
+                self::HAS_MANY,
+                'Mmlink',
+                'massmedia_id',
+                'condition' => 'linksGeneral.type=' . Mmlink::TYPE_GENERAL,
+            ),
+            'linksYoutube' => array(
+                self::HAS_MANY,
+                'Mmlink',
+                'massmedia_id',
+                'condition' => 'linksYoutube.type=' . Mmlink::TYPE_YOUTUBE,
+            ),
+            'files' => array(self::HAS_MANY, 'Mmfile', 'massmedia_id'),
         );
     }
 
@@ -84,6 +124,10 @@ class Massmedia extends CActiveRecord
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
             'tags' => 'Теги',
+            'links' => 'Ссылки',
+            'category' => 'Категория',
+            'direction' => 'Направление',
+            'files' => 'Файлы',
         );
     }
 
@@ -93,20 +137,51 @@ class Massmedia extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('title',$this->title,true);
-        $criteria->compare('content',$this->content,true);
-        $criteria->compare('create_time',$this->create_time,true);
-        $criteria->compare('organization_id',$this->organization_id);
+        // Relation.
+        $criteria->with = array();
+
+        // Relation BELONGS_TO search.
+        if (!empty($this->organization)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'organization',
+            ));
+            $criteria->compare('organization.id', $this->organization);
+        }
+
+        // Relation MANY_MANY search.
+        if (!empty($this->tags)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'tags' => array('together' => true),
+            ));
+            $criteria->addInCondition('tags.id', $this->tags);
+        }
+
+        $criteria->compare('t.title',$this->title,true);
+
+        // $criteria->compare('id',$this->id);
+        // $criteria->compare('content',$this->content,true);
+        // $criteria->compare('create_time',$this->create_time,true);
+        // $criteria->compare('organization_id',$this->organization_id);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is validated.
+     */
+    public function beforeValidate()
+    {
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Find or create objects and validate.
+        $this->tagsTabular();
+        $this->linksTabular();
+        $this->filesTabular();
+
+        return parent::beforeValidate();
     }
 
     /**
@@ -120,12 +195,116 @@ class Massmedia extends CActiveRecord
             $this->create_time = new CDbExpression('NOW()');
         }
 
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Save new models.
+        foreach ($this->tags as $m) $m->save();
+        foreach ($this->links as $m) $m->save();
+        foreach ($this->files as $m) $m->save();
+
         return parent::beforeSave();
     }
 
     /**
-    * Implodes relation array to plain string.
-    */
+     * This is invoked after the record is saved.
+     */
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        // Relations with new models handler 'HAS_MANY'.
+        // Delete old models.
+        $deleteModels = Mmlink::model()->findAllByAttributes(array('massmedia_id' => null));
+        foreach ($deleteModels as $m) $m->delete();
+        $deleteModels = Mmfile::model()->findAllByAttributes(array('massmedia_id' => null));
+        foreach ($deleteModels as $m) $m->delete();
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds, creates and validates models from tabular input.
+     */
+    public function tagsTabular()
+    {
+        $valid = true;
+        $modelArray = array();
+
+        if (!empty($this->tags)) {
+            $tagsNames = explode(',', $this->tags);
+
+            foreach ($tagsNames as $n) {
+                $model = Mmtag::model()->find(
+                    'name=:name',
+                    array(':name' => $n)
+                );
+                if ($model === null) {
+                    $model = new Mmtag;
+                }
+
+                $model->name = $n;
+
+                $valid = $model->validate() && $valid;
+                $modelArray[] = $model;
+            }
+        }
+
+        $this->tags = $modelArray;
+        if (!$valid) $this->addError('tags', 'Неверно задано поле ' . $this->getAttributeLabel('tags'));
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds, creates and validates models from tabular input.
+     */
+    public function linksTabular()
+    {
+        $valid = true;
+        $modelArray = array();
+
+        foreach ($this->links as $attributes) {
+            $model = Mmlink::model()->findByPk($attributes['id']);
+            if ($model === null) {
+                $model = new Mmlink;
+            }
+
+            $model->attributes = $attributes;
+
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
+        }
+
+        $this->links = $modelArray;
+        if (!$valid) $this->addError('links', 'Неверно задано поле ' . $this->getAttributeLabel('links'));
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds, creates and validates models from tabular input.
+     */
+    public function filesTabular()
+    {
+        $valid = true;
+        $modelArray = array();
+
+        foreach ($this->files as $i => $attributes) {
+            $model = Mmfile::model()->findByPk($attributes['id']);
+            if ($model === null) {
+                $model = new Mmfile;
+            }
+
+            $model->attributes = $attributes;
+            $model->uploadOffset = $i;
+
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
+        }
+
+        $this->files = $modelArray;
+        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
+    }
+
+    /**
+     * Implodes tags relation array to plain string.
+     */
     public function tagsToString()
     {
         if (empty($this->tags)) {
@@ -136,33 +315,5 @@ class Massmedia extends CActiveRecord
                 CHtml::listData($this->tags, 'id', 'name')
             );
         }
-    }
-
-    /**
-    * Finds and creates all relations for this model from string.
-    */
-    public function tagsFromStringCreate($relationString)
-    {
-        $relationArray = array();
-
-        if (!empty($relationString)) {
-            $relationNames = explode(',', $relationString);
-
-            // Create new models if don't exists.
-            foreach ($relationNames as $n) {
-                $relation = Mmtag::model()->find(
-                    'name=:name',
-                    array(':name' => $n)
-                );
-                if ($relation === null) {
-                    $relation = new Mmtag;
-                    $relation->name = $n;
-                    $relation->save();
-                }
-                $relationArray[] = $relation;
-            }
-        }
-
-        $this->tags = $relationArray;
     }
 }

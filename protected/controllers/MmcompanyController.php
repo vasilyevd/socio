@@ -1,6 +1,6 @@
 <?php
 
-class MassmediaController extends Controller
+class MmcompanyController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -63,33 +63,20 @@ class MassmediaController extends Controller
      */
     public function actionCreate($org)
     {
-        $model=new Massmedia;
+        $model=new Mmcompany;
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Massmedia']))
+        if(isset($_POST['Mmcompany']))
         {
-            $model->attributes=$_POST['Massmedia'];
+            $model->attributes=$_POST['Mmcompany'];
 
             // Relations.
             $model->organization = $org;
-            $model->links = $_POST['Mmlink'];
-            $model->files = $_POST['Mmfile'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
-        }
-
-        // Show tags relation as imploded string.
-        $model->tagsToString();
-        // Need at least one link for copy.
-        if (empty($model->links)) {
-            $model->links = array(new Mmlink);
-        }
-        // Need at least one file for copy.
-        if (empty($model->files)) {
-            $model->files = array(new Mmfile);
         }
 
         $this->render('create',array(
@@ -109,27 +96,11 @@ class MassmediaController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Massmedia']))
+        if(isset($_POST['Mmcompany']))
         {
-            $model->attributes=$_POST['Massmedia'];
-
-            // Relations.
-            $model->links = $_POST['Mmlink'];
-            $model->files = $_POST['Mmfile'];
-
+            $model->attributes=$_POST['Mmcompany'];
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
-        }
-
-        // Show tags relation as imploded string.
-        $model->tagsToString();
-        // Need at least one link for copy.
-        if (empty($model->links)) {
-            $model->links = array(new Mmlink);
-        }
-        // Need at least one file for copy.
-        if (empty($model->files)) {
-            $model->files = array(new Mmfile);
         }
 
         $this->render('update',array(
@@ -153,30 +124,17 @@ class MassmediaController extends Controller
         $model = $this->loadModel($id);
         $model->delete();
         if(!isset($_GET['ajax']))
-            $this->redirect(array('index','org' => $model->organization_id));
+            $this->redirect(array('massmedia/index','org' => $model->organization_id));
     }
 
     /**
      * Lists all models.
-     * @param integer $org the ID of the organization model.
      */
-    public function actionIndex($org)
+    public function actionIndex()
     {
-        // $dataProvider=new CActiveDataProvider('Massmedia');
-        // $this->render('index',array(
-        //     'dataProvider'=>$dataProvider,
-        // ));
-
-        $model=new Massmedia('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Massmedia']))
-            $model->attributes=$_GET['Massmedia'];
-
-        // Limit search to only this organization.
-        $model->organization = $org;
-
+        $dataProvider=new CActiveDataProvider('Mmcompany');
         $this->render('index',array(
-            'model'=>$model,
+            'dataProvider'=>$dataProvider,
         ));
     }
 
@@ -185,10 +143,10 @@ class MassmediaController extends Controller
      */
     public function actionAdmin()
     {
-        $model=new Massmedia('search');
+        $model=new Mmcompany('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Massmedia']))
-            $model->attributes=$_GET['Massmedia'];
+        if(isset($_GET['Mmcompany']))
+            $model->attributes=$_GET['Mmcompany'];
 
         $this->render('admin',array(
             'model'=>$model,
@@ -202,7 +160,7 @@ class MassmediaController extends Controller
      */
     public function loadModel($id)
     {
-        $model=Massmedia::model()->findByPk($id);
+        $model=Mmcompany::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -214,7 +172,7 @@ class MassmediaController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='massmedia-form')
+        if(isset($_POST['ajax']) && $_POST['ajax']==='mmcompany-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

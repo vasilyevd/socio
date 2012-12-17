@@ -71,8 +71,8 @@ class OrganizationController extends Controller
         {
             $model->attributes=$_POST['Organization'];
 
-            // Set type relation for later group data extraction.
-            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            // Relations.
+            $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
 
             if($model->save())
                 $this->redirect(array('update','id'=>$model->id));
@@ -100,8 +100,8 @@ class OrganizationController extends Controller
         {
             $model->attributes=$_POST['Organization'];
 
-            // Set type relation for later group data extraction.
-            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            // Relations.
+            $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));

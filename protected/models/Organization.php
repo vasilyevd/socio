@@ -121,6 +121,8 @@ class Organization extends CActiveRecord
             'albums' => array(self::HAS_MANY, 'Album', 'organization_id'),
             'images' => array(self::HAS_MANY, 'Image', 'organization_id'),
             'achievements' => array(self::HAS_MANY, 'Achievement', 'organization_id'),
+            'massmedias' => array(self::HAS_MANY, 'Massmedia', 'organization_id'),
+            'mmcompanys' => array(self::HAS_MANY, 'Mmcompany', 'organization_id'),
         );
     }
 
@@ -200,7 +202,7 @@ class Organization extends CActiveRecord
             $criteria->with = array_merge($criteria->with, array(
                 'directions' => array('together' => true),
             ));
-            $criteria->addInCondition('directions.id', Chtml::listData($this->directions, 'id', 'id'));
+            $criteria->addInCondition('directions.id', CHtml::listData($this->directions, 'id', 'id'));
         }
 
         // Relation MANY_MANY search.
@@ -208,7 +210,7 @@ class Organization extends CActiveRecord
             $criteria->with = array_merge($criteria->with, array(
                 'problems' => array('together' => true),
             ));
-            $criteria->addInCondition('problems.id', Chtml::listData($this->problems, 'id', 'id'));
+            $criteria->addInCondition('problems.id', CHtml::listData($this->problems, 'id', 'id'));
         }
 
         $criteria->compare('t.name',$this->name,true);
@@ -261,11 +263,11 @@ class Organization extends CActiveRecord
 
             // TODO: get author form user model.
             $this->author_id = 1;
-        }
 
-        // Set default logo.
-        if (empty($this->logo)) {
-            $this->logo = 'placeholder.jpg';
+            // Set default logo.
+            if (empty($this->logo)) {
+                $this->logo = 'placeholder.jpg';
+            }
         }
 
         // Get group from type relation.
