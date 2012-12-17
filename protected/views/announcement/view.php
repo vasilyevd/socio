@@ -13,7 +13,13 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo $model->title; ?></h1>
+<h1>
+    <?php echo $model->title; ?>
+    <?php if (!empty($model->category)): ?>
+        (<?php echo CHtml::encode(Lookup::item('AnnouncementCategory', $model->category)); ?>)
+    <?php endif; ?>
+</h1>
+
 <h3><?php echo $model->publication_time; ?></h3>
 
 <div class='row'>
