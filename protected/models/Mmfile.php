@@ -140,8 +140,10 @@ class Mmfile extends CActiveRecord
         // Find file type by it's extension.
         $fileExtension = strtolower(pathinfo($this->name, PATHINFO_EXTENSION));
         switch ($fileExtension) {
-            case 'docx':
             case 'doc':
+            case 'odt':
+            case 'xls':
+            case 'pdf':
                 $this->type = self::TYPE_DOCUMENT;
                 break;
             case 'jpeg':
@@ -155,5 +157,106 @@ class Mmfile extends CActiveRecord
         }
 
         return parent::beforeSave();
+    }
+
+    /**
+     * Generate image preview for this model upload file.
+     */
+    public static function createDocPreview($filepath)
+    {
+        // Find new '.pdf' file path.
+        $info = pathinfo($filepath);
+        $pdfpath = $info['dirname'] . '/' . $info['filename'] . '.pdf';
+
+        // Convert only once.
+        if (!file_exists($pdfpath)) {
+            // Document to '.pdf'.
+            $cmd = '/usr/bin/unoconv -f pdf ' . $filepath;
+            $result = shell_exec($cmd);
+
+            // '.pdf' to '.png'.
+            self::createPdfPreview($pdfpath);
+        }
+    }
+
+    /**
+     * Generate image preview for this model upload file.
+     */
+    public static function createPdfPreview($filepath)
+    {
+        // Find new '.png' file path.
+        $info = pathinfo($filepath);
+        $pngpath = $info['dirname'] . '/' . $info['filename'] . '.png';
+
+        // Convert only once.
+        if (!file_exists($pngpath)) {
+            // Convert to image.
+            $image = new imagick($filepath . '[0]');
+            $image->setImageFormat('png');
+
+            // Save image.
+            $image->writeImage($pngpath);
+            $image->clear();
+            $image->destroy();
+
+            // Create several pages of image previews for this document.
+            $image = new imagick();
+            $image->pingImage($filepath);
+            $counter = $image->getNumberImages();
+            if ($counter > 5) {
+                $counter = 5;
+            }
+            for ($i = 0; $i < $counter; $i++) {
+                $path = $info['dirname'] . '/' . $info['filename'] . '_' . $i . '.png';
+
+                // Convert to image.
+                $image = new imagick($filepath . '[' . $i . ']');
+                $image->setImageFormat('png');
+                // Save image.
+                $image->writeImage($path);
+                $image->clear();
+                $image->destroy();
+            }
+
+            // Create thumbnail.
+            self::createImgPreview($pngpath);
+        }
+    }
+
+    /**
+     * Generate image preview for this model upload file.
+     */
+    public static function createImgPreview($filepath)
+    {
+        $info = pathinfo($filepath);
+        $thumbpath = $info['dirname'] . '/' . $info['filename'] . '_thumb.png';
+
+        if (!file_exists($thumbpath)) {
+            $image = new imagick($filepath);
+            $image->thumbnailImage(null, 140);
+
+            // Save image.
+            $image->writeImage($thumbpath);
+            $image->clear();
+            $image->destroy();
+        }
+    }
+
+    /**
+     * Gets all preview images for this document file gallery.
+     * @return array of images URL.
+     */
+    public function getDocumentGallery()
+    {
+        return;
+    }
+
+    /**
+     * Gets thumbnail URL for this file.
+     * @return string the thumbnail file URL.
+     */
+    public function getThumbUrl()
+    {
+        return;
     }
 }
