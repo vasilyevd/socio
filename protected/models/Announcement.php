@@ -47,7 +47,7 @@ class Announcement extends CActiveRecord
     public function rules()
     {
         return array(
-            array('title, content, publication_time, status, category', 'required'),
+            array('title, content, publication_time, status, category', 'required', 'on' => 'insert, update'),
             array('status, category', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>128),
             // Upload handler.
@@ -92,6 +92,10 @@ class Announcement extends CActiveRecord
     public function behaviors()
     {
         return array(
+            // Advanced relations
+            'EActiveRecordRelationBehavior' => array(
+                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
+            ),
             // Upload handler.
             'MultiUploadBehavior' => array(
                 'class' => 'application.components.behaviors.MultiUploadBehavior',
@@ -159,8 +163,8 @@ class Announcement extends CActiveRecord
         $criteria->compare('organization_id',$this->organization_id);
         // Check for whole day.
         $criteria->compare('date(publication_time)',$this->publication_time);
-        // Only find news.
-        $criteria->compare('category',self::CATEGORY_NEWS);
+        // Filter system news.
+        $criteria->addCondition('category IS NOT NULL');
 
         // $criteria->compare('id',$this->id);
         // $criteria->compare('title',$this->title,true);
@@ -189,6 +193,28 @@ class Announcement extends CActiveRecord
             $this->author_id = 1;
         }
 
+        // Set defaults.
+        if (empty($this->publication_time)) {
+            $this->publication_time = new CDbExpression('NOW()');
+        }
+        if (empty($this->status)) {
+            $this->status = self::STATUS_ACTIVE;
+        }
+
         return parent::beforeSave();
+    }
+
+    /**
+     * Creates new system Announcement model message.
+     */
+    public static function createSystemAnnouncement($title, $content, $organization_id)
+    {
+        $model = new Announcement('system');
+
+        $model->title = $title;
+        $model->content = $content;
+        $model->organization = $organization_id;
+
+        $model->save();
     }
 }
