@@ -104,8 +104,14 @@ class UploadBehavior extends CActiveRecordBehavior
         // Don't delete with empty attribute field.
         // Don't delete placeholder image.
         if (!empty($this->owner->$attribute) && $this->owner->$attribute != 'placeholder.jpg') {
-            // Remove file.
-            unlink($this->getUploadPath($attribute));
+            // Remove all files containing this name.
+            $info = pathinfo($this->getUploadPath($attribute));
+            $files = glob($info['dirname'] . '/' . $info['filename'] . '*');
+            if (!empty($files)) {
+                foreach ($files as $f) {
+                    unlink($f);
+                }
+            }
 
             // Empty attribute.
             $this->owner->$attribute = '';
