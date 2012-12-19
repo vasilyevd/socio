@@ -141,8 +141,11 @@ class Mmfile extends CActiveRecord
         $fileExtension = strtolower(pathinfo($this->name, PATHINFO_EXTENSION));
         switch ($fileExtension) {
             case 'doc':
+            case 'docx':
             case 'odt':
+            case 'ppt':
             case 'xls':
+            case 'xlsx':
             case 'pdf':
                 $this->type = self::TYPE_DOCUMENT;
                 break;
@@ -246,9 +249,26 @@ class Mmfile extends CActiveRecord
      * Gets all preview images for this document file gallery.
      * @return array of images URL.
      */
-    public function getDocumentGallery()
+    public function getGallery()
     {
-        return;
+        $infoPath = pathinfo($this->getUploadPath('name'));
+        $infoUrl = pathinfo($this->getUploadUrl('name'));
+        $urlArray = array();
+
+        if ($this->type == self::TYPE_IMAGE) {
+            $urlArray[] = $this->getUploadUrl('name');
+        } elseif ($this->type == self::TYPE_DOCUMENT) {
+            for ($i = 0; $i < 5; $i++) {
+                // Check if file exists in file system.
+                $path = $infoPath['dirname'] . '/' . $infoPath['filename'] . '_' . $i . '.png';
+                if (file_exists($path)) {
+                    // Include new URL.
+                    $urlArray[] = $infoUrl['dirname'] . '/' . $infoUrl['filename'] . '_' . $i . '.png';
+                }
+            }
+        }
+
+        return $urlArray;
     }
 
     /**
@@ -257,6 +277,11 @@ class Mmfile extends CActiveRecord
      */
     public function getThumbUrl()
     {
-        return;
+        if ($this->preview && ($this->type == self::TYPE_DOCUMENT || $this->type == self::TYPE_IMAGE)) {
+            $thumbnail = pathinfo($this->getUploadUrl('name'));
+            $thumbnail = $thumbnail['dirname'] . '/' . $thumbnail['filename'] . '_thumb.png';
+
+            return $thumbnail;
+        }
     }
 }

@@ -14,8 +14,11 @@ class MmfileGeneratePreviewCommand extends CConsoleCommand
             $fileExtension = strtolower(pathinfo($m->name, PATHINFO_EXTENSION));
             switch ($fileExtension) {
                 case 'doc':
+                case 'docx':
                 case 'odt':
+                case 'ppt':
                 case 'xls':
+                case 'xlsx':
                     Mmfile::createDocPreview($m->getUploadPath('name'));
                     break;
                 case 'pdf':
