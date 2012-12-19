@@ -11,6 +11,13 @@ $this->menu=array(
     array('label' => 'Изменить Элемент СМИ', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
     array('label' => 'Удалить Элемент СМИ', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
 );
+
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/lightbox.js'
+);
+Yii::app()->clientScript->registerCssFile(
+    Yii::app()->baseUrl.'/css/lightbox.css'
+);
 ?>
 
 <h1><?php echo $model->title; ?></h1>
@@ -23,11 +30,16 @@ $this->menu=array(
 
 <hr>
 <p class="lead">Файлы</p>
-<ul class="unstyled">
-    <?php foreach ($model->files as $m): ?>
-        <li><?php echo CHtml::link(CHtml::encode($m->name), $m->getUploadUrl('name'), array('target' => '_blank')); ?></li>
-    <?php endforeach; ?>
-</ul>
+<?php $this->widget('bootstrap.widgets.TbListView',array(
+    'dataProvider' => new CArrayDataProvider(
+        $model->files,
+        array('pagination'=>false)
+    ),
+    'itemView' => '_mmfile',
+    'template' => '{items}{pager}', // Hide summary header.
+    // 'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
+    'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
+)); ?>
 
 
 <hr>

@@ -5,7 +5,9 @@
 <div class="span3 feed-list">
     <br />
     <strong><?php echo CHtml::link(CHtml::encode($data->title),array('view','id'=>$data->id)); ?></strong>
-    (<?php echo CHtml::encode(Lookup::item('AnnouncementCategory', $data->category)); ?>)
+    <?php if (!empty($data->category)): ?>
+        (<?php echo CHtml::encode(Lookup::item('AnnouncementCategory', $data->category)); ?>)
+    <?php endif; ?>
     <br />
 
     <?php echo CHtml::encode($data->publication_time); ?>
