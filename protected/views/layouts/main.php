@@ -72,7 +72,7 @@
 							'htmlOptions'=>array('class'=>'nav-pills'),
 							'items'=>array(
 								array('label'=>'Организации', 'url'=>array('/organization/index')),
-								array('label'=>'Доступность', 'url'=>array('/object/nav')),
+								array('label'=>'Доступность', 'url'=>array('/object/main')),
 								array('label'=>'Инфраструктура', 'url'=>array('/object/index')),
 								'',
 								array('label'=>'Справка', 'url'=>array('/site/page', 'view'=>'faq')),
