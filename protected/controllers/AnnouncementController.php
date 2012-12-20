@@ -15,7 +15,7 @@ class AnnouncementController extends Controller
     {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+            'postOnly + delete, dynamicDeleteFile', // we only allow deletion via POST request
         );
     }
 
@@ -32,7 +32,7 @@ class AnnouncementController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update', 'dynamicDeleteUpload','dynamicImageGetJson'),
+                'actions'=>array('create','update', 'dynamicDeleteFile'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -74,7 +74,8 @@ class AnnouncementController extends Controller
         {
             $model->attributes=$_POST['Announcement'];
 
-            $model->organization_id = $org;
+            // Relations.
+            $model->organization = $org;
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
@@ -145,7 +146,7 @@ class AnnouncementController extends Controller
             $model->attributes=$_GET['Announcement'];
 
         // Limit search to only this organization.
-        $model->organization_id = $org;
+        $model->organization = $org;
 
         $this->render('index',array(
             'model'=>$model,
@@ -164,7 +165,7 @@ class AnnouncementController extends Controller
             $model->attributes=$_GET['Announcement'];
 
         // Limit search to only this organization.
-        $model->organization_id = $org;
+        $model->organization = $org;
 
         $this->render('news',array(
             'model'=>$model,
@@ -188,19 +189,14 @@ class AnnouncementController extends Controller
 
     /**
      * Upload handler.
-     * AJAX delete of particular uploaded file for current model.
+     * AJAX delete of particular uploaded file.
      */
-    public function actionDynamicDeleteUpload()
+    public function actionDynamicDeleteFile($id)
     {
-        if (!isset($_POST['id']) || !isset($_POST['attribute']) || !isset($_POST['filename'])) {
-            return;
-        }
-
-        $model = $this->loadModel($_POST['id']);
-
-        $model->deleteUpload($_POST['attribute'], $_POST['filename']);
-
-        $model->save();
+        $model=Annfile::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $model->delete();
     }
 
     /**

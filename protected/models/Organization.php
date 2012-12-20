@@ -122,7 +122,7 @@ class Organization extends CActiveRecord
             'images' => array(self::HAS_MANY, 'Image', 'organization_id'),
             'achievements' => array(self::HAS_MANY, 'Achievement', 'organization_id'),
             'massmedias' => array(self::HAS_MANY, 'Massmedia', 'organization_id'),
-            'mmcompanys' => array(self::HAS_MANY, 'Mmcompany', 'organization_id'),
+            'companys' => array(self::HAS_MANY, 'Company', 'organization_id'),
         );
     }
 
@@ -136,10 +136,6 @@ class Organization extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
-            // // Many to many handler.
-            // 'CAdvancedArBehavior' => array(
-            //     'class' => 'application.components.behaviors.CAdvancedArBehavior',
-            // ),
             // Upload handler.
             'UploadBehavior' => array(
                 'class' => 'application.components.behaviors.UploadBehavior',

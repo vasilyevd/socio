@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-    'id'=>'mmcompany-form',
+    'id'=>'company-form',
     'enableAjaxValidation'=>false,
 )); ?>
 
@@ -9,7 +9,7 @@
 
     <?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
 
-    <?php echo $form->radioButtonListRow($model, 'type', Lookup::items('MmcompanyType')); ?>
+    <?php echo $form->radioButtonListRow($model, 'type', Lookup::items('CompanyType')); ?>
 
     <?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 

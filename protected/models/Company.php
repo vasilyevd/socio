@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "org_mmcompany".
+ * This is the model class for table "org_company".
  *
- * The followings are the available columns in table 'org_mmcompany':
+ * The followings are the available columns in table 'org_company':
  * @property integer $id
  * @property string $name
  * @property integer $type
@@ -12,7 +12,7 @@
  * The followings are the available model relations:
  * @property Massmedia[] $massmedias
  */
-class Mmcompany extends CActiveRecord
+class Company extends CActiveRecord
 {
     const TYPE_INFORMATIONAL = 1;
     const TYPE_ADVERTISEMENT = 2;
@@ -22,7 +22,7 @@ class Mmcompany extends CActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Mmcompany the static model class
+     * @return Company the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -34,7 +34,7 @@ class Mmcompany extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_mmcompany';
+        return 'org_company';
     }
 
     /**
@@ -62,7 +62,7 @@ class Mmcompany extends CActiveRecord
     {
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
-            'massmedias' => array(self::HAS_MANY, 'Massmedia', 'mmcompany_id'),
+            'massmedias' => array(self::HAS_MANY, 'Massmedia', 'company_id'),
         );
     }
 
@@ -122,13 +122,13 @@ class Mmcompany extends CActiveRecord
     {
         if ($this->isNewRecord) {
             $models = Massmedia::model()->findAll(
-                'organization_id=:organization_id AND mmcompany_id IS NULL',
+                'organization_id=:organization_id AND company_id IS NULL',
                 array('organization_id' => $_GET['org'])
             );
         } else {
             $models = Massmedia::model()->findAll(
-                'organization_id=:organization_id AND (mmcompany_id=:mmcompany_id OR mmcompany_id IS NULL)',
-                array('organization_id' => $this->organization->id, ':mmcompany_id' => $this->id)
+                'organization_id=:organization_id AND (company_id=:company_id OR company_id IS NULL)',
+                array('organization_id' => $this->organization->id, ':company_id' => $this->id)
             );
         }
 

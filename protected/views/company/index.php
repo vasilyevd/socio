@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
-	'Mmcompanies',
+	'Companies',
 );
 
 $this->menu=array(
-	array('label'=>'Create Mmcompany','url'=>array('create')),
-	array('label'=>'Manage Mmcompany','url'=>array('admin')),
+	array('label'=>'Create Company','url'=>array('create')),
+	array('label'=>'Manage Company','url'=>array('admin')),
 );
 ?>
 
-<h1>Mmcompanies</h1>
+<h1>Companies</h1>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
 	'dataProvider'=>$dataProvider,

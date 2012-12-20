@@ -1,6 +1,6 @@
 <?php
 
-class MmcompanyController extends Controller
+class CompanyController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -63,14 +63,14 @@ class MmcompanyController extends Controller
      */
     public function actionCreate($org)
     {
-        $model=new Mmcompany;
+        $model=new Company;
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Mmcompany']))
+        if(isset($_POST['Company']))
         {
-            $model->attributes=$_POST['Mmcompany'];
+            $model->attributes=$_POST['Company'];
 
             // Relations.
             $model->organization = $org;
@@ -96,9 +96,9 @@ class MmcompanyController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Mmcompany']))
+        if(isset($_POST['Company']))
         {
-            $model->attributes=$_POST['Mmcompany'];
+            $model->attributes=$_POST['Company'];
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
@@ -132,7 +132,7 @@ class MmcompanyController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider=new CActiveDataProvider('Mmcompany');
+        $dataProvider=new CActiveDataProvider('Company');
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));
@@ -143,10 +143,10 @@ class MmcompanyController extends Controller
      */
     public function actionAdmin()
     {
-        $model=new Mmcompany('search');
+        $model=new Company('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Mmcompany']))
-            $model->attributes=$_GET['Mmcompany'];
+        if(isset($_GET['Company']))
+            $model->attributes=$_GET['Company'];
 
         $this->render('admin',array(
             'model'=>$model,
@@ -160,7 +160,7 @@ class MmcompanyController extends Controller
      */
     public function loadModel($id)
     {
-        $model=Mmcompany::model()->findByPk($id);
+        $model=Company::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -172,7 +172,7 @@ class MmcompanyController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='mmcompany-form')
+        if(isset($_POST['ajax']) && $_POST['ajax']==='company-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

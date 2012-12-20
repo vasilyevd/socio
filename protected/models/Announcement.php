@@ -12,7 +12,6 @@
  * @property integer $status
  * @property integer $organization_id
  * @property integer $author_id
- * @property string $files
  * @property integer $category
  */
 class Announcement extends CActiveRecord
@@ -50,17 +49,7 @@ class Announcement extends CActiveRecord
             array('title, content, publication_time, status, category', 'required', 'on' => 'insert, update'),
             array('status, category', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>128),
-            // Upload handler.
-            array(
-                'files',
-                'file',
-                'allowEmpty' => true,
-                'maxFiles' => 10,
-                'maxSize' => 2*(1024*1024), //2MB
-                'minSize' => 1024, //1KB
-                // 'types' => 'jpeg, jpg, gif, png',
-                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
-            ),
+            array('files', 'safe'),
             array('publication_time', 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'),
             array('category', 'in', 'range' => array(
                 self::CATEGORY_GENERAL, self::CATEGORY_NEWS,
@@ -70,7 +59,7 @@ class Announcement extends CActiveRecord
             )),
             array('content','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 
-            array('id, title, content, create_time, publication_time, status, organization_id, author_id, files, category', 'safe', 'on'=>'search'),
+            array('id, title, content, create_time, publication_time, status, organization_id, author_id, category', 'safe', 'on'=>'search'),
         );
     }
 
@@ -79,10 +68,9 @@ class Announcement extends CActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
+            'files' => array(self::HAS_MANY, 'Annfile', 'announcement_id'),
         );
     }
 
@@ -95,11 +83,6 @@ class Announcement extends CActiveRecord
             // Advanced relations
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
-            ),
-            // Upload handler.
-            'MultiUploadBehavior' => array(
-                'class' => 'application.components.behaviors.MultiUploadBehavior',
-                'attributes' => array('files'),
             ),
         );
     }
@@ -131,9 +114,19 @@ class Announcement extends CActiveRecord
     {
         $criteria=new CDbCriteria;
 
-        $criteria->compare('organization_id',$this->organization_id);
+        // Relation.
+        $criteria->with = array();
+
+        // Relation BELONGS_TO search.
+        if (!empty($this->organization)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'organization',
+            ));
+            $criteria->compare('organization.id', $this->organization);
+        }
+
         // Check for whole day.
-        $criteria->compare('date(publication_time)',$this->publication_time);
+        $criteria->compare('date(t.publication_time)',$this->publication_time);
 
         // $criteria->compare('id',$this->id);
         // $criteria->compare('title',$this->title,true);
@@ -180,6 +173,18 @@ class Announcement extends CActiveRecord
     }
 
     /**
+     * This is invoked before the record is validated.
+     */
+    public function beforeValidate()
+    {
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Find or create objects and validate.
+        $this->filesTabular();
+
+        return parent::beforeValidate();
+    }
+
+    /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
      */
@@ -201,7 +206,34 @@ class Announcement extends CActiveRecord
             $this->status = self::STATUS_ACTIVE;
         }
 
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Save new models.
+        foreach ($this->files as $m) $m->save();
+
         return parent::beforeSave();
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds, creates and validates models from tabular input.
+     */
+    public function filesTabular()
+    {
+        $valid = true;
+        $modelArray = array();
+
+        $uploads = CUploadedFile::getInstances($this, 'files');
+        foreach ($uploads as $file) {
+            $model = new Annfile;
+
+            $model->name = $file;
+
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
+        }
+
+        $this->files = array_merge($this->files, $modelArray);
+        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
     }
 
     /**

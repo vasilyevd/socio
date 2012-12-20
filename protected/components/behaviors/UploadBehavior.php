@@ -4,7 +4,6 @@ class UploadBehavior extends CActiveRecordBehavior
 {
     public $attributes = array();
     public $originalModel;
-    public $uploadOffset;
 
     /**
      * Allow upload attributes to only store not empty 'CUploadedFile' or
@@ -21,18 +20,9 @@ class UploadBehavior extends CActiveRecordBehavior
         }
 
         foreach ($this->attributes as $attr) {
-            // Apply offset to upload.
-            if (isset($this->uploadOffset)) {
-                $upload = CUploadedFile::getInstance($this->owner, "[$this->uploadOffset]$attr");
-            } else {
-                $upload = CUploadedFile::getInstance($this->owner, $attr);
-            }
-
             // Override attribute only with 'CUploadedFile'.
-            if (empty($upload)) {
+            if (empty($this->owner->$attr)) {
                 $this->owner->$attr = $this->originalModel->$attr;
-            } else {
-                $this->owner->$attr = $upload;
             }
         }
     }
