@@ -21,7 +21,7 @@ class UploadBehavior extends CActiveRecordBehavior
 
         foreach ($this->attributes as $attr) {
             // Override attribute only with 'CUploadedFile'.
-            if (empty($this->owner->$attr)) {
+            if (empty($this->owner->$attr) || !($this->owner->$attr instanceof CUploadedFile)) {
                 $this->owner->$attr = $this->originalModel->$attr;
             }
         }

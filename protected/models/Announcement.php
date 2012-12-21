@@ -222,6 +222,7 @@ class Announcement extends CActiveRecord
         $valid = true;
         $modelArray = array();
 
+        // Upload handler.
         $uploads = CUploadedFile::getInstances($this, 'files');
         foreach ($uploads as $file) {
             $model = new Annfile;

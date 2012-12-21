@@ -73,6 +73,8 @@ class OrganizationController extends Controller
 
             // Relations.
             $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
 
             if($model->save())
                 $this->redirect(array('update','id'=>$model->id));
@@ -102,6 +104,8 @@ class OrganizationController extends Controller
 
             // Relations.
             $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));

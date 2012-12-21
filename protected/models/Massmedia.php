@@ -282,7 +282,8 @@ class Massmedia extends CActiveRecord
             }
 
             $model->attributes = $attributes;
-            $model->uploadOffset = $i;
+            // Upload handler.
+            $model->name = CUploadedFile::getInstance($model, "[$i]name");
 
             $valid = $model->validate() && $valid;
             $modelArray[] = $model;
