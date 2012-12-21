@@ -191,6 +191,38 @@ INSERT INTO `org_company` VALUES (1,'Моя первая компания в С�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_cooperation`
+--
+
+DROP TABLE IF EXISTS `org_cooperation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_cooperation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(128) NOT NULL,
+  `link_organization_id` int(11) DEFAULT NULL,
+  `description` text NOT NULL,
+  `create_time` datetime NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  KEY `organization_id_2` (`organization_id`),
+  KEY `link_organization_id` (`link_organization_id`),
+  CONSTRAINT `org_cooperation_ibfk_2` FOREIGN KEY (`link_organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_cooperation_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_cooperation`
+--
+
+LOCK TABLES `org_cooperation` WRITE;
+/*!40000 ALTER TABLE `org_cooperation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_cooperation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_direction`
 --
 
@@ -674,4 +706,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-21 13:45:48
+-- Dump completed on 2012-12-21 17:40:37
