@@ -74,7 +74,7 @@ class UploadBehavior extends CActiveRecordBehavior
      */
     public function getUploadPath($attribute)
     {
-        return Yii::getPathOfAlias('webroot')
+        return dirname(Yii::app()->basePath)
             . '/uploads/'
             . strtolower(get_class($this->owner)) . '/'
             . $attribute . '/'
