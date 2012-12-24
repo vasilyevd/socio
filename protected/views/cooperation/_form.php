@@ -1,32 +1,3 @@
-<?php
-$cs=Yii::app()->clientScript;
-$cs->registerScript('select2_index_script',"
-
-function movieFormatResult(movie) {
-    var markup = \"<table class='movie-result'><tr>\";
-    if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
-        markup += \"<td class='movie-image'><img src='\" + movie.posters.thumbnail + \"'/></td>\";
-    }
-    markup += \"<td class='movie-info'><div class='movie-title'>\" + movie.title + \"</div>\";
-    if (movie.critics_consensus !== undefined) {
-        markup += \"<div class='movie-synopsis'>\" + movie.critics_consensus + \"</div>\";
-    }
-    else if (movie.synopsis !== undefined) {
-        markup += \"<div class='movie-synopsis'>\" + movie.synopsis + \"</div>\";
-    }
-    markup += \"</td></tr></table>\"
-    return markup;
-}
-
-function movieFormatSelection(movie) {
-    return movie.title;
-}
-
-",CClientScript::POS_HEAD);
-?>
-
-
-
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'cooperation-form',
     'enableAjaxValidation'=>true,
@@ -42,12 +13,11 @@ function movieFormatSelection(movie) {
         'multiple' => true,
         'prompt' => '', // Blank for all drop.
         'options' => array(
-            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'placeholder' => empty($model->link) ? 'Выбрать...' : CHtml::encode($model->link), // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
             'width' => '500px',
             'minimumInputLength' => 1,
             'ajax' => array(
-                'url' => 'http://api.rottentomatoes.com/api/public/v1.0/movies.json',
                 'url' => $this->createUrl('dynamicSearchOrganizations'),
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {
@@ -58,7 +28,11 @@ function movieFormatSelection(movie) {
                 }',
             ),
             'formatResult' => 'js:function(model) {
-                return model.name;
+                markup = "<table><tr>";
+                markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
+                markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
+                markup += "</tr></table>";
+                return markup;
             }',
             'formatSelection' => 'js:function(model) {
                 return model.name;

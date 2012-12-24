@@ -79,6 +79,9 @@ class CooperationController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Empty 'linkOrganization', relation for view.
+        $model->linkOrganization = null;
+
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -102,6 +105,9 @@ class CooperationController extends Controller
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        // Empty 'linkOrganization', relation for view.
+        $model->linkOrganization = null;
 
         $this->render('update',array(
             'model'=>$model,
@@ -168,10 +174,28 @@ class CooperationController extends Controller
         $criteria->limit = 5;
         $organizations = Organization::model()->findAll($criteria);
 
+        // Add dummy organization to allow user selection.
+        $dummy = new Organization;
+        $dummy->name = $query;
+        $dummy->id = $query;
+        $dummy->logo = 'placeholder.jpg';
+        $organizations[] = $dummy;
+
+        // Change formating for view.
+        foreach ($organizations as $org) {
+            // Full URL for logo.
+            $org->logo = $org->getUploadUrl('logo');
+            // Clean and limit length for description.
+            if (empty($org->description)) {
+                $org->description = ' ';
+            } else {
+                $org->description = mb_substr(CHtml::encode(strip_tags($org->description)), 0, 100, 'UTF-8') . '...';
+            }
+        }
+
         echo CJSON::encode(array(
             'organizations' => $organizations,
         ));
-
         Yii::app()->end();
     }
 

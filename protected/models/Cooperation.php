@@ -36,8 +36,9 @@ class Cooperation extends CActiveRecord
     public function rules()
     {
         return array(
-            array('linkOrganization, description', 'required'),
+            array('link, description', 'required'),
             array('link', 'length', 'max'=>128),
+            array('linkOrganization', 'safe'),
 
             // array('id, name, description, create_time, organization_id', 'safe', 'on'=>'search'),
         );
@@ -50,7 +51,7 @@ class Cooperation extends CActiveRecord
     {
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
-            'linkOrganization' => array(self::HAS_ONE, 'Organization', 'link_organization_id'),
+            'linkOrganization' => array(self::BELONGS_TO, 'Organization', 'link_organization_id'),
         );
     }
 
@@ -102,6 +103,39 @@ class Cooperation extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is validated.
+     */
+    public function beforeValidate()
+    {
+        // Save link organization name.
+        if (empty($this->linkOrganization)) {
+            // Restore relation.
+            if (!$this->isNewRecord) {
+                $originalModel = Cooperation::model()->findByPk($this->id);
+                $this->linkOrganization = $originalModel->linkOrganization;
+            }
+        } else {
+            $originalLink = $this->linkOrganization;
+
+            // Try to convert PK to relation object.
+            if (!($this->linkOrganization instanceof Organization)) {
+                $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
+            }
+
+            // If valid model found, save it's name.
+            if ($this->linkOrganization instanceof Organization) {
+                $this->link = $this->linkOrganization->name;
+            // If still not organization model, save only name.
+            } else {
+                $this->link = $originalLink;
+                $this->linkOrganization = null;
+            }
+        }
+
+        return parent::beforeValidate();
     }
 
     /**
