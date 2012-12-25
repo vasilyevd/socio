@@ -34,6 +34,7 @@ class Organization extends CActiveRecord
     const ACTION_AREA_REGION = 2;
     const ACTION_AREA_DISTRICT = 3;
     const ACTION_AREA_CITY = 4;
+    const ACTION_AREA_COUNTRY = 5;
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
@@ -69,6 +70,7 @@ class Organization extends CActiveRecord
             array('action_area', 'in', 'range' => array(
                 self::ACTION_AREA_NATION, self::ACTION_AREA_REGION,
                 self::ACTION_AREA_DISTRICT, self::ACTION_AREA_CITY,
+                self::ACTION_AREA_COUNTRY,
             )),
 
             array(

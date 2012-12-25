@@ -139,7 +139,17 @@ class CooperationController extends Controller
      */
     public function actionIndex($org)
     {
-        $dataProvider=new CActiveDataProvider('Cooperation');
+        // $dataProvider=new CActiveDataProvider('Cooperation');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+
+        $criteria = new CDbCriteria;
+        $criteria->compare('organization_id', $org);
+        $dataProvider = new CActiveDataProvider('Cooperation', array(
+            'criteria' => $criteria,
+        ));
+
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));

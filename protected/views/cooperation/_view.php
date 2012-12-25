@@ -1,24 +1,35 @@
-<div class="view">
+<div class="well well-small">
+    <div class="row">
+        <?php if (!empty($data->linkOrganization)): ?>
+            <div class="org-logo-conteiner">
+                <div class="span1">
+                    <?php echo CHtml::link(
+                        CHtml::image(
+                            $data->linkOrganization->getUploadUrl('logo'),
+                            'Лого организации'
+                        ),
+                        array('organization/view', 'id' => $data->linkOrganization->id),
+                        array(
+                            'class' => 'thumbnail',
+                            'rel' => 'tooltip',
+                            'data-title' => CHtml::encode($data->link),
+                        )
+                    ); ?>
+                </div>
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-    <?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
-    <br />
+                <div class="span5">
+                    <strong><?php echo CHtml::link(CHtml::encode($data->link),array('view','id'=>$data->id)); ?></strong>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="span5">
+                <strong><?php echo CHtml::link(CHtml::encode($data->link),array('view','id'=>$data->id)); ?></strong>
+            </div>
+        <?php endif; ?>
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('link')); ?>:</b>
-    <?php echo CHtml::encode($data->link); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-    <?php echo CHtml::encode($data->description); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
-    <?php echo CHtml::encode($data->create_time); ?>
-    <br />
-
-    <b><?php echo CHtml::encode($data->getAttributeLabel('organization_id')); ?>:</b>
-    <?php echo CHtml::encode($data->organization_id); ?>
-    <br />
-
-
+        <div class="span8">
+            <br />
+            <?php echo CHtml::encode($data->description); ?>
+        </div>
+    </div>
 </div>

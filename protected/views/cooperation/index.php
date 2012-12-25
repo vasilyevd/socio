@@ -7,8 +7,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Сотрудничество</h1>
-
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     // 'id' => 'massmedia-listview',
     'dataProvider' => $dataProvider,
