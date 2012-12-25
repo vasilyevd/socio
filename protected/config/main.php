@@ -31,14 +31,14 @@ return array(
     // autoloading model and component classes
     'import'=>array(
         'application.models.*',
-	      'application.models.dostup.*',
+        'application.models.dostup.*',
         'application.components.*',
-                'application.extensions.*',
-                'application.extensions.widgets.*',
-                'application.helpers.*',
+        'application.extensions.*',
+        'application.extensions.widgets.*',
+        'application.helpers.*',
 
-                'ext.yii-mail.YiiMailMessage',
-                'ext.yiiext.filters.setReturnUrl.ESetReturnUrlFilter',
+        'ext.yii-mail.YiiMailMessage',
+        'ext.yiiext.filters.setReturnUrl.ESetReturnUrlFilter',
     ),
 
         'modules'=>$conf_modules,

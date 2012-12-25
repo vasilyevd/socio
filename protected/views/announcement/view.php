@@ -32,9 +32,9 @@ $this->menu=array(
     <div class='row'>
         <div class='span9'>
             <hr>
-            <b>Прикрепленные файлы:</b>
-            <?php foreach ($model->files as $f): ?>
-                <?php echo CHtml::link(CHtml::encode($f), $model->getUploadUrl('files', $f)); ?>
+            <strong>Прикрепленные файлы:</strong>
+            <?php foreach ($model->files as $m): ?>
+                <?php echo CHtml::link(CHtml::encode($m->name), $m->getUploadUrl('name')); ?>
             <?php endforeach; ?>
         </div>
     </div>
