@@ -18,6 +18,8 @@
  * @property string $phone_num
  * @property string $email
  * @property string $logo
+ * @property string $logobg
+ * @property string $logobgset
  * @property integer $author_id
  * @property integer $create_time
  * @property integer $status
@@ -168,7 +170,9 @@ class Organization extends CActiveRecord
             'website' => 'Сайт',
             'phone_num' => 'Номера Телефонов',
             'email' => 'Емейл',
-            'logo' => 'Логотип',
+            'logo' => 'Лого',
+	          'logobg'=>'Фоновое изображение',
+	          'logobgset'=>'Позиция фона',
             'author_id' => 'Автор',
             'create_time' => 'Время Создания',
             'status' => 'Статус',

@@ -12,9 +12,6 @@ $this->breadcrumbs = array_merge(array(
     <div class="span12">
         <div id="org-header" class="org-header">
 
-
-
-
 	        <!-- NAME -->
 	        <div class="main-name">
 		        <?php echo CHtml::encode($this->menu_org->name); ?>
@@ -24,12 +21,22 @@ $this->breadcrumbs = array_merge(array(
 	        <div class="item-header-container">
 
 		        <!-- FON -->
-		        <div class="item-header-bg">
-		          <?=CHtml::image('/images/orgtitile.jpg'); ?>
-		        </div>
+		        <?
+		        echo $model->logo;
+		        /** @var $model Organization */
+		        if($model->logobg) :
+				      echo CHtml::tag('div',array('class'=>'item-header-bg'));
+				      echo CHtml::image($model->getUploadUrl('logobg'));
+				      echo CHtml::closeTag('div');
+		        endif;
+		        ?>
 
 		        <!-- LOGO -->
-		        <div class="item-header-logo" style="">
+	          <?
+		        $logo_class = array('item-header-logo');
+		        if (!$model->logobg) $logo_class[] = 'no-bg';
+		        echo CHtml::tag('div',array('class'=>implode(' ', $logo_class)));
+		        ?>
 			        <img src="<?php echo $this->menu_org->getUploadUrl('logo'); ?>" alt="Logo">
 		        </div>
 
@@ -79,6 +86,25 @@ top: 0; width: 160px;">
 			        ));
 		        ?>
 	        </div>
+
+
+	    <div>
+		    <?
+		    $this->widget('bootstrap.widgets.TbSelect2', array(
+				    'asDropDownList' => false,
+				    'name' => 'clevertech',
+				    'options' => array(
+					    'tags' => array('clever','is', 'better', 'clevertech'),
+					    'placeholder' => 'disciplines',
+					    'width' => '40%',
+					    //'tokenSeparators' => array(',', ' ')
+				    )));
+
+		    ?>
+
+
+
+	    </div>
 
 
 
