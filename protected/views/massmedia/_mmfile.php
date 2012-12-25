@@ -5,6 +5,7 @@
 <div class="span3">
     <div class="well well-small">
         <?php echo CHtml::link(CHtml::encode($data->name), $data->getUploadUrl('name'), array('target' => '_blank')); ?>
+        (<?php echo CHtml::encode(Lookup::item('MmfileCategory', $data->category)); ?>)
 
         <?php if ($data->preview): ?>
             <?php $thumbnail = $data->getThumbUrl(); ?>

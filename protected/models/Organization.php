@@ -36,6 +36,7 @@ class Organization extends CActiveRecord
     const ACTION_AREA_REGION = 2;
     const ACTION_AREA_DISTRICT = 3;
     const ACTION_AREA_CITY = 4;
+    const ACTION_AREA_COUNTRY = 5;
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
@@ -71,6 +72,7 @@ class Organization extends CActiveRecord
             array('action_area', 'in', 'range' => array(
                 self::ACTION_AREA_NATION, self::ACTION_AREA_REGION,
                 self::ACTION_AREA_DISTRICT, self::ACTION_AREA_CITY,
+                self::ACTION_AREA_COUNTRY,
             )),
 
             array(
@@ -124,7 +126,7 @@ class Organization extends CActiveRecord
             'images' => array(self::HAS_MANY, 'Image', 'organization_id'),
             'achievements' => array(self::HAS_MANY, 'Achievement', 'organization_id'),
             'massmedias' => array(self::HAS_MANY, 'Massmedia', 'organization_id'),
-            'mmcompanys' => array(self::HAS_MANY, 'Mmcompany', 'organization_id'),
+            'companys' => array(self::HAS_MANY, 'Company', 'organization_id'),
         );
     }
 
@@ -138,10 +140,6 @@ class Organization extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
-            // // Many to many handler.
-            // 'CAdvancedArBehavior' => array(
-            //     'class' => 'application.components.behaviors.CAdvancedArBehavior',
-            // ),
             // Upload handler.
             'UploadBehavior' => array(
                 'class' => 'application.components.behaviors.UploadBehavior',

@@ -58,16 +58,6 @@ class Massmedia extends CActiveRecord
                 self::CATEGORY_SOCIAL_ADVERTISING,
             )),
             array('direction', 'boolean'),
-            array(
-                'files',
-                'file',
-                'allowEmpty' => true,
-                'maxFiles' => 10,
-                'maxSize' => 2*(1024*1024), //2MB
-                'minSize' => 1024, //1KB
-                // 'types' => 'jpeg, jpg, gif, png',
-                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
-            ),
 
             array('title, tags', 'safe', 'on'=>'search'),
         );
@@ -80,7 +70,7 @@ class Massmedia extends CActiveRecord
     {
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
-            'company' => array(self::BELONGS_TO, 'Mmcompany', 'mmcompany_id'),
+            'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
             'tags' => array(self::MANY_MANY, 'Mmtag', 'org_massmedia_mmtag(massmedia_id, mmtag_id)'),
             'links' => array(self::HAS_MANY, 'Mmlink', 'massmedia_id'),
             'linksGeneral' => array(
@@ -292,7 +282,8 @@ class Massmedia extends CActiveRecord
             }
 
             $model->attributes = $attributes;
-            $model->uploadOffset = $i;
+            // Upload handler.
+            $model->name = CUploadedFile::getInstance($model, "[$i]name");
 
             $valid = $model->validate() && $valid;
             $modelArray[] = $model;
