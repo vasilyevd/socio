@@ -10,13 +10,14 @@
     <?php echo $form->select2Row($model, 'linkOrganization', array(
         // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
         'asDropDownList' => false, // Tag mode.
-        'multiple' => true,
         'prompt' => '', // Blank for all drop.
         'options' => array(
+            'multiple' => true, // Multiple mode with 'asDropDownList',
             'placeholder' => empty($model->link) ? 'Выбрать...' : CHtml::encode($model->link), // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
             'width' => '500px',
             'minimumInputLength' => 1,
+            'maximumSelectionSize' => 1,
             'ajax' => array(
                 'url' => $this->createUrl('dynamicSearchOrganizations'),
                 'dataType' => 'json',
