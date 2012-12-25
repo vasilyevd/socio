@@ -10,8 +10,8 @@ $this->breadcrumbs=array(
 <p class="lead">Компании СМИ</p>
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     // 'id' => 'massmedia-listview',
-    'dataProvider' => new CArrayDataProvider(Mmcompany::model()->findAll()),
-    'itemView' => '_mmcompany',
+    'dataProvider' => new CArrayDataProvider(Company::model()->findAll()),
+    'itemView' => '_company',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
     // 'itemsCssClass' => 'row', // Change items container class. Default: items.

@@ -81,25 +81,24 @@
     <?php echo $form->error($model,'files'); ?>
     <?php if(!empty($model->files)): ?>
         <ul class="unstyled">
-            <?php foreach($model->files as $i => $u): ?>
+            <?php foreach($model->files as $i => $m): ?>
                 <li id="item_uploaded_<?php echo $i; ?>">
                     <?php echo CHtml::ajaxLink(
                         'x',
-                        array('dynamicDeleteUpload'),
+                        array(
+                            'dynamicDeleteFile',
+                            'id' => $m->id,
+                        ),
                         array(
                             'type' => 'POST',
                             'replace' => '#item_uploaded_' . $i,
-                            'data' => array(
-                                'id' => $model->id,
-                                'attribute' => 'files',
-                                'filename' => $u,
-                            ),
                         ),
                         array(
                             'confirm' => 'Вы уверены, что хотите удалить данный элемент?',
                         )
                     ); ?>
-                    <?php echo CHtml::link(CHtml::encode($u), $model->getUploadUrl('files', $u)); ?>
+                    <?php echo CHtml::link(CHtml::encode($m->name), $m->getUploadUrl('name')); ?>
+                    <?php echo $form->error($m,'name'); ?>
                 </li>
             <?php endforeach; ?>
         </ul>

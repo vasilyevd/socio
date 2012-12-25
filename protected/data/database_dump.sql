@@ -88,7 +88,7 @@ CREATE TABLE `org_album_image` (
   KEY `image_id` (`image_id`),
   CONSTRAINT `org_album_image_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `org_album` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_album_image_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `org_image` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,8 +97,35 @@ CREATE TABLE `org_album_image` (
 
 LOCK TABLES `org_album_image` WRITE;
 /*!40000 ALTER TABLE `org_album_image` DISABLE KEYS */;
-INSERT INTO `org_album_image` VALUES (12,4,8,'Другой кот'),(39,4,11,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\r\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\r\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\r\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\r\n'),(44,1,11,'sdfsdfs dfsdfsd'),(45,1,12,'sdfsdfsdf sdfsd'),(46,1,4,'sdfsd sdf');
+INSERT INTO `org_album_image` VALUES (12,4,8,'Другой кот'),(39,4,11,'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod\r\ntempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At\r\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\r\nno sea takimata sanctus est Lorem ipsum dolor sit amet.\r\n'),(44,1,11,'sdfsdfs dfsdfsd'),(45,1,12,'sdfsdfsdf sdfsd'),(46,1,4,'sdfsd sdf'),(48,5,16,'sdfs dfsdfsdf');
 /*!40000 ALTER TABLE `org_album_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_annfile`
+--
+
+DROP TABLE IF EXISTS `org_annfile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_annfile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `announcement_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `massmedia_id` (`announcement_id`),
+  CONSTRAINT `org_annfile_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `org_announcement` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_annfile`
+--
+
+LOCK TABLES `org_annfile` WRITE;
+/*!40000 ALTER TABLE `org_annfile` DISABLE KEYS */;
+INSERT INTO `org_annfile` VALUES (7,'50d334e8c3a96.jpg',1),(8,'50d334e8e7643.jpg',1),(9,'50d334e908cc3.jpg',1);
+/*!40000 ALTER TABLE `org_annfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -117,7 +144,6 @@ CREATE TABLE `org_announcement` (
   `status` int(11) NOT NULL,
   `organization_id` int(11) NOT NULL,
   `author_id` int(11) NOT NULL,
-  `files` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `category` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
@@ -131,8 +157,70 @@ CREATE TABLE `org_announcement` (
 
 LOCK TABLES `org_announcement` WRITE;
 /*!40000 ALTER TABLE `org_announcement` DISABLE KEYS */;
-INSERT INTO `org_announcement` VALUES (1,'Первая новость','<p></p><p></p><p></p><p></p><p><strike>Lorem ipsum dolor</strike> sit amet, consetetur sadipsci<span style=\"background-color:rgb(146,205,220);\">ng elitr, sed diam nonumy eirmod\ntempor invidunt ut <i>labore et dolore</i> magna aliquyam e</span>rat, sed diam voluptua. At\nvero eos et accusam et justo <i>duo dolores et ea rebum. </i>Stet clita kasd gubergren,\nno sea takimata sanctus es<br /><br />\n\nsdf dsfsdf sdfsdffsdfsdfsdfsdf\n</p><p></p>\n\n<p><img style=\"width:237.379px;height:225px;float:left;margin:0px 10px 10px 0px;\" alt=\"\" src=\"/socio/uploads/image/file/50a10241b6e3d.jpg\" />The domestic cat[1][2] (Felis catus[2] or Felis silvestris catus[4]) is a small, usually <b>furry, domesticated</b>, carnivorous mammal. It is often called the housecat when kept as an indoor pet,[6] or simply the cat when there is no need to distinguish it from other felids and felines. Cats are valued by humans for companionship and ability to hunt vermin and household pests.</p>\n\n<p> Cats are similar in anatomy to the other felids, with strong, flexible bodies, quick reflexes, sharp retractable claws, and teeth adapted to killing small prey. Cat senses fit a crepuscular and predatory ecological niche. Cats can hear sounds too faint or too high in frequency for human ears, such as those made by mice and other small game. They can see in near darkness. Like most mammals, cats have poorer color vision and a better sense of smell than humans.<br /></p>\n\n<p><br /><img style=\"width:272.365px;height:194px;float:right;margin:0px 0px 10px 10px;\" alt=\"\" src=\"/socio/uploads/image/file/509bb57b291c9.gif\" />Despite being solitary hunters, cats are a social species, and cat communication includes the use of a variety of vocalizations (meowing, purring, trilling, hissing, growling and grunting) as well as pheromones and types of cat-specific body language.[7] <br /></p><p>Cats are similar in anatomy to the other felids, with strong, flexible \nbodies, quick reflexes, sharp retractable claws, and teeth adapted to \nkilling small prey. Cat senses fit a crepuscular and predatory \necological niche. Cats can hear sounds too faint or too high in \nfrequency for human ears, such as those made by mice and other small \ngame. They can see in near darkness. Like most mammals, cats have poorer\n color vision and a better sense of smell than humans.</p><p><br /></p>\n','2012-11-03 03:13:17','2012-11-03 19:19:23',1,1,1,'509661285fda4.js,509665b6c8d91.htm',2),(2,'Без файлов','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти.','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(3,'Ещё Новость','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти[22] подвидов дикой кошки Felis silvestris, и её правильное международное научное название — Felis silvestris catus[5][23]. ','2012-11-04 15:20:51','2012-11-04 15:20:44',1,1,1,'50966bb36a767.js',2),(4,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(6,'Что-то','<p>sdfsdfsdf\n</p><div>\n          <ul><li>Lorem ipsum dolor sit amet</li><li>Consectetur adipiscing elit</li><li>Integer molestie lorem at massa</li><li>Facilisis in pretium nisl aliquet</li><li>Nulla volutpat aliquam velit\n              <ul><li>Phasellus iaculis neque</li><li>Purus sodales ultricies</li><li>Vestibulum laoreet porttitor sem</li><li>Ac tristique libero volutpat at</li></ul></li><li>Faucibus porta lacus fringilla vel</li><li>Aenean sit amet erat nunc</li><li>Eget porttitor lorem</li></ul></div>','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',2),(7,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(8,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(10,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(11,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(12,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(13,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,'',1),(14,'НОвая новость!','sdfsdf','2012-11-05 12:00:33','2012-11-05 12:00:30',1,1,1,'',1),(15,'sdfsdf !','sdfsdf','2012-11-05 12:01:32','2012-11-05 12:01:30',1,6,1,'',1),(17,'system test title','system test content','2012-12-17 15:45:58','2012-11-03 18:06:19',1,1,1,'',NULL),(18,'system  конвертированная','bla bla','2012-12-17 16:28:09','2012-12-17 16:28:09',1,1,1,'',2);
+INSERT INTO `org_announcement` VALUES (1,'Первая новость','<p></p><p></p><p></p><p></p><p><strike>Lorem ipsum dolor</strike> sit amet, consetetur sadipsci<span style=\"background-color:rgb(146,205,220);\">ng elitr, sed diam nonumy eirmod\ntempor invidunt ut <i>labore et dolore</i> magna aliquyam e</span>rat, sed diam voluptua. At\nvero eos et accusam et justo <i>duo dolores et ea rebum. </i>Stet clita kasd gubergren,\nno sea takimata sanctus es<br /><br />\n\nsdf dsfsdf sdfsdffsdfsdfsdfsdf\n</p><p></p>\n\n<p><img style=\"width:237.379px;height:225px;float:left;margin:0px 10px 10px 0px;\" alt=\"\" src=\"/socio/uploads/image/file/50a10241b6e3d.jpg\" />The domestic cat[1][2] (Felis catus[2] or Felis silvestris catus[4]) is a small, usually <b>furry, domesticated</b>, carnivorous mammal. It is often called the housecat when kept as an indoor pet,[6] or simply the cat when there is no need to distinguish it from other felids and felines. Cats are valued by humans for companionship and ability to hunt vermin and household pests.</p>\n\n<p> Cats are similar in anatomy to the other felids, with strong, flexible bodies, quick reflexes, sharp retractable claws, and teeth adapted to killing small prey. Cat senses fit a crepuscular and predatory ecological niche. Cats can hear sounds too faint or too high in frequency for human ears, such as those made by mice and other small game. They can see in near darkness. Like most mammals, cats have poorer color vision and a better sense of smell than humans.<br /></p>\n\n<p><br /><img style=\"width:272.365px;height:194px;float:right;margin:0px 0px 10px 10px;\" alt=\"\" src=\"/socio/uploads/image/file/509bb57b291c9.gif\" />Despite being solitary hunters, cats are a social species, and cat communication includes the use of a variety of vocalizations (meowing, purring, trilling, hissing, growling and grunting) as well as pheromones and types of cat-specific body language.[7] <br /></p><p>Cats are similar in anatomy to the other felids, with strong, flexible \nbodies, quick reflexes, sharp retractable claws, and teeth adapted to \nkilling small prey. Cat senses fit a crepuscular and predatory \necological niche. Cats can hear sounds too faint or too high in \nfrequency for human ears, such as those made by mice and other small \ngame. They can see in near darkness. Like most mammals, cats have poorer\n color vision and a better sense of smell than humans.</p><p><br /></p>\n','2012-11-03 03:13:17','2012-11-03 19:19:23',1,1,1,2),(2,'Без файлов','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти.','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(3,'Ещё Новость','На основании данных, полученных современной филогенетикой, домашняя кошка является одним из пяти[22] подвидов дикой кошки Felis silvestris, и её правильное международное научное название — Felis silvestris catus[5][23]. ','2012-11-04 15:20:51','2012-11-04 15:20:44',1,1,1,2),(4,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(6,'Что-то','<p>sdfsdfsdf\n</p><div>\n          <ul><li>Lorem ipsum dolor sit amet</li><li>Consectetur adipiscing elit</li><li>Integer molestie lorem at massa</li><li>Facilisis in pretium nisl aliquet</li><li>Nulla volutpat aliquam velit\n              <ul><li>Phasellus iaculis neque</li><li>Purus sodales ultricies</li><li>Vestibulum laoreet porttitor sem</li><li>Ac tristique libero volutpat at</li></ul></li><li>Faucibus porta lacus fringilla vel</li><li>Aenean sit amet erat nunc</li><li>Eget porttitor lorem</li></ul></div>','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,2),(7,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(8,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(10,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(11,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(12,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(13,'Без файлов','sdfsdfsdf','2012-11-03 18:06:19','2012-11-03 18:06:10',1,1,1,1),(14,'НОвая новость!','sdfsdf','2012-11-05 12:00:33','2012-11-05 12:00:30',1,1,1,1),(15,'sdfsdf !','sdfsdf','2012-11-05 12:01:32','2012-11-05 12:01:30',1,6,1,1),(17,'system test title','system test content','2012-12-17 15:45:58','2012-11-03 18:06:19',1,1,1,NULL),(18,'system  конвертированная','bla bla','2012-12-17 16:28:09','2012-12-17 16:28:09',1,1,1,2);
 /*!40000 ALTER TABLE `org_announcement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_company`
+--
+
+DROP TABLE IF EXISTS `org_company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `type` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `org_company_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_company`
+--
+
+LOCK TABLES `org_company` WRITE;
+/*!40000 ALTER TABLE `org_company` DISABLE KEYS */;
+INSERT INTO `org_company` VALUES (1,'Моя первая компания в СМИ',1,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquet lacus et ligula malesuada luctus. In non tellus vel leo ullamcorper gravida. Suspendisse et erat nibh, eget volutpat elit. Nulla facilisi. Cras sit amet arcu lacus. Aenean tellus magna, iaculis sed accumsan ac, ullamcorper sed purus. Sed id nulla sem. Morbi id dolor sit amet purus suscipit lacinia. Donec malesuada suscipit mi in congue. Curabitur molestie aliquam turpis eget dapibus. Morbi aliquet, felis quis auctor mollis, tortor leo lobortis sem, eget dictum elit sapien in dolor. Vestibulum vel arcu velit, a sollicitudin leo. Nunc sodales tortor sit amet erat facilisis ac elementum augue consectetur.',1),(5,'Еще одна компания',4,'Phasellus consequat arcu ut quam tincidunt et commodo ligula aliquam. Integer ullamcorper urna non sem porttitor porta. Cras dignissim ipsum risus, eget pellentesque erat. Duis vitae est a neque varius volutpat at quis lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In in tortor mauris, ac gravida nisi. In hac habitasse platea dictumst. Nam sollicitudin iaculis elit, non luctus metus facilisis fermentum. Quisque in auctor nibh. Sed nisi lorem, luctus vel suscipit eu, aliquet vitae nunc. Fusce semper auctor tellus, in tincidunt magna ornare ac. Duis euismod augue eget elit consequat tempus. Donec gravida malesuada molestie. ',1),(6,'Последняя компания',3,'Sed quis justo nunc, eu semper libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra, purus non volutpat adipiscing, arcu velit rhoncus est, vel elementum risus massa id sem. Morbi luctus, felis vel volutpat pellentesque, sem erat vehicula arcu, vitae fringilla est sem ac quam. Etiam congue, odio consequat viverra semper, dui diam rutrum metus, sed sollicitudin ligula arcu posuere purus. Mauris sagittis elit a odio imperdiet mollis quis quis nunc. Pellentesque nibh lectus, hendrerit at accumsan vel, condimentum sed lorem. Aliquam ligula magna, adipiscing viverra posuere vitae, dignissim vitae ante. Donec sed mi et velit egestas sodales ut quis enim. Proin ac augue nisi. Curabitur bibendum est in orci placerat venenatis. Vivamus malesuada adipiscing erat, sit amet fermentum dolor consectetur quis. Aenean dui diam, feugiat quis iaculis eu, feugiat ut massa. Duis quis eros tellus. Phasellus non velit libero, sit amet dictum elit. Pellentesque lacinia elementum placerat. ',1);
+/*!40000 ALTER TABLE `org_company` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_cooperation`
+--
+
+DROP TABLE IF EXISTS `org_cooperation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_cooperation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(128) NOT NULL,
+  `link_organization_id` int(11) DEFAULT NULL,
+  `description` text NOT NULL,
+  `create_time` datetime NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  KEY `organization_id_2` (`organization_id`),
+  KEY `link_organization_id` (`link_organization_id`),
+  CONSTRAINT `org_cooperation_ibfk_2` FOREIGN KEY (`link_organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_cooperation_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_cooperation`
+--
+
+LOCK TABLES `org_cooperation` WRITE;
+/*!40000 ALTER TABLE `org_cooperation` DISABLE KEYS */;
+INSERT INTO `org_cooperation` VALUES (23,'Корв ВС sd',6,'Pellentesque dignissim placerat risus et pulvinar. Aliquam euismod, justo a tempor venenatis, eros nulla sodales lacus, non cursus erat nibh eget nulla. In vitae tortor vel neque convallis faucibus vel a lorem. Suspendisse pharetra scelerisque sapien, eu fringilla felis tempor non. Nam vel vehicula dui.','2012-12-24 17:15:19',1),(24,'Не в списке',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1),(25,'Royal Mail',8,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1),(26,'Ещё не в списке',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1);
+/*!40000 ALTER TABLE `org_cooperation` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -243,7 +331,7 @@ CREATE TABLE `org_image` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_image_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +340,7 @@ CREATE TABLE `org_image` (
 
 LOCK TABLES `org_image` WRITE;
 /*!40000 ALTER TABLE `org_image` DISABLE KEYS */;
-INSERT INTO `org_image` VALUES (1,'5098faf1854e9.jpg','2012-11-06 13:56:33',1),(2,'5098fb961c218.jpg','2012-11-06 13:59:18',1),(3,'50990331c1fe6.jpg','2012-11-06 14:31:45',1),(4,'509bb57b291c9.gif','2012-11-06 14:36:28',1),(5,'509bb58a2019c.jpg','2012-11-06 15:20:18',1),(6,'509bb59b35fcc.jpg','2012-11-06 15:20:28',1),(7,'509bb5aac0df5.jpg','2012-11-06 15:21:31',1),(8,'509bb5f4795e9.jpg','2012-11-06 15:23:38',1),(9,'509bb606b10db.jpg','2012-11-06 15:24:40',1),(10,'509bb61b5cf12.jpg','2012-11-06 15:24:51',1),(11,'509bb626ea826.jpg','2012-11-06 15:25:03',1),(12,'50a10241b6e3d.jpg','2012-11-12 16:05:53',1),(13,'50a2064d04355.jpg','2012-11-13 10:35:25',1),(14,'50a207d911908.jpg','2012-11-13 10:42:01',1);
+INSERT INTO `org_image` VALUES (1,'5098faf1854e9.jpg','2012-11-06 13:56:33',1),(2,'5098fb961c218.jpg','2012-11-06 13:59:18',1),(3,'50990331c1fe6.jpg','2012-11-06 14:31:45',1),(4,'509bb57b291c9.gif','2012-11-06 14:36:28',1),(5,'509bb58a2019c.jpg','2012-11-06 15:20:18',1),(6,'509bb59b35fcc.jpg','2012-11-06 15:20:28',1),(7,'509bb5aac0df5.jpg','2012-11-06 15:21:31',1),(8,'509bb5f4795e9.jpg','2012-11-06 15:23:38',1),(9,'509bb606b10db.jpg','2012-11-06 15:24:40',1),(10,'509bb61b5cf12.jpg','2012-11-06 15:24:51',1),(11,'509bb626ea826.jpg','2012-11-06 15:25:03',1),(12,'50a10241b6e3d.jpg','2012-11-12 16:05:53',1),(13,'50a2064d04355.jpg','2012-11-13 10:35:25',1),(14,'50a207d911908.jpg','2012-11-13 10:42:01',1),(16,'50d44ac6e442d.jpg','2012-12-21 13:40:54',1);
 /*!40000 ALTER TABLE `org_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +358,7 @@ CREATE TABLE `org_lookup` (
   `type` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +367,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Государство',1,'OrganizationActionArea',1),(10,'Область',2,'OrganizationActionArea',2),(11,'Район',3,'OrganizationActionArea',3),(12,'Город',4,'OrganizationActionArea',4),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'MmcompanyType',1),(53,'Рекламная',2,'MmcompanyType',2),(54,'Правовая',3,'MmcompanyType',3),(55,'Пиар',4,'MmcompanyType',4);
+INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Национальная',1,'OrganizationActionArea',1),(10,'Региональная',2,'OrganizationActionArea',3),(11,'Районная',3,'OrganizationActionArea',4),(12,'Городская',4,'OrganizationActionArea',5),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'CompanyType',1),(53,'Рекламная',2,'CompanyType',2),(54,'Правовая',3,'CompanyType',3),(55,'Пиар',4,'CompanyType',4),(56,'Всеукраинская',5,'OrganizationActionArea',2);
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,13 +386,13 @@ CREATE TABLE `org_massmedia` (
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `create_time` datetime NOT NULL,
   `organization_id` int(11) NOT NULL,
-  `mmcompany_id` int(11) DEFAULT NULL,
+  `company_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
-  KEY `mmcompany_id` (`mmcompany_id`),
-  CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `org_massmedia_ibfk_2` FOREIGN KEY (`mmcompany_id`) REFERENCES `org_mmcompany` (`id`) ON DELETE SET NULL
+  KEY `mmcompany_id` (`company_id`),
+  CONSTRAINT `org_massmedia_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `org_company` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -348,35 +436,6 @@ INSERT INTO `org_massmedia_mmtag` VALUES (41,40,6),(42,40,7),(45,41,7),(48,41,13
 UNLOCK TABLES;
 
 --
--- Table structure for table `org_mmcompany`
---
-
-DROP TABLE IF EXISTS `org_mmcompany`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `org_mmcompany` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `type` int(11) NOT NULL,
-  `description` text NOT NULL,
-  `organization_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `organization_id` (`organization_id`),
-  CONSTRAINT `org_mmcompany_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `org_mmcompany`
---
-
-LOCK TABLES `org_mmcompany` WRITE;
-/*!40000 ALTER TABLE `org_mmcompany` DISABLE KEYS */;
-INSERT INTO `org_mmcompany` VALUES (1,'Моя первая компания в СМИ',1,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquet lacus et ligula malesuada luctus. In non tellus vel leo ullamcorper gravida. Suspendisse et erat nibh, eget volutpat elit. Nulla facilisi. Cras sit amet arcu lacus. Aenean tellus magna, iaculis sed accumsan ac, ullamcorper sed purus. Sed id nulla sem. Morbi id dolor sit amet purus suscipit lacinia. Donec malesuada suscipit mi in congue. Curabitur molestie aliquam turpis eget dapibus. Morbi aliquet, felis quis auctor mollis, tortor leo lobortis sem, eget dictum elit sapien in dolor. Vestibulum vel arcu velit, a sollicitudin leo. Nunc sodales tortor sit amet erat facilisis ac elementum augue consectetur.',1),(5,'Еще одна компания',4,'Phasellus consequat arcu ut quam tincidunt et commodo ligula aliquam. Integer ullamcorper urna non sem porttitor porta. Cras dignissim ipsum risus, eget pellentesque erat. Duis vitae est a neque varius volutpat at quis lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In in tortor mauris, ac gravida nisi. In hac habitasse platea dictumst. Nam sollicitudin iaculis elit, non luctus metus facilisis fermentum. Quisque in auctor nibh. Sed nisi lorem, luctus vel suscipit eu, aliquet vitae nunc. Fusce semper auctor tellus, in tincidunt magna ornare ac. Duis euismod augue eget elit consequat tempus. Donec gravida malesuada molestie. ',1),(6,'Последняя компания',3,'Sed quis justo nunc, eu semper libero. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec viverra, purus non volutpat adipiscing, arcu velit rhoncus est, vel elementum risus massa id sem. Morbi luctus, felis vel volutpat pellentesque, sem erat vehicula arcu, vitae fringilla est sem ac quam. Etiam congue, odio consequat viverra semper, dui diam rutrum metus, sed sollicitudin ligula arcu posuere purus. Mauris sagittis elit a odio imperdiet mollis quis quis nunc. Pellentesque nibh lectus, hendrerit at accumsan vel, condimentum sed lorem. Aliquam ligula magna, adipiscing viverra posuere vitae, dignissim vitae ante. Donec sed mi et velit egestas sodales ut quis enim. Proin ac augue nisi. Curabitur bibendum est in orci placerat venenatis. Vivamus malesuada adipiscing erat, sit amet fermentum dolor consectetur quis. Aenean dui diam, feugiat quis iaculis eu, feugiat ut massa. Duis quis eros tellus. Phasellus non velit libero, sit amet dictum elit. Pellentesque lacinia elementum placerat. ',1);
-/*!40000 ALTER TABLE `org_mmcompany` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `org_mmfile`
 --
 
@@ -393,7 +452,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,7 +461,7 @@ CREATE TABLE `org_mmfile` (
 
 LOCK TABLES `org_mmfile` WRITE;
 /*!40000 ALTER TABLE `org_mmfile` DISABLE KEYS */;
-INSERT INTO `org_mmfile` VALUES (20,'50cb1df9a23e2.ogg',1,2,1,40),(22,'50cb1e9245d68.jpg',2,1,1,40),(23,'50cb4c3936aa1.jpg',2,1,1,42),(24,'50cb4c3946e7d.jpg',2,2,1,42),(25,'50cb4d04294b4.jpg',2,2,1,43),(26,'50cb4d5d5d8f5.jpg',2,1,1,44),(27,'50cefba631a1e.jpg',2,1,1,45),(28,'50cf3a377cd0d.doc',3,3,1,40),(29,'50d06f3aa87a0.doc',3,2,1,40),(30,'50d08d997bc2f.doc',3,2,1,46),(36,'50d1bb08e02f9.docx',3,3,1,40),(37,'50d1bb09044cb.pdf',3,3,1,40),(38,'50d1bb091c973.xls',3,3,1,40),(39,'50d1bb09322af.xlsx',3,3,1,40),(41,'50d1bb76a31a8.ppt',3,3,1,40),(42,'50d1be4572d75.jpg',2,2,0,40),(43,'50d1be4588470.jpg',2,2,0,40);
+INSERT INTO `org_mmfile` VALUES (23,'50cb4c3936aa1.jpg',2,1,1,42),(24,'50cb4c3946e7d.jpg',2,2,1,42),(25,'50cb4d04294b4.jpg',2,2,1,43),(26,'50cb4d5d5d8f5.jpg',2,1,1,44),(27,'50cefba631a1e.jpg',2,1,1,45),(30,'50d08d997bc2f.doc',3,2,1,46),(37,'50d1bb09044cb.pdf',3,1,1,40),(46,'50d1db31e9f7e.docx',3,3,1,40),(47,'50d1db32060d0.ppt',3,3,1,40);
 /*!40000 ALTER TABLE `org_mmfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,7 +556,7 @@ CREATE TABLE `org_organization` (
 
 LOCK TABLES `org_organization` WRITE;
 /*!40000 ALTER TABLE `org_organization` DISABLE KEYS */;
-INSERT INTO `org_organization` VALUES (1,'Лаберж ОС',1,3,4,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС',1,1,2,NULL,NULL,NULL,NULL,'','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'sdfsdf',1,1,3,NULL,NULL,NULL,NULL,'','','','','','50c89426a7950.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2012-12-03 16:56:46',3,0);
+INSERT INTO `org_organization` VALUES (1,'Лаберж ОС sd',1,3,5,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС sd',1,1,2,NULL,NULL,NULL,NULL,'<p>Morbi enim nisi, vestibulum ac volutpat vel, lobortis sit amet neque. \nDonec eleifend lacinia felis elementum consectetur. Mauris id congue \narcu. Quisque a augue aliquet odio hendrerit facilisis at id nibh. Cras \nornare, quam a venenatis pretium, quam purus aliquet justo, sit amet \nscelerisque tortor massa et arcu. Donec interdum scelerisque sem, et \nconsequat turpis vulputate ac. Vivamus pharetra dui ut tellus commodo \npretium. Aliquam id auctor nulla. Vivamus aliquam ullamcorper felis \nauctor commodo. Nulla eget justo nunc, non bibendum mi. Cras faucibus \nodio a lectus vehicula nec luctus lectus commodo. Maecenas at porttitor \nrisus.\n</p>\n','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'Royal Mail',1,1,3,NULL,NULL,NULL,NULL,'','','','','','50c89426a7950.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,'','','','','','50d445c4ee9e2.jpg',1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2012-12-03 16:56:46',3,0);
 /*!40000 ALTER TABLE `org_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -648,4 +707,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-19 15:52:55
+-- Dump completed on 2012-12-25 15:48:17
