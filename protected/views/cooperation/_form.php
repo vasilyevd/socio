@@ -1,11 +1,28 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'cooperation-form',
     'enableAjaxValidation'=>true,
+    // Upload handler.
+    'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
 
     <p class="help-block">Поля с <span class="required">*</span> обязательны.</p>
 
     <?php echo $form->errorSummary($model); ?>
+
+    <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('CooperationSource')); ?>
+
+    <?php echo $form->select2Row($model, 'type', array(
+        'data' => CHtml::listData(Orgtype::model()->findAll(), 'id', 'name'),
+        // 'asDropDownList' => false, // Tag mode.
+        // 'multiple' => true, // Multiple mode without 'asDropDownList'.
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            // 'multiple' => true, // Multiple mode with 'asDropDownList'.
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
     <?php echo $form->select2Row($model, 'linkOrganization', array(
         // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
@@ -40,6 +57,16 @@
             }',
         ),
     )); ?>
+
+    <p>---------- HIDE --------------- </p>
+    <?php echo $form->fileFieldRow($model,'logo'); ?>
+    <p>---------- HIDE --------------- </p>
+
+    <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128)); ?>
+
+    <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128)); ?>
+
+    <?php echo $form->textFieldRow($model,'contact_name',array('class'=>'span5','maxlength'=>128)); ?>
 
     <?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 

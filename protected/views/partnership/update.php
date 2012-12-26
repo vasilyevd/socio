@@ -13,6 +13,8 @@ $this->breadcrumbs=array(
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'partnership-form',
     'enableAjaxValidation'=>true,
+    // Upload handler.
+    'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
     <p class="help-block">Поля с <span class="required">*</span> обязательны.</p>
 
