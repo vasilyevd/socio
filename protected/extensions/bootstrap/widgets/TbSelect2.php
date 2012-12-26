@@ -48,21 +48,34 @@ class TbSelect2 extends CInputWidget
 	{
 		list($name, $id) = $this->resolveNameID();
 
+		/** add by lsd */
+		$likeinput_need =$this->options['likeinput']==true && $this->options['likeinputAtribute'] != "";
+		/** end add by lsd */
 		if ($this->hasModel())
 		{
-			if($this->form)
+			if($this->form) {
 				echo $this->asDropDownList?
 					$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
 					$this->form->hiddenField($this->model, $this->attribute);
-			else
+				/** add by lsd  - todo check likeinputAtribute secure */
+				if ($likeinput_need) echo $this->form->hiddenField($this->model, $this->options['likeinputAtribute']);
+				/** add by lsd */ }
+			else {
 				echo $this->asDropDownList?
 					CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions) :
 					CHtml::activeHiddenField($this->model, $this->attribute);
+				/** add by lsd */
+				if ($likeinput_need) echo CHtml::activeHiddenField($this->model, $this->options['likeinputAtribute']);
+				/** add by lsd */ }
 
-		} else
+		} else {
 			echo $this->asDropDownList ?
 				CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions) :
 				CHtml::hiddenField($name, $this->value);
+				/** add by lsd */
+			if ($likeinput_need) echo CHtml::activeHiddenField($this->model, $this->options['likeinputAtribute']);
+			/** add by lsd */
+		}
 
 		$this->registerClientScript($id);
 	}

@@ -593,6 +593,9 @@
             this.resultsPage = 0;
             this.context = null;
 
+            if (this.opts.likeinput === true && this.opts.likeinputAtribute !== "") {
+                this.likeinputelement = this.opts.element.next("input:hidden");
+            }
             // initialize the container
             this.initContainer();
             this.initContainerWidth();
@@ -1878,12 +1881,18 @@
                 }
             }));
 
-            this.search.bind("keyup", this.bind(this.resizeSearch));
+            this.search.bind("keyup", this.bind(function(){
+                this.resizeSearch();
+                this.fillLikeInput();
+                }
+            ));
 
             this.search.bind("blur", this.bind(function(e) {
                 this.container.removeClass("select2-container-active");
                 this.search.removeClass("select2-focused");
+                if (this.opts.likeinput !== true || this.search.val().length == 0) {
                 this.clearSearch();
+                }
                 e.stopImmediatePropagation();
             }));
 
@@ -1893,10 +1902,16 @@
                     // clicked inside a select2 search choice, do not open
                     return;
                 }
+                if (this.opts.likeinput === true && this.getVal().length !== 0) {
+                    // clicked them a select2 in likeinput mode and has value - do not need open and show
+                    return;
+                }
                 this.clearPlaceholder();
                 this.open();
                 this.focusSearch();
+                if (this.opts.likeinput !== true) {
                 e.preventDefault();
+                }
             }));
 
             this.container.delegate(selector, "focus", this.bind(function () {
@@ -1953,20 +1968,32 @@
         // multi
         clearSearch: function () {
             var placeholder = this.getPlaceholder();
-
             if (placeholder !== undefined  && this.getVal().length === 0 && this.search.hasClass("select2-focused") === false) {
-                this.search.val(placeholder).addClass("select2-default");
+                var ssv = this.search.val();
+                var ssvt = $.trim(this.search.val());
+                var ssvt = $.trim(this.search.val()).length;
+                var ssvl = this.search.val().length;
+                if (this.opts.likeinput === false || (this.opts.likeinput === true && $.trim(this.search.val()).length === 0)) {
+								this.search.val(placeholder).addClass("select2-default");
+                }
                 // stretch the search box to full width of the container so as much of the placeholder is visible as possible
                 this.resizeSearch();
             } else {
                 // we set this to " " instead of "" and later clear it on focus() because there is a firefox bug
                 // that does not properly render the caret when the field starts out blank
+                var ssv = this.search.val();
+                var ssvt = $.trim(this.search.val());
+                var ssvt = $.trim(this.search.val()).length;
+                var ssvl = this.search.val().length;
+                var gvl = this.getVal().length;
+                if (this.opts.likeinput === false || (this.opts.likeinput === true && $.trim(this.search.val()).length === 0 || this.getVal().length !== 0) ) {
                 this.search.val(" ").width(10);
+                }
             }
         },
 
         // multi
-        clearPlaceholder: function () {
+        clearPlaceholder : function () {
             if (this.search.hasClass("select2-default")) {
                 this.search.val("").removeClass("select2-default");
             } else {
@@ -2056,7 +2083,12 @@
             // added we do not need to check if this is a new element before firing change
             this.triggerChange({ added: data });
 
-            this.focusSearch();
+            if (this.opts.likeinput === true) {
+                this.search.hide();
+                this.fillLikeInput();
+            } else {
+                this.focusSearch();
+            }
         },
 
         // multi
@@ -2068,7 +2100,7 @@
         // multi
         addSelectedChoice: function (data) {
             var choice=$(
-                    "<li class='select2-search-choice'>" +
+                    "<li class='select2-search-choice" + (this.opts.likeinput === true ? " likeinput" : "") + "'>" +
                     "    <div></div>" +
                     "    <a href='#' onclick='return false;' class='select2-search-choice-close' tabindex='-1'></a>" +
                     "</li>"),
@@ -2300,8 +2332,15 @@
                 this.updateSelection(values);
                 this.clearSearch();
             }
+        },
+
+        // lsd - likeinput
+        fillLikeInput: function() {
+            this.likeinputelement.val($.trim(this.search.val()));
         }
     });
+
+
 
     $.fn.select2 = function () {
 
@@ -2322,7 +2361,7 @@
                     if ("tags" in opts) {opts.multiple = multiple = true;}
                 }
 
-                select2 = multiple ? new MultiSelect2() : new SingleSelect2();
+                select2 = (multiple || opts.likeinput) ? new MultiSelect2() : new SingleSelect2();
                 select2.init(opts);
             } else if (typeof(args[0]) === "string") {
 
@@ -2385,7 +2424,8 @@
             }
             return markup;
         },
-        blurOnChange: false
+        blurOnChange: false,
+        likeinput: false
     };
 
     // exports

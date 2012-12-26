@@ -89,7 +89,7 @@ top: 0; width: 160px;">
 
 
 	    <div>
-		    <?
+		    <? /*
 		    $this->widget('bootstrap.widgets.TbSelect2', array(
 				    'asDropDownList' => false,
 				    'name' => 'clevertech',
@@ -99,7 +99,7 @@ top: 0; width: 160px;">
 					    'width' => '40%',
 					    //'tokenSeparators' => array(',', ' ')
 				    )));
-
+*/
 		    ?>
 
 
