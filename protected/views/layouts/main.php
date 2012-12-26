@@ -1,3 +1,4 @@
+<?php /** @var $this Controller */ ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -71,12 +72,26 @@
 			$this->widget('bootstrap.widgets.TbMenu', array(
 							'htmlOptions'=>array('class'=>'nav-pills'),
 							'items'=>array(
-								array('label'=>'Организации', 'url'=>array('/organization/index')),
-								array('label'=>'Доступность', 'url'=>array('/object/main')),
-								array('label'=>'Инфраструктура', 'url'=>array('/object/index')),
+								array('label'=>'Организации',
+									'url'=>array('/organization/index'),
+									'active'=>$this->sectionMain == 'org'
+								),
+								array('label'=>'Доступность',
+									'url'=>array('/object/main'),
+									'active'=>$this->sectionMain == 'obj'
+								),
+								array('label'=>'Инфраструктура',
+									'url'=>array('/object/index'),
+									'active'=>$this->sectionMain == 'inf'
+								),
 								'',
-								array('label'=>'Справка', 'url'=>array('/site/page', 'view'=>'faq')),
-								array('label'=>'О проекте', 'url'=>array('/site/about', 'page'=>'comanda')),
+								array('label'=>'Справка',
+									'url'=>array('/site/page', 'view'=>'faq'),
+								),
+								array('label'=>'О проекте',
+									'url'=>array('/site/about', 'page'=>'comanda'),
+									'active'=>$this->sectionMain == 'about'
+								),
 							),
 				));
 

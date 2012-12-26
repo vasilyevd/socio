@@ -1,6 +1,7 @@
 <?php
 $this->layout='//layouts/main';
 
+$this->sectionMain = "org";
 $this->breadcrumbs=array(
     'Организации',
 );

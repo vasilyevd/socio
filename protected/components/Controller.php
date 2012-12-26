@@ -15,7 +15,25 @@ class Controller extends CController
      */
     public $menu=array();
     public $menu_org;
-    /**
+
+	/** @var string variable for add description of page */
+	public $pageDescription=NULL;
+
+	/** @var mixed string or array of keywords of page  */
+	public $pageKeywords=NULL;
+
+	/** @var string the name of main-section of SOCIO
+	 * like: Organizations, Accesibilyty, Help, Media, Users ets.
+	 */
+	public $sectionMain=NULL;
+
+	/** @var string the name of sub-main-section of main-section SOCIO
+	 * Accessibility:
+	 * */
+	public $sectionMainSub=NULL;
+
+
+	/**
      * @var array the breadcrumbs of the current page. The value of this property will
      * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
      * for more details on how to specify this property.

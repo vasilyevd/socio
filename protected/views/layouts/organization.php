@@ -1,4 +1,6 @@
 <?php
+/** @var $this Controller */
+$this->sectionMain = "org";
 $this->breadcrumbs = array_merge(array(
     'Организации' => array('organization/index'),
     CHtml::encode($this->menu_org->name) => array('organization/view', 'id' => $this->menu_org->id),

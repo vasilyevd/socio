@@ -1,4 +1,5 @@
 <?php
+$this->sectionMain = "org";
 $this->breadcrumbs=array(
     'Организации',
 );
