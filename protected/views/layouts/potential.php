@@ -2,6 +2,7 @@
 $this->menu=array(
     array('label' => 'Управление Потенциалом'),
     array('label' => 'Добавить Сотрудничество', 'icon' => 'cog', 'url' => array('cooperation/create', 'org' => $this->menu_org->id)),
+    array('label' => 'Добавить Партнерство', 'icon' => 'cog', 'url' => array('partnership/create', 'org' => $this->menu_org->id)),
 );
 ?>
 
@@ -12,7 +13,7 @@ $this->menu=array(
     // 'stacked' => true, // stacked state for tabs and pills
     'items' => array(
         array('label' => 'Сотрудничество', 'url' => array('cooperation/index', 'org' => $this->menu_org->id)),
-        array('label' => 'Партнерство', 'url' => array('achievement/index', 'org' => $this->menu_org->id)),
+        array('label' => 'Партнерство', 'url' => array('partnership/index', 'org' => $this->menu_org->id)),
         array('label' => 'Поддержка', 'url' => array('massmedia/index', 'org' => $this->menu_org->id)),
     ),
 )); ?>

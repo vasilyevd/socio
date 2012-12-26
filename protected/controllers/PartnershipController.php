@@ -1,6 +1,6 @@
 <?php
 
-class CooperationController extends Controller
+class PartnershipController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,7 +15,7 @@ class CooperationController extends Controller
     {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+            'postOnly + delete, dynamicDeleteFile', // we only allow deletion via POST request
         );
     }
 
@@ -32,7 +32,7 @@ class CooperationController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create', 'update', 'dynamicSearchOrganizations'),
+                'actions'=>array('create', 'update', 'updateVerification', 'dynamicDeleteFile'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,14 +63,14 @@ class CooperationController extends Controller
      */
     public function actionCreate($org)
     {
-        $model=new Cooperation;
+        $model=new Partnership;
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Cooperation']))
+        if(isset($_POST['Partnership']))
         {
-            $model->attributes=$_POST['Cooperation'];
+            $model->attributes=$_POST['Partnership'];
 
             // Relations.
             $model->organization = $org;
@@ -99,9 +99,9 @@ class CooperationController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Cooperation']))
+        if(isset($_POST['Partnership']))
         {
-            $model->attributes=$_POST['Cooperation'];
+            $model->attributes=$_POST['Partnership'];
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
@@ -110,6 +110,33 @@ class CooperationController extends Controller
         $model->linkOrganization = null;
 
         $this->render('update',array(
+            'model'=>$model,
+        ));
+    }
+
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdateVerification($id)
+    {
+        $model=$this->loadModel($id);
+
+        // Custom scenario.
+        $model->scenario = 'updateVerification';
+
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($model);
+
+        if(isset($_POST['Partnership']))
+        {
+            $model->attributes=$_POST['Partnership'];
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
+        }
+
+        $this->render('updateVerification',array(
             'model'=>$model,
         ));
     }
@@ -139,14 +166,14 @@ class CooperationController extends Controller
      */
     public function actionIndex($org)
     {
-        // $dataProvider=new CActiveDataProvider('Cooperation');
+        // $dataProvider=new CActiveDataProvider('Partnership');
         // $this->render('index',array(
         //     'dataProvider'=>$dataProvider,
         // ));
 
         $criteria = new CDbCriteria;
         $criteria->compare('organization_id', $org);
-        $dataProvider = new CActiveDataProvider('Cooperation', array(
+        $dataProvider = new CActiveDataProvider('Partnership', array(
             'criteria' => $criteria,
         ));
 
@@ -160,10 +187,10 @@ class CooperationController extends Controller
      */
     public function actionAdmin()
     {
-        $model=new Cooperation('search');
+        $model=new Partnership('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Cooperation']))
-            $model->attributes=$_GET['Cooperation'];
+        if(isset($_GET['Partnership']))
+            $model->attributes=$_GET['Partnership'];
 
         $this->render('admin',array(
             'model'=>$model,
@@ -171,42 +198,15 @@ class CooperationController extends Controller
     }
 
     /**
-     * Search organizations by its name.
-     * @param string $query organization name to search.
+     * Upload handler.
+     * AJAX delete of particular uploaded file.
      */
-    public function actionDynamicSearchOrganizations($query)
+    public function actionDynamicDeleteFile($id)
     {
-        header('Content-type: application/json');
-
-        // Find organizations by name.
-        $criteria = new CDbCriteria();
-        $criteria->compare('name', $query, true);
-        $criteria->limit = 5;
-        $organizations = Organization::model()->findAll($criteria);
-
-        // Add dummy organization to allow user selection.
-        $dummy = new Organization;
-        $dummy->name = $query;
-        $dummy->id = $query;
-        $dummy->logo = 'placeholder.jpg';
-        $organizations[] = $dummy;
-
-        // Change formating for view.
-        foreach ($organizations as $org) {
-            // Full URL for logo.
-            $org->logo = $org->getUploadUrl('logo');
-            // Clean and limit length for description.
-            if (empty($org->description)) {
-                $org->description = ' ';
-            } else {
-                $org->description = mb_substr(CHtml::encode(strip_tags($org->description)), 0, 100, 'UTF-8') . '...';
-            }
-        }
-
-        echo CJSON::encode(array(
-            'organizations' => $organizations,
-        ));
-        Yii::app()->end();
+        $model=Partfile::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $model->delete();
     }
 
     /**
@@ -216,7 +216,7 @@ class CooperationController extends Controller
      */
     public function loadModel($id)
     {
-        $model=Cooperation::model()->findByPk($id);
+        $model=Partnership::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -228,7 +228,7 @@ class CooperationController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='cooperation-form')
+        if(isset($_POST['ajax']) && $_POST['ajax']==='partnership-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
