@@ -97,7 +97,7 @@
                             'confirm' => 'Вы уверены, что хотите удалить данный элемент?',
                         )
                     ); ?>
-                    <?php echo CHtml::link(CHtml::encode($m->name), $m->getUploadUrl('name')); ?>
+                    <?php echo CHtml::link(CHtml::encode($m->name), $m->getUploadUrl('name'), array('target' => '_blank')); ?>
                     <?php echo $form->error($m,'name'); ?>
                 </li>
             <?php endforeach; ?>

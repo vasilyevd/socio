@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "org_annfile".
+ * This is the model class for table "org_partfile".
  *
- * The followings are the available columns in table 'org_annfile':
+ * The followings are the available columns in table 'org_partfile':
  * @property integer $id
  * @property string $name
- * @property integer $announcement_id
+ * @property integer $partnership_id
  *
  * The followings are the available model relations:
- * @property Announcement $announcement
+ * @property Partnership $partnership
  */
-class Annfile extends CActiveRecord
+class Partfile extends CActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Annfile the static model class
+     * @return Partfile the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -28,7 +28,7 @@ class Annfile extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_annfile';
+        return 'org_partfile';
     }
 
     /**
@@ -50,7 +50,7 @@ class Annfile extends CActiveRecord
                 // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
             ),
 
-            // array('id, name, announcement_id', 'safe', 'on'=>'search'),
+            // array('id, name, partnership_id', 'safe', 'on'=>'search'),
         );
     }
 
@@ -60,7 +60,7 @@ class Annfile extends CActiveRecord
     public function relations()
     {
         return array(
-            'announcement' => array(self::BELONGS_TO, 'Announcement', 'announcement_id'),
+            'partnership' => array(self::BELONGS_TO, 'Partnership', 'partnership_id'),
         );
     }
 
@@ -90,7 +90,7 @@ class Annfile extends CActiveRecord
         return array(
             'id' => 'ID',
             'name' => 'Название',
-            'announcement_id' => 'Новость',
+            'partnership_id' => 'Партнерство',
         );
     }
 
@@ -107,7 +107,7 @@ class Annfile extends CActiveRecord
 
         $criteria->compare('id',$this->id);
         $criteria->compare('name',$this->name,true);
-        $criteria->compare('announcement_id',$this->announcement_id);
+        $criteria->compare('partnership_id',$this->partnership_id);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

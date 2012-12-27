@@ -2,7 +2,8 @@
 
 <?php echo $form->select2Row($model, 'type', array(
     'data' => CHtml::listData(Orgtype::model()->findAll(), 'id', 'name'),
-    // 'multiple' => true,
+    // 'asDropDownList' => false, // Tag mode.
+    // 'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
         'placeholder' => 'Выбрать...', // Blank for all drop.
@@ -13,7 +14,8 @@
 
 <?php echo $form->select2Row($model, 'action_area', array(
     'data' => Lookup::items('OrganizationActionArea'),
-    // 'multiple' => true,
+    // 'asDropDownList' => false, // Tag mode.
+    // 'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
         'placeholder' => 'Выбрать...', // Blank for all drop.
@@ -24,7 +26,8 @@
 
 <?php echo $form->select2Row($model, 'directions', array(
     'data' => CHtml::listData(Direction::model()->findAll(), 'id', 'name'),
-    'multiple' => true,
+    // 'asDropDownList' => false, // Tag mode.
+    'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
         'placeholder' => 'Выбрать...', // Blank for all drop.
@@ -44,7 +47,8 @@
         'name',
         'group'
     ),
-    'multiple' => true,
+    // 'asDropDownList' => false, // Tag mode.
+    // 'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
         'placeholder' => 'Выбрать...', // Blank for all drop.

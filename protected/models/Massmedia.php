@@ -161,6 +161,17 @@ class Massmedia extends CActiveRecord
     }
 
     /**
+     * This is invoked before the record is deleted.
+     */
+    public function beforeDelete()
+    {
+        // Upload handler.
+        foreach ($this->files as $m) $m->delete();
+
+        return parent::beforeDelete();
+    }
+
+    /**
      * This is invoked before the record is validated.
      */
     public function beforeValidate()

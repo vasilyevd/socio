@@ -1,30 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "org_cooperation".
+ * This is the model class for table "org_partnership".
  *
- * The followings are the available columns in table 'org_cooperation':
+ * The followings are the available columns in table 'org_partnership':
  * @property integer $id
  * @property string $name
  * @property string $description
  * @property string $create_time
  * @property integer $organization_id
  */
-class Cooperation extends CActiveRecord
+class Partnership extends CActiveRecord
 {
-    const SOURCE_INTERNATIONAL = 1;
-    const SOURCE_PUBLIC = 2;
-    const SOURCE_GOVERNMENT = 3;
-    const SOURCE_BUSINESS = 4;
-
-    const TYPE_SOME = 1;
-    const TYPE_OTHER = 2;
-    const TYPE_MORE = 3;
-
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Cooperation the static model class
+     * @return Partnership the static model class
      */
     public static function model($className=__CLASS__)
     {
@@ -36,7 +27,7 @@ class Cooperation extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_cooperation';
+        return 'org_partnership';
     }
 
     /**
@@ -45,31 +36,10 @@ class Cooperation extends CActiveRecord
     public function rules()
     {
         return array(
-            array('link, description, source, type, email', 'required'),
-            array('source, type', 'numerical', 'integerOnly'=>true),
-            array('link, email, contact_name, website', 'length', 'max'=>128),
-            array('linkOrganization', 'safe'),
-            array('source', 'in', 'range' => array(
-                self::SOURCE_INTERNATIONAL, self::SOURCE_PUBLIC,
-                self::SOURCE_GOVERNMENT, self::SOURCE_BUSINESS,
-            )),
-            array('type', 'in', 'range' => array(
-                self::TYPE_SOME, self::TYPE_OTHER,
-                self::TYPE_MORE,
-            )),
-            // Upload handler.
-            array(
-                'logo',
-                'file',
-                'allowEmpty' => true,
-                // 'maxFiles' => 10,
-                'maxSize' => 2*(1024*1024), //2MB
-                'minSize' => 1024, //1KB
-                'types' => 'jpeg, jpg, gif, png',
-                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
-            ),
-            array('email', 'email'),
-            array('website', 'url'),
+            array('link, description', 'required', 'on' => 'insert, update'),
+            array('link', 'length', 'max'=>128, 'on' => 'insert, update'),
+            array('linkOrganization', 'safe', 'on' => 'insert, update'),
+            array('verification_description, files', 'safe', 'on' => 'insert, updateVerification'),
 
             // array('id, name, description, create_time, organization_id', 'safe', 'on'=>'search'),
         );
@@ -83,6 +53,7 @@ class Cooperation extends CActiveRecord
         return array(
             'organization' => array(self::BELONGS_TO, 'Organization', 'organization_id'),
             'linkOrganization' => array(self::BELONGS_TO, 'Organization', 'link_organization_id'),
+            'files' => array(self::HAS_MANY, 'Partfile', 'partnership_id'),
         );
     }
 
@@ -95,11 +66,6 @@ class Cooperation extends CActiveRecord
             // Advanced relations
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
-            ),
-            // Upload handler.
-            'UploadBehavior' => array(
-                'class' => 'application.components.behaviors.UploadBehavior',
-                'attributes' => array('logo'),
             ),
         );
     }
@@ -116,12 +82,9 @@ class Cooperation extends CActiveRecord
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
-            'source' => 'Источник',
-            'type' => 'Тип',
-            'logo' => 'Логотип',
-            'email' => 'Емейл',
-            'contact_name' => 'Контактное Лицо',
-            'website' => 'Сайт',
+            'verified' => 'Проверенно',
+            'verification_description' => 'Описание Проверки',
+            'files' => 'Файлы',
         );
     }
 
@@ -148,6 +111,17 @@ class Cooperation extends CActiveRecord
     }
 
     /**
+     * This is invoked before the record is deleted.
+     */
+    public function beforeDelete()
+    {
+        // Upload handler.
+        foreach ($this->files as $m) $m->delete();
+
+        return parent::beforeDelete();
+    }
+
+    /**
      * This is invoked before the record is validated.
      */
     public function beforeValidate()
@@ -156,7 +130,7 @@ class Cooperation extends CActiveRecord
         if (empty($this->linkOrganization)) {
             // Restore relation.
             if (!$this->isNewRecord) {
-                $originalModel = Cooperation::model()->findByPk($this->id);
+                $originalModel = Partnership::model()->findByPk($this->id);
                 $this->linkOrganization = $originalModel->linkOrganization;
             }
         } else {
@@ -177,6 +151,10 @@ class Cooperation extends CActiveRecord
             }
         }
 
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Find or create objects and validate.
+        $this->filesTabular();
+
         return parent::beforeValidate();
     }
 
@@ -190,12 +168,38 @@ class Cooperation extends CActiveRecord
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
 
-            // Set default logo.
-            if (empty($this->logo)) {
-                $this->logo = 'placeholder.jpg';
-            }
+            // Default verified status.
+            $this->verified = false;
         }
 
+        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
+        // Save new models.
+        foreach ($this->files as $m) $m->save();
+
         return parent::beforeSave();
+    }
+
+    /**
+     * Relations with new models handler.
+     * Finds, creates and validates models from tabular input.
+     */
+    public function filesTabular()
+    {
+        $valid = true;
+        $modelArray = array();
+
+        // Upload handler.
+        $uploads = CUploadedFile::getInstances($this, 'files');
+        foreach ($uploads as $file) {
+            $model = new Partfile;
+
+            $model->name = $file;
+
+            $valid = $model->validate() && $valid;
+            $modelArray[] = $model;
+        }
+
+        $this->files = array_merge($this->files, $modelArray);
+        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
     }
 }
