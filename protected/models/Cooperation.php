@@ -118,7 +118,7 @@ class Cooperation extends CActiveRecord
             'organization_id' => 'Организация',
             'source' => 'Источник',
             'type' => 'Тип',
-            'logo' => 'Логотип',
+            'logo' => 'Логотип Организации',
             'email' => 'Емейл',
             'contact_name' => 'Контактное Лицо',
             'website' => 'Сайт',
@@ -152,29 +152,16 @@ class Cooperation extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Save link organization name.
-        if (empty($this->linkOrganization)) {
-            // Restore relation.
-            if (!$this->isNewRecord) {
-                $originalModel = Cooperation::model()->findByPk($this->id);
-                $this->linkOrganization = $originalModel->linkOrganization;
-            }
-        } else {
-            $originalLink = $this->linkOrganization;
-
-            // Try to convert PK to relation object.
-            if (!($this->linkOrganization instanceof Organization)) {
-                $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
-            }
-
-            // If valid model found, save it's name.
-            if ($this->linkOrganization instanceof Organization) {
-                $this->link = $this->linkOrganization->name;
-            // If still not organization model, save only name.
-            } else {
-                $this->link = $originalLink;
-                $this->linkOrganization = null;
-            }
+        // Find new link attributes.
+        if (is_string($this->linkOrganization) && ctype_digit($this->linkOrganization)) {
+            $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
+            $this->link = $this->linkOrganization->name;
+        }
+        // Restore empty link attributes on update.
+        if (!$this->isNewRecord && empty($this->link)) {
+            $originalModel = Cooperation::model()->findByPk($this->id);
+            $this->linkOrganization = $originalModel->linkOrganization;
+            $this->link = $originalModel->link;
         }
 
         return parent::beforeValidate();

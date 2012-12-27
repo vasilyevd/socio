@@ -51,8 +51,13 @@ class AnnouncementController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $model = $this->loadModel($id);
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
+
+        $this->render('view', array(
+            'model' => $model,
         ));
     }
 
@@ -81,6 +86,9 @@ class AnnouncementController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
+
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -104,6 +112,9 @@ class AnnouncementController extends Controller
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
 
         $this->render('update',array(
             'model'=>$model,
@@ -148,6 +159,9 @@ class AnnouncementController extends Controller
         // Limit search to only this organization.
         $model->organization = $org;
 
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
+
         $this->render('index',array(
             'model'=>$model,
         ));
@@ -166,6 +180,9 @@ class AnnouncementController extends Controller
 
         // Limit search to only this organization.
         $model->organization = $org;
+
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
 
         $this->render('news',array(
             'model'=>$model,

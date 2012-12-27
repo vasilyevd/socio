@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = $model;
-
 $this->breadcrumbs=array(
     // 'Организации'=>array('index'),
     // CHtml::encode($model->name)=>array('view','id'=>$model->id),

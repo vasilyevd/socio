@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = Organization::model()->findByPk($_GET['org']);
-
 $this->breadcrumbs=array(
     'Партнерство' => array('index', 'org' => $this->menu_org->id),
     'Создать',
