@@ -12,7 +12,7 @@
     <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('CooperationSource')); ?>
 
     <?php echo $form->select2Row($model, 'type', array(
-        'data' => CHtml::listData(Orgtype::model()->findAll(), 'id', 'name'),
+        'data' => Lookup::items('CooperationSource'),
         // 'asDropDownList' => false, // Tag mode.
         // 'multiple' => true, // Multiple mode without 'asDropDownList'.
         'prompt' => '', // Blank for all drop.
@@ -28,8 +28,18 @@
         // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
         'asDropDownList' => false, // Tag mode.
         'prompt' => '', // Blank for all drop.
+        'events' => array(
+            'change' => 'js:function(e) {
+                if (e.val == "") {
+                    $(".form-hide-toggle").show();
+                } else {
+                    $(".form-hide-toggle").hide();
+                }
+                return false;
+            }',
+        ),
         'options' => array(
-            'placeholder' => empty($model->link) ? 'Введите название...' : CHtml::encode($model->link), // Blank for all drop.
+            'placeholder' => 'Введите название...', // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
             'likeinput' => true,
             'likeinputAtribute' => 'link',
@@ -61,9 +71,9 @@
         ),
     )); ?>
 
-    <p>---------- HIDE --------------- </p>
-    <?php echo $form->fileFieldRow($model,'logo'); ?>
-    <p>---------- HIDE --------------- </p>
+    <div class="form-hide-toggle">
+        <?php echo $form->fileFieldRow($model,'logo'); ?>
+    </div>
 
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128)); ?>
 

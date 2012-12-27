@@ -216,7 +216,7 @@ CREATE TABLE `org_cooperation` (
   KEY `link_organization_id` (`link_organization_id`),
   CONSTRAINT `org_cooperation_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_cooperation_ibfk_2` FOREIGN KEY (`link_organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `org_cooperation` (
 
 LOCK TABLES `org_cooperation` WRITE;
 /*!40000 ALTER TABLE `org_cooperation` DISABLE KEYS */;
-INSERT INTO `org_cooperation` VALUES (23,'Корв ВС sd',6,'Pellentesque dignissim placerat risus et pulvinar. Aliquam euismod, justo a tempor venenatis, eros nulla sodales lacus, non cursus erat nibh eget nulla. In vitae tortor vel neque convallis faucibus vel a lorem. Suspendisse pharetra scelerisque sapien, eu fringilla felis tempor non. Nam vel vehicula dui.','2012-12-24 17:15:19',1,0,0,NULL,'','',''),(24,'Не в списке',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1,0,0,NULL,'','',''),(25,'Royal Mail',8,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1,0,0,NULL,'','',''),(26,'Ещё не в списке',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1,0,0,NULL,'','','');
+INSERT INTO `org_cooperation` VALUES (24,'Не в списке с лого',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1,2,1,'50dc68589a3ff.jpg','catman@example.com','',''),(25,'Корв ВС sd',6,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1,2,1,'placeholder.jpg','catman@example.com','',''),(26,'Не в списке и без лого',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1,1,1,'placeholder.jpg','catman@example.com','',''),(29,'Royal Mail',8,'sdf sdf sdfasd fasd f','2012-12-27 17:19:23',1,4,1,'placeholder.jpg','catman@example.com','','');
 /*!40000 ALTER TABLE `org_cooperation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -775,4 +775,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-27 14:29:53
+-- Dump completed on 2012-12-27 17:55:10

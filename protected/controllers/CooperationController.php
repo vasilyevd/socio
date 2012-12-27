@@ -66,7 +66,7 @@ class CooperationController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @param integer $org the ID of the organization model.
      */
-    public function actionCreate($org)
+   public function actionCreate($org)
     {
         $model=new Cooperation;
 
@@ -79,13 +79,17 @@ class CooperationController extends Controller
 
             // Relations.
             $model->organization = $org;
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
         // Empty 'linkOrganization', relation for view.
+        //TODO: Properly restore 'linkOrganization' value and not just blank.
         $model->linkOrganization = null;
+        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($org);
 
@@ -109,12 +113,18 @@ class CooperationController extends Controller
         if(isset($_POST['Cooperation']))
         {
             $model->attributes=$_POST['Cooperation'];
+
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
+
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
         // Empty 'linkOrganization', relation for view.
+        //TODO: Properly restore 'linkOrganization' value and not just blank.
         $model->linkOrganization = null;
+        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 
@@ -196,12 +206,12 @@ class CooperationController extends Controller
         $criteria->limit = 5;
         $organizations = Organization::model()->findAll($criteria);
 
-        // Add dummy organization to allow user selection.
-        $dummy = new Organization;
-        $dummy->name = $query;
-        $dummy->id = $query;
-        $dummy->logo = 'placeholder.jpg';
-        $organizations[] = $dummy;
+        // // Add dummy organization to allow user selection.
+        // $dummy = new Organization;
+        // $dummy->name = $query;
+        // $dummy->id = $query;
+        // $dummy->logo = 'placeholder.jpg';
+        // $organizations[] = $dummy;
 
         // Change formating for view.
         foreach ($organizations as $org) {
