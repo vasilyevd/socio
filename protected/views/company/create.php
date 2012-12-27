@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = Organization::model()->findByPk($_GET['org']);
-
 $this->breadcrumbs=array(
     'Мы в СМИ' => array('massmedia/index', 'org' => $this->menu_org->id),
     'Создать',

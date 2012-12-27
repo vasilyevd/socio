@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = Organization::model()->findByPk($model->organization_id);
-
 $this->breadcrumbs=array(
     'Images'=>array('index'),
     $model->id,

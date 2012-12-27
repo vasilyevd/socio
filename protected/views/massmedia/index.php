@@ -1,5 +1,4 @@
 <?php
-$this->menu_org = Organization::model()->findByPk($_GET['org']);
 $this->layout = '//layouts/presentation';
 
 $this->breadcrumbs=array(

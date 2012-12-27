@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = $model->organization;
-
 $this->breadcrumbs=array(
     'Партнерство' => array('index', 'org' => $this->menu_org->id),
     $model->link,

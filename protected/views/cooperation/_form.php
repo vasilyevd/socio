@@ -31,8 +31,8 @@
         'options' => array(
             'placeholder' => empty($model->link) ? 'Введите название...' : CHtml::encode($model->link), // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
-            'likeinput'=>true,
-            'likeinputAtribute'=>'link',
+            'likeinput' => true,
+            'likeinputAtribute' => 'link',
             'multiple' => false,
             'width' => '500px',
             'minimumInputLength' => 1,

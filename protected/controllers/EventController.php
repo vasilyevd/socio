@@ -51,8 +51,13 @@ class EventController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $model = $this->loadModel($id);
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
+
+        $this->render('view', array(
+            'model' => $model,
         ));
     }
 
@@ -78,6 +83,9 @@ class EventController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
+
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -101,6 +109,9 @@ class EventController extends Controller
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
 
         $this->render('update',array(
             'model'=>$model,
@@ -144,6 +155,9 @@ class EventController extends Controller
 
         // Limit search to only this organization.
         $model->organization_id = $org;
+
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
 
         $this->render('index',array(
             'model'=>$model,

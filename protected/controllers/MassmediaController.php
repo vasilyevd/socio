@@ -51,8 +51,13 @@ class MassmediaController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $model = $this->loadModel($id);
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
+
+        $this->render('view', array(
+            'model' => $model,
         ));
     }
 
@@ -91,6 +96,8 @@ class MassmediaController extends Controller
         if (empty($model->files)) {
             $model->files = array(new Mmfile);
         }
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
 
         $this->render('create',array(
             'model'=>$model,
@@ -131,6 +138,8 @@ class MassmediaController extends Controller
         if (empty($model->files)) {
             $model->files = array(new Mmfile);
         }
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
 
         $this->render('update',array(
             'model'=>$model,
@@ -174,6 +183,9 @@ class MassmediaController extends Controller
 
         // Limit search to only this organization.
         $model->organization = $org;
+
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
 
         $this->render('index',array(
             'model'=>$model,

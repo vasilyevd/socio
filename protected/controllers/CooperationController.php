@@ -51,8 +51,13 @@ class CooperationController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $model = $this->loadModel($id);
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
+
+        $this->render('view', array(
+            'model' => $model,
         ));
     }
 
@@ -81,6 +86,8 @@ class CooperationController extends Controller
 
         // Empty 'linkOrganization', relation for view.
         $model->linkOrganization = null;
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
 
         $this->render('create',array(
             'model'=>$model,
@@ -108,6 +115,8 @@ class CooperationController extends Controller
 
         // Empty 'linkOrganization', relation for view.
         $model->linkOrganization = null;
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
 
         $this->render('update',array(
             'model'=>$model,
@@ -149,6 +158,9 @@ class CooperationController extends Controller
         $dataProvider = new CActiveDataProvider('Cooperation', array(
             'criteria' => $criteria,
         ));
+
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
 
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
