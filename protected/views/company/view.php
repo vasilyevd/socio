@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = $model->organization;
-
 $this->breadcrumbs=array(
     'Мы в СМИ' => array('massmedia/index', 'org' => $this->menu_org->id),
     $model->name,

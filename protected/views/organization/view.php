@@ -1,5 +1,4 @@
 <?php
-$this->menu_org = $model;
 $this->layout = '//layouts/presentation';
 
 $this->breadcrumbs=array(

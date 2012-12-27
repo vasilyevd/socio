@@ -51,8 +51,13 @@ class OrganizationController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $model = $this->loadModel($id);
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model);
+
+        $this->render('view', array(
+            'model' => $model,
         ));
     }
 
@@ -110,6 +115,9 @@ class OrganizationController extends Controller
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model);
 
         $this->render('update',array(
             'model'=>$model,

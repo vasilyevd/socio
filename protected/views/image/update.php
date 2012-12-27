@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = $model->organization;
-
 $this->breadcrumbs=array(
     'Images'=>array('index'),
     $model->id=>array('view','id'=>$model->id),
