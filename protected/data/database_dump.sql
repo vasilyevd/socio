@@ -562,7 +562,7 @@ CREATE TABLE `org_organization` (
 
 LOCK TABLES `org_organization` WRITE;
 /*!40000 ALTER TABLE `org_organization` DISABLE KEYS */;
-INSERT INTO `org_organization` VALUES (1,'Лаберж ОС sd',1,3,5,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС sd',1,1,2,NULL,NULL,NULL,NULL,'<p>Morbi enim nisi, vestibulum ac volutpat vel, lobortis sit amet neque. \nDonec eleifend lacinia felis elementum consectetur. Mauris id congue \narcu. Quisque a augue aliquet odio hendrerit facilisis at id nibh. Cras \nornare, quam a venenatis pretium, quam purus aliquet justo, sit amet \nscelerisque tortor massa et arcu. Donec interdum scelerisque sem, et \nconsequat turpis vulputate ac. Vivamus pharetra dui ut tellus commodo \npretium. Aliquam id auctor nulla. Vivamus aliquam ullamcorper felis \nauctor commodo. Nulla eget justo nunc, non bibendum mi. Cras faucibus \nodio a lectus vehicula nec luctus lectus commodo. Maecenas at porttitor \nrisus.\n</p>\n','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'Royal Mail',1,1,3,NULL,NULL,NULL,NULL,'','','','','','50c89426a7950.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,'','','','','','50d445c4ee9e2.jpg',1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2012-12-03 16:56:46',3,0);
+INSERT INTO `org_organization` VALUES (1,'Лаберж ОС sd',1,3,5,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС sd',1,1,2,NULL,NULL,NULL,NULL,'<p>Morbi enim nisi, vestibulum ac volutpat vel, lobortis sit amet neque. \nDonec eleifend lacinia felis elementum consectetur. Mauris id congue \narcu. Quisque a augue aliquet odio hendrerit facilisis at id nibh. Cras \nornare, quam a venenatis pretium, quam purus aliquet justo, sit amet \nscelerisque tortor massa et arcu. Donec interdum scelerisque sem, et \nconsequat turpis vulputate ac. Vivamus pharetra dui ut tellus commodo \npretium. Aliquam id auctor nulla. Vivamus aliquam ullamcorper felis \nauctor commodo. Nulla eget justo nunc, non bibendum mi. Cras faucibus \nodio a lectus vehicula nec luctus lectus commodo. Maecenas at porttitor \nrisus.\n</p>\n','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'Royal Mail',1,1,3,NULL,NULL,NULL,NULL,'<p>Quisque massa lacus, ultrices adipiscing fringilla sit amet, commodo \neget enim. Cras fringilla adipiscing neque, dignissim vehicula lorem \nfaucibus non. Integer elementum mattis sem, ac semper mauris condimentum\n eget. Duis eu vulputate magna. In porttitor sollicitudin ante, vel \nfacilisis urna viverra sed. Aliquam erat volutpat.</p>','','','','','50c89426a7950.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,'','','','','','50d445c4ee9e2.jpg',1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2012-12-03 16:56:46',3,0);
 /*!40000 ALTER TABLE `org_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -611,7 +611,7 @@ CREATE TABLE `org_organization_problem` (
   KEY `image_id` (`problem_id`),
   CONSTRAINT `org_organization_problem_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_problem_ibfk_2` FOREIGN KEY (`problem_id`) REFERENCES `org_problem` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -620,7 +620,7 @@ CREATE TABLE `org_organization_problem` (
 
 LOCK TABLES `org_organization_problem` WRITE;
 /*!40000 ALTER TABLE `org_organization_problem` DISABLE KEYS */;
-INSERT INTO `org_organization_problem` VALUES (41,1,33),(42,1,41),(43,1,42),(44,1,43),(46,6,33),(47,6,34),(48,6,35),(52,7,33),(53,7,35),(54,7,37),(62,8,35),(68,11,33),(70,1,45),(71,9,40),(72,6,42);
+INSERT INTO `org_organization_problem` VALUES (41,1,33),(42,1,41),(43,1,42),(44,1,43),(46,6,33),(47,6,34),(48,6,35),(52,7,33),(53,7,35),(54,7,37),(62,8,35),(68,11,33),(70,1,45),(71,9,40),(72,6,42),(73,8,37),(74,8,42);
 /*!40000 ALTER TABLE `org_organization_problem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -663,7 +663,7 @@ CREATE TABLE `org_partfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`partnership_id`),
   CONSTRAINT `org_partfile_ibfk_1` FOREIGN KEY (`partnership_id`) REFERENCES `org_partnership` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -672,7 +672,7 @@ CREATE TABLE `org_partfile` (
 
 LOCK TABLES `org_partfile` WRITE;
 /*!40000 ALTER TABLE `org_partfile` DISABLE KEYS */;
-INSERT INTO `org_partfile` VALUES (20,'50db05f58bd59.jpg',10),(22,'50db0610cbbdd.jpg',10);
+INSERT INTO `org_partfile` VALUES (27,'50dd884b014e1.jpg',12);
 /*!40000 ALTER TABLE `org_partfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -690,6 +690,12 @@ CREATE TABLE `org_partnership` (
   `description` text NOT NULL,
   `create_time` datetime NOT NULL,
   `organization_id` int(11) NOT NULL,
+  `source` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `logo` varchar(128) DEFAULT NULL,
+  `email` varchar(128) NOT NULL,
+  `contact_name` varchar(128) DEFAULT NULL,
+  `website` varchar(128) DEFAULT NULL,
   `verified` tinyint(1) NOT NULL,
   `verification_description` text,
   PRIMARY KEY (`id`),
@@ -698,7 +704,7 @@ CREATE TABLE `org_partnership` (
   KEY `link_organization_id` (`link_organization_id`),
   CONSTRAINT `org_partnership_ibfk_1` FOREIGN KEY (`link_organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL,
   CONSTRAINT `org_partnership_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -707,7 +713,7 @@ CREATE TABLE `org_partnership` (
 
 LOCK TABLES `org_partnership` WRITE;
 /*!40000 ALTER TABLE `org_partnership` DISABLE KEYS */;
-INSERT INTO `org_partnership` VALUES (8,'dsfsdfsd222',NULL,'ssdfsdf sdfsd fsdfsdf','2012-12-26 15:42:33',1,0,'my description 3333'),(10,'Корв ВС sd',6,'sdfs dfsdf sdfsd fsdf','2012-12-26 16:13:09',1,0,'sdf sdfsd fsdfsdf sdfs dfsdf');
+INSERT INTO `org_partnership` VALUES (12,'Кастом лого тест',NULL,'sdf asdf asdfa sdfasd fasdf sadf safd','2012-12-28 13:53:47',1,2,1,'50dd884b867ec.jpg','example@example.com','Николай Жук','https://github.com/vasilyevd/socio/network',0,'test test test'),(13,'Royal Mail',8,'s dfsdf sdf','2012-12-28 14:12:08',1,4,1,'placeholder.jpg','example@example.com','','',0,''),(14,'Проверенная тест',NULL,'sdfasdfa dfadfs fafsaf','2012-12-28 14:33:48',1,2,1,'placeholder.jpg','example@example.com','','',1,'');
 /*!40000 ALTER TABLE `org_partnership` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -775,4 +781,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-27 17:55:10
+-- Dump completed on 2012-12-28 14:36:57

@@ -1,9 +1,9 @@
 <?php
-$this->menu = array(
+$this->menu = array_merge(array(
     array('label' => 'Управление Событиями'),
     array('label' => 'Добавить Новость', 'icon' => 'cog', 'url' => array('announcement/create', 'org' => $this->menu_org->id)),
     array('label' => 'Добавить Мероприятие', 'icon' => 'cog', 'url' => array('event/create', 'org' => $this->menu_org->id)),
-);
+), $this->menu);
 ?>
 
 <?php $this->beginContent('//layouts/organization'); ?>

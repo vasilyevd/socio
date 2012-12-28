@@ -48,7 +48,7 @@
             'minimumInputLength' => 1,
             'maximumSelectionSize' => 1,
             'ajax' => array(
-                'url' => $this->createUrl('dynamicSearchOrganizations'),
+                'url' => $this->createUrl('cooperation/dynamicSearchOrganizations'),
                 'quietMillis'=>500,
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {

@@ -36,9 +36,33 @@ class Partnership extends CActiveRecord
     public function rules()
     {
         return array(
-            array('link, description', 'required', 'on' => 'insert, update'),
-            array('link', 'length', 'max'=>128, 'on' => 'insert, update'),
+            array('link, description, source, type, email', 'required', 'on' => 'insert, update'),
+            array('source, type', 'numerical', 'integerOnly'=>true, 'on' => 'insert, update'),
+            array('link, email, contact_name, website', 'length', 'max'=>128, 'on' => 'insert, update'),
             array('linkOrganization', 'safe', 'on' => 'insert, update'),
+            array('source', 'in', 'range' => array(
+                Cooperation::SOURCE_INTERNATIONAL, Cooperation::SOURCE_PUBLIC,
+                Cooperation::SOURCE_GOVERNMENT, Cooperation::SOURCE_BUSINESS,
+            ), 'on' => 'insert, update'),
+            array('type', 'in', 'range' => array(
+                Cooperation::TYPE_SOME, Cooperation::TYPE_OTHER,
+                Cooperation::TYPE_MORE,
+            ), 'on' => 'insert, update'),
+            // Upload handler.
+            array(
+                'logo',
+                'file',
+                'allowEmpty' => true,
+                // 'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+                'on' => 'insert, update',
+            ),
+            array('email', 'email', 'on' => 'insert, update'),
+            array('website', 'url', 'on' => 'insert, update'),
+
             array('verification_description, files', 'safe', 'on' => 'insert, updateVerification'),
 
             // array('id, name, description, create_time, organization_id', 'safe', 'on'=>'search'),
@@ -67,6 +91,11 @@ class Partnership extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
+            // Upload handler.
+            'UploadBehavior' => array(
+                'class' => 'application.components.behaviors.UploadBehavior',
+                'attributes' => array('logo'),
+            ),
         );
     }
 
@@ -82,6 +111,12 @@ class Partnership extends CActiveRecord
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
+            'source' => 'Источник',
+            'type' => 'Тип',
+            'logo' => 'Логотип Организации',
+            'email' => 'Емейл',
+            'contact_name' => 'Контактное Лицо',
+            'website' => 'Сайт',
             'verified' => 'Проверенно',
             'verification_description' => 'Описание Проверки',
             'files' => 'Файлы',
@@ -126,29 +161,16 @@ class Partnership extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Save link organization name.
-        if (empty($this->linkOrganization)) {
-            // Restore relation.
-            if (!$this->isNewRecord) {
-                $originalModel = Partnership::model()->findByPk($this->id);
-                $this->linkOrganization = $originalModel->linkOrganization;
-            }
-        } else {
-            $originalLink = $this->linkOrganization;
-
-            // Try to convert PK to relation object.
-            if (!($this->linkOrganization instanceof Organization)) {
-                $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
-            }
-
-            // If valid model found, save it's name.
-            if ($this->linkOrganization instanceof Organization) {
-                $this->link = $this->linkOrganization->name;
-            // If still not organization model, save only name.
-            } else {
-                $this->link = $originalLink;
-                $this->linkOrganization = null;
-            }
+        // Find new link attributes.
+        if (is_string($this->linkOrganization) && ctype_digit($this->linkOrganization)) {
+            $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
+            $this->link = $this->linkOrganization->name;
+        }
+        // Restore empty link attributes on update.
+        if (!$this->isNewRecord && empty($this->link)) {
+            $originalModel = Partnership::model()->findByPk($this->id);
+            $this->linkOrganization = $originalModel->linkOrganization;
+            $this->link = $originalModel->link;
         }
 
         // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
@@ -170,6 +192,11 @@ class Partnership extends CActiveRecord
 
             // Default verified status.
             $this->verified = false;
+
+            // Set default logo.
+            if (empty($this->logo)) {
+                $this->logo = 'placeholder.jpg';
+            }
         }
 
         // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.

@@ -1,9 +1,9 @@
 <?php
-$this->menu=array(
+$this->menu = array_merge(array(
     array('label' => 'Управление Потенциалом'),
     array('label' => 'Добавить Сотрудничество', 'icon' => 'cog', 'url' => array('cooperation/create', 'org' => $this->menu_org->id)),
     array('label' => 'Добавить Партнерство', 'icon' => 'cog', 'url' => array('partnership/create', 'org' => $this->menu_org->id)),
-);
+), $this->menu);
 ?>
 
 <?php $this->beginContent('//layouts/organization'); ?>

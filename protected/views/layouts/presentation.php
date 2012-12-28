@@ -1,11 +1,11 @@
 <?php
-$this->menu=array(
-    array('label' => 'Управление Организацией'),
+$this->menu = array_merge(array(
+    array('label' => 'Управление Презентацией'),
     array('label' => 'Изменить Организацию', 'icon' => 'cog', 'url' => array('organization/update', 'id' => $this->menu_org->id)),
     array('label' => 'Добавить Достижение', 'icon' => 'cog', 'url' => array('achievement/create', 'org' => $this->menu_org->id)),
     array('label' => 'Добавить Элемент СМИ', 'icon' => 'cog', 'url' => array('massmedia/create', 'org' => $this->menu_org->id)),
     array('label' => 'Добавить Компанию СМИ', 'icon' => 'cog', 'url' => array('company/create', 'org' => $this->menu_org->id)),
-);
+), $this->menu);
 ?>
 
 <?php $this->beginContent('//layouts/organization'); ?>

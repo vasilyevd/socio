@@ -6,7 +6,7 @@ class PartnershipController extends Controller
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/organization';
+    public $layout='//layouts/potential';
 
     /**
      * @return array action filters
@@ -66,7 +66,7 @@ class PartnershipController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @param integer $org the ID of the organization model.
      */
-    public function actionCreate($org)
+   public function actionCreate($org)
     {
         $model=new Partnership;
 
@@ -79,13 +79,17 @@ class PartnershipController extends Controller
 
             // Relations.
             $model->organization = $org;
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
         // Empty 'linkOrganization', relation for view.
+        //TODO: Properly restore 'linkOrganization' value and not just blank.
         $model->linkOrganization = null;
+        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($org);
 
@@ -109,12 +113,18 @@ class PartnershipController extends Controller
         if(isset($_POST['Partnership']))
         {
             $model->attributes=$_POST['Partnership'];
+
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
+
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
         // Empty 'linkOrganization', relation for view.
+        //TODO: Properly restore 'linkOrganization' value and not just blank.
         $model->linkOrganization = null;
+        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 
@@ -144,6 +154,9 @@ class PartnershipController extends Controller
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
 
         $this->render('updateVerification',array(
             'model'=>$model,

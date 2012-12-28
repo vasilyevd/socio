@@ -1,6 +1,4 @@
 <?php
-$this->layout = '//layouts/potential';
-
 $this->breadcrumbs=array(
     'Сотрудничество',
 );
