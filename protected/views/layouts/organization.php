@@ -1,6 +1,8 @@
 <?php
 /** @var $this Controller */
 $this->sectionMain = "org";
+$model = $this->escalation['model'];
+
 $this->breadcrumbs = array_merge(array(
     'Организации' => array('organization/index'),
     CHtml::encode($this->menu_org->name) => array('organization/view', 'id' => $this->menu_org->id),
@@ -24,7 +26,6 @@ $this->breadcrumbs = array_merge(array(
 
 		        <!-- FON -->
 		        <?
-		        echo $model->logo;
 		        /** @var $model Organization */
 		        if($model->logobg) :
 				      echo CHtml::tag('div',array('class'=>'item-header-bg'));
@@ -35,7 +36,7 @@ $this->breadcrumbs = array_merge(array(
 
 		        <!-- LOGO -->
 	          <?
-		        $logo_class = array('item-header-logo');
+		        $logo_class = array('item-header-logo spn3');
 		        if (!$model->logobg) $logo_class[] = 'no-bg';
 		        echo CHtml::tag('div',array('class'=>implode(' ', $logo_class)));
 		        ?>
@@ -43,7 +44,7 @@ $this->breadcrumbs = array_merge(array(
 		        </div>
 
 		        <!-- TEXT -->
-		        <div class="item-header-content">
+		        <div class="item-header-content offset3">
 			        <p><span class="pre-info">Группа типа: </span> Объединения граждан</p>
 			        <p><span class="pre-info">Тип: </span>Государственное предприятие</p>
 			        <p><span class="pre-info">Область действий: </span>Региональное</p>
@@ -52,7 +53,7 @@ $this->breadcrumbs = array_merge(array(
 		        </div>
 
 		        <!-- INFO-RIGHT -->
-		        <div class="item-header-widget" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), #FFFFFF 60%); margin: 10px; min-height: 170px; padding: 10px 0; position: absolute; right: 0;
+		        <div class="item-header-widget" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), #E6E6E6 60%); margin: 10px; min-height: 170px; padding: 10px 0; position: absolute; right: 0;
 top: 0; width: 160px;">
 
 			        <div class="info" style="font-family: PTSansNarrow; font-size: 16px; font-weight: bold; text-align: center; text-transform: uppercase; margin-bottom: 7px;">
@@ -70,44 +71,16 @@ top: 0; width: 160px;">
 
 	        </div>
 
-
-
-	        <!-- MENU -->
-	        <div>
+        <!-- MENU -->
+	        <div class="navbar-inverse">
+		        <div class="span3"></div>
 		        <?php
 		        $this->widget('bootstrap.widgets.TbMenu', array(
-				        'htmlOptions'=>array('class'=>'nav-pills'),
-				        'items'=>array(
-					        array('label'=>'Описание', 'url'=>'#'),
-					        array('label'=>'Новости', 'url'=>'#'),
-					        array('label'=>'Достижения', 'url'=>'#'),
-					        '',
-					        array('label'=>'Галерея', 'url'=>'#'),
-					        array('label'=>'Коллектив', 'url'=>'#'),
-				        ),
+				        'htmlOptions'=>array('class'=>'nav-pills item-header-pading-from-logo padding3'),
+				        'items'=>$this->menu_item_sub,
 			        ));
 		        ?>
 	        </div>
-
-
-	    <div>
-		    <? /*
-		    $this->widget('bootstrap.widgets.TbSelect2', array(
-				    'asDropDownList' => false,
-				    'name' => 'clevertech',
-				    'options' => array(
-					    'tags' => array('clever','is', 'better', 'clevertech'),
-					    'placeholder' => 'disciplines',
-					    'width' => '40%',
-					    //'tokenSeparators' => array(',', ' ')
-				    )));
-*/
-		    ?>
-
-
-
-	    </div>
-
 
 
         </div>

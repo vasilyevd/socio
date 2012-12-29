@@ -1,5 +1,7 @@
 <?php
+/** @var $this Controller  */
 $this->menu_org = $model;
+$this->escalation['model'] = $model;
 $this->layout = '//layouts/presentation';
 
 $this->breadcrumbs=array(
