@@ -21,7 +21,7 @@ class Controller extends CController
 
 	/**
 	 * @var array items that showed like submenu of ITEMS (object, org, user)*/
-	public $menu_item_sub;
+	public $menu_item_sub = array();
 	/**
 	 * @var array items like main meno of ITEM (obj, org, user, ets.) */
 	public $menu_item;

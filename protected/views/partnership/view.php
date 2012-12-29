@@ -1,4 +1,5 @@
 <?php
+$this->layout = '//layouts/potential';
 $this->breadcrumbs=array(
     'Партнерство' => array('index', 'org' => $this->menu_org->id),
     $model->link,
