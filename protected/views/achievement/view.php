@@ -1,6 +1,5 @@
 <?php
-$this->menu_org = $model->organization;
-
+$this->layout = '//layouts/presentation';
 $this->breadcrumbs=array(
     'Достижения' => array('index', 'org' => $this->menu_org->id),
     $model->title,

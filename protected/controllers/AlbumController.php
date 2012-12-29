@@ -81,8 +81,13 @@ class AlbumController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
+        $model = $this->loadModel($id);
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
+
+        $this->render('view', array(
+            'model' => $model,
         ));
     }
 
@@ -108,6 +113,9 @@ class AlbumController extends Controller
                 $this->redirect(array('index','org'=>$model->organization_id));
         }
 
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
+
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -131,6 +139,9 @@ class AlbumController extends Controller
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model->organization);
 
         $this->render('update',array(
             'model'=>$model,
@@ -165,6 +176,9 @@ class AlbumController extends Controller
         $model=Organization::model()->findByPk($org);
         if($model===null)
             throw new CHttpException(404,'Не найдено.');
+
+        // Escalate organization for view.
+        $this->escalateOrganization($model);
 
         $this->render('index',array(
             'model'=>$model,

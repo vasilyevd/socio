@@ -14,7 +14,7 @@ $this->menu_operations = $this->menu;
 $this->menu_item_sub = array(
 	array('label' => 'Лента', 'url' => array('announcement/index', 'org' => $this->menu_org->id)),
 	array('label' => 'Новости', 'url' => array('announcement/news', 'org' => $this->menu_org->id)),
-	array('label' => 'Мероприятия', 'url' => array('event/index', 'org' => $this->menu_org->id)),
+	array('label' => 'Мероприятия', 'url' => array('event/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='event'),
 );
 ?>
 

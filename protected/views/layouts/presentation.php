@@ -12,8 +12,8 @@ $this->menu=array(
 /* SET MENU ITEMS FOR - PRESENTATION part of organization page */
 $this->menu_item_sub = array(
 	array('label' => 'О Нас', 'url' => array('organization/view', 'id' => $this->menu_org->id)),
-	array('label' => 'Достижения', 'url' => array('achievement/index', 'org' => $this->menu_org->id)),
-	array('label' => 'Мы в СМИ', 'url' => array('massmedia/index', 'org' => $this->menu_org->id)),
+	array('label' => 'Достижения', 'url' => array('achievement/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='achievement'),
+	array('label' => 'Мы в СМИ', 'url' => array('massmedia/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='massmedia'),
 );
 ?>
 

@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = $model;
-
 $this->breadcrumbs=array(
     'Галерея',
 );

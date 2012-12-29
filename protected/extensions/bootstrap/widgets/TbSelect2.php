@@ -49,7 +49,7 @@ class TbSelect2 extends CInputWidget
 		list($name, $id) = $this->resolveNameID();
 
 		/** add by lsd */
-		$likeinput_need =$this->options['likeinput']==true && $this->options['likeinputAtribute'] != "";
+		$likeinput_need = array_key_exists('likeinput', $this->options) && $this->options['likeinput']==true && array_key_exists('likeinputAtribute', $this->options);
 		/** end add by lsd */
 		if ($this->hasModel())
 		{

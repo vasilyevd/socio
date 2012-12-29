@@ -12,6 +12,15 @@
  */
 class Cooperation extends CActiveRecord
 {
+    const SOURCE_INTERNATIONAL = 1;
+    const SOURCE_PUBLIC = 2;
+    const SOURCE_GOVERNMENT = 3;
+    const SOURCE_BUSINESS = 4;
+
+    const TYPE_SOME = 1;
+    const TYPE_OTHER = 2;
+    const TYPE_MORE = 3;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -36,9 +45,31 @@ class Cooperation extends CActiveRecord
     public function rules()
     {
         return array(
-            array('link, description', 'required'),
-            array('link', 'length', 'max'=>128),
+            array('link, description, source, type, email', 'required'),
+            array('source, type', 'numerical', 'integerOnly'=>true),
+            array('link, email, contact_name, website', 'length', 'max'=>128),
             array('linkOrganization', 'safe'),
+            array('source', 'in', 'range' => array(
+                self::SOURCE_INTERNATIONAL, self::SOURCE_PUBLIC,
+                self::SOURCE_GOVERNMENT, self::SOURCE_BUSINESS,
+            )),
+            array('type', 'in', 'range' => array(
+                self::TYPE_SOME, self::TYPE_OTHER,
+                self::TYPE_MORE,
+            )),
+            // Upload handler.
+            array(
+                'logo',
+                'file',
+                'allowEmpty' => true,
+                // 'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+            ),
+            array('email', 'email'),
+            array('website', 'url'),
 
             // array('id, name, description, create_time, organization_id', 'safe', 'on'=>'search'),
         );
@@ -65,6 +96,11 @@ class Cooperation extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
+            // Upload handler.
+            'UploadBehavior' => array(
+                'class' => 'application.components.behaviors.UploadBehavior',
+                'attributes' => array('logo'),
+            ),
         );
     }
 
@@ -80,6 +116,12 @@ class Cooperation extends CActiveRecord
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
+            'source' => 'Источник',
+            'type' => 'Тип',
+            'logo' => 'Логотип Организации',
+            'email' => 'Емейл',
+            'contact_name' => 'Контактное Лицо',
+            'website' => 'Сайт',
         );
     }
 
@@ -110,29 +152,16 @@ class Cooperation extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Save link organization name.
-        if (empty($this->linkOrganization)) {
-            // Restore relation.
-            if (!$this->isNewRecord) {
-                $originalModel = Cooperation::model()->findByPk($this->id);
-                $this->linkOrganization = $originalModel->linkOrganization;
-            }
-        } else {
-            $originalLink = $this->linkOrganization;
-
-            // Try to convert PK to relation object.
-            if (!($this->linkOrganization instanceof Organization)) {
-                $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
-            }
-
-            // If valid model found, save it's name.
-            if ($this->linkOrganization instanceof Organization) {
-                $this->link = $this->linkOrganization->name;
-            // If still not organization model, save only name.
-            } else {
-                $this->link = $originalLink;
-                $this->linkOrganization = null;
-            }
+        // Find new link attributes.
+        if (is_string($this->linkOrganization) && ctype_digit($this->linkOrganization)) {
+            $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
+            $this->link = $this->linkOrganization->name;
+        }
+        // Restore empty link attributes on update.
+        if (!$this->isNewRecord && empty($this->link)) {
+            $originalModel = Cooperation::model()->findByPk($this->id);
+            $this->linkOrganization = $originalModel->linkOrganization;
+            $this->link = $originalModel->link;
         }
 
         return parent::beforeValidate();
@@ -147,6 +176,11 @@ class Cooperation extends CActiveRecord
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
+
+            // Set default logo.
+            if (empty($this->logo)) {
+                $this->logo = 'placeholder.jpg';
+            }
         }
 
         return parent::beforeSave();

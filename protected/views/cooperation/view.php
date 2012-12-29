@@ -1,6 +1,4 @@
 <?php
-$this->menu_org = $model->organization;
-
 $this->breadcrumbs=array(
     'Сотрудничество' => array('index', 'org' => $this->menu_org->id),
     $model->link,
@@ -15,29 +13,39 @@ $this->menu=array(
 
 <h1><?php echo $model->link; ?></h1>
 
-<?php if (!empty($model->linkOrganization)): ?>
-    <div class="row cooperation-view">
-        <div class="span3">
-            <?php echo CHtml::link(
-                CHtml::image(
-                    $model->linkOrganization->getUploadUrl('logo'),
-                    'Лого организации'
-                ),
-                array('organization/view', 'id' => $model->linkOrganization->id),
-                array(
-                    'class' => 'thumbnail',
-                    'rel' => 'tooltip',
-                    'data-title' => CHtml::encode($model->link),
-                )
+<div class="row">
+    <div class="span3">
+        <div class="thumbnail">
+            <?php echo CHtml::image(
+                empty($model->linkOrganization) ? $model->getUploadUrl('logo') : $model->linkOrganization->getUploadUrl('logo'),
+                'Лого организации'
             ); ?>
         </div>
-        <?php if (!empty($model->linkOrganization->description)): ?>
-            <div class="span6">
-                <?php echo $model->linkOrganization->description; ?>
-            </div>
-        <?php endif; ?>
     </div>
-    <br />
-<?php endif; ?>
+
+    <?php if (!empty($model->linkOrganization->description)): ?>
+        <div class="span6">
+            <?php echo $model->linkOrganization->description; ?>
+        </div>
+    <?php endif; ?>
+</div>
+<br />
+
+<?php $this->widget('bootstrap.widgets.TbDetailView',array(
+    'data'=>$model,
+    'attributes'=>array(
+        array(
+            'name' => 'source',
+            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->source)),
+        ),
+        array(
+            'name' => 'type',
+            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
+        ),
+        'email',
+        'contact_name',
+        'website',
+    ),
+)); ?>
 
 <?php echo CHtml::encode($model->description); ?>

@@ -89,8 +89,8 @@ class Annfile extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'name' => 'Name',
-            'announcement_id' => 'Announcement',
+            'name' => 'Название',
+            'announcement_id' => 'Новость',
         );
     }
 
