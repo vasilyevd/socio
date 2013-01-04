@@ -192,6 +192,28 @@ img.pull-left {
 .link-menu a {
   margin: 0 5px;
 }
+.rounded li {
+  background-image: url("/images/li21.png");
+  background-repeat: no-repeat;
+  list-style: none outside none;
+  line-height: 21px;
+  padding-left: 30px;
+  padding-right: 10px;
+  background-position: 10px 0;
+}
+.rounded li:hover {
+  background-position: 10px -21px;
+  background-color: rgba(108, 0, 0, 0.62);
+}
+.rounded li,
+.rounded li a {
+  color: #000000;
+  display: block;
+}
+.rounded li:hover,
+.rounded li a:hover {
+  text-decoration: none;
+}
 .clearfix {
   *zoom: 1;
 }
@@ -3735,6 +3757,8 @@ input[type="submit"].btn.btn-mini {
   opacity: 0.9;
   filter: alpha(opacity=90);
   outline: none;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .nav-tabs-plain > li > a:hover {
   opacity: 1;
@@ -3754,9 +3778,11 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs-plain > .active > a,
 .nav-tabs-plain > .active > a:hover {
   cursor: default;
+  color: #ffffff;
   opacity: 1;
   filter: alpha(opacity=100);
   background-image: none;
+  text-shadow: 1px 1px 2px #000000;
 }
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
