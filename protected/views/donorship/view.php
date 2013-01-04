@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
     'Доноры' => array('index', 'org' => $this->menu_org->id),
-    $model->donor->name,
+    CHtml::encode($model->donor->name),
 );
 
 $this->menu=array(
@@ -11,7 +11,7 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo $model->donor->name; ?></h1>
+<h1><?php echo CHtml::encode($model->donor->name); ?> (<?php echo CHtml::encode($model->donor->country); ?>)</h1>
 
 <div class="row">
     <div class="span3">
@@ -24,7 +24,9 @@ $this->menu=array(
     </div>
 
     <div class="span6">
-        <?php echo $model->donor->description; ?>
+        <p><?php echo CHtml::encode($model->donor->description); ?></p>
+        <p><?php echo CHtml::link(CHtml::encode($model->donor->website), $model->donor->website, array('target' => '_blank')); ?></p>
+        <p><?php echo CHtml::link(CHtml::encode($model->donor->email), 'mailto:' . $model->donor->email); ?></p>
     </div>
 </div>
 <br />

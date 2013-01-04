@@ -89,7 +89,7 @@ class Donorship extends CActiveRecord
             'donor' => 'Донор',
             'description' => 'Описание',
             'create_time' => 'Время Создания',
-            'organization_id' => 'Организация',
+            'organization' => 'Организация',
             'source' => 'Источник',
             'type' => 'Тип',
             'delivery_year' => 'Год Вручения',

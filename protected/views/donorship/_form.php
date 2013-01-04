@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-    'id'=>'support-form',
+    'id'=>'donorship-form',
     'enableAjaxValidation'=>true,
 )); ?>
 
