@@ -13,7 +13,7 @@ $this->menu = array_merge(array(
 $this->menu_item_sub = array(
     array('label' => 'Сотрудничество', 'url' => array('cooperation/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='cooperation'),
     array('label' => 'Партнерство', 'url' => array('partnership/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='partnership'),
-    array('label' => 'Поддержка', 'url' => array('massmedia/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='massmedia'),
+    array('label' => 'Поддержка', 'url' => array('support/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='support'),
     array('label' => 'Доноры', 'url' => array('donorship/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='donorship'),
 );
 ?>
