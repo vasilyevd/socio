@@ -12,6 +12,7 @@
 
             <div class="span5">
                 <strong><?php echo CHtml::link(CHtml::encode($data->donor->name),array('view','id'=>$data->id)); ?></strong>
+                <?php echo CHtml::encode($data->donor->email); ?>
             </div>
 
             <div class="pull-right">

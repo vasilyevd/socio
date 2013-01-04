@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
     'Доноры' => array('index', 'org' => $this->menu_org->id),
-    $model->link=>array('view','id'=>$model->id),
+    'Донор'=>array('view','id'=>$model->id),
     'Изменить',
 );
 ?>

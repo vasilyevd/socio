@@ -12,8 +12,8 @@ $this->menu_operations = $this->menu;
 <?php
 /* SET MENU ITEMS FOR - announcement part of organization page */
 $this->menu_item_sub = array(
-	array('label' => 'Лента', 'url' => array('announcement/index', 'org' => $this->menu_org->id)),
-	array('label' => 'Новости', 'url' => array('announcement/news', 'org' => $this->menu_org->id)),
+	array('label' => 'Лента', 'url' => array('announcement/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='announcement'),
+	array('label' => 'Новости', 'url' => array('news/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='news'),
 	array('label' => 'Мероприятия', 'url' => array('event/index', 'org' => $this->menu_org->id), 'active'=>$this->uniqueId =='event'),
 );
 ?>
