@@ -67,10 +67,13 @@ class Controller extends CController
     public function escalateOrganization($organization)
     {
         if ($organization instanceof Organization) {
-            $this->menu_org = $organization;
+            $this->escalation['organization'] = $organization;
         } else {
-            $this->menu_org = $this->loadOrganizationModel($organization);
+            $this->escalation['organization'] = $this->loadOrganizationModel($organization);
         }
+
+        // TODO: remove fallback on 'menu_org'.
+        $this->menu_org = $this->escalation['organization'];
     }
 
     /**
