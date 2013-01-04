@@ -6,6 +6,7 @@
     // 'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
+        // 'multiple' => true, // Multiple mode with 'asDropDownList'.
         'placeholder' => 'Выбрать...', // Blank for all drop.
         'allowClear' => true, // Clear for normal drop.
         'width' => '300px',
@@ -18,6 +19,7 @@
     // 'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
+        // 'multiple' => true, // Multiple mode with 'asDropDownList'.
         'placeholder' => 'Выбрать...', // Blank for all drop.
         'allowClear' => true, // Clear for normal drop.
         'width' => '300px',
@@ -30,6 +32,7 @@
     'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
+        // 'multiple' => true, // Multiple mode with 'asDropDownList'.
         'placeholder' => 'Выбрать...', // Blank for all drop.
         'allowClear' => true, // Clear for normal drop.
         'width' => '300px',
@@ -48,9 +51,10 @@
         'group'
     ),
     // 'asDropDownList' => false, // Tag mode.
-    // 'multiple' => true, // Multiple mode without 'asDropDownList',
+    'multiple' => true, // Multiple mode without 'asDropDownList',
     'prompt' => '', // Blank for all drop.
     'options' => array(
+        // 'multiple' => true, // Multiple mode with 'asDropDownList'.
         'placeholder' => 'Выбрать...', // Blank for all drop.
         'allowClear' => true, // Clear for normal drop.
         'width' => '300px',

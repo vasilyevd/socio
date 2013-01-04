@@ -1,6 +1,4 @@
 <?php
-$this->layout = '//layouts/presentation';
-
 $this->breadcrumbs=array(
     'Достижения',
 );

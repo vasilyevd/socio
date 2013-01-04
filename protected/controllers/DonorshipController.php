@@ -1,6 +1,6 @@
 <?php
 
-class PartnershipController extends Controller
+class DonorshipController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,7 +15,7 @@ class PartnershipController extends Controller
     {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete, dynamicDeleteFile', // we only allow deletion via POST request
+            'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -32,7 +32,7 @@ class PartnershipController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create', 'update', 'updateVerification', 'dynamicDeleteFile'),
+                'actions'=>array('create', 'update'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -68,28 +68,22 @@ class PartnershipController extends Controller
      */
    public function actionCreate($org)
     {
-        $model=new Partnership;
+        $model=new Donorship;
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Partnership']))
+        if(isset($_POST['Donorship']))
         {
-            $model->attributes=$_POST['Partnership'];
+            $model->attributes=$_POST['Donorship'];
 
             // Relations.
             $model->organization = $org;
-            // Upload handler.
-            $model->logo = CUploadedFile::getInstance($model, 'logo');
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty 'linkOrganization', relation for view.
-        //TODO: Properly restore 'linkOrganization' value and not just blank.
-        $model->linkOrganization = null;
-        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($org);
 
@@ -110,55 +104,18 @@ class PartnershipController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Partnership']))
+        if(isset($_POST['Donorship']))
         {
-            $model->attributes=$_POST['Partnership'];
-
-            // Upload handler.
-            $model->logo = CUploadedFile::getInstance($model, 'logo');
+            $model->attributes=$_POST['Donorship'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty 'linkOrganization', relation for view.
-        //TODO: Properly restore 'linkOrganization' value and not just blank.
-        $model->linkOrganization = null;
-        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 
         $this->render('update',array(
-            'model'=>$model,
-        ));
-    }
-
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionUpdateVerification($id)
-    {
-        $model=$this->loadModel($id);
-
-        // Custom scenario.
-        $model->scenario = 'updateVerification';
-
-        // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
-
-        if(isset($_POST['Partnership']))
-        {
-            $model->attributes=$_POST['Partnership'];
-            if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
-        }
-
-        // Escalate organization for view.
-        $this->escalateOrganization($model->organization);
-
-        $this->render('updateVerification',array(
             'model'=>$model,
         ));
     }
@@ -188,14 +145,14 @@ class PartnershipController extends Controller
      */
     public function actionIndex($org)
     {
-        // $dataProvider=new CActiveDataProvider('Partnership');
+        // $dataProvider=new CActiveDataProvider('Donorship');
         // $this->render('index',array(
         //     'dataProvider'=>$dataProvider,
         // ));
 
         $criteria = new CDbCriteria;
         $criteria->compare('organization_id', $org);
-        $dataProvider = new CActiveDataProvider('Partnership', array(
+        $dataProvider = new CActiveDataProvider('Donorship', array(
             'criteria' => $criteria,
         ));
 
@@ -212,26 +169,14 @@ class PartnershipController extends Controller
      */
     public function actionAdmin()
     {
-        $model=new Partnership('search');
+        $model=new Donorship('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Partnership']))
-            $model->attributes=$_GET['Partnership'];
+        if(isset($_GET['Donorship']))
+            $model->attributes=$_GET['Donorship'];
 
         $this->render('admin',array(
             'model'=>$model,
         ));
-    }
-
-    /**
-     * Upload handler.
-     * AJAX delete of particular uploaded file.
-     */
-    public function actionDynamicDeleteFile($id)
-    {
-        $model=Partfile::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        $model->delete();
     }
 
     /**
@@ -241,7 +186,7 @@ class PartnershipController extends Controller
      */
     public function loadModel($id)
     {
-        $model=Partnership::model()->findByPk($id);
+        $model=Donorship::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -253,7 +198,7 @@ class PartnershipController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='partnership-form')
+        if(isset($_POST['ajax']) && $_POST['ajax']==='donorship-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

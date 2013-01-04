@@ -1,6 +1,4 @@
 <?php
-$this->layout = '//layouts/announcement';
-
 $this->breadcrumbs=array(
     'Мероприятия',
 );

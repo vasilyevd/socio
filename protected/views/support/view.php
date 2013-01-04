@@ -1,15 +1,13 @@
 <?php
-$this->layout = '//layouts/potential';
 $this->breadcrumbs=array(
-    'Партнерство' => array('index', 'org' => $this->menu_org->id),
+    'Поддержка' => array('index', 'org' => $this->menu_org->id),
     $model->link,
 );
 
 $this->menu=array(
-    array('label' => 'Управление Партнерством'),
-    array('label' => 'Изменить Партнерство', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
-    array('label' => 'Изменить Проверку Партнерства', 'icon' => 'cog', 'url'=>array('updateVerification','id'=>$model->id)),
-    array('label' => 'Удалить Партнерство', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
+    array('label' => 'Управление Поддержкой'),
+    array('label' => 'Изменить Поддержку', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
+    array('label' => 'Удалить Поддержку', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
 );
 ?>
 
@@ -44,9 +42,12 @@ $this->menu=array(
             'name' => 'type',
             'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
         ),
-        'email',
-        'contact_name',
-        'website',
+        'delivery_year',
+        array(
+            'name' => 'funds',
+            'value' => CHtml::encode(Lookup::item('SupportFunds',$model->funds)),
+        ),
+        'funds_specific',
     ),
 )); ?>
 
