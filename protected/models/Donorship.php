@@ -12,6 +12,10 @@
  */
 class Donorship extends CActiveRecord
 {
+    const SOURCE_INTERNATIONAL = 1;
+    const SOURCE_COUNTRY = 2;
+    const SOURCE_PRIVATE = 3;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -39,8 +43,8 @@ class Donorship extends CActiveRecord
             array('donor, description, source, type, delivery_year, funds', 'required'),
             array('source, type, delivery_year, funds, funds_specific', 'numerical', 'integerOnly'=>true),
             array('source', 'in', 'range' => array(
-                Cooperation::SOURCE_INTERNATIONAL, Cooperation::SOURCE_PUBLIC,
-                Cooperation::SOURCE_GOVERNMENT, Cooperation::SOURCE_BUSINESS,
+                self::SOURCE_INTERNATIONAL, self::SOURCE_COUNTRY,
+                self::SOURCE_PRIVATE,
             )),
             array('type', 'in', 'range' => array(
                 Cooperation::TYPE_SOME, Cooperation::TYPE_OTHER,

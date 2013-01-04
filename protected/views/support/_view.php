@@ -3,18 +3,12 @@
         <div class="org-logo-conteiner">
             <div class="span1">
                 <?php if (!empty($data->linkOrganization)): ?>
-                    <?php echo CHtml::link(
-                        CHtml::image(
+                    <div class="thumbnail">
+                        <?php echo CHtml::image(
                             $data->linkOrganization->getUploadUrl('logo'),
                             'Лого организации'
-                        ),
-                        array('organization/view', 'id' => $data->linkOrganization->id),
-                        array(
-                            'class' => 'thumbnail',
-                            'rel' => 'tooltip',
-                            'data-title' => CHtml::encode($data->link),
-                        )
-                    ); ?>
+                        ); ?>
+                    </div>
                 <?php else: ?>
                     <div class="thumbnail">
                         <?php echo CHtml::image(
