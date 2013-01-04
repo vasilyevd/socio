@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: socio
 -- ------------------------------------------------------
--- Server version	5.5.28-log
+-- Server version	5.5.29-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -884,4 +884,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-28 17:53:34
+-- Dump completed on 2013-01-04 12:36:27

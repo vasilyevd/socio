@@ -1,7 +1,7 @@
 <?php
 /** @var $this Controller */
 $this->sectionMain = "org";
-$model = $this->escalation['model'];
+$model = $this->escalation['organization'];
 
 $this->breadcrumbs = array_merge(array(
     'Организации' => array('organization/index'),
