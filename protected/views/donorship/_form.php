@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-    'id'=>'support-form',
+    'id'=>'donorship-form',
     'enableAjaxValidation'=>true,
 )); ?>
 
@@ -7,7 +7,7 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('CooperationSource')); ?>
+    <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('DonorshipSource')); ?>
 
     <?php echo $form->select2Row($model, 'type', array(
         'data' => Lookup::items('CooperationSource'),
