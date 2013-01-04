@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-    'id'=>'cooperation-form',
+    'id'=>'support-form',
     'enableAjaxValidation'=>true,
     // Upload handler.
     'htmlOptions' => array('enctype' => 'multipart/form-data'),
@@ -28,16 +28,6 @@
         // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
         'asDropDownList' => false, // Tag mode.
         'prompt' => '', // Blank for all drop.
-        'events' => array(
-            'change' => 'js:function(e) {
-                if (e.val == "") {
-                    $(".form-hide-toggle").show();
-                } else {
-                    $(".form-hide-toggle").hide();
-                }
-                return false;
-            }',
-        ),
         'options' => array(
             'placeholder' => 'Введите название...', // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
@@ -69,17 +59,61 @@
                 return model.name;
             }',
         ),
+        'events' => array(
+            'change' => 'js:function(e) {
+                if (e.val == "") {
+                    $(".logo-toggle").show();
+                } else {
+                    $(".logo-toggle").hide();
+                }
+                return false;
+            }',
+        ),
     )); ?>
 
-    <div class="form-hide-toggle">
+    <div class="logo-toggle">
         <?php echo $form->fileFieldRow($model,'logo'); ?>
     </div>
 
-    <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->select2Row($model, 'funds', array(
+        'data' => Lookup::items('SupportFunds'),
+        // 'asDropDownList' => false, // Tag mode.
+        // 'multiple' => true, // Multiple mode without 'asDropDownList'.
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            // 'multiple' => true, // Multiple mode with 'asDropDownList'.
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+        'events' => array(
+            'change' => 'js:function(e) {
+                if (e.val == "' . Support::FUNDS_OTHER . '") {
+                    $(".funds-specific-toggle").show();
+                } else {
+                    $(".funds-specific-toggle").hide();
+                }
+                return false;
+            }',
+        ),
+    )); ?>
 
-    <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128)); ?>
+    <div class="funds-specific-toggle"<?php echo empty($model->funds_specific) ? ' style="display:none"' : ''; ?>>
+        <?php echo $form->textFieldRow($model,'funds_specific',array('class'=>'span5','maxlength'=>128)); ?>
+    </div>
 
-    <?php echo $form->textFieldRow($model,'contact_name',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->select2Row($model, 'delivery_year', array(
+        'data' => array_combine(range(date('Y'), 1900), range(date('Y'), 1900)),
+        // 'asDropDownList' => false, // Tag mode.
+        // 'multiple' => true, // Multiple mode without 'asDropDownList'.
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            // 'multiple' => true, // Multiple mode with 'asDropDownList'.
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+    )); ?>
 
     <?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
