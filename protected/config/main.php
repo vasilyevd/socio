@@ -33,6 +33,7 @@ return array(
         'application.models.*',
         'application.models.dostup.*',
         'application.components.*',
+        'application.controllers.*',
         'application.extensions.*',
         'application.extensions.widgets.*',
         'application.helpers.*',
