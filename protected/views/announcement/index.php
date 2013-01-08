@@ -4,43 +4,50 @@ $this->breadcrumbs=array(
 );
 
 Yii::app()->clientScript->registerScript('search', "
-// On select widget listview update.
+// Dynamic listview update.
 var ajaxUpdateTimeout;
-var ajaxRequest;
-// This is the id of the source.
-$('input.calendar-search').change(function(){
-    ajaxRequest = $(this).serialize();
+function dynamicAnnouncementFilter() {
     clearTimeout(ajaxUpdateTimeout);
-    ajaxUpdateTimeout = setTimeout(function () {
-        $.fn.yiiListView.update(
-            // This is the id of the CListView.
-            'events-listview',
-            {data: ajaxRequest}
-        )
-    },
-    // This is the delay.
-    300);
-});
-");
+    ajaxUpdateTimeout = setTimeout(
+        function() {
+            $.fn.yiiListView.update(
+                // This is the id of the CListView.
+                'announcement-listview',
+                { data: $('.announcement-calendar-widget').serialize() }
+            )
+        },
+        // This is the delay.
+        500
+    );
+    return false;
+};
+", CClientScript::POS_END);
 ?>
 
-<div class="input-append">
-    <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-        'model' => $model,
-        'attribute' => 'publication_time',
-        'language' => 'ru',
-        'options' => array(
-            'dateFormat' => 'yy-mm-dd',
-        ), // jquery plugin options
-        'htmlOptions' => array(
-            'class' => 'calendar-search',
-        ),
-    )); ?>
-    <span class="add-on"><i class="icon-calendar"></i></span>
-</div>
+<?php echo CHtml::link('За всё время', '#', array(
+    'class' => 'announcement-calendar-link',
+    'onclick' => '$(".announcement-calendar-widget").datepicker("show"); return false;',
+)); ?>
+<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+    'model' => $model,
+    'attribute' => 'publication_time',
+    'language' => 'ru',
+    // jQuery plugin options.
+    'options' => array(
+        'dateFormat' => 'yy-mm-dd',
+        'onSelect' => 'js:function(date) {
+            $(".announcement-calendar-link").text(date);
+            dynamicAnnouncementFilter();
+        },',
+    ),
+    'htmlOptions' => array(
+        'class' => 'announcement-calendar-widget',
+        'style' => 'display:none',
+    ),
+)); ?>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-    'id' => 'events-listview',
+    'id' => 'announcement-listview',
     'dataProvider' => $model->search(),
     'itemView' => '_view',
     // 'viewData' => array('albumId' => $model->id),

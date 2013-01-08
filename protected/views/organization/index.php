@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->layout='//layouts/column1';
 
 Yii::app()->clientScript->registerScript('search', "
-// Dynamic form submit and listview update.
+// Dynamic listview update.
 var ajaxUpdateTimeout;
 function dynamicOrganizationFilter() {
     clearTimeout(ajaxUpdateTimeout);
