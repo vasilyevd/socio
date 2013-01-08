@@ -21,6 +21,13 @@
 }
 .org-main-type-items {
   //  line-height: 60px;
+	
+}
+.org-main-type-items a {
+  //  line-height: 60px;
+	display: block;
+	padding: 2px;
+	
 }
 .org-main-problem-group {
     -moz-column-count: 3;

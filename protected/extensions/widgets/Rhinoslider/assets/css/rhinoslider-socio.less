@@ -1,0 +1,186 @@
+// ===== MIXINS =====
+// Box sizing
+.box-sizing(@boxmodel) {
+  -webkit-box-sizing: @boxmodel;
+     -moz-box-sizing: @boxmodel;
+          box-sizing: @boxmodel;
+}
+
+// User select
+// For selecting text on the page
+.user-select(@select) {
+  -webkit-user-select: @select;
+     -moz-user-select: @select;
+      -ms-user-select: @select;
+       -o-user-select: @select;
+          user-select: @select;
+}
+
+.rgba(@colour, @alpha) {
+    @alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
+    @ieAlphaColour: argb(@alphaColour);
+     
+    background-color: @colour; // Fallback for older browsers
+    background-color: @alphaColour; 
+     
+    // IE hacks
+    zoom: 1; // hasLayout
+    background-color: transparent\9;
+    -ms-filter:  "progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})"; // IE 8+
+        filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=@{ieAlphaColour}, endColorstr=@{ieAlphaColour})"; // IE 6 & 7  
+}
+
+.positionV (top, @px: 0) {
+	top: @px;
+}
+.positionV (bottom, @px: 0) {
+	bottom: @px;
+}
+.positionV (@_, @px: 0) {
+	bottom: @px;
+}
+
+
+// ====== VARS ======
+@bulletsHeight: 20px;
+@bulletsPosition: bottom;
+@bulletsBGColor:		#fff; 
+
+@bulletWidth:				14px;
+@bulletHeihgt:			20px;
+@bulletMargin: 			0px;
+@bulletPaddingV: 		(@bulletsHeight - @bulletHeihgt) / 2;
+@bulletPaddingG: 		2px;
+@bulletTextColor: 	black;
+@bulletTextSize:		10px;
+@bulletBGColorActive:	dimgray;
+@bulletTextColorActive: 	white;
+
+@buttonWidth: 56px;
+@buttonHeight: 100%;
+@buttonPositionV: bottom;
+
+@buttonBackgroundColor: #111;
+@buttonBackgroundAlfa: 0.45;
+
+@PrevButtonLeft: 0;
+@PrevButtonV: bottom;
+
+@NextButtonRight: 0;
+
+
+
+// ======= CSS =====
+.rhino-btn {
+	z-index:10;
+	width: @buttonWidth;
+	height: @buttonHeight;
+	display:block;
+	text-indent:-999%;
+	.user-select(none);
+}
+
+.rhino-prev, .rhino-next {
+    .positionV(@buttonPositionV);
+    .rgba(@buttonBackgroundColor, @buttonBackgroundAlfa);
+}
+
+.rhino-prev {
+	left: @PrevButtonLeft;
+}
+
+.rhino-next {
+	right: @NextButtonRight;
+}
+
+.rhino-prev:hover {
+}
+
+.rhino-next:hover {
+}
+
+.rhino-toggle {
+	top:-4px;
+	left:-6px;
+}
+
+.rhino-play { background-position:0 0; }
+
+.rhino-play:hover { background-position:0 -53px; }
+
+.rhino-pause { background-position:-56px 0; }
+
+.rhino-pause:hover { background-position:-56px -53px; }
+
+.rhino-container { 
+	position:relative; 
+	& ul li {
+		list-style: none outside none;
+	}
+}
+
+.rhino-caption {
+	position:absolute;
+	background: #000;
+	display:none;
+	left:0;
+	right:0;
+	top:0;
+	color:#fff;
+	padding:10px;
+	text-align:right;
+	.user-select(none);
+}
+
+.rhino-nav {
+    position: absolute;
+    left: 50%;
+		.positionV(@bulletsPosition);
+}
+
+.rhino-bullets {
+	position: relative;
+	left: -50%;
+	z-index: 10;
+	margin:0;
+	padding:0;
+	background: @bulletsBGColor;
+  height: @bulletsHeight;
+}
+
+.rhino-bullets:before, .rhino-bullets:after {
+}
+
+.rhino-bullets:after {
+}
+
+.rhino-bullets li {
+	float:left;
+	display:inline;
+	margin: 0 @bulletMargin;
+}
+
+.rhino-bullets li a.rhino-bullet {
+	display: block;
+	width: @bulletWidth;
+	height: @bulletHeihgt;
+	line-height: @bulletsHeight - @bulletPaddingV;
+	cursor: pointer;
+	background: white;
+	font-size: @bulletTextSize;
+	text-align: center;
+	padding: @bulletPaddingV @bulletPaddingG;
+	color: @bulletTextColor;
+	text-decoration:none;
+	.user-select(none);
+}
+
+.rhino-bullets li a.rhino-bullet:hover, .rhino-bullets li a.rhino-bullet:focus {
+	color: @bulletTextColorActive;
+	background: darken(@bulletsBGColor, 20%);
+}
+
+.rhino-bullets li a.rhino-bullet.rhino-active-bullet {
+	color: @bulletTextColorActive;
+	background: @bulletBGColorActive;
+}

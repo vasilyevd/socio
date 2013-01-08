@@ -5681,3 +5681,7 @@ a.badge:hover {
 .item-header-pading-from-logo {
   padding-left: 210px;
 }
+.content {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 15px;
+}
