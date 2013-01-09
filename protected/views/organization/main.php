@@ -17,7 +17,7 @@ $this->breadcrumbs=array(
         <div class="sub-header">
             Список организаций, партий, движений, центров, гражданских акций и инициатив.
             <div class="info">
-                Всего зарегистрировано <em>1478</em> организаций
+                Всего зарегистрировано <em>1337</em> организаций
             </div>
         </div>
 </div>
@@ -135,7 +135,7 @@ $this->breadcrumbs=array(
                 'headerIcon' => 'icon-th-list',
                 // 'htmlOptions' => array('class'=>'bootstrap-widget-table') // Remove padding.
             ));?>
-            <?php /*$this->widget('bootstrap.widgets.TbListView',array(
+            <?php $this->widget('bootstrap.widgets.TbListView',array(
                 'dataProvider' => new CArrayDataProvider(
                     Direction::model()->findAll(),
                     array('pagination'=>false)
@@ -144,7 +144,7 @@ $this->breadcrumbs=array(
                 'template' => '{items}{pager}', // Hide summary header.
                 'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
                 'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
-            ));*/ ?>
+            )); ?>
             <?php $this->endWidget();?>
             <!-- CATEGORYES end -->
 
