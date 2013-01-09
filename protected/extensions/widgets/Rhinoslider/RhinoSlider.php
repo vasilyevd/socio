@@ -16,6 +16,9 @@ class RhinoSlider extends CWidget
 	/** @var array options of widget container */
 	public $htmlOptions = array();
 
+	/** @var string set theme from css file rhinoslider-XXX.css 1.05*/
+	public $theme = 'socio';
+
 	public $options = array();
 
 	private $_assetsUrl;
@@ -35,7 +38,7 @@ class RhinoSlider extends CWidget
 	{
 		$id = $this->id;
 
-		echo CHtml::openTag('div')."\n";
+		echo CHtml::openTag('div', array('class'=>'bootstrap-widget'))."\n";
 		echo CHtml::openTag('ul', $this->htmlOptions)."\n";
 
 		if ($this->contentView!=false){
@@ -109,7 +112,7 @@ class RhinoSlider extends CWidget
 			"jQuery('#{$id}').rhinoslider({$options});"
 		);
 
-		$cs->registerCssFile($this->getAssetsUrl().'/css/rhinoslider-socio.css');
+		$cs->registerCssFile($this->getAssetsUrl().'/css/rhinoslider-'.$this->theme.'.css');
 
 		$cs->registerScriptFile($this->getAssetsUrl().'/js/easing.js');
 

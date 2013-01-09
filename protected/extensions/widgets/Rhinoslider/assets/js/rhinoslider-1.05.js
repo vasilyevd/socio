@@ -204,13 +204,41 @@
 				if (settings.showBullets !== 'never') {
 					vars.container.addClass(vars.prefix + 'show-bullets');
 					var navi = '<div class="' + vars.prefix + 'nav"><ol class="' + vars.prefix + 'bullets">';
+					if (settings.controlsPrevNextIn===true) {
+						prevbutton = '<a class="' + vars.prefix + 'prev-bullet ' + vars.prefix + 'bullet-nav">' + settings.prevText + '</a>';
+						nextbutton = '<a class="' + vars.prefix + 'next-bullet ' + vars.prefix + 'bullet-nav">' + settings.nextText + '</a>';
+						navi = navi + '<li>' + prevbutton + '</li>';
+					}
 					vars.items.each(function (i) {
 						var $item = $(this);
 						var id = vars.prefix + 'item' + i;
 						navi = navi + '<li><a id="' + id + '-bullet" class="' + vars.prefix + 'bullet">' + parseInt(i + 1, 10) + '</a></li>';
 					});
+					if (settings.controlsPrevNextIn===true) {
+						navi = navi + '<li>' + nextbutton + '</li>';
+					}
 					navi = navi + '</ol></div>';
 					vars.container.append(navi);
+					
+					if (settings.controlsPrevNextIn===true) {
+					vars.buttons.prev = vars.container.find('.' + vars.prefix + 'prev-bullet');
+					vars.buttons.next = vars.container.find('.' + vars.prefix + 'next-bullet');
+
+					//add functionality to the "prev"-button
+					vars.buttons.prev.click(function () {
+						prev($slider, settings);
+						if (settings.autoPlay) {
+							pause();
+						}
+					});
+					//add functionality to the "next"-button
+					vars.buttons.next.click(function () {
+						next($slider, settings);
+						if (settings.autoPlay) {
+							pause();
+						}
+					});
+					}
 
 					vars.navigation = vars.container.find('.' + vars.prefix + 'bullets');
 					vars.buttons.bullets = vars.navigation.find('.' + vars.prefix + 'bullet');
@@ -701,6 +729,8 @@
 		controlsPrevNext: true,
 		//show/hide play/pause-controls
 		controlsPlayPause: true,
+		// show controlsPrevNext in bullets
+		controlsPrevNextIn: false,
 		//pause on mouse-over
 		pauseOnHover: true,
 		//if the active content should be animated too - depending on effect slide

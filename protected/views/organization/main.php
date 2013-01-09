@@ -28,6 +28,7 @@ $this->breadcrumbs=array(
 			<? $this->widget('ext.widgets.Rhinoslider.RhinoSlider', array(
 				'contentView'=>'org_main_slider', // on ALL get renderPartial
 				'contentSeparator'=>false, // if is set - separate to many items
+				'theme'=>'socio',
 				'htmlOptions'=>array(
 					'id'=>'slider',
 					'style'=>'height: 200px; margin: 0;',
@@ -40,16 +41,15 @@ $this->breadcrumbs=array(
 					'effectTime'=>100,
 					'controlsPlayPause'=>false,
 					'controlsMousewheel'=>false,
+					'prevText'=>'<',
+					'nextText'=>'>',
 					'controlFadeTime'=>0,
-					'showBullets'=>'always',
+					'showBullets'=>'hover',
+					'showControls'=>'never',
 					'changeBullets'=>'before',
-
+					'controlsPrevNextIn'=>true,
 				),
-				'items'=>array(
-					array('content'=>'bla bla bla', 'label'=>'label for one', 'visible'=>true),
-					array('content'=>'next number 2'),
-					array('content'=>'lest therd slide', 'label'=>'label for 3')
-				),
+				'items'=>array(),
 				'merge'=>false, // merge content from view and from items array
 			)) ?>
 		</div>
@@ -57,6 +57,7 @@ $this->breadcrumbs=array(
 			<? $this->widget('ext.widgets.Rhinoslider.RhinoSlider', array(
 				'contentView'=>'org_main_types', // on ALL get renderPartial
 				'contentSeparator'=>false, // if is set - separate to many items
+				'theme'=>'socio-boxn',
 				'htmlOptions'=>array(
 					'id'=>'slider2',
 					'style'=>'height: 200px; margin: 0;'),
@@ -66,7 +67,7 @@ $this->breadcrumbs=array(
 					'effect'=>'fade',
 					'effectTime'=>100,
 					'controlsPlayPause'=>false,
-					'showControls'=>'never',
+					'showControls'=>'hover',
 					'controlFadeTime'=>0,
 					'showBullets'=>'always',
 					'changeBullets'=>'before',
@@ -118,7 +119,7 @@ $this->breadcrumbs=array(
 		<div class="span6">
 			<!-- CATEGORYES -->
 			<?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-				'title' => 'Категории',
+				'title' => 'Направления деятельности',
 				'headerIcon' => 'icon-th-list',
 				// 'htmlOptions' => array('class'=>'bootstrap-widget-table') // Remove padding.
 			));?>

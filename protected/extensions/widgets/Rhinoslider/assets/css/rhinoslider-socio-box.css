@@ -1,7 +1,8 @@
 .rhino-btn {
+  background: url(../img/rhinoslider-box-sprite.png) 0 0 no-repeat;
   z-index: 10;
-  width: 56px;
-  height: 100%;
+  width: 37px;
+  height: 37px;
   display: block;
   text-indent: -999%;
   -webkit-user-select: none;
@@ -12,19 +13,22 @@
 }
 .rhino-prev,
 .rhino-next {
+  top: 0;
   bottom: 0;
-  background-color: #111111;
-  background-color: rgba(18, 18, 18, 0.45);
-  zoom: 1;
-  background-color: transparent\9;
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212)";
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212);
 }
 .rhino-prev {
   left: 0;
+  background-position: -111px 0;
 }
 .rhino-next {
   right: 0;
+  background-position: -74px 0;
+}
+.rhino-prev:hover {
+  background-position: -111px -37px;
+}
+.rhino-next:hover {
+  background-position: -74px -37px;
 }
 .rhino-toggle {
   top: -4px;
@@ -34,13 +38,13 @@
   background-position: 0 0;
 }
 .rhino-play:hover {
-  background-position: 0 -53px;
+  background-position: 0 -37px;
 }
 .rhino-pause {
-  background-position: -56px 0;
+  background-position: -37px 0;
 }
 .rhino-pause:hover {
-  background-position: -56px -53px;
+  background-position: -37px -37px;
 }
 .rhino-container {
   position: relative;
@@ -79,8 +83,8 @@
   height: 20px;
 }
 .rhino-bullets .rhino-btn {
-  width: 56px;
-  height: 100%;
+  width: 37px;
+  height: 37px;
   display: block;
   text-indent: -999%;
   -webkit-user-select: none;
@@ -91,13 +95,14 @@
 }
 .rhino-bullets .rhino-prev,
 .rhino-bullets .rhino-next {
+  top: 0;
   bottom: 0;
-  background-color: #111111;
-  background-color: rgba(18, 18, 18, 0.45);
+  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0);
   zoom: 1;
   background-color: transparent\9;
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212)";
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00ffffff, endColorstr=#00ffffff)";
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00ffffff, endColorstr=#00ffffff);
 }
 .rhino-bullets .rhino-prev {
   left: 0;

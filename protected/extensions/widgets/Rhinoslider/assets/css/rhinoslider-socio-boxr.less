@@ -42,6 +42,9 @@
 
 
 // ====== VARS ======
+@bgGridHeight: 	1px;
+@bgGridWidth:		1px;
+
 @bulletsHeight: 20px;
 @bulletsPosition: bottom;
 @bulletsBGColor:		#fff; 
@@ -56,12 +59,12 @@
 @bulletBGColorActive:	dimgray;
 @bulletTextColorActive: 	white;
 
-@buttonWidth: 56px;
-@buttonHeight: 100%;
-@buttonPositionV: bottom;
+@buttonWidth: 37px;
+@buttonHeight: 37px;
+@buttonPositionV: top;
 
-@buttonBackgroundColor: #111;
-@buttonBackgroundAlfa: 0.45;
+@buttonBackgroundColor: #fff;
+@buttonBackgroundAlfa: 0;
 
 @PrevButtonLeft: 0;
 @PrevButtonV: bottom;
@@ -72,6 +75,7 @@
 
 // ======= CSS =====
 .rhino-btn {
+	background:url(../img/rhinoslider-box-sprite.png) 0 0 no-repeat;
 	z-index:10;
 	width: @buttonWidth;
 	height: @buttonHeight;
@@ -82,21 +86,25 @@
 
 .rhino-prev, .rhino-next {
     .positionV(@buttonPositionV);
-    .rgba(@buttonBackgroundColor, @buttonBackgroundAlfa);
+    //.rgba(@buttonBackgroundColor, @buttonBackgroundAlfa);
 }
 
 .rhino-prev {
 	left: @PrevButtonLeft;
+	background-position: -(@buttonWidth * 3) 0;
 }
 
 .rhino-next {
 	right: @NextButtonRight;
+	background-position: -(@buttonWidth * 2) 0;
 }
 
 .rhino-prev:hover {
+background-position: -(@buttonWidth * 3) -(@buttonHeight);
 }
 
 .rhino-next:hover {
+background-position: -(@buttonWidth * 2) -(@buttonHeight);
 }
 
 .rhino-toggle {
@@ -106,11 +114,11 @@
 
 .rhino-play { background-position:0 0; }
 
-.rhino-play:hover { background-position:0 -53px; }
+.rhino-play:hover { background-position:0 -(@buttonHeight); }
 
-.rhino-pause { background-position:-56px 0; }
+.rhino-pause { background-position:-(@buttonWidth * 1) 0; }
 
-.rhino-pause:hover { background-position:-56px -53px; }
+.rhino-pause:hover { background-position:-(@buttonWidth * 1) -(@buttonHeight); }
 
 .rhino-container { 
 	position:relative; 

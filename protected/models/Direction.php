@@ -92,4 +92,8 @@ class Direction extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+	public function getLimitedOrgList($limit = 3) {
+		return $this->organizations(array('limit'=>$limit));
+	}
 }
