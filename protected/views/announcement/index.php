@@ -3,44 +3,15 @@ $this->breadcrumbs=array(
     'Лента',
 );
 
-Yii::app()->clientScript->registerScript('search', "
-// On select widget listview update.
-var ajaxUpdateTimeout;
-var ajaxRequest;
-// This is the id of the source.
-$('input.calendar-search').change(function(){
-    ajaxRequest = $(this).serialize();
-    clearTimeout(ajaxUpdateTimeout);
-    ajaxUpdateTimeout = setTimeout(function () {
-        $.fn.yiiListView.update(
-            // This is the id of the CListView.
-            'events-listview',
-            {data: ajaxRequest}
-        )
-    },
-    // This is the delay.
-    300);
-});
-");
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/dynamicListviewUpdate.js'
+);
 ?>
 
-<div class="input-append">
-    <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-        'model' => $model,
-        'attribute' => 'publication_time',
-        'language' => 'ru',
-        'options' => array(
-            'dateFormat' => 'yy-mm-dd',
-        ), // jquery plugin options
-        'htmlOptions' => array(
-            'class' => 'calendar-search',
-        ),
-    )); ?>
-    <span class="add-on"><i class="icon-calendar"></i></span>
-</div>
+<?php echo $this->renderPartial('_calendar', array('model' => $model, 'attribute' => 'publication_time')); ?>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-    'id' => 'events-listview',
+    'id' => 'announcement-listview',
     'dataProvider' => $model->search(),
     'itemView' => '_view',
     // 'viewData' => array('albumId' => $model->id),

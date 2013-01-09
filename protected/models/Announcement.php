@@ -261,4 +261,22 @@ class Announcement extends CActiveRecord
 
         $model->save();
     }
+
+    /**
+     * Finds latest Announcement news.
+     * @param int $limit the limit of news array.
+     * @return array of Announcement models.
+     */
+    public static function getLatestNews($limit)
+    {
+        $criteria=new CDbCriteria;
+
+        // Filter system news.
+        $criteria->addCondition('category IS NOT NULL');
+
+        $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+
+        return Announcement::model()->findAll($criteria);
+    }
 }
