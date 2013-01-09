@@ -19,11 +19,16 @@
 
 		</div>
 		<div class="list-left-info">
-			<?php echo CHtml::link(
-			CHtml::encode($data->name),
-			array('search', 'Organization[directions][]' => $data->id)
-		);
-			?>
+			<div class="list-item-header">
+				<?php echo CHtml::link(
+					CHtml::encode($data->name),
+					array('search', 'Organization[directions][]' => $data->id)
+					);
+				?>
+			</div>
+			<div class="sub-info">
+				<em>54</em> организации
+			</div>
 		</div>
 
 

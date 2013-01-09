@@ -14,9 +14,7 @@ class STbBox extends TbBox
 	{
 		if (isset($this->htmlOptions['class']))
 			$this->htmlOptions['class'] = 'bootstrap-widget ' . $this->htmlOptions['class'];
-		elseif ($this->content === false) 
-			$this->htmlOptions['class'] = $this->htmlOptions['class'];
-		else 
+		elseif ($this->content !== false)
 			$this->htmlOptions['class'] = 'bootstrap-widget';
 
 		if (isset($this->htmlContentOptions['class']))

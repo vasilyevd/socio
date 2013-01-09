@@ -959,6 +959,26 @@ h4 small {
   font-weight: bold;
   text-shadow: 0 0 1px #D6D6D6;
 }
+.sub-info {
+  color: #7d7d7d;
+  font-size: 12px;
+  font-weight: normal;
+}
+.sub-info em {
+  color: #D95D00;
+  font-family: Trebuchet MS;
+  font-style: normal;
+  font-weight: bold;
+  text-shadow: 0 0 1px #D6D6D6;
+}
+.list-item-header {
+  color: #343434;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.list-item-header a {
+  color: #343434;
+}
 ul,
 ol {
   padding: 0;
@@ -5684,4 +5704,15 @@ a.badge:hover {
 .content {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px;
+}
+.list-right-info-fixed img {
+  max-height: 32px;
+  max-width: 32px;
+}
+.list-right-info-fixed .thumbnail {
+  float: left;
+  height: 32px;
+  width: 32px;
+  padding: 0;
+  margin: 0 4px;
 }
