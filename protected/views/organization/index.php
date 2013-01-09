@@ -27,22 +27,6 @@ function dynamicOrganizationFilter() {
 ", CClientScript::POS_END);
 ?>
 
-<?php if (!empty($model->type)): ?>
-    <p class="lead">Поиск по типу: <?php echo CHtml::encode($model->type->name); ?></p>
-<?php endif; ?>
-<?php if (!empty($model->directions)): ?>
-    <p class="lead">
-        Поиск по категории:
-        <?php echo CHtml::encode(implode(', ', CHtml::listData($model->directions, 'name', 'name'))); ?>
-    </p>
-<?php endif; ?>
-<?php if (!empty($model->problems)): ?>
-    <p class="lead">
-        Поиск по проблематику:
-        <?php echo CHtml::encode(implode(', ', CHtml::listData($model->problems, 'name', 'name'))); ?>
-    </p>
-<?php endif; ?>
-
 <div class="row">
     <div class="span9">
         <?php $this->renderPartial('_searchMainFilter',array(

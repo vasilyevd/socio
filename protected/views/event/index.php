@@ -2,6 +2,10 @@
 $this->breadcrumbs=array(
     'Мероприятия',
 );
+
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/dynamicListviewUpdate.js'
+);
 ?>
 
 <?php echo $this->renderPartial('//announcement/_calendar', array('model' => $model, 'attribute' => 'start_time')); ?>
