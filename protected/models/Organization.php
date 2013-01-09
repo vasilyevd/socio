@@ -277,4 +277,19 @@ class Organization extends CActiveRecord
 
         return parent::beforeSave();
     }
+
+    /**
+     * Finds latest Organization models.
+     * @param int $limit the limit of Organization array.
+     * @return array of Organization models.
+     */
+    public static function getLatestOrganizations($limit)
+    {
+        $criteria=new CDbCriteria;
+
+        $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+
+        return Organization::model()->findAll($criteria);
+    }
 }

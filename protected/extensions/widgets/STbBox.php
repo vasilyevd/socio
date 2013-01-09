@@ -6,7 +6,7 @@ Yii::import('bootstrap.widgets.TbBox');
 
 class STbBox extends TbBox
 {
-	
+
 		/**
 	 * Widget initialization
 	 */
@@ -14,9 +14,9 @@ class STbBox extends TbBox
 	{
 		if (isset($this->htmlOptions['class']))
 			$this->htmlOptions['class'] = 'bootstrap-widget ' . $this->htmlOptions['class'];
-		elseif ($this->content === false) 
-			$this->htmlOptions['class'] = $this->htmlOptions['class'];
-		else 
+		elseif ($this->content === false)
+			$foo = true;
+		else
 			$this->htmlOptions['class'] = 'bootstrap-widget';
 
 		if (isset($this->htmlContentOptions['class']))
@@ -39,13 +39,13 @@ class STbBox extends TbBox
 		$this->renderContentBegin();
 	}
 
-	
+
 	/*
 	  * Renders the opening of the content element and the optional content
 	  */
 	public function renderContentBegin()
 	{
-		if ($this->content != false) 
+		if ($this->content != false)
 			echo CHtml::openTag('div', $this->htmlContentOptions);
 		if (!empty($this->content)) {
 			echo $this->content;
