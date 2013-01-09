@@ -2,6 +2,10 @@
 $this->breadcrumbs=array(
     'Лента',
 );
+
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/dynamicListviewUpdate.js'
+);
 ?>
 
 <?php echo $this->renderPartial('_calendar', array('model' => $model, 'attribute' => 'publication_time')); ?>
