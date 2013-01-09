@@ -1,4 +1,4 @@
-<div class="well well-small">
+<div class="well">
     <div class="row">
         <div class="item-header">
             <div class="span1">
@@ -33,7 +33,7 @@
         </div>
 
         <?php if (!empty($data->description)): ?>
-            <div class="span11">
+            <div class="span8">
                 <br />
                 <?php echo mb_substr(CHtml::encode(strip_tags($data->description)), 0, 300, 'UTF-8'), '...'; ?>
             </div>
