@@ -8,6 +8,9 @@ $this->breadcrumbs = array_merge(array(
     CHtml::encode($this->menu_org->name) => array('organization/view', 'id' => $this->menu_org->id),
 ), $this->breadcrumbs);
 ?>
+<style type="text/css">
+	.content{ background-color: #F2F2F2; }
+</style>
 
 <?php $this->beginContent('//layouts/main'); ?>
 
@@ -54,7 +57,7 @@ $this->breadcrumbs = array_merge(array(
 		        </div>
 
 		        <!-- INFO-RIGHT -->
-		        <div class="item-header-widget" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), #E6E6E6 60%); margin: 10px; min-height: 170px; padding: 10px 0; position: absolute; right: 0;
+		        <div class="item-header-widget" style="background-image: linear-gradient(to bottom, rgba(242, 242, 242, 0.45), #F2F2F2 60%); margin: 0 10px; min-height: 175px; padding: 10px 0; position: absolute; right: 0;
 top: 0; width: 160px;">
 
 			        <div class="info" style="font-family: PTSansNarrow; font-size: 16px; font-weight: bold; text-align: center; text-transform: uppercase; margin-bottom: 7px;">

@@ -107,7 +107,7 @@
 		</div>
 	</div>
 
-	<div class="content container">
+	<div class="content container <?php echo $this->contentClass; ?>">
 		<?php echo $content; ?>
 	</div>
 

@@ -52,6 +52,9 @@ class Controller extends CController
 	/** @var array of escaleted variables for its access in higher layouts */
 	public $escalation = array();
 
+	/** @var string set Class of content container in main layout when is need */
+	public $contentClass = '';
+
 
 	/**
      * @var array the breadcrumbs of the current page. The value of this property will

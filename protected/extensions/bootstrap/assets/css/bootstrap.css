@@ -824,6 +824,10 @@ a:hover {
 .container-fluid:after {
   clear: both;
 }
+.content.pading {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 15px;
+}
 p {
   margin: 0 0 8.5px;
 }
@@ -5701,10 +5705,6 @@ a.badge:hover {
 .item-header-pading-from-logo {
   padding-left: 210px;
 }
-.content {
-  background-color: rgba(255, 255, 255, 0.85);
-  padding: 15px;
-}
 .listed-info-text {
   overflow: hidden;
   padding-left: 10px;
@@ -5712,7 +5712,7 @@ a.badge:hover {
   border-bottom: 1px solid #DADADA;
 }
 .listed-info-text .sub-info {
-  margin-top: -5px;
+  margin-top: -4px;
   padding-left: 10px;
 }
 .listed-info-images {

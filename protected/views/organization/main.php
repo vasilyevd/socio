@@ -1,26 +1,27 @@
 <?php
 /** @var $this Controller  */
 $this->layout='//layouts/main';
+$this->contentClass = 'pading';
 
 $this->sectionMain = "org";
 $this->breadcrumbs=array(
     'Организации',
 );
 ?>
-<div class="row-fluid">
-        <div class="page-header">
-            <div class="header-menu">
-                <?php echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-colored')); ?>
-            </div>
-            <h4>Организации</h4>
-        </div>
-        <div class="sub-header">
-            Список организаций, партий, движений, центров, гражданских акций и инициатив.
-            <div class="info">
-                Всего зарегистрировано <em>1337</em> организаций
-            </div>
-        </div>
-</div>
+		<div class="row-fluid">
+		        <div class="page-header">
+		            <div class="header-menu">
+		                <?php echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-colored')); ?>
+		            </div>
+		            <h4>Организации</h4>
+		        </div>
+		        <div class="sub-header">
+		            Список организаций, партий, движений, центров, гражданских акций и инициатив.
+		            <div class="info">
+		                Всего зарегистрировано <em>1337</em> организаций
+		            </div>
+		        </div>
+		</div>
 
     <!-- RhinoROW -->
     <div class="row">
@@ -171,5 +172,3 @@ $this->breadcrumbs=array(
 
         </div>
     </div>
-
-</div>
