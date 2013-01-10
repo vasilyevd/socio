@@ -96,6 +96,7 @@ class Event extends CActiveRecord
             'name' => 'Название',
             'category' => 'Категория',
             'type_id' => 'Тип',
+            'type' => 'Тип',
             'type_other' => 'Тип Другой',
             'create_time' => 'Время Создания',
             'start_time' => 'Время Начала',
@@ -116,32 +117,26 @@ class Event extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria=new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('organization_id',$this->organization_id);
-        $criteria->compare('author_id',$this->author_id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('category',$this->category);
-        $criteria->compare('type_id',$this->type_id);
-        $criteria->compare('type_other',$this->type_other,true);
-        $criteria->compare('create_time',$this->create_time,true);
+        // Relation.
+        $criteria->with = array();
+
+        // Relation BELONGS_TO search.
+        if (!empty($this->organization)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'organization',
+            ));
+            $criteria->compare('organization.id', $this->organization);
+        }
 
         // Check for whole day.
-        // $criteria->compare('start_time',$this->start_time,true);
-        $criteria->compare('date(start_time)',$this->start_time);
-
-        $criteria->compare('end_time',$this->end_time,true);
-        $criteria->compare('city_id',$this->city_id);
-        $criteria->compare('address_id',$this->address_id);
-        $criteria->compare('address_other',$this->address_other,true);
-        $criteria->compare('address_description',$this->address_description,true);
-        $criteria->compare('description',$this->description,true);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('invite_closed',$this->invite_closed);
+        $criteria->compare('date(t.start_time)',$this->start_time);
+        $criteria->compare('t.name',$this->name,true);
+        $criteria->compare('t.category',$this->category);
+        $criteria->compare('t.type_id',$this->type_id);
+        $criteria->compare('t.city_id',$this->city_id);
+        $criteria->compare('t.status',$this->status);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

@@ -7,14 +7,14 @@
     <?php echo $form->textField($model, 'name', array(
         'class' => 'span8',
         'maxlength' => 128,
-        'onkeyup' => 'dynamicOrganizationFilter()',
+        'onkeyup' => 'dynamicListviewUpdate("organization-listview", "organization-filter")',
     )); ?>
 
     <?php $this->widget('bootstrap.widgets.TbButton', array(
         'type' => 'primary',
         'label' => 'Поиск',
         'icon' => 'search',
-        'htmlOptions' => array('onclick' => 'dynamicOrganizationFilter()'),
+        'htmlOptions' => array('onclick' => 'dynamicListviewUpdate("organization-listview", "organization-filter")'),
     )); ?>
 
     <?php echo $form->select2Row($model, 'type', array(
@@ -27,7 +27,7 @@
             'width' => '300px',
         ),
         'events' => array(
-            'change' => 'js:dynamicOrganizationFilter',
+            'change' => 'js:function() { dynamicListviewUpdate("organization-listview", "organization-filter"); }',
         ),
     )); ?>
 
@@ -41,7 +41,7 @@
             'width' => '300px',
         ),
         'events' => array(
-            'change' => 'js:dynamicOrganizationFilter',
+            'change' => 'js:function() { dynamicListviewUpdate("organization-listview", "organization-filter"); }',
         ),
     )); ?>
 <?php $this->endWidget(); ?>

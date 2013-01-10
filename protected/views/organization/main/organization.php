@@ -7,7 +7,6 @@
 
 <?php if (!empty($data->description)): ?>
     <p><?php echo mb_substr(CHtml::encode(strip_tags($data->description)), 0, 300, 'UTF-8'), '...'; ?></p>
-<?php else: ?>
-    <br />
-    <br />
 <?php endif; ?>
+
+<hr>

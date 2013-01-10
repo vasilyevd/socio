@@ -127,15 +127,15 @@ class Announcement extends CActiveRecord
 
         // Check for whole day.
         $criteria->compare('date(t.publication_time)',$this->publication_time);
+        $criteria->compare('t.title',$this->title,true);
+        $criteria->compare('t.category',$this->category);
 
         // $criteria->compare('id',$this->id);
-        // $criteria->compare('title',$this->title,true);
         // $criteria->compare('content',$this->content,true);
         // $criteria->compare('create_time',$this->create_time);
         // $criteria->compare('status',$this->status);
         // $criteria->compare('author_id',$this->author_id);
         // $criteria->compare('files',$this->files,true);
-        // $criteria->compare('category',$this->category);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
@@ -151,25 +151,12 @@ class Announcement extends CActiveRecord
      */
     public function searchNews()
     {
-        $criteria=new CDbCriteria;
+        $dataProvider = $this->search();
 
-        $criteria->compare('organization_id',$this->organization_id);
-        // Check for whole day.
-        $criteria->compare('date(publication_time)',$this->publication_time);
-        // Filter system news.
-        $criteria->addCondition('category IS NOT NULL');
+        // Filter out system news.
+        $dataProvider->criteria->addCondition('category IS NOT NULL');
 
-        // $criteria->compare('id',$this->id);
-        // $criteria->compare('title',$this->title,true);
-        // $criteria->compare('content',$this->content,true);
-        // $criteria->compare('create_time',$this->create_time);
-        // $criteria->compare('status',$this->status);
-        // $criteria->compare('author_id',$this->author_id);
-        // $criteria->compare('files',$this->files,true);
-
-        return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
-        ));
+        return $dataProvider;
     }
 
     /**

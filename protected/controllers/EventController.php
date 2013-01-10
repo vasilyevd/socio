@@ -154,7 +154,7 @@ class EventController extends Controller
             $model->attributes=$_GET['Event'];
 
         // Limit search to only this organization.
-        $model->organization_id = $org;
+        $model->organization = $org;
 
         // Escalate organization for view.
         $this->escalateOrganization($org);
