@@ -239,7 +239,8 @@ img.pull-left {
 .bootstrap-widget-content:after {
   clear: both;
 }
-.bootstrap-widget-header {
+.bootstrap-widget-header,
+.nav-tabs-box {
   position: relative;
   height: 37px;
   background: #E9E9E9;
@@ -262,7 +263,8 @@ img.pull-left {
   border-bottom: 1px solid #8F8F8F;
   -webkit-background-clip: padding-box;
 }
-.bootstrap-widget-header h3 {
+.bootstrap-widget-header h3,
+.nav-tabs-box h3 {
   font-family: "PTSansNarrow", Arial, sans-serif;
   text-transform: uppercase;
   position: relative;
@@ -278,10 +280,12 @@ img.pull-left {
   line-height: 14px;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
-.bootstrap-widget-header .bootstrap-toolbar {
+.bootstrap-widget-header .bootstrap-toolbar,
+.nav-tabs-box .bootstrap-toolbar {
   margin: 3px 2px;
 }
-.bootstrap-widget-header .bootstrap-toolbar ul.dropdown-menu i {
+.bootstrap-widget-header .bootstrap-toolbar ul.dropdown-menu i,
+.nav-tabs-box .bootstrap-toolbar ul.dropdown-menu i {
   margin-left: -18px;
   margin-right: 1px;
 }

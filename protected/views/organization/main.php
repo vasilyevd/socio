@@ -130,6 +130,23 @@ $this->breadcrumbs=array(
 
         <!-- C2 -->
         <div class="span6">
+	        <?
+	        $this->widget('ext.widgets.STbTabs', array(
+			        'type'=>'tabs-box', // 'tabs' or 'pills'
+			        'header'=>false,
+			        //'tabsContainerClass'=>'bba-map',
+			        //'htmlOptions'=>array('class'=>'no-last', 'style'=>'background-color: rgba(255, 255, 255, 0.53);'),
+			        'tabs'=>array(
+				        array( 'label'=>'Направления деятельности', 'icon'=>'icon-th-list', 'active'=>true,
+					        'content'=>$this->renderPartial('main/directions_tab', '', true),
+				        ),
+				        array('label'=>'Проблематики',
+					        'content'=>$this->renderPartial('main/problems_tab', '', true),
+				        ),
+			        ),
+		        ));
+	        ?>
+
             <!-- CATEGORYES -->
             <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 'title' => 'Направления деятельности',

@@ -17,6 +17,7 @@ class STbMenu extends TbMenu
 {
 	// Menu new menu types.
 	const TYPE_PLAIN = 'tabs-plain';
+	const TYPE_BOX = 'tabs-box';
 
 	/**
 	 * Header text what show before Tabs
@@ -33,7 +34,7 @@ class STbMenu extends TbMenu
 
 		//$classes = array('nav');
 
-		$validTypes = array(self::TYPE_TABS, self::TYPE_PILLS, self::TYPE_LIST, self::TYPE_PLAIN);
+		$validTypes = array(self::TYPE_TABS, self::TYPE_PILLS, self::TYPE_LIST, self::TYPE_PLAIN, self::TYPE_BOX);
 
 		if (isset($this->type) && in_array($this->type, $validTypes))
 			$classes[] = 'nav-'.$this->type;
