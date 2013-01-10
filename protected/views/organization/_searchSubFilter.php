@@ -5,7 +5,7 @@
 )); ?>
     <?php echo $form->textFieldRow($model, 'city_id', array(
         'class' => 'span2',
-        'onkeyup' => 'dynamicOrganizationFilter()',
+        'onkeyup' => 'dynamicListviewUpdate("organization-listview", "organization-filter")',
     )); ?>
 
     <?php echo $form->select2Row($model, 'directions', array(
@@ -18,7 +18,7 @@
             'width' => '250px',
         ),
         'events' => array(
-            'change' => 'js:dynamicOrganizationFilter',
+            'change' => 'js:function() { dynamicListviewUpdate("organization-listview", "organization-filter"); }',
         ),
     )); ?>
 
@@ -41,7 +41,7 @@
             'width' => '250px',
         ),
         'events' => array(
-            'change' => 'js:dynamicOrganizationFilter',
+            'change' => 'js:function() { dynamicListviewUpdate("organization-listview", "organization-filter"); }',
         ),
     )); ?>
 
@@ -55,7 +55,7 @@
             'width' => '250px',
         ),
         'events' => array(
-            'change' => 'js:dynamicOrganizationFilter',
+            'change' => 'js:function() { dynamicListviewUpdate("organization-listview", "organization-filter"); }',
         ),
     )); ?>
 <?php $this->endWidget(); ?>
