@@ -1,6 +1,6 @@
-<div class="row">
-	<div>
-		<div class="list-right-info-fixed" style="float: right;" >
+<div class="row-fluid">
+	<div class="listed-info-item">
+		<div class="listed-info-images">
 
 			<?php foreach ($data->getLimitedOrgList(5) as $o): ?>
 				<?php echo CHtml::link(
@@ -18,7 +18,7 @@
 			<?php endforeach; ?>
 
 		</div>
-		<div class="list-left-info">
+		<div class="listed-info-text">
 			<div class="list-item-header">
 				<?php echo CHtml::link(
 					CHtml::encode($data->name),

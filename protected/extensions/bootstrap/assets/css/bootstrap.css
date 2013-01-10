@@ -5705,11 +5705,27 @@ a.badge:hover {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px;
 }
-.list-right-info-fixed img {
+.listed-info-text {
+  overflow: hidden;
+  padding-left: 10px;
+  margin-left: 10px;
+  border-bottom: 1px solid #DADADA;
+}
+.listed-info-text .sub-info {
+  margin-top: -5px;
+  padding-left: 10px;
+}
+.listed-info-images {
+  float: right;
+  margin-left: 25px;
+  width: 210px;
+  min-height: 1px;
+}
+.listed-info-images img {
   max-height: 32px;
   max-width: 32px;
 }
-.list-right-info-fixed .thumbnail {
+.listed-info-images .thumbnail {
   float: left;
   height: 32px;
   width: 32px;
