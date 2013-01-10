@@ -6,25 +6,9 @@ $this->breadcrumbs=array(
 
 $this->layout='//layouts/column1';
 
-Yii::app()->clientScript->registerScript('search', "
-// Dynamic listview update.
-var ajaxUpdateTimeout;
-function dynamicOrganizationFilter() {
-    clearTimeout(ajaxUpdateTimeout);
-    ajaxUpdateTimeout = setTimeout(
-        function() {
-            $.fn.yiiListView.update(
-                // This is the id of the CListView.
-                'organization-listview',
-                { data: $('.organization-filter').serialize() }
-            )
-        },
-        // This is the delay.
-        500
-    );
-    return false;
-};
-", CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/dynamicListviewUpdate.js'
+);
 ?>
 
 <div class="row">
