@@ -97,8 +97,8 @@ function dynamicType() {
         ),
     )); ?>
 
-    <p>---------Чекбоксы</p>
-    <p>---------[ ] Прошедшие</p>
-    <p>---------[ ] Не прошедшие</p>
+    <?php echo $form->radioButtonListRow($model, 'end_time', Lookup::items('EventEndTime'), array(
+        'onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")',
+    )); ?>
 
 <?php $this->endWidget(); ?>
