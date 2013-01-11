@@ -6,7 +6,7 @@
 		),
 		'itemView' => 'main/direction',
 		'template' => '{items}{pager}', // Hide summary header.
-		'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
+		'itemsCssClass' => 'items', // Items container class. Default: items.
 		'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
 	)); ?>
 <!-- CATEGORYES end -->
