@@ -1,3 +1,48 @@
+<?php
+Yii::app()->clientScript->registerScript('dynamicType', "
+var typeOptgroups;
+function dynamicType() {
+    var select = '#Event_type_id';
+
+    // Get select optgroups once.
+    if (!typeOptgroups) {
+        typeOptgroups = {};
+        $(select).find('optgroup').each(function() {
+            typeOptgroups[$(this).attr('label')] = $(this);
+        });
+    }
+
+    // Get all selected checkboxes from list.
+    var selectedCheckboxes = new Array();
+    $('#event-checkboxlist input:checked').each(function() {
+        // Get label text of current checkbox.
+        var label = $('label[for=\"' + $(this).attr('id') + '\"]');
+        selectedCheckboxes.push(label.text());
+    });
+
+    // Blank select.
+    $(select).empty();
+    // Add empty option for select.
+    $(select).append('<option value=\"\"></option>');
+
+    if (selectedCheckboxes.length == 0) {
+        // Add all options.
+        jQuery.each(typeOptgroups, function() {
+            $(select).append(this);
+        });
+    } else {
+        // Add all checked options.
+        jQuery.each(selectedCheckboxes, function() {
+            $(select).append(typeOptgroups[this]);
+        });
+    }
+
+    // Select empty value before submit.
+    $(select).select2('val', '');
+};
+", CClientScript::POS_END);
+?>
+
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'action' => Yii::app()->createUrl($this->route),
     'method' => 'get',
@@ -9,9 +54,11 @@
         'onkeyup' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")',
     )); ?>
 
-    <?php echo $form->checkBoxListRow($model, 'category', Lookup::items('EvtypeCategory'), array('onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")')); ?>
-
-    <p>---------Зависимый ajax select</p>
+    <div id="event-checkboxlist">
+        <?php echo $form->checkBoxListRow($model, 'category', Lookup::items('EvtypeCategory'), array(
+            'onchange' => 'dynamicType(); dynamicListviewUpdate("announcement-listview", "announcement-filter");',
+        )); ?>
+    </div>
 
     <?php echo $form->select2Row($model, 'type_id', array(
         'data' => CHtml::listData(
@@ -50,8 +97,8 @@
         ),
     )); ?>
 
-    <p>---------Чекбоксы</p>
-    <p>---------[ ] Прошедшие</p>
-    <p>---------[ ] Не прошедшие</p>
+    <?php echo $form->radioButtonListRow($model, 'end_time', Lookup::items('EventEndTime'), array(
+        'onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")',
+    )); ?>
 
 <?php $this->endWidget(); ?>
