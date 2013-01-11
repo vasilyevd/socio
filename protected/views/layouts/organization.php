@@ -49,10 +49,23 @@ $this->breadcrumbs = array_merge(array(
 
 		        <!-- TEXT -->
 		        <div class="item-header-content offset3">
-			        <p><span class="pre-info">Группа типа: </span> Объединения граждан</p>
-			        <p><span class="pre-info">Тип: </span>Государственное предприятие</p>
-			        <p><span class="pre-info">Область действий: </span>Региональное</p>
-			        <p><span class="pre-info">Направления:</span> </p>
+			        <p><?php echo CHtml::encode(Lookup::item('OrgtypeGroup', $model->type_group)); ?></p>
+			        <p>
+				        <span class="pre-info">Тип: </span>
+				        <?php echo CHtml::encode($model->type->name); ?>
+			        </p>
+			        <?php if(!empty($model->directions)): ?>
+	            <p>
+		            <span class="pre-info">Направления деятельности:</span>
+		            <?php echo CHtml::encode(implode(', ', CHtml::listData($model->directions, 'id', 'name'))); ?>
+	            </p>
+			        <?php endif; ?>
+			        <?php if(!empty($model->problems)): ?>
+			        <p>
+				        <span class="pre-info"><?php echo CHtml::encode($model->getAttributeLabel('problems')); ?>:</span>
+				        <?php echo CHtml::encode(implode(', ', CHtml::listData($model->problems, 'id', 'name'))); ?>
+			        </p>
+			        <?php endif; ?>
 
 		        </div>
 

@@ -70,7 +70,8 @@
 			<!-- MAIN MENU -->
 			<?php
 			$this->widget('bootstrap.widgets.TbMenu', array(
-							'htmlOptions'=>array('class'=>'nav-pills'),
+							'type'=>'pills',
+							//'htmlOptions'=>array('class'=>'nav-pills'),
 							'items'=>array(
 								array('label'=>'Организации',
 									'url'=>array('/organization/index'),

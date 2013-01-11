@@ -131,11 +131,10 @@ $this->breadcrumbs=array(
         <!-- C2 -->
         <div class="span6">
 	        <?
+	        // Show tabs-box with DIRECTIONS & PROBLEMATICS
 	        $this->widget('ext.widgets.STbTabs', array(
 			        'type'=>'tabs-box', // 'tabs' or 'pills'
 			        'header'=>false,
-			        //'tabsContainerClass'=>'bba-map',
-			        //'htmlOptions'=>array('class'=>'no-last', 'style'=>'background-color: rgba(255, 255, 255, 0.53);'),
 			        'tabs'=>array(
 				        array( 'label'=>'Направления деятельности', 'icon'=>'icon-th-list', 'active'=>true,
 					        'content'=>$this->renderPartial('main/directions_tab', '', true),
@@ -146,46 +145,5 @@ $this->breadcrumbs=array(
 			        ),
 		        ));
 	        ?>
-
-            <!-- CATEGORYES -->
-            <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-                'title' => 'Направления деятельности',
-                'headerIcon' => 'icon-th-list',
-                // 'htmlOptions' => array('class'=>'bootstrap-widget-table') // Remove padding.
-            ));?>
-            <?php $this->widget('bootstrap.widgets.TbListView',array(
-                'dataProvider' => new CArrayDataProvider(
-                    Direction::model()->findAll(),
-                    array('pagination'=>false)
-                ),
-                'itemView' => 'main/direction',
-                'template' => '{items}{pager}', // Hide summary header.
-                'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
-                'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
-            )); ?>
-            <?php $this->endWidget();?>
-            <!-- CATEGORYES end -->
-
-
-            <!-- PROBLEMS end -->
-            <?php $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-                'title' => 'Проблематики',
-                'headerIcon' => 'icon-th-list',
-                //'htmlOptions' => array('class'=>'bootstrap-widget-table')
-            ));?>
-            <?php $this->widget('bootstrap.widgets.TbListView',array(
-                'dataProvider' => new CArrayDataProvider(
-                    Problem::model()->findAll(),
-                    array('pagination'=>false)
-                ),
-                'itemView' => 'main/problem',
-                'viewData' => array('groupMarker' => 0),
-                'template' => '{items}{pager}', // Hide summary header.
-                'itemsCssClass' => 'org-main-problem-items', // Items container class. Default: items.
-                'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
-            )); ?>
-            <?php $this->endWidget();?>
-            <!-- PROBLEMS end -->
-
         </div>
     </div>

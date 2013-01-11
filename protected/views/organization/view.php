@@ -9,39 +9,38 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1><?php echo CHtml::encode($model->name); ?></h1>
-
-<hr>
 <div class="row">
-    <div class="span4">
-        <b><?php echo CHtml::encode($model->getAttributeLabel('type_group')); ?>:</b>
-        <?php echo CHtml::encode(Lookup::item('OrgtypeGroup', $model->type_group)); ?>
-    </div>
-    <div class="span4">
-        <b><?php echo CHtml::encode($model->getAttributeLabel('type')); ?>:</b>
-        <?php echo CHtml::encode($model->type->name); ?>
-    </div>
-    <div class="span4">
-        <b><?php echo CHtml::encode($model->getAttributeLabel('action_area')); ?>:</b>
-        <?php echo CHtml::encode(Lookup::item('OrganizationActionArea',$model->action_area)); ?>
-    </div>
-    <?php if(!empty($model->directions)): ?>
-        <div class="span9">
-            <b><?php echo CHtml::encode($model->getAttributeLabel('directions')); ?>:</b>
-            <?php echo CHtml::encode(implode(', ', CHtml::listData($model->directions, 'id', 'name'))); ?>
-        </div>
-    <?php endif; ?>
-    <?php if(!empty($model->problems)): ?>
-        <div class="span9">
-            <b><?php echo CHtml::encode($model->getAttributeLabel('problems')); ?>:</b>
-            <?php echo CHtml::encode(implode(', ', CHtml::listData($model->problems, 'id', 'name'))); ?>
-        </div>
-    <?php endif; ?>
+
+<?php if(!empty($model->foundation_year)): ?>
+<div class="span4">
+	<b><?php echo CHtml::encode($model->getAttributeLabel('foundation_year')); ?>:</b>
+	<?php echo CHtml::encode($model->foundation_year); ?>
 </div>
+<?php endif; ?>
+
+<?php if(!empty($model->staff_size)): ?>
+<div class="span4">
+	<b><?php echo CHtml::encode($model->getAttributeLabel('staff_size')); ?>:</b>
+	<?php echo CHtml::encode($model->staff_size); ?>
+</div>
+<?php endif; ?>
+
+<?php if(!empty($model->website) || !empty($model->email)): ?>
+	<?php if(!empty($model->website)): ?>
+	<div class="span4">
+		<b><?php echo CHtml::encode($model->getAttributeLabel('website')); ?>:</b>
+		<a href="<?php echo CHtml::encode($model->website); ?>" target="_blank"><?php echo CHtml::encode($model->website); ?></a>
+	</div>
+	<?php endif; ?>
+	<?php if(!empty($model->email)): ?>
+	<div class="span4">
+		<b><?php echo CHtml::encode($model->getAttributeLabel('email')); ?>:</b>
+		<a href="mailto:<?php echo CHtml::encode($model->email); ?>"><?php echo CHtml::encode($model->email); ?></a>
+	</div>
+	<?php endif; ?>
+<?php endif; ?>
 
 <?php if(!empty($model->city_id) || !empty($model->address_id)): ?>
-    <hr>
-    <div class="row">
         <?php if(!empty($model->city_id)): ?>
             <div class="span9">
                 <b><?php echo CHtml::encode($model->getAttributeLabel('city_id')); ?>:</b>
@@ -54,10 +53,19 @@ $this->breadcrumbs=array(
                 <?php echo CHtml::encode($model->address_id); ?>
             </div>
         <?php endif; ?>
-    </div>
 <?php endif; ?>
 
-<?php if(!empty($model->description) || !empty($model->goal) || !empty($model->foundation_year) || !empty($model->staff_size) || !empty($model->phone_num)): ?>
+<?php if(!empty($model->phone_num)): ?>
+<div class="span9">
+	<b><?php echo CHtml::encode($model->getAttributeLabel('phone_num')); ?>: </b>
+	<?php echo CHtml::encode($model->phone_num); ?>
+</div>
+<?php endif; ?>
+
+</div>
+
+
+<?php if(!empty($model->description) || !empty($model->goal)): ?>
     <hr>
     <div class="row">
         <?php if(!empty($model->description)): ?>
@@ -72,41 +80,6 @@ $this->breadcrumbs=array(
                 <?php echo $model->goal; ?>
             </div>
         <?php endif; ?>
-        <?php if(!empty($model->foundation_year)): ?>
-            <div class="span4">
-                <b><?php echo CHtml::encode($model->getAttributeLabel('foundation_year')); ?>:</b>
-                <?php echo CHtml::encode($model->foundation_year); ?>
-            </div>
-        <?php endif; ?>
-        <?php if(!empty($model->staff_size)): ?>
-            <div class="span4">
-                <b><?php echo CHtml::encode($model->getAttributeLabel('staff_size')); ?>:</b>
-                <?php echo CHtml::encode($model->staff_size); ?>
-            </div>
-        <?php endif; ?>
-        <?php if(!empty($model->phone_num)): ?>
-            <div class="span9">
-                <b><?php echo CHtml::encode($model->getAttributeLabel('phone_num')); ?>:</b><br />
-                <?php echo CHtml::encode($model->phone_num); ?>
-            </div>
-        <?php endif; ?>
     </div>
 <?php endif; ?>
 
-<?php if(!empty($model->website) || !empty($model->email)): ?>
-    <hr>
-    <div class="row">
-        <?php if(!empty($model->website)): ?>
-            <div class="span4">
-                <b><?php echo CHtml::encode($model->getAttributeLabel('website')); ?>:</b>
-                <a href="<?php echo CHtml::encode($model->website); ?>" target="_blank"><?php echo CHtml::encode($model->website); ?></a>
-            </div>
-        <?php endif; ?>
-        <?php if(!empty($model->email)): ?>
-            <div class="span4">
-                <b><?php echo CHtml::encode($model->getAttributeLabel('email')); ?>:</b>
-                <a href="mailto:<?php echo CHtml::encode($model->email); ?>"><?php echo CHtml::encode($model->email); ?></a>
-            </div>
-        <?php endif; ?>
-    </div>
-<?php endif; ?>

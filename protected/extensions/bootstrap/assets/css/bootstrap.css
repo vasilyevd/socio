@@ -3707,7 +3707,8 @@ input[type="submit"].btn.btn-mini {
 }
 .nav-tabs > li,
 .nav-pills > li,
-.nav-tabs-plain > li {
+.nav-tabs-plain > li,
+.nav-tabs-box > li {
   float: left;
 }
 .nav-tabs > li > a,
@@ -3717,6 +3718,42 @@ input[type="submit"].btn.btn-mini {
   margin-right: 2px;
   margin-left: 2px;
   line-height: 14px;
+}
+.nav-tabs-box {
+  margin-bottom: 0;
+}
+.nav-tabs-box li {
+  margin: 0 4px;
+}
+.nav-tabs-box  + .tab-content {
+  padding: 10px;
+}
+.nav-tabs-box > li > a {
+  font-family: "PTSansNarrow", Arial, sans-serif;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 17px;
+  color: #000000;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+  margin-left: 3px;
+  padding: 5px 5px;
+}
+.nav-tabs-box [class^="icon-"],
+.nav-tabs-box [class*=" icon-"] {
+  vertical-align: top;
+}
+.nav-tabs-box > .active > a,
+.nav-tabs-box > .active > a:hover {
+  text-decoration: none;
+  background-color: #ffffff;
+  outline: none;
 }
 .nav-tabs-plain > li > a {
   padding-right: 30px;
