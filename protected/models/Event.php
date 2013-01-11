@@ -35,6 +35,10 @@ class Event extends CActiveRecord
     const TYPE_OTHER_INTERNAL = 2;
     const TYPE_OTHER_PUBLIC = 3;
 
+    const END_TIME_ALL = 1;
+    const END_TIME_PAST = 2;
+    const END_TIME_FUTURE = 3;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -130,8 +134,16 @@ class Event extends CActiveRecord
             $criteria->compare('organization.id', $this->organization);
         }
 
+        // Check 'end_time' selected values.
+        if ($this->end_time == self::END_TIME_PAST) {
+            $criteria->addCondition('date(t.end_time) < NOW()');
+        } elseif ($this->end_time == self::END_TIME_FUTURE) {
+            $criteria->addCondition('date(t.end_time) > NOW()');
+        }
+
         // Check for whole day.
         $criteria->compare('date(t.start_time)',$this->start_time);
+
         $criteria->compare('t.name',$this->name,true);
         $criteria->compare('t.category',$this->category);
         $criteria->compare('t.type_id',$this->type_id);
