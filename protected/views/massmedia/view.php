@@ -5,10 +5,11 @@ $this->breadcrumbs=array(
     $model->title,
 );
 
+$routePrefix = $this->uniqueId == 'company' ? 'mm' : '';
 $this->menu=array(
     array('label' => 'Управление Элементами СМИ'),
-    array('label' => 'Изменить Элемент СМИ', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
-    array('label' => 'Удалить Элемент СМИ', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
+    array('label' => 'Изменить Элемент СМИ', 'icon' => 'cog', 'url'=>array($routePrefix . 'update','id'=>$model->id)),
+    array('label' => 'Удалить Элемент СМИ', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('massmedia/delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
 );
 
 Yii::app()->clientScript->registerScriptFile(
@@ -34,7 +35,7 @@ Yii::app()->clientScript->registerCssFile(
         $model->files,
         array('pagination'=>false)
     ),
-    'itemView' => '_mmfile',
+    'itemView' => '//massmedia/_mmfile',
     'template' => '{items}{pager}', // Hide summary header.
     // 'itemsCssClass' => 'items org-main-direction-items', // Items container class. Default: items.
     'htmlOptions' => array('class'=>'') // Blank class for list-view to remove padding top.
@@ -58,7 +59,7 @@ Yii::app()->clientScript->registerCssFile(
     [<?php echo CHtml::link(
         CHtml::encode($m->name),
         array(
-            'index',
+            'massmedia/index',
             'org' => $model->organization->id,
             'Massmedia[tags][]' => $m->id,
         )

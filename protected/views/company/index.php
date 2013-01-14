@@ -1,18 +1,19 @@
 <?php
-$this->layout = '//layouts/presentation';
 $this->breadcrumbs=array(
-	'Companies',
-);
-
-$this->menu=array(
-	array('label'=>'Create Company','url'=>array('create')),
-	array('label'=>'Manage Company','url'=>array('admin')),
+    'Companies',
 );
 ?>
 
-<h1>Companies</h1>
+<h1>Пиар Компании</h1>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+    // 'id' => 'massmedia-listview',
+    'dataProvider' => $model->search(),
+    'itemView' => '_view',
+    // 'viewData' => array('albumId' => $model->id),
+    // 'template' => '{items}{pager}', // Hide summary header.
+    // 'itemsCssClass' => 'row', // Change items container class. Default: items.
+    'sortableAttributes' => array(
+        'title',
+    ),
 )); ?>

@@ -6,7 +6,7 @@ class CompanyController extends Controller
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/organization';
+    public $layout='//layouts/presentation';
 
     /**
      * @return array action filters
@@ -20,6 +20,18 @@ class CompanyController extends Controller
     }
 
     /**
+     * Declares class-based actions.
+     */
+    public function actions()
+    {
+        return array(
+            // Forward massmedia actions for this controller.
+            'mmview' => 'application.controllers.massmedia.ViewAction',
+            'mmupdate' => 'application.controllers.massmedia.UpdateAction',
+        );
+    }
+
+    /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
@@ -28,11 +40,11 @@ class CompanyController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view'),
+                'actions'=>array('index','view', 'mmview'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update'),
+                'actions'=>array('create','update', 'mmupdate'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -140,12 +152,28 @@ class CompanyController extends Controller
 
     /**
      * Lists all models.
+     * @param integer $org the ID of the organization model.
      */
-    public function actionIndex()
+    public function actionIndex($org)
     {
-        $dataProvider=new CActiveDataProvider('Company');
+        // $dataProvider=new CActiveDataProvider('Company');
+        // $this->render('index',array(
+        //     'dataProvider'=>$dataProvider,
+        // ));
+
+        $model=new Company('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Company']))
+            $model->attributes=$_GET['Company'];
+
+        // Limit search to only this organization.
+        $model->organization = $org;
+
+        // Escalate organization for view.
+        $this->escalateOrganization($org);
+
         $this->render('index',array(
-            'dataProvider'=>$dataProvider,
+            'model'=>$model,
         ));
     }
 

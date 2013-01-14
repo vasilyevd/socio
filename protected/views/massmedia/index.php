@@ -4,20 +4,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<p class="lead">Компании СМИ</p>
-<?php $this->widget('bootstrap.widgets.TbListView',array(
-    // 'id' => 'massmedia-listview',
-    'dataProvider' => new CArrayDataProvider(Company::model()->findAll()),
-    'itemView' => '_company',
-    // 'viewData' => array('albumId' => $model->id),
-    // 'template' => '{items}{pager}', // Hide summary header.
-    // 'itemsCssClass' => 'row', // Change items container class. Default: items.
-    // 'sortableAttributes' => array(
-    //     'title',
-    // ),
-)); ?>
-
-<hr>
 <p class="lead">Теги</p>
 <?php foreach (Mmtag::model()->with('massmedias')->findAll('massmedias.organization_id=:organization_id', array(':organization_id' => $_GET['org'])) as $t): ?>
     [<?php echo CHtml::link(

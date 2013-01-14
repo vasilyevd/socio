@@ -8,4 +8,4 @@ $this->breadcrumbs=array(
 
 <h1>Изменить Элемент СМИ</h1>
 
-<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
+<?php echo $this->renderPartial('//massmedia/_form',array('model'=>$model)); ?>
