@@ -25,7 +25,7 @@ $this->menu=array(
 <?php $this->widget('bootstrap.widgets.TbListView',array(
     // 'id' => 'massmedia-listview',
     'dataProvider' => new CArrayDataProvider($model->massmedias),
-    'itemView' => '//massmedia/_view',
+    'itemView' => '_massmedia',
     // 'viewData' => array('albumId' => $model->id),
     // 'template' => '{items}{pager}', // Hide summary header.
     // 'itemsCssClass' => 'row', // Change items container class. Default: items.
