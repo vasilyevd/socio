@@ -20,6 +20,19 @@ class MassmediaController extends Controller
     }
 
     /**
+     * Declares class-based actions.
+     */
+    public function actions()
+    {
+        return array(
+            // Forward massmedia actions for this controller.
+            'view' => 'application.controllers.massmedia.ViewAction',
+            'update' => 'application.controllers.massmedia.UpdateAction',
+            'delete' => 'application.controllers.massmedia.DeleteAction',
+        );
+    }
+
+    /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
@@ -43,22 +56,6 @@ class MassmediaController extends Controller
                 'users'=>array('*'),
             ),
         );
-    }
-
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionView($id)
-    {
-        $model = $this->loadModel($id);
-
-        // Escalate organization for view.
-        $this->escalateOrganization($model->organization);
-
-        $this->render('view', array(
-            'model' => $model,
-        ));
     }
 
     /**
@@ -105,67 +102,6 @@ class MassmediaController extends Controller
     }
 
     /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionUpdate($id)
-    {
-        $model=$this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
-
-        if(isset($_POST['Massmedia']))
-        {
-            $model->attributes=$_POST['Massmedia'];
-
-            // Relations.
-            $model->links = $_POST['Mmlink'];
-            $model->files = $_POST['Mmfile'];
-
-            if($model->save())
-                $this->redirect(array('view','id'=>$model->id));
-        }
-
-        // Show tags relation as imploded string.
-        $model->tagsToString();
-        // Need at least one link for copy.
-        if (empty($model->links)) {
-            $model->links = array(new Mmlink);
-        }
-        // Need at least one file for copy.
-        if (empty($model->files)) {
-            $model->files = array(new Mmfile);
-        }
-        // Escalate organization for view.
-        $this->escalateOrganization($model->organization);
-
-        $this->render('update',array(
-            'model'=>$model,
-        ));
-    }
-
-    /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionDelete($id)
-    {
-        // $this->loadModel($id)->delete();
-
-        // // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        // if(!isset($_GET['ajax']))
-        //     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-
-        $model = $this->loadModel($id);
-        $model->delete();
-        if(!isset($_GET['ajax']))
-            $this->redirect(array('index','org' => $model->organization_id));
-    }
-
-    /**
      * Lists all models.
      * @param integer $org the ID of the organization model.
      */
@@ -173,11 +109,11 @@ class MassmediaController extends Controller
     {
         // $dataProvider=new CActiveDataProvider('Massmedia');
         // $this->render('index',array(
-        //     'dataProvider'=>$dataProvider,
+        // 'dataProvider'=>$dataProvider,
         // ));
 
         $model=new Massmedia('search');
-        $model->unsetAttributes();  // clear any default values
+        $model->unsetAttributes(); // clear any default values
         if(isset($_GET['Massmedia']))
             $model->attributes=$_GET['Massmedia'];
 
@@ -224,7 +160,7 @@ class MassmediaController extends Controller
      * Performs the AJAX validation.
      * @param CModel the model to be validated
      */
-    protected function performAjaxValidation($model)
+    public function performAjaxValidation($model)
     {
         if(isset($_POST['ajax']) && $_POST['ajax']==='massmedia-form')
         {
