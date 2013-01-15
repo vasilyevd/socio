@@ -91,6 +91,8 @@ class Company extends CActiveRecord
             'description' => 'Описание',
             'organization_id' => 'Организация',
             'massmedias' => 'Элементы СМИ',
+            'min_date' => 'Минимальная Дата',
+            'max_date' => 'Максимальная Дата',
         );
     }
 
@@ -133,5 +135,41 @@ class Company extends CActiveRecord
         }
 
         return $models;
+    }
+
+    /**
+     * Updates 'min_date' and 'max_date' based on Massmedia time and date.
+     * @param string $date the main date to compare with.
+     * @param string $fallbackTime the datetime will be used if $date is empty.
+     * @cascadeSearch boolean if search on 'massmedias' relation needed.
+     */
+    public function updateDateRange($date, $fallbackTime, $cascadeSearch = false)
+    {
+        // Extract date from 'create_time'.
+        if (empty($date)) {
+            $date = date('Y-m-d', strtotime($fallbackTime));
+        }
+
+        // Convert to timestamp.
+        $compareTime = strtotime($date);
+        $minTime = strtotime($this->min_date);
+        $maxTime = strtotime($this->max_date);
+
+        // Find new range.
+        if ($compareTime < $minTime) {
+            $this->min_date = $date;
+        }
+        if ($compareTime > $maxTime) {
+            $this->max_date = $date;
+        }
+
+        if ($cascadeSearch) {
+            if ($compareTime == $minTime) {
+                foreach ($this->massmedias as $m) {
+                    $this->updateDateRange($m->publication_date, $m->create_time);
+                }
+            }
+            // Etc.
+        }
     }
 }

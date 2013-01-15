@@ -58,6 +58,7 @@ class Massmedia extends CActiveRecord
                 self::CATEGORY_SOCIAL_ADVERTISING,
             )),
             array('direction', 'boolean'),
+            array('publication_date', 'date', 'format'=>'yyyy-MM-dd'),
 
             array('title, tags', 'safe', 'on'=>'search'),
         );
@@ -118,6 +119,7 @@ class Massmedia extends CActiveRecord
             'category' => 'Категория',
             'direction' => 'Направление',
             'files' => 'Файлы',
+            'publication_date' => 'Дата Публикации',
         );
     }
 
@@ -169,6 +171,19 @@ class Massmedia extends CActiveRecord
     }
 
     /**
+     * This is invoked after the record is deleted.
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        // Update date ranges ('min_date' and 'max_date') for company.
+        if (!empty($this->company)) {
+            $this->company->updateDateRange($this->publication_date, $this->create_time, true);
+        }
+    }
+
+    /**
      * This is invoked before the record is validated.
      */
     public function beforeValidate()
@@ -193,6 +208,11 @@ class Massmedia extends CActiveRecord
             $this->create_time = new CDbExpression('NOW()');
         }
 
+        // Allow null date database field.
+        if (empty($this->publication_date)) {
+            $this->publication_date = null;
+        }
+
         // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
         // Save new models.
         foreach ($this->tags as $m) $m->save();
@@ -208,6 +228,11 @@ class Massmedia extends CActiveRecord
     public function afterSave()
     {
         parent::afterSave();
+
+        // Update date ranges ('min_date' and 'max_date') for company.
+        if (!empty($this->company)) {
+            $this->company->updateDateRange($this->publication_date, $this->create_time);
+        }
 
         // Relations with new models handler 'HAS_MANY'.
         // Delete old models.
