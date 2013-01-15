@@ -148,12 +148,9 @@ class Massmedia extends CActiveRecord
             $criteria->addInCondition('tags.id', $this->tags);
         }
 
-        $criteria->compare('t.title',$this->title,true);
-
-        // $criteria->compare('id',$this->id);
-        // $criteria->compare('content',$this->content,true);
-        // $criteria->compare('create_time',$this->create_time,true);
-        // $criteria->compare('organization_id',$this->organization_id);
+        $criteria->compare('t.title', $this->title, true);
+        $criteria->compare('t.category', $this->category);
+        $criteria->compare('t.direction', $this->direction);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

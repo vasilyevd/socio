@@ -82,4 +82,19 @@ class Mmtag extends CActiveRecord
             'criteria'=>$criteria,
         ));
     }
+
+    /**
+     * Retrieves tag models for selected organization.
+     * @param int $organizationId the ID of organization model.
+     * @return array of tag models.
+     */
+    public static function getTagsForOrganization($organizationId)
+    {
+        $criteria = new CDbCriteria;
+
+        $criteria->with = 'massmedias';
+        $criteria->compare('massmedias.organization_id', $organizationId);
+
+        return Mmtag::model()->findAll($criteria);
+    }
 }

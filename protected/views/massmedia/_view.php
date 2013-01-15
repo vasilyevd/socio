@@ -1,6 +1,8 @@
 <div class="row feed-list">
     <div class="span7">
         <strong><?php echo CHtml::link(CHtml::encode($data->title),array('view','id'=>$data->id)); ?></strong>
+        (<?php echo Lookup::item('MassmediaCategory', $data->category); ?>)
+        (<?php echo $data->direction ? 'Мы в СМИ' : 'СМИ о нас'; ?>)
     </div>
 
     <div class="span9">

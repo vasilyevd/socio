@@ -97,7 +97,7 @@ function dynamicType() {
         ),
     )); ?>
 
-    <?php echo $form->radioButtonListRow($model, 'end_time', Lookup::items('EventEndTime'), array(
+    <?php echo $form->radioButtonListRow($model, 'end_time', array('' => 'Все') + Lookup::items('EventEndTime'), array(
         'onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")',
     )); ?>
 
