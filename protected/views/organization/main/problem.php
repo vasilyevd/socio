@@ -4,11 +4,13 @@
 			</div></div>
 	<?php endif; ?>
 
-	<div class="listed-group">
+	<div class="listed-info-item">
+		<div class="listed-info-text">
     <div class="list-item-header">
 	    <?php echo Lookup::item('ProblemGroup', $data->group); ?>:
     </div>
-    <div class="listed-group-items columns2">
+		</div>
+    <div class="listed-info-group columns2">
 <?php endif; ?>
 
 <div class="listed-group-item">

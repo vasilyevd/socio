@@ -1313,9 +1313,6 @@ textarea,
   line-height: 18px;
   color: gray;
   border: 1px solid #ccc;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   padding: 4px;
 }
 .ui-icon-arrowthick-1-w {

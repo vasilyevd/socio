@@ -121,7 +121,7 @@
 				<p><em>Условия</em> и <em>Политика конфиденциальности</em> в соответствии с которыми наши услуги предоставляются для Вас</p>
 			</div>
 
-			<div class="span7">
+			<div class="span6">
 				<div class="text-block">
 				<p class="topic-pre">Что такое SOCIO?</p>
 				<p class="topic">Социальная платформа для общения, самовыражения и самореализации</p>
@@ -138,12 +138,16 @@
 				</div>
 			</div>
 
-			<div class="span2">
-				<?=CHtml::image('/images/other/coalition128.png'); ?>
-				<?=CHtml::image('/images/other/prometei128.png'); ?>
+			<div class="span3 tac">
+				<?=CHtml::image('/images/other/coalition128.png', '', array('style'=>'width: 110px;')); ?>
+				<?=CHtml::image('/images/other/aemb128.gif', '', array('style'=>'width: 110px;')); ?>
+				<?=CHtml::image('/images/other/irf.jpg'); ?>
+				<?=CHtml::image('/images/other/prometei.png'); ?>
+
 			</div>
 
-
+			<div class="span12 tac">
+			</div>
 			</div></div>
 	</div>
 
