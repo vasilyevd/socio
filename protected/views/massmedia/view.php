@@ -5,11 +5,10 @@ $this->breadcrumbs=array(
     $model->title,
 );
 
-$routePrefix = $this->uniqueId == 'company' ? 'mm' : '';
 $this->menu=array(
     array('label' => 'Управление Элементами СМИ'),
     array('label' => 'Изменить Элемент СМИ', 'icon' => 'cog', 'url'=>array($routePrefix . 'update','id'=>$model->id)),
-    array('label' => 'Удалить Элемент СМИ', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('massmedia/delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
+    array('label' => 'Удалить Элемент СМИ', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array($routePrefix . 'delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
 );
 
 Yii::app()->clientScript->registerScriptFile(

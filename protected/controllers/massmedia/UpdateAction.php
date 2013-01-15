@@ -1,17 +1,19 @@
 <?php
 
-class UpdateAction extends CAction
+class UpdateAction extends BaseMassmediaAction
 {
     public function run()
     {
         if (!isset($_GET['id']))
             throw new CHttpException(400, 'Некорректный запрос.');
         $controller = $this->getController();
+        $controllerModel = $this->getControllerModel();
+        $routePrefix = $this->getRoutePrefix();
 
-        $model=$this->loadModel($_GET['id']);
+        $model = $controllerModel->loadModel($_GET['id']);
 
         // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
+        $controllerModel->performAjaxValidation($model);
 
         if(isset($_POST['Massmedia']))
         {
@@ -22,7 +24,7 @@ class UpdateAction extends CAction
             $model->files = $_POST['Mmfile'];
 
             if($model->save())
-                $controller->redirect(array('view','id'=>$model->id));
+                $controller->redirect(array($routePrefix . 'view','id'=>$model->id));
         }
 
         // Show tags relation as imploded string.
@@ -41,23 +43,7 @@ class UpdateAction extends CAction
 
         $controller->render('//massmedia/update', array(
             'model' => $model,
+            'routePrefix' => $routePrefix,
         ));
-    }
-
-    public function loadModel($id)
-    {
-        $model=Massmedia::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
-    }
-
-    protected function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='massmedia-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
     }
 }

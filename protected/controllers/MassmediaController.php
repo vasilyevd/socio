@@ -28,6 +28,7 @@ class MassmediaController extends Controller
             // Forward massmedia actions for this controller.
             'view' => 'application.controllers.massmedia.ViewAction',
             'update' => 'application.controllers.massmedia.UpdateAction',
+            'delete' => 'application.controllers.massmedia.DeleteAction',
         );
     }
 
@@ -101,25 +102,6 @@ class MassmediaController extends Controller
     }
 
     /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionDelete($id)
-    {
-        // $this->loadModel($id)->delete();
-
-        // // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        // if(!isset($_GET['ajax']))
-        // $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-
-        $model = $this->loadModel($id);
-        $model->delete();
-        if(!isset($_GET['ajax']))
-            $this->redirect(array('index','org' => $model->organization_id));
-    }
-
-    /**
      * Lists all models.
      * @param integer $org the ID of the organization model.
      */
@@ -178,7 +160,7 @@ class MassmediaController extends Controller
      * Performs the AJAX validation.
      * @param CModel the model to be validated
      */
-    protected function performAjaxValidation($model)
+    public function performAjaxValidation($model)
     {
         if(isset($_POST['ajax']) && $_POST['ajax']==='massmedia-form')
         {

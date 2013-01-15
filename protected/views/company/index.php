@@ -14,6 +14,7 @@ $this->breadcrumbs=array(
     // 'template' => '{items}{pager}', // Hide summary header.
     // 'itemsCssClass' => 'row', // Change items container class. Default: items.
     'sortableAttributes' => array(
-        'title',
+        'name',
+        'type',
     ),
 )); ?>

@@ -28,6 +28,7 @@ class CompanyController extends Controller
             // Forward massmedia actions for this controller.
             'mmview' => 'application.controllers.massmedia.ViewAction',
             'mmupdate' => 'application.controllers.massmedia.UpdateAction',
+            'mmdelete' => 'application.controllers.massmedia.DeleteAction',
         );
     }
 
@@ -48,7 +49,7 @@ class CompanyController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('admin','delete'),
+                'actions'=>array('admin','delete', 'mmdelete'),
                 'users'=>array('*'),
             ),
             array('deny',  // deny all users

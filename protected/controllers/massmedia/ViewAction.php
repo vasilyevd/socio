@@ -1,28 +1,23 @@
 <?php
 
-class ViewAction extends CAction
+class ViewAction extends BaseMassmediaAction
 {
     public function run()
     {
         if (!isset($_GET['id']))
             throw new CHttpException(400, 'Некорректный запрос.');
         $controller = $this->getController();
+        $controllerModel = $this->getControllerModel();
+        $routePrefix = $this->getRoutePrefix();
 
-        $model = $this->loadModel($_GET['id']);
+        $model = $controllerModel->loadModel($_GET['id']);
 
         // Escalate organization for view.
         $controller->escalateOrganization($model->organization);
 
         $controller->render('//massmedia/view', array(
             'model' => $model,
+            'routePrefix' => $routePrefix,
         ));
-    }
-
-    public function loadModel($id)
-    {
-        $model=Massmedia::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
     }
 }
