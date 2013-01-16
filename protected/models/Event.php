@@ -35,9 +35,8 @@ class Event extends CActiveRecord
     const TYPE_OTHER_INTERNAL = 2;
     const TYPE_OTHER_PUBLIC = 3;
 
-    const END_TIME_ALL = 1;
-    const END_TIME_PAST = 2;
-    const END_TIME_FUTURE = 3;
+    const END_TIME_PAST = 1;
+    const END_TIME_FUTURE = 2;
 
     /**
      * Returns the static model of the specified AR class.

@@ -4,10 +4,12 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Пиар Компании</h1>
+<?php $this->renderPartial('_search', array(
+    'model' => $model,
+)); ?>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-    // 'id' => 'massmedia-listview',
+    'id' => 'company-listview',
     'dataProvider' => $model->search(),
     'itemView' => '_view',
     // 'viewData' => array('albumId' => $model->id),

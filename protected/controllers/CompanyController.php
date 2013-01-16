@@ -148,7 +148,7 @@ class CompanyController extends Controller
         $model = $this->loadModel($id);
         $model->delete();
         if(!isset($_GET['ajax']))
-            $this->redirect(array('massmedia/index','org' => $model->organization_id));
+            $this->redirect(array('index','org' => $model->organization_id));
     }
 
     /**

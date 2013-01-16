@@ -1,22 +1,42 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
+<?php
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/dynamicListviewUpdate.js'
+);
+?>
+
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'get',
+    'type' => 'horizontal',
+    'htmlOptions' => array('class' => 'company-filter'),
 )); ?>
 
-	<?php echo $form->textFieldRow($model,'id',array('class'=>'span5')); ?>
+    Проходящие:
+    <?php echo $this->renderPartial('//announcement/_calendar', array('model' => $model, 'attribute' => 'compareDate', 'listview' => 'company-listview', 'filter' => 'company-filter')); ?>
 
-	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->radioButtonListInlineRow($model, 'compareDateType',
+        array(
+            '' => 'Все',
+            Company::COMPARE_DATE_TYPE_BEFORE => 'До',
+            Company::COMPARE_DATE_TYPE_AFTER => 'После',
+        ),
+        array(
+            'onchange' => 'dynamicListviewUpdate("company-listview", "company-filter")',
+        )
+    ); ?>
 
-	<?php echo $form->textFieldRow($model,'type',array('class'=>'span5')); ?>
-
-	<?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType' => 'submit',
-			'type'=>'primary',
-			'label'=>'Search',
-		)); ?>
-	</div>
+    <?php echo $form->select2Row($model, 'type', array(
+        'data' => Lookup::items('CompanyType'),
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+        'events' => array(
+            'change' => 'js:function() { dynamicListviewUpdate("company-listview", "company-filter"); }',
+        ),
+    )); ?>
 
 <?php $this->endWidget(); ?>
