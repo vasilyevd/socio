@@ -102,19 +102,36 @@ class Company extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
+        $criteria = new CDbCriteria;
 
-        $criteria=new CDbCriteria;
+        // Relation.
+        $criteria->with = array();
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('type',$this->type);
-        $criteria->compare('description',$this->description,true);
+        // Relation BELONGS_TO search.
+        if (!empty($this->organization)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'organization',
+            ));
+            $criteria->compare('organization.id', $this->organization);
+        }
+
+        $criteria->compare('t.type', $this->type);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked after the record is saved.
+     */
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        // Update date ranges ('min_date' and 'max_date') for company.
+        $this->isNewRecord = false;
+        $this->updateDateRange();
     }
 
     /**
@@ -138,38 +155,27 @@ class Company extends CActiveRecord
     }
 
     /**
-     * Updates 'min_date' and 'max_date' based on Massmedia time and date.
-     * @param string $date the main date to compare with.
-     * @param string $fallbackTime the datetime will be used if $date is empty.
-     * @cascadeSearch boolean if search on 'massmedias' relation needed.
+     * Updates 'min_date' and 'max_date' for current model, based on it's
+     * massmedias 'publication_date' and 'create_time'.
      */
-    public function updateDateRange($date, $fallbackTime, $cascadeSearch = false)
+    public function updateDateRange()
     {
-        // Extract date from 'create_time'.
-        if (empty($date)) {
-            $date = date('Y-m-d', strtotime($fallbackTime));
+        // Create query.
+        $query = 'SELECT MIN(rdate) AS rmindate, MAX(rdate) AS rmaxdate FROM (SELECT IF (publication_date IS NULL, date(create_time), publication_date) AS rdate FROM org_massmedia WHERE company_id=:company_id) AS t2';
+        $command = Yii::app()->db->createCommand($query);
+        $command->bindValue(':company_id', $this->id);
+        $result = $command->queryRow();
+
+        // Set new range values.
+        if ($result) {
+            $this->min_date = $result['rmindate'];
+            $this->max_date = $result['rmaxdate'];
+        } else {
+            $this->min_date = '0000-00-00';
+            $this->max_date = '0000-00-00';
         }
 
-        // Convert to timestamp.
-        $compareTime = strtotime($date);
-        $minTime = strtotime($this->min_date);
-        $maxTime = strtotime($this->max_date);
-
-        // Find new range.
-        if ($compareTime < $minTime) {
-            $this->min_date = $date;
-        }
-        if ($compareTime > $maxTime) {
-            $this->max_date = $date;
-        }
-
-        if ($cascadeSearch) {
-            if ($compareTime == $minTime) {
-                foreach ($this->massmedias as $m) {
-                    $this->updateDateRange($m->publication_date, $m->create_time);
-                }
-            }
-            // Etc.
-        }
+        // Update record.
+        $this->saveAttributes(array('min_date', 'max_date'));
     }
 }

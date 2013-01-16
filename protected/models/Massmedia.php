@@ -179,12 +179,13 @@ class Massmedia extends CActiveRecord
 
         // Update date ranges ('min_date' and 'max_date') for company.
         if (!empty($this->company)) {
-            $this->company->updateDateRange($this->publication_date, $this->create_time, true);
+            $this->company->updateDateRange();
         }
     }
 
     /**
      * This is invoked before the record is validated.
+     * @return boolean whether the record is valid.
      */
     public function beforeValidate()
     {
@@ -231,7 +232,7 @@ class Massmedia extends CActiveRecord
 
         // Update date ranges ('min_date' and 'max_date') for company.
         if (!empty($this->company)) {
-            $this->company->updateDateRange($this->publication_date, $this->create_time);
+            $this->company->updateDateRange();
         }
 
         // Relations with new models handler 'HAS_MANY'.
