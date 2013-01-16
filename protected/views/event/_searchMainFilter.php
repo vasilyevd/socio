@@ -11,6 +11,6 @@
         'onkeyup' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")',
     )); ?>
 
-    <?php echo $this->renderPartial('//announcement/_calendar', array('model' => $model, 'attribute' => 'start_time')); ?>
+    <?php echo $this->renderPartial('//announcement/_calendar', array('model' => $model, 'attribute' => 'start_time', 'listview' => 'announcement-listview', 'filter' => 'announcement-filter')); ?>
 
 <?php $this->endWidget(); ?>

@@ -14,10 +14,16 @@
  */
 class Company extends CActiveRecord
 {
+    public $compareDate;
+    public $compareDateType;
+
     const TYPE_INFORMATIONAL = 1;
     const TYPE_ADVERTISEMENT = 2;
     const TYPE_LEGAL = 3;
     const TYPE_PR = 4;
+
+    const COMPARE_DATE_TYPE_BEFORE = 1;
+    const COMPARE_DATE_TYPE_AFTER = 2;
 
     /**
      * Returns the static model of the specified AR class.
@@ -51,7 +57,7 @@ class Company extends CActiveRecord
                 self::TYPE_LEGAL, self::TYPE_PR,
             )),
 
-            // array('id, name, type, description', 'safe', 'on'=>'search'),
+            array('type, compareDate, compareDateType', 'safe', 'on'=>'search'),
         );
     }
 
@@ -93,6 +99,8 @@ class Company extends CActiveRecord
             'massmedias' => 'Элементы СМИ',
             'min_date' => 'Минимальная Дата',
             'max_date' => 'Максимальная Дата',
+            'compareDate' => 'Сравнить Даты',
+            'compareDateType' => 'Тип Сравнения Даты',
         );
     }
 
@@ -113,6 +121,25 @@ class Company extends CActiveRecord
                 'organization',
             ));
             $criteria->compare('organization.id', $this->organization);
+        }
+
+        // Check date range.
+        if (!empty($this->compareDate)) {
+            $criteria->params = array_merge($criteria->params, array(
+                ':compareDate' => $this->compareDate,
+            ));
+            // Select compare mode.
+            if ($this->compareDateType == self::COMPARE_DATE_TYPE_BEFORE) {
+                // Find all before 'compareDate'.
+                $criteria->addCondition('t.max_date <= :compareDate');
+            } elseif ($this->compareDateType == self::COMPARE_DATE_TYPE_AFTER) {
+                // Find all after 'compareDate'.
+                $criteria->addCondition('t.min_date >= :compareDate');
+            } else {
+                // Find all in date range.
+                $criteria->addCondition('t.min_date <= :compareDate');
+                $criteria->addCondition('t.max_date >= :compareDate');
+            }
         }
 
         $criteria->compare('t.type', $this->type);

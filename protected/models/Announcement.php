@@ -112,7 +112,7 @@ class Announcement extends CActiveRecord
      */
     public function search()
     {
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
         // Relation.
         $criteria->with = array();
@@ -154,7 +154,7 @@ class Announcement extends CActiveRecord
         $dataProvider = $this->search();
 
         // Filter out system news.
-        $dataProvider->criteria->addCondition('category IS NOT NULL');
+        $dataProvider->criteria->addCondition('t.category IS NOT NULL');
 
         return $dataProvider;
     }
