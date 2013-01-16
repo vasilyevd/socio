@@ -112,6 +112,21 @@ $('.removelink').click(function(){
         ),
     )); ?>
 
+    <?php echo $form->labelEx($model, 'publication_date'); ?>
+    <div class="input-append">
+        <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'model' => $model,
+            'attribute' => 'publication_date',
+            'language' => 'ru',
+            // jQuery plugin options.
+            'options' => array(
+                'dateFormat' => 'yy-mm-dd',
+            ),
+        )); ?>
+        <span class="add-on"><i class="icon-calendar"></i></span>
+    </div>
+    <?php echo $form->error($model, 'publication_date'); ?>
+
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',

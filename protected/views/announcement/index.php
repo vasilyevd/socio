@@ -20,7 +20,7 @@ Yii::app()->clientScript->registerScriptFile(
         'onkeyup' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")',
     )); ?>
 
-    <?php echo $this->renderPartial('_calendar', array('model' => $model, 'attribute' => 'publication_time')); ?>
+    <?php echo $this->renderPartial('_calendar', array('model' => $model, 'attribute' => 'publication_time', 'listview' => 'announcement-listview', 'filter' => 'announcement-filter')); ?>
 
     <?php echo $form->checkBoxListInlineRow($model, 'category', Lookup::items('AnnouncementCategory'), array('onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")')); ?>
 <?php $this->endWidget(); ?>
