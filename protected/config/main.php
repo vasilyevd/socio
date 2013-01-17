@@ -46,11 +46,13 @@ return array(
 
     // application components
     'components'=>array(
-
-            'user'=>$component_user,
+        'user' => $component_user,
+        'db' => $conf_db,
+        'log' => $conf_log,
+        'cache' => $conf_cache,
 
         // uncomment the following to enable URLs in path-format
-      'urlManager'=>array(
+        'urlManager'=>array(
                 'urlFormat'=>'path',
                 'showScriptName' => false,
                 'rules'=>array(
@@ -59,9 +61,6 @@ return array(
                     '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
                 ),
        ),
-
-        'db'=>$conf_db,
-        'log'=>$conf_log,
 
         'errorHandler'=>array(
             // use 'site/error' action to display errors
