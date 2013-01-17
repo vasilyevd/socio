@@ -6,6 +6,9 @@
         <?php if (!empty($data->company)): ?>
             (<?php echo CHtml::encode($data->company->name); ?>)
         <?php endif; ?>
+        (Ссылок: <?php echo $data->linksYoutubeCount; ?>)
+        (Видео: <?php echo $data->linksYoutubeCount; ?>)
+        (Файлов: <?php echo $data->filesCount; ?>)
     </div>
 
     <div class="span9">
