@@ -78,15 +78,28 @@ class Massmedia extends CActiveRecord
                 self::HAS_MANY,
                 'Mmlink',
                 'massmedia_id',
-                'condition' => 'linksGeneral.type=' . Mmlink::TYPE_GENERAL,
+                'condition' => 'type=' . Mmlink::TYPE_GENERAL,
+            ),
+            'linksGeneralCount' => array(
+                self::STAT,
+                'Mmlink',
+                'massmedia_id',
+                'condition' => 'type=' . Mmlink::TYPE_GENERAL,
             ),
             'linksYoutube' => array(
                 self::HAS_MANY,
                 'Mmlink',
                 'massmedia_id',
-                'condition' => 'linksYoutube.type=' . Mmlink::TYPE_YOUTUBE,
+                'condition' => 'type=' . Mmlink::TYPE_YOUTUBE,
+            ),
+            'linksYoutubeCount' => array(
+                self::STAT,
+                'Mmlink',
+                'massmedia_id',
+                'condition' => 'type=' . Mmlink::TYPE_YOUTUBE,
             ),
             'files' => array(self::HAS_MANY, 'Mmfile', 'massmedia_id'),
+            'filesCount' => array(self::STAT, 'Mmfile', 'massmedia_id'),
         );
     }
 
@@ -132,7 +145,7 @@ class Massmedia extends CActiveRecord
         $criteria=new CDbCriteria;
 
         // Relation.
-        $criteria->with = array();
+        $criteria->with = array('company', 'linksGeneralCount', 'linksYoutubeCount', 'filesCount');
 
         // Relation BELONGS_TO search.
         if (!empty($this->organization)) {
