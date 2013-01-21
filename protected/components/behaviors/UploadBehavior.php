@@ -17,6 +17,10 @@ class UploadBehavior extends CActiveRecordBehavior
             $this->originalModel = new $originalClass;
         } else {
             $this->originalModel = call_user_func($originalClass . '::model')->findByPk($this->owner->id);
+            // Fix manual 'isNewRecord = false'.
+            if ($this->originalModel === null) {
+                $this->originalModel = new $originalClass;
+            }
         }
 
         foreach ($this->attributes as $attr) {

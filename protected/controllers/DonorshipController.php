@@ -84,6 +84,10 @@ class DonorshipController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Empty relation for view.
+        //TODO: Properly restore value and not just blank.
+        $model->donor = null;
+        $model->donorNewName = null;
         // Escalate organization for view.
         $this->escalateOrganization($org);
 
@@ -112,6 +116,10 @@ class DonorshipController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
+        // Empty relation for view.
+        //TODO: Properly restore value and not just blank.
+        $model->donor = null;
+        $model->donorNewName = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 

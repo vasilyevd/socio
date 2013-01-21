@@ -270,8 +270,9 @@ CREATE TABLE `org_donor` (
   `website` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `source` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -280,7 +281,7 @@ CREATE TABLE `org_donor` (
 
 LOCK TABLES `org_donor` WRITE;
 /*!40000 ALTER TABLE `org_donor` DISABLE KEYS */;
-INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg'),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg'),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg');
+INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(4,'sdfsdfsd fsd',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(5,'sdfsdffsdf22',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(6,'sdfsdffsdf22',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(7,'234234sss',NULL,NULL,NULL,NULL,'placeholder.jpg',4);
 /*!40000 ALTER TABLE `org_donor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,9 +307,9 @@ CREATE TABLE `org_donorship` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   KEY `donor_id` (`donor_id`),
-  CONSTRAINT `org_donorship_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `org_donorship_ibfk_3` FOREIGN KEY (`donor_id`) REFERENCES `org_donor` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+  CONSTRAINT `org_donorship_ibfk_4` FOREIGN KEY (`donor_id`) REFERENCES `org_donor` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `org_donorship_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,7 +318,7 @@ CREATE TABLE `org_donorship` (
 
 LOCK TABLES `org_donorship` WRITE;
 /*!40000 ALTER TABLE `org_donorship` DISABLE KEYS */;
-INSERT INTO `org_donorship` VALUES (22,2,'sdfssdfsdf','2013-01-04 13:55:11',1,1,2,2013,2,NULL),(23,3,'sdfsd fsdsdfsf','2013-01-04 13:56:28',1,1,2,1998,4,24300);
+INSERT INTO `org_donorship` VALUES (22,2,'sdfssdfsdf','2013-01-04 13:55:11',1,1,2,2013,2,NULL),(23,3,'sdfsd fsdsdfsf','2013-01-04 13:56:28',1,1,2,1998,4,24300),(24,7,'sdfsdfs','2013-01-21 17:11:29',1,4,2,2012,1,NULL);
 /*!40000 ALTER TABLE `org_donorship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -887,4 +888,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-21 15:58:09
+-- Dump completed on 2013-01-21 17:51:34

@@ -36,11 +36,11 @@
             'minimumInputLength' => 1,
             'maximumSelectionSize' => 1,
             'ajax' => array(
-                'url' => $this->createUrl('donorship/dynamicSearchDonors'),
+                'url' => $this->createUrl('cooperation/dynamicSearchOrganizations'),
                 'quietMillis'=>500,
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {
-                    return { query: term };
+                    return { query: term, modelName: "Donor" };
                 }',
                 'results' => 'js:function(data, page) {
                     return { results: data.organizations };
