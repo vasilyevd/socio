@@ -8,13 +8,13 @@ $conf_log = array(
             'class' => 'CFileLogRoute',
             'levels' => 'error, warning',
         ),
-        // // Web page logging output.
-        // array(
-        //         'class' => 'CWebLogRoute',
-        //         // 'categories' => 'application, system.db.CDbCommand',
-        //         // 'levels' => 'error, warning, trace, profile, info',
-        //         // 'showInFireBug' => true,
-        // ),
+        // Web page logging output.
+        array(
+                'class' => 'CWebLogRoute',
+                // 'categories' => 'application, system.db.CDbCommand',
+                // 'levels' => 'error, warning, trace, profile, info',
+                // 'showInFireBug' => true,
+        ),
 
         /*
         array(

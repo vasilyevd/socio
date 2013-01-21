@@ -142,33 +142,31 @@ class Massmedia extends CActiveRecord
      */
     public function search()
     {
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        // Relation.
-        $criteria->with = array('company', 'linksGeneralCount', 'linksYoutubeCount', 'filesCount');
+        $criteria->with = array(
+            'company',
+            'linksGeneralCount',
+            'linksYoutubeCount',
+            'filesCount',
 
-        // Relation BELONGS_TO search.
-        if (!empty($this->organization)) {
-            $criteria->with = array_merge($criteria->with, array(
-                'organization',
-            ));
-            $criteria->compare('organization.id', $this->organization);
-        }
+            'tags' => array('select' => false),
+            'organization' => array('select' => false),
+        );
 
-        // Relation MANY_MANY search.
         if (!empty($this->tags)) {
-            $criteria->with = array_merge($criteria->with, array(
-                'tags' => array('together' => true),
-            ));
+            $criteria->with['tags']['together'] = true;
             $criteria->addInCondition('tags.id', $this->tags);
         }
+
+        $criteria->compare('organization.id', $this->organization);
 
         $criteria->compare('t.title', $this->title, true);
         $criteria->compare('t.category', $this->category);
         $criteria->compare('t.direction', $this->direction);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 

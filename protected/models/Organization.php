@@ -186,57 +186,34 @@ class Organization extends CActiveRecord
      */
     public function search()
     {
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        // Relation.
-        $criteria->with = array();
+        $criteria->with = array(
+            'directions' => array('select' => false),
+            'problems' => array('select' => false),
+            'type',
+        );
 
-        // Relation BELONGS_TO search.
-        if (!empty($this->type)) {
-            $criteria->with = array_merge($criteria->with, array(
-                'type',
-            ));
-            $criteria->compare('type.id', $this->type->id);
-        }
-
-        // Relation MANY_MANY search.
         if (!empty($this->directions)) {
-            $criteria->with = array_merge($criteria->with, array(
-                'directions' => array('together' => true),
-            ));
-            $criteria->addInCondition('directions.id', CHtml::listData($this->directions, 'id', 'id'));
+            $criteria->with['directions']['together'] = true;
+            $criteria->addInCondition('directions.id', $this->directions);
         }
 
-        // Relation MANY_MANY search.
         if (!empty($this->problems)) {
-            $criteria->with = array_merge($criteria->with, array(
-                'problems' => array('together' => true),
-            ));
-            $criteria->addInCondition('problems.id', CHtml::listData($this->problems, 'id', 'id'));
+            $criteria->with['problems']['together'] = true;
+            $criteria->addInCondition('problems.id', $this->problems);
         }
 
-        $criteria->compare('t.name',$this->name,true);
-        $criteria->compare('t.action_area',$this->action_area);
-        $criteria->compare('t.city_id',$this->city_id);
-        $criteria->compare('t.address_id',$this->address_id);
-        $criteria->compare('t.foundation_year',$this->foundation_year);
+        $criteria->compare('type.id', $this->type);
 
-        // $criteria->compare('id',$this->id);
-        // $criteria->compare('type_group',$this->type_group);
-        // $criteria->compare('staff_size',$this->staff_size);
-        // $criteria->compare('description',$this->description,true);
-        // $criteria->compare('goal',$this->goal,true);
-        // $criteria->compare('website',$this->website,true);
-        // $criteria->compare('phone_num',$this->phone_num,true);
-        // $criteria->compare('email',$this->email,true);
-        // $criteria->compare('logo',$this->logo,true);
-        // $criteria->compare('author_id',$this->author_id);
-        // $criteria->compare('create_time',$this->create_time);
-        // $criteria->compare('status',$this->status);
-        // $criteria->compare('verified',$this->verified);
+        $criteria->compare('t.name', $this->name, true);
+        $criteria->compare('t.action_area', $this->action_area);
+        $criteria->compare('t.city_id', $this->city_id);
+        $criteria->compare('t.address_id', $this->address_id);
+        $criteria->compare('t.foundation_year', $this->foundation_year);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
             'sort' => array(
                 'attributes' => array(
                     'type' => array(

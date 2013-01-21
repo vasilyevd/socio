@@ -163,10 +163,10 @@ class OrganizationController extends Controller
         if(isset($_GET['Organization'])) {
             $model->attributes=$_GET['Organization'];
 
-            // Relations.
-            $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
-            $model->directions = isset($_GET['Organization']['directions']) ? Direction::model()->findAllByPk($model->directions) : array();
-            $model->problems = isset($_GET['Organization']['problems']) ? Problem::model()->findAllByPk($model->problems) : array();
+            // // Relations.
+            // $model->type = isset($_GET['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
+            // $model->directions = isset($_GET['Organization']['directions']) ? Direction::model()->findAllByPk($model->directions) : array();
+            // $model->problems = isset($_GET['Organization']['problems']) ? Problem::model()->findAllByPk($model->problems) : array();
         }
 
         $this->render('index',array(
