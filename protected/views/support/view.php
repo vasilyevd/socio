@@ -36,11 +36,11 @@ $this->menu=array(
     'attributes'=>array(
         array(
             'name' => 'source',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->source)),
+            'value' => CHtml::encode(Lookup::item('SupportSource',$model->source)),
         ),
         array(
             'name' => 'type',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
+            'value' => CHtml::encode(Lookup::item('SupportType',$model->type)),
         ),
         'delivery_year',
         array(

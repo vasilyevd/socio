@@ -265,10 +265,10 @@ DROP TABLE IF EXISTS `org_donor`;
 CREATE TABLE `org_donor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `country` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `website` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `country` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `website` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -432,7 +432,7 @@ CREATE TABLE `org_lookup` (
   `type` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -441,7 +441,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Национальная',1,'OrganizationActionArea',1),(10,'Региональная',2,'OrganizationActionArea',3),(11,'Районная',3,'OrganizationActionArea',4),(12,'Городская',4,'OrganizationActionArea',5),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'CompanyType',1),(53,'Рекламная',2,'CompanyType',2),(54,'Правовая',3,'CompanyType',3),(55,'Пиар',4,'CompanyType',4),(56,'Всеукраинская',5,'OrganizationActionArea',2),(57,'Международная',1,'CooperationSource',1),(58,'Общественная',2,'CooperationSource',2),(59,'Государственная',3,'CooperationSource',3),(60,'Бизнес',4,'CooperationSource',4),(61,'10.000-20.000',1,'SupportFunds',1),(62,'20.000-40.000',2,'SupportFunds',2),(63,'40.000-80.000',3,'SupportFunds',3),(64,'Конкретнее...',4,'SupportFunds',4),(65,'Международная',1,'DonorshipSource',1),(66,'Всеукраинская',2,'DonorshipSource',2),(67,'Частная',3,'DonorshipSource',3);
+INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Национальная',1,'OrganizationActionArea',1),(10,'Региональная',2,'OrganizationActionArea',3),(11,'Районная',3,'OrganizationActionArea',4),(12,'Городская',4,'OrganizationActionArea',5),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'CompanyType',1),(53,'Рекламная',2,'CompanyType',2),(54,'Правовая',3,'CompanyType',3),(55,'Пиар',4,'CompanyType',4),(56,'Всеукраинская',5,'OrganizationActionArea',2),(57,'Международный',1,'CooperationSource',1),(58,'Общественный',2,'CooperationSource',2),(59,'Государственный',3,'CooperationSource',3),(60,'Бизнес',4,'CooperationSource',4),(61,'10.000-20.000',1,'SupportFunds',1),(62,'20.000-40.000',2,'SupportFunds',2),(63,'40.000-80.000',3,'SupportFunds',3),(64,'Конкретнее...',4,'SupportFunds',4),(65,'Международный',1,'DonorshipSource',1),(66,'Национальный',2,'DonorshipSource',2),(67,'Региональный',3,'DonorshipSource',3),(68,'Совместная реализация проектов',1,'CooperationType',1),(69,'Совместная разработка документации',2,'CooperationType',2),(70,'Проведение мероприятий',3,'CooperationType',3),(71,'Проведение акций',4,'CooperationType',4),(72,'Представительство',1,'PartnershipType',1),(73,'Национальное',2,'PartnershipType',2),(74,'Грантовое',3,'PartnershipType',3),(75,'Программное',4,'PartnershipType',4),(76,'Договорное',5,'PartnershipType',5),(77,'Декларативное',6,'PartnershipType',6),(78,'Международный',1,'SupportSource',1),(79,'Благотворительный',2,'SupportSource',2),(80,'Государственный',3,'SupportSource',3),(81,'Бизнес',4,'SupportSource',4),(82,'Административное',1,'SupportType',1),(83,'Поддержка проекта',2,'SupportType',2),(84,'Хозяйственная деятельность',3,'SupportType',3),(85,'Средства и оборудования',4,'SupportType',4),(86,'Финансовые образования',5,'SupportType',5),(87,'Международный',1,'PartnershipSource',1),(88,'Общественный',2,'PartnershipSource',2),(89,'Государственный',3,'PartnershipSource',3),(90,'Бизнес',4,'PartnershipSource',4),(91,'Частный',4,'DonorshipSource',4),(92,'Финансирование',1,'DonorshipType',1),(93,'Приобретение средств и оборот',2,'DonorshipType',2),(94,'Ремонтно строительные работы',3,'DonorshipType',3),(95,'Научные исследования',4,'DonorshipType',4),(96,'Получение образования',5,'DonorshipType',5);
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -887,4 +887,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-21 13:57:55
+-- Dump completed on 2013-01-21 15:58:09

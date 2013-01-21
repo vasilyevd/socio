@@ -12,6 +12,18 @@
  */
 class Partnership extends CActiveRecord
 {
+    const SOURCE_INTERNATIONAL = 1;
+    const SOURCE_PUBLIC = 2;
+    const SOURCE_GOVERNMENT = 3;
+    const SOURCE_BUSINESS = 4;
+
+    const TYPE_AGENCY = 1;
+    const TYPE_NATIONAL = 2;
+    const TYPE_GRANT = 3;
+    const TYPE_PROGRAM = 4;
+    const TYPE_CONTRACT = 5;
+    const TYPE_DECLARATIVE = 6;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -41,12 +53,13 @@ class Partnership extends CActiveRecord
             array('link, email, contact_name, website', 'length', 'max'=>128, 'on' => 'insert, update'),
             array('linkOrganization', 'safe', 'on' => 'insert, update'),
             array('source', 'in', 'range' => array(
-                Cooperation::SOURCE_INTERNATIONAL, Cooperation::SOURCE_PUBLIC,
-                Cooperation::SOURCE_GOVERNMENT, Cooperation::SOURCE_BUSINESS,
+                self::SOURCE_INTERNATIONAL, self::SOURCE_PUBLIC,
+                self::SOURCE_GOVERNMENT, self::SOURCE_BUSINESS,
             ), 'on' => 'insert, update'),
             array('type', 'in', 'range' => array(
-                Cooperation::TYPE_SOME, Cooperation::TYPE_OTHER,
-                Cooperation::TYPE_MORE,
+                self::TYPE_AGENCY, self::TYPE_NATIONAL,
+                self::TYPE_GRANT, self::TYPE_PROGRAM,
+                self::TYPE_CONTRACT, self::TYPE_DECLARATIVE,
             ), 'on' => 'insert, update'),
             // Upload handler.
             array(
@@ -111,8 +124,8 @@ class Partnership extends CActiveRecord
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
-            'source' => 'Источник',
-            'type' => 'Тип',
+            'source' => 'Уровень Партнерства',
+            'type' => 'Статус Партнерства',
             'logo' => 'Логотип Организации',
             'email' => 'Емейл',
             'contact_name' => 'Контактное Лицо',

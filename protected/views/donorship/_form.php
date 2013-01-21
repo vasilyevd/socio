@@ -10,7 +10,7 @@
     <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('DonorshipSource')); ?>
 
     <?php echo $form->select2Row($model, 'type', array(
-        'data' => Lookup::items('CooperationSource'),
+        'data' => Lookup::items('DonorshipType'),
         // 'asDropDownList' => false, // Tag mode.
         // 'multiple' => true, // Multiple mode without 'asDropDownList'.
         'prompt' => '', // Blank for all drop.
@@ -23,15 +23,39 @@
     )); ?>
 
     <?php echo $form->select2Row($model, 'donor', array(
-        'data' => CHtml::listData(Donor::model()->findAll(), 'id', 'name'),
-        // 'asDropDownList' => false, // Tag mode.
-        // 'multiple' => true, // Multiple mode without 'asDropDownList'.
+        // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
+        'asDropDownList' => false, // Tag mode.
         'prompt' => '', // Blank for all drop.
         'options' => array(
-            // 'multiple' => true, // Multiple mode with 'asDropDownList'.
-            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'placeholder' => 'Введите название...', // Blank for all drop.
             'allowClear' => true, // Clear for normal drop.
-            'width' => '300px',
+            'likeinput' => true,
+            'likeinputAtribute' => 'donorNewName',
+            'multiple' => false,
+            'width' => '500px',
+            'minimumInputLength' => 1,
+            'maximumSelectionSize' => 1,
+            'ajax' => array(
+                'url' => $this->createUrl('donorship/dynamicSearchDonors'),
+                'quietMillis'=>500,
+                'dataType' => 'json',
+                'data' => 'js:function(term, page) {
+                    return { query: term };
+                }',
+                'results' => 'js:function(data, page) {
+                    return { results: data.organizations };
+                }',
+            ),
+            'formatResult' => 'js:function(model) {
+                markup = "<table><tr>";
+                markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
+                markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
+                markup += "</tr></table>";
+                return markup;
+            }',
+            'formatSelection' => 'js:function(model) {
+                return model.name;
+            }',
         ),
     )); ?>
 

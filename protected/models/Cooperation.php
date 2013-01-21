@@ -17,9 +17,10 @@ class Cooperation extends CActiveRecord
     const SOURCE_GOVERNMENT = 3;
     const SOURCE_BUSINESS = 4;
 
-    const TYPE_SOME = 1;
-    const TYPE_OTHER = 2;
-    const TYPE_MORE = 3;
+    const TYPE_PROJECTS_IMPLEMENTATION = 1;
+    const TYPE_DOCUMENTATION_IMPLEMENTATION = 2;
+    const TYPE_EVENT_MANAGEMENT = 3;
+    const TYPE_EVENT_IMPLEMENTATION = 4;
 
     /**
      * Returns the static model of the specified AR class.
@@ -54,8 +55,8 @@ class Cooperation extends CActiveRecord
                 self::SOURCE_GOVERNMENT, self::SOURCE_BUSINESS,
             )),
             array('type', 'in', 'range' => array(
-                self::TYPE_SOME, self::TYPE_OTHER,
-                self::TYPE_MORE,
+                self::TYPE_PROJECTS_IMPLEMENTATION, self::TYPE_DOCUMENTATION_IMPLEMENTATION,
+                self::TYPE_EVENT_MANAGEMENT, self::TYPE_EVENT_IMPLEMENTATION,
             )),
             // Upload handler.
             array(
@@ -116,8 +117,8 @@ class Cooperation extends CActiveRecord
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
-            'source' => 'Источник',
-            'type' => 'Тип',
+            'source' => 'Уровень Сотрудничества',
+            'type' => 'Вид Сотрудничества',
             'logo' => 'Логотип Организации',
             'email' => 'Емейл',
             'contact_name' => 'Контактное Лицо',
