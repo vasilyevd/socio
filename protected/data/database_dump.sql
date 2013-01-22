@@ -272,7 +272,7 @@ CREATE TABLE `org_donor` (
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `source` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,7 +281,7 @@ CREATE TABLE `org_donor` (
 
 LOCK TABLES `org_donor` WRITE;
 /*!40000 ALTER TABLE `org_donor` DISABLE KEYS */;
-INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(4,'sdfsdfsd fsd',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(5,'sdfsdffsdf22',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(6,'sdfsdffsdf22',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(7,'234234sss',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(8,'new',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(9,'newonew',NULL,NULL,NULL,NULL,'placeholder.jpg',2),(10,'onemore',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(11,'more',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(12,'423xxxxxxd',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(13,'xoxoxo',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(14,'zdzdzd',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(16,'gggghhh',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(17,'4545454',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(18,'uiuiu',NULL,NULL,NULL,NULL,'placeholder.jpg',4);
+INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(21,'Донор новый 4',NULL,NULL,NULL,NULL,'placeholder.jpg',2),(22,'donor 5',NULL,NULL,NULL,NULL,'placeholder.jpg',2),(23,'donor 6',NULL,NULL,NULL,NULL,'placeholder.jpg',3);
 /*!40000 ALTER TABLE `org_donor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ DROP TABLE IF EXISTS `org_donorship`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `org_donorship` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `donor_id` int(11) DEFAULT NULL,
+  `donor_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `create_time` datetime NOT NULL,
   `organization_id` int(11) NOT NULL,
@@ -308,7 +308,7 @@ CREATE TABLE `org_donorship` (
   KEY `organization_id_2` (`organization_id`),
   KEY `donor_id` (`donor_id`),
   CONSTRAINT `org_donorship_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `org_donorship_ibfk_4` FOREIGN KEY (`donor_id`) REFERENCES `org_donor` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `org_donorship_ibfk_5` FOREIGN KEY (`donor_id`) REFERENCES `org_donor` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -318,7 +318,7 @@ CREATE TABLE `org_donorship` (
 
 LOCK TABLES `org_donorship` WRITE;
 /*!40000 ALTER TABLE `org_donorship` DISABLE KEYS */;
-INSERT INTO `org_donorship` VALUES (22,2,'sdfssdfsdf','2013-01-04 13:55:11',1,1,2,2013,2,NULL),(23,3,'sdfsd fsdsdfsf','2013-01-04 13:56:28',1,1,2,1998,4,24300),(24,18,'sdfsdfs','2013-01-21 17:11:29',1,4,2,2012,1,NULL);
+INSERT INTO `org_donorship` VALUES (22,1,'sdfssdfsdf','2013-01-04 13:55:11',1,1,2,2013,2,NULL),(23,2,'sdfsd fsdsdfsf','2013-01-04 13:56:28',1,1,2,1998,4,24300),(24,23,'sdfsdfs','2013-01-21 17:11:29',1,3,2,2012,1,NULL);
 /*!40000 ALTER TABLE `org_donorship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -888,4 +888,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-22 15:38:40
+-- Dump completed on 2013-01-22 17:50:30

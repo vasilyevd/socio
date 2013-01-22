@@ -19,6 +19,18 @@ class TabularBehavior extends CActiveRecordBehavior
         foreach ($this->relations as $rel => $options) {
             $method = $rel . 'Tabular';
             $this->_models[$rel] = $this->owner->$method();
+
+            // Check validation.
+            if ($this->_models[$rel] === null) {
+                $this->owner->$rel = null;
+            } elseif ($this->_models[$rel] === array()) {
+                $this->owner->$rel = array();
+            } elseif ($this->_models[$rel] === false) {
+                $this->owner->$rel = true;
+                $this->owner->addError($rel, 'Неверно задано поле ' . $this->owner->getAttributeLabel($rel));
+            } else {
+                $this->owner->$rel = true;
+            }
         }
     }
 
@@ -27,6 +39,7 @@ class TabularBehavior extends CActiveRecordBehavior
      * attribute as null (to find ID).
      * Sets relation attributes to saved models arrays.
      * EActiveRecordRelationBehavior will update relations on master save.
+     * Saves all 'BELONGS_TO' master relations and sets their links.
      */
     public function beforeSave()
     {
@@ -48,8 +61,6 @@ class TabularBehavior extends CActiveRecordBehavior
     /**
      * Deletes homeless models for 'HAS_MANY' relations, based on 'delete'
      * option.
-     * Saves master relation for 'BELONGS_TO', updates current model relation
-     * link in progress.
      */
     public function afterSave()
     {
@@ -62,13 +73,6 @@ class TabularBehavior extends CActiveRecordBehavior
                     $m->delete();
                 }
             }
-            // } elseif ($this->_settings[$rel][0] === CActiveRecord::BELONGS_TO &&
-            //     $this->_models[$rel] !== null
-            // ) {
-            //     // Set masters 'MANY_MANY' relational array.
-            //     $this->_models[$rel]->$options['masterRelation'] = array($this->owner);
-            //     $this->_models[$rel]->save();
-            // }
         }
     }
 }

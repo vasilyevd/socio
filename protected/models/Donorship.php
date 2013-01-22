@@ -49,9 +49,8 @@ class Donorship extends CActiveRecord
     public function rules()
     {
         return array(
-            array('description, source, type, delivery_year, funds', 'required'),
+            array('donor, description, source, type, delivery_year, funds', 'required'),
             array('source, type, delivery_year, funds, funds_specific', 'numerical', 'integerOnly'=>true),
-            array('donor', 'safe'),
             array('donorNewName', 'length', 'max'=>128),
             array('source', 'in', 'range' => array(
                 self::SOURCE_INTERNATIONAL, self::SOURCE_NATIONAL,
@@ -183,9 +182,20 @@ class Donorship extends CActiveRecord
         $valid = true;
         $model = null;
 
+        // Restore empty relation attributes on update.
+        // Empty 'Select2' fix.
+        if (!$this->isNewRecord && empty($this->donor) && empty($this->donorNewName)) {
+            $originalModel = Donorship::model()->findByPk($this->id);
+            $this->donor = $originalModel->donor;
+        }
+
         if (!empty($this->donor) || !empty($this->donorNewName)) {
             // Try to find model from database.
-            $model = Donor::model()->findByPk($this->donor);
+            if ($this->donor instanceof Donor) {
+                $model = $this->donor;
+            } else {
+                $model = Donor::model()->findByPk($this->donor);
+            }
 
             // Try to create new model from it's name.
             if ($model === null) {
@@ -198,7 +208,6 @@ class Donorship extends CActiveRecord
             $valid = $model->validate() && $valid;
         }
 
-        if (!$valid) $this->addError('donor', 'Неверно задано поле ' . $this->getAttributeLabel('donor'));
-        return $model;
+        return $valid ? $model : false;
     }
 }
