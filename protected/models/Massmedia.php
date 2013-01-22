@@ -110,6 +110,14 @@ class Massmedia extends CActiveRecord
     {
         return array(
             // Advanced relations
+            'TabularBehavior' => array(
+                'class' => 'application.components.behaviors.TabularBehavior',
+                'relations' => array(
+                    'tags' => array(),
+                    'links' => array('delete' => true),
+                    'files' => array('delete' => true),
+                ),
+            ),
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),

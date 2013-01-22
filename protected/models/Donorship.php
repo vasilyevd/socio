@@ -49,8 +49,9 @@ class Donorship extends CActiveRecord
     public function rules()
     {
         return array(
-            array('donor, description, source, type, delivery_year, funds', 'required'),
+            array('description, source, type, delivery_year, funds', 'required'),
             array('source, type, delivery_year, funds, funds_specific', 'numerical', 'integerOnly'=>true),
+            array('donor', 'safe'),
             array('donorNewName', 'length', 'max'=>128),
             array('source', 'in', 'range' => array(
                 self::SOURCE_INTERNATIONAL, self::SOURCE_NATIONAL,
@@ -88,6 +89,12 @@ class Donorship extends CActiveRecord
     {
         return array(
             // Advanced relations.
+            'TabularBehavior' => array(
+                'class' => 'application.components.behaviors.TabularBehavior',
+                'relations' => array(
+                    'donor' => array(),
+                ),
+            ),
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
@@ -150,9 +157,6 @@ class Donorship extends CActiveRecord
             $this->funds_specific = null;
         }
 
-        // Relations with new models handler.
-        $this->donorTabular();
-
         return parent::beforeValidate();
     }
 
@@ -165,11 +169,6 @@ class Donorship extends CActiveRecord
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
-        }
-
-        // Relations with new models handler.
-        if ($this->donor !== null) {
-            $this->donor->save();
         }
 
         return parent::beforeSave();
@@ -193,13 +192,13 @@ class Donorship extends CActiveRecord
                 $model = new Donor;
                 $model->name = $this->donorNewName;
                 $model->source = $this->source;
-                $model->isNewRecord = false;
+                // $model->isNewRecord = false;
             }
 
             $valid = $model->validate() && $valid;
         }
 
-        $this->donor = $model;
         if (!$valid) $this->addError('donor', 'Неверно задано поле ' . $this->getAttributeLabel('donor'));
+        return $model;
     }
 }
