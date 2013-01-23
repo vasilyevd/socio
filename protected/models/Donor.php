@@ -40,7 +40,7 @@ class Donor extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name, description, country, website, email, logo', 'required'),
+            array('name, source', 'required'),
             array('name, country, website, email, logo', 'length', 'max'=>128),
 
             // array('id, name, country, website, email, logo', 'safe', 'on'=>'search'),
@@ -112,5 +112,21 @@ class Donor extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is saved.
+     * @return boolean whether the record should be saved.
+     */
+    public function beforeSave()
+    {
+        if ($this->isNewRecord) {
+            // Set default logo.
+            if (empty($this->logo)) {
+                $this->logo = 'placeholder.jpg';
+            }
+        }
+
+        return parent::beforeSave();
     }
 }

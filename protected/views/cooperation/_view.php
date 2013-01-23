@@ -31,7 +31,7 @@
                 )); ?>
                 <?php $this->widget('bootstrap.widgets.TbBadge', array(
                     'type' => 'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-                    'label' => CHtml::encode(Lookup::item('CooperationSource',$data->type)),
+                    'label' => CHtml::encode(Lookup::item('CooperationType',$data->type)),
                 )); ?>
             </div>
         </div>

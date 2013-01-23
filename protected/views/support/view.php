@@ -5,9 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-    array('label' => 'Управление Поддержкой'),
-    array('label' => 'Изменить Поддержку', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
-    array('label' => 'Удалить Поддержку', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
+    array('label' => 'Управление Донорами'),
+    array('label' => 'Изменить Донора', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
+    array('label' => 'Удалить Донора', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
 );
 ?>
 
@@ -36,11 +36,11 @@ $this->menu=array(
     'attributes'=>array(
         array(
             'name' => 'source',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->source)),
+            'value' => CHtml::encode(Lookup::item('SupportSource',$model->source)),
         ),
         array(
             'name' => 'type',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
+            'value' => CHtml::encode(Lookup::item('SupportType',$model->type)),
         ),
         'delivery_year',
         array(

@@ -26,11 +26,11 @@
             <div class="pull-right">
                 <?php $this->widget('bootstrap.widgets.TbBadge', array(
                     'type' => 'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-                    'label' => CHtml::encode(Lookup::item('CooperationSource',$data->source)),
+                    'label' => CHtml::encode(Lookup::item('SupportSource',$data->source)),
                 )); ?>
                 <?php $this->widget('bootstrap.widgets.TbBadge', array(
                     'type' => 'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-                    'label' => CHtml::encode(Lookup::item('CooperationSource',$data->type)),
+                    'label' => CHtml::encode(Lookup::item('SupportType',$data->type)),
                 )); ?>
             </div>
         </div>
