@@ -110,6 +110,9 @@ class Massmedia extends CActiveRecord
     {
         return array(
             // Advanced relations
+            'EActiveRecordRelationBehavior' => array(
+                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
+            ),
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
                 'relations' => array(
@@ -117,9 +120,6 @@ class Massmedia extends CActiveRecord
                     'links' => array('delete' => true),
                     'files' => array('delete' => true),
                 ),
-            ),
-            'EActiveRecordRelationBehavior' => array(
-                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
         );
     }
@@ -203,21 +203,6 @@ class Massmedia extends CActiveRecord
     }
 
     /**
-     * This is invoked before the record is validated.
-     * @return boolean whether the record is valid.
-     */
-    public function beforeValidate()
-    {
-        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
-        // Find or create objects and validate.
-        $this->tagsTabular();
-        $this->linksTabular();
-        $this->filesTabular();
-
-        return parent::beforeValidate();
-    }
-
-    /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
      */
@@ -233,12 +218,6 @@ class Massmedia extends CActiveRecord
             $this->publication_date = null;
         }
 
-        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
-        // Save new models.
-        foreach ($this->tags as $m) $m->save();
-        foreach ($this->links as $m) $m->save();
-        foreach ($this->files as $m) $m->save();
-
         return parent::beforeSave();
     }
 
@@ -253,23 +232,16 @@ class Massmedia extends CActiveRecord
         if (!empty($this->company)) {
             $this->company->updateDateRange();
         }
-
-        // Relations with new models handler 'HAS_MANY'.
-        // Delete old models.
-        $deleteModels = Mmlink::model()->findAllByAttributes(array('massmedia_id' => null));
-        foreach ($deleteModels as $m) $m->delete();
-        $deleteModels = Mmfile::model()->findAllByAttributes(array('massmedia_id' => null));
-        foreach ($deleteModels as $m) $m->delete();
     }
 
     /**
-     * Relations with new models handler.
-     * Finds, creates and validates models from tabular input.
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of validation status and relation models or single model.
      */
     public function tagsTabular()
     {
         $valid = true;
-        $modelArray = array();
+        $tabular = array();
 
         if (!empty($this->tags)) {
             $tagsNames = explode(',', $this->tags);
@@ -281,27 +253,25 @@ class Massmedia extends CActiveRecord
                 );
                 if ($model === null) {
                     $model = new Mmtag;
+                    $model->name = $n;
                 }
 
-                $model->name = $n;
-
                 $valid = $model->validate() && $valid;
-                $modelArray[] = $model;
+                $tabular[] = $model;
             }
         }
 
-        $this->tags = $modelArray;
-        if (!$valid) $this->addError('tags', 'Неверно задано поле ' . $this->getAttributeLabel('tags'));
+        return array($valid, $tabular);
     }
 
     /**
-     * Relations with new models handler.
-     * Finds, creates and validates models from tabular input.
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of validation status and relation models or single model.
      */
     public function linksTabular()
     {
         $valid = true;
-        $modelArray = array();
+        $tabular = array();
 
         foreach ($this->links as $attributes) {
             $model = Mmlink::model()->findByPk($attributes['id']);
@@ -312,21 +282,20 @@ class Massmedia extends CActiveRecord
             $model->attributes = $attributes;
 
             $valid = $model->validate() && $valid;
-            $modelArray[] = $model;
+            $tabular[] = $model;
         }
 
-        $this->links = $modelArray;
-        if (!$valid) $this->addError('links', 'Неверно задано поле ' . $this->getAttributeLabel('links'));
+        return array($valid, $tabular);
     }
 
     /**
-     * Relations with new models handler.
-     * Finds, creates and validates models from tabular input.
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of validation status and relation models or single model.
      */
     public function filesTabular()
     {
         $valid = true;
-        $modelArray = array();
+        $tabular = array();
 
         foreach ($this->files as $i => $attributes) {
             $model = Mmfile::model()->findByPk($attributes['id']);
@@ -339,11 +308,10 @@ class Massmedia extends CActiveRecord
             $model->name = CUploadedFile::getInstance($model, "[$i]name");
 
             $valid = $model->validate() && $valid;
-            $modelArray[] = $model;
+            $tabular[] = $model;
         }
 
-        $this->files = $modelArray;
-        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
+        return array($valid, $tabular);
     }
 
     /**

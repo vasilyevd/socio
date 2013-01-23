@@ -88,14 +88,14 @@ class Donorship extends CActiveRecord
     {
         return array(
             // Advanced relations.
+            'EActiveRecordRelationBehavior' => array(
+                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
+            ),
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
                 'relations' => array(
                     'donor' => array(),
                 ),
-            ),
-            'EActiveRecordRelationBehavior' => array(
-                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
         );
     }
@@ -107,7 +107,7 @@ class Donorship extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'donor' => 'Донор',
+            'donor' => 'Грантодатель',
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization' => 'Организация',
@@ -174,13 +174,13 @@ class Donorship extends CActiveRecord
     }
 
     /**
-     * Relations with new models handler.
-     * Finds, creates and validates models from tabular input.
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of validation status and relation models or single model.
      */
     public function donorTabular()
     {
         $valid = true;
-        $model = null;
+        $tabular = null;
 
         // Restore empty relation attributes on update.
         // Empty 'Select2' fix.
@@ -191,7 +191,7 @@ class Donorship extends CActiveRecord
 
         if (!empty($this->donor) || !empty($this->donorNewName)) {
             // Try to find model from database.
-            if ($this->donor instanceof Donor) {
+            if (is_object($this->donor)) {
                 $model = $this->donor;
             } else {
                 $model = Donor::model()->findByPk($this->donor);
@@ -202,12 +202,12 @@ class Donorship extends CActiveRecord
                 $model = new Donor;
                 $model->name = $this->donorNewName;
                 $model->source = $this->source;
-                // $model->isNewRecord = false;
             }
 
             $valid = $model->validate() && $valid;
+            $tabular = $model;
         }
 
-        return $valid ? $model : false;
+        return array($valid, $tabular);
     }
 }

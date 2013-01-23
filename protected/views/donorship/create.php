@@ -5,6 +5,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Создать Донора</h1>
+<h1>Создать Грантодателя</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

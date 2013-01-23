@@ -1,14 +1,18 @@
 <?php
 
+/**
+ * 'TabularBehavior' handles new related models validation and creation along
+ * side with it's owner model in bulk format.
+ */
 class TabularBehavior extends CActiveRecordBehavior
 {
     public $relations = array();
-    private $_models = array();
     private $_settings;
 
     /**
-     * Calls tabular method for all relations and saves relation models. Sets
-     * relations to empty or valid and adds validation errors where needed.
+     * Calls Tabular method for all relations, finds and validates relation
+     * models. Models from new relation attributes is not affected by
+     * 'EActiveRecordRelationBehavior' because this method is called after it.
      */
     public function beforeValidate()
     {
@@ -18,34 +22,25 @@ class TabularBehavior extends CActiveRecordBehavior
         }
 
         foreach ($this->relations as $rel => $options) {
+            // Call owners tabular method.
             $method = $rel . 'Tabular';
-            $this->_models[$rel] = $this->owner->$method();
+            list($valid, $tabular) = $this->owner->$method();
 
-            // Check validation.
-            if ($this->_models[$rel] === null) {
-                // Set relation as empty.
-                $this->owner->$rel = null;
-            } elseif ($this->_models[$rel] === array()) {
-                // Set relation as empty.
-                $this->owner->$rel = array();
-            } elseif ($this->_models[$rel] === false) {
-                // Set relation as having models (but don't set models, because
-                // related models are not saved).
-                $this->owner->$rel = true;
-                // Set validation error for current relation.
+            $this->owner->$rel = $tabular;
+
+            // Check for validation errors.
+            if (!$valid) {
                 $this->owner->addError($rel, 'Неверно задано поле ' . $this->owner->getAttributeLabel($rel));
-            } else {
-                // Set relation as having models (but don't set models, because
-                // related models are not saved).
-                $this->owner->$rel = true;
             }
         }
     }
 
     /**
-     * Saves all 'MANY_MANY' and 'HAS_MANY' relations with relation link
-     * attribute as null (to find ID).
-     * Saves all 'BELONGS_TO' master relations and sets their links.
+     * Saves all 'MANY_MANY' and 'HAS_MANY' related models. Their link ID
+     * attribute is set to null, because owner is new and don't have ID yet.
+     * Relation link creation is handled by 'EActiveRecordRelationBehavior'
+     * later in 'afterSave'.
+     * Saves all 'BELONGS_TO' master relations and sets owner model link ID.
      */
     public function beforeSave()
     {
@@ -53,25 +48,18 @@ class TabularBehavior extends CActiveRecordBehavior
             if ($this->_settings[$rel][0] === CActiveRecord::MANY_MANY ||
                 $this->_settings[$rel][0] === CActiveRecord::HAS_MANY
             ) {
-                // Save all related models. Their link attribute is set to
-                // null, because owner model is new and don't have ID yet.
-                foreach ($this->_models[$rel] as $m) {
+                foreach ($this->owner->$rel as $m) {
                     $m->save();
                 }
-                // Set relation as array of models or empty array. Relation
-                // creation will be handled by 'EActiveRecordRelationBehavior'
-                // accordingly, later in 'afterSave'.
-                $this->owner->$rel = $this->_models[$rel];
             } elseif ($this->_settings[$rel][0] === CActiveRecord::BELONGS_TO) {
-                if ($this->_models[$rel] === null) {
+                if ($this->owner->$rel === null) {
                     // Set link ID attribute of owner model as null.
                     $this->owner->setAttribute($this->_settings[$rel][2], null);
                 } else {
                     // Save related model.
-                    $this->_models[$rel]->save();
-                    // Set link ID attribute of owner model as new related
-                    // model ID.
-                    $this->owner->setAttribute($this->_settings[$rel][2], $this->_models[$rel]->id);
+                    $this->owner->{$rel}->save();
+                    // Set link ID attribute of owner model as new relation ID.
+                    $this->owner->setAttribute($this->_settings[$rel][2], $this->owner->{$rel}->id);
                 }
             }
         }
@@ -79,18 +67,20 @@ class TabularBehavior extends CActiveRecordBehavior
 
     /**
      * Deletes homeless models for 'HAS_MANY' relations, based on 'delete'
-     * option.
+     * option. This method is called after 'EActiveRecordRelationBehavior' so
+     * all valid relations are set and old relations marked with link ID null.
      */
     public function afterSave()
     {
         foreach ($this->relations as $rel => $options) {
-            if ($this->_settings[$rel][0] === CActiveRecord::HAS_MANY &&
-                $options['delete'] === true
-            ) {
-                // Find all related models with null ID link.
-                $deleteModels = call_user_func($this->_settings[$rel][1] . '::model')->findAllByAttributes(array($this->_settings[$rel][2] => null));
-                foreach ($deleteModels as $m) {
-                    $m->delete();
+            if ($this->_settings[$rel][0] === CActiveRecord::HAS_MANY) {
+                // If set delete option.
+                if (array_key_exists('delete', $options) && $options['delete'] === true) {
+                    // Find all related models with null ID link.
+                    $deleteModels = call_user_func($this->_settings[$rel][1] . '::model')->findAllByAttributes(array($this->_settings[$rel][2] => null));
+                    foreach ($deleteModels as $m) {
+                        $m->delete();
+                    }
                 }
             }
         }
