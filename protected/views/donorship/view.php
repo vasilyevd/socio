@@ -5,13 +5,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-    array('label' => 'Управление Донорами'),
-    array('label' => 'Изменить Донора', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
-    array('label' => 'Удалить Донора', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
+    array('label' => 'Управление Грантодателями'),
+    array('label' => 'Изменить Грантодателя', 'icon' => 'cog', 'url'=>array('update','id'=>$model->id)),
+    array('label' => 'Удалить Грантодателя', 'icon' => 'cog', 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Вы уверены, что хотите удалить данный элемент?')),
 );
 ?>
 
-<h1><?php echo CHtml::encode($model->donor->name); ?> (<?php echo CHtml::encode($model->donor->country); ?>)</h1>
+<h1><?php echo CHtml::encode($model->donor->name); ?></h1>
 
 <div class="row">
     <div class="span3">
@@ -24,9 +24,18 @@ $this->menu=array(
     </div>
 
     <div class="span6">
-        <p><?php echo CHtml::encode($model->donor->description); ?></p>
-        <p><?php echo CHtml::link(CHtml::encode($model->donor->website), $model->donor->website, array('target' => '_blank')); ?></p>
-        <p><?php echo CHtml::link(CHtml::encode($model->donor->email), 'mailto:' . $model->donor->email); ?></p>
+        <?php if (!empty($model->donor->country)): ?>
+            <p><?php echo CHtml::encode($model->donor->country); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($model->donor->description)): ?>
+            <p><?php echo CHtml::encode($model->donor->description); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($model->donor->website)): ?>
+            <p><?php echo CHtml::link(CHtml::encode($model->donor->website), $model->donor->website, array('target' => '_blank')); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($model->donor->email)): ?>
+            <p><?php echo CHtml::link(CHtml::encode($model->donor->email), 'mailto:' . $model->donor->email); ?></p>
+        <?php endif; ?>
     </div>
 </div>
 <br />
@@ -36,11 +45,11 @@ $this->menu=array(
     'attributes'=>array(
         array(
             'name' => 'source',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->source)),
+            'value' => CHtml::encode(Lookup::item('DonorshipSource',$model->source)),
         ),
         array(
             'name' => 'type',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
+            'value' => CHtml::encode(Lookup::item('DonorshipType',$model->type)),
         ),
         'delivery_year',
         array(

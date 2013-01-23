@@ -41,7 +41,7 @@ $this->menu=array(
         ),
         array(
             'name' => 'type',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
+            'value' => CHtml::encode(Lookup::item('CooperationType',$model->type)),
         ),
         'email',
         'contact_name',

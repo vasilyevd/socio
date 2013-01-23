@@ -12,17 +12,19 @@
 
             <div class="span5">
                 <strong><?php echo CHtml::link(CHtml::encode($data->donor->name),array('view','id'=>$data->id)); ?></strong>
-                <?php echo CHtml::encode($data->donor->email); ?>
+                <?php if (!empty($data->donor->email)): ?>
+                    <?php echo CHtml::encode($data->donor->email); ?>
+                <?php endif; ?>
             </div>
 
             <div class="pull-right">
                 <?php $this->widget('bootstrap.widgets.TbBadge', array(
                     'type' => 'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-                    'label' => CHtml::encode(Lookup::item('CooperationSource',$data->source)),
+                    'label' => CHtml::encode(Lookup::item('DonorshipSource',$data->source)),
                 )); ?>
                 <?php $this->widget('bootstrap.widgets.TbBadge', array(
                     'type' => 'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-                    'label' => CHtml::encode(Lookup::item('CooperationSource',$data->type)),
+                    'label' => CHtml::encode(Lookup::item('DonorshipType',$data->type)),
                 )); ?>
             </div>
         </div>
