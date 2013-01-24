@@ -162,6 +162,88 @@ INSERT INTO `org_announcement` VALUES (1,'Первая новость','<p></p><
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_catorganization`
+--
+
+DROP TABLE IF EXISTS `org_catorganization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_catorganization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `registration_date` date NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `region_id` int(11) DEFAULT NULL,
+  `chief_fio` varchar(128) DEFAULT NULL,
+  `registration_num` varchar(128) DEFAULT NULL,
+  `phone` varchar(128) DEFAULT NULL,
+  `website` varchar(128) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `organization_id` int(11) DEFAULT NULL,
+  `is_legal` tinyint(1) DEFAULT NULL,
+  `action_area` int(11) DEFAULT NULL,
+  `directions_more` varchar(128) DEFAULT NULL,
+  `logo` varchar(128) DEFAULT NULL,
+  `is_branch` tinyint(1) DEFAULT NULL,
+  `branch_master` varchar(128) DEFAULT NULL,
+  `is_verified` tinyint(1) DEFAULT NULL,
+  `word_name` varchar(128) DEFAULT NULL,
+  `word_registration_date` varchar(128) DEFAULT NULL,
+  `word_address` varchar(128) DEFAULT NULL,
+  `word_city` varchar(128) DEFAULT NULL,
+  `word_region` varchar(128) DEFAULT NULL,
+  `word_contact` varchar(128) DEFAULT NULL,
+  `word_contact_position` varchar(128) DEFAULT NULL,
+  `word_is_legal` tinyint(1) DEFAULT NULL,
+  `word_is_branch` tinyint(1) DEFAULT NULL,
+  `word_branch_master` varchar(128) DEFAULT NULL,
+  `word_registration_num` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_catorganization`
+--
+
+LOCK TABLES `org_catorganization` WRITE;
+/*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_catorganization_direction`
+--
+
+DROP TABLE IF EXISTS `org_catorganization_direction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_catorganization_direction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `catorganization_id` int(11) NOT NULL,
+  `direction_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`catorganization_id`),
+  KEY `image_id` (`direction_id`),
+  CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_catorganization_direction_ibfk_1` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_catorganization_direction`
+--
+
+LOCK TABLES `org_catorganization_direction` WRITE;
+/*!40000 ALTER TABLE `org_catorganization_direction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_catorganization_direction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_company`
 --
 
@@ -888,4 +970,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-23 16:06:20
+-- Dump completed on 2013-01-24 15:07:01
