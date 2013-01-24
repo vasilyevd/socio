@@ -5,9 +5,13 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<p>ТУТ кнопки: [Update] [Delete]<p>
-<p>ТУТ кнопки: [Update] [Delete]<p>
-<p>ТУТ кнопки: [Update] [Delete]<p>
+<?php echo CHtml::link('Изменить Организацию', array('update', 'id' => $model->id), array('class' => 'btn btn-success')); ?>
+
+<?php echo CHtml::link('Удалить Организацию', '#', array(
+    'submit' => array('delete', 'id' => $model->id),
+    'confirm' => 'Вы уверены, что хотите удалить данный элемент?',
+    'class' => 'btn btn-warning',
+)); ?>
 
 <h1><?php echo $model->name; ?></h1>
 

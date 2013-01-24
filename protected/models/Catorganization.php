@@ -55,8 +55,29 @@ class Catorganization extends CActiveRecord
     {
         return array(
             array('name, registration_date, address', 'required'),
-            array('address_id, city_id, region_id, organization, is_legal, action_area, is_branch, is_verified', 'numerical', 'integerOnly'=>true),
-            array('name, address, chief_fio, registration_num, phone, website, email, directions_more, logo, branch_master', 'length', 'max'=>128),
+            array('address_id, city_id, region_id, action_area', 'numerical', 'integerOnly'=>true),
+            array('name, address, chief_fio, registration_num, phone, website, email, directions_more, branch_master', 'length', 'max'=>128),
+            array('registration_date', 'date', 'format' => 'yyyy-MM-dd'),
+            array('action_area', 'in', 'range' => array(
+                Organization::ACTION_AREA_NATION, Organization::ACTION_AREA_REGION,
+                Organization::ACTION_AREA_DISTRICT, Organization::ACTION_AREA_CITY,
+                Organization::ACTION_AREA_COUNTRY,
+            )),
+            array('email', 'email'),
+            array('website', 'url'),
+            array('is_legal, is_branch, is_verified', 'boolean'),
+            // Upload handler.
+            array(
+                'logo',
+                'file',
+                'allowEmpty' => true,
+                // 'maxFiles' => 10,
+                'maxSize' => 2*(1024*1024), //2MB
+                'minSize' => 1024, //1KB
+                'types' => 'jpeg, jpg, gif, png',
+                // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
+            ),
+            array('directions, organization', 'safe'),
 
             // array('name', 'safe', 'on'=>'search'),
         );
@@ -156,5 +177,22 @@ class Catorganization extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is saved.
+     * @return boolean whether the record should be saved.
+     */
+    public function beforeSave()
+    {
+        // Upload handler.
+        $this->logo = CUploadedFile::getInstance($this, 'logo');
+
+        if ($this->isNewRecord) {
+            // Upload handler. Set default placeholder image.
+            $this->logo = $this->logo === null ? 'placeholder.jpg' : $this->logo;
+        }
+
+        return parent::beforeSave();
     }
 }

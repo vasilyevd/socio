@@ -4,9 +4,9 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Общественные Организации</h1>
-
 <?php echo CHtml::link('Добавить Организацию', array('create'), array('class' => 'btn btn-success')); ?>
+
+<h1>Общественные Организации</h1>
 
 <p>CGridView?<p>
 <p>CGridView?<p>

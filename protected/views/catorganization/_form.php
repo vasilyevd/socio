@@ -1,7 +1,19 @@
+<?php
+Yii::app()->clientScript->registerScript('branch-toggle', "
+$('.branch-trigger').change(function(){
+    $('.branch-toggle').toggle();
+    return false;
+});
+");
+?>
+
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'catorganization-form',
     'enableAjaxValidation' => false,
     'type' => 'horizontal',
+
+    // Upload handler.
+    'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
 
     <p class="help-block">Поля с <span class="required">*</span> обязательны.</p>
@@ -12,8 +24,8 @@
 
     <?php echo $form->datepickerRow($model, 'registration_date', array(
         'options' => array('format' => 'yyyy-mm-dd', 'weekStart' => 1),
-        'append' => '<i class="icon-calendar"></i>'));
-    ?>
+        'append' => '<i class="icon-calendar"></i>',
+    )); ?>
 
     <?php echo $form->textFieldRow($model,'address',array('class'=>'span5','maxlength'=>128)); ?>
 
@@ -52,29 +64,53 @@
 
     <?php echo $form->textFieldRow($model,'phone',array('class'=>'span5','maxlength'=>128)); ?>
 
-    <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-globe"></i>')); ?>
 
-    <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
     <?php echo $form->select2Row($model, 'organization', array(
-        'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
+        'asDropDownList' => false,
         'prompt' => '',
         'options' => array(
             'placeholder' => 'Выбрать...',
             'allowClear' => true,
-            'width' => '300px',
+            'width' => '400px',
+            'minimumInputLength' => 1,
+            'ajax' => array(
+                'url' => $this->createUrl('cooperation/dynamicSearchOrganizations'),
+                'quietMillis'=>500,
+                'dataType' => 'json',
+                'data' => 'js:function(term, page) {
+                    return { query: term };
+                }',
+                'results' => 'js:function(data, page) {
+                    return { results: data.organizations };
+                }',
+            ),
+            'formatResult' => 'js:function(model) {
+                markup = "<table><tr>";
+                markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
+                markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
+                markup += "</tr></table>";
+                return markup;
+            }',
+            'formatSelection' => 'js:function(model) {
+                return model.name;
+            }',
         ),
     )); ?>
 
     <?php echo $form->radioButtonListInlineRow($model, 'is_legal', array('' => 'Не известно', true => 'Да', false => 'Нет')); ?>
 
-    <?php echo $form->textFieldRow($model,'logo',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->fileFieldRow($model,'logo'); ?>
 
-    <?php echo $form->textFieldRow($model,'is_branch',array('class'=>'span5')); ?>
+    <?php echo $form->checkBoxRow($model, 'is_branch', array('class' => 'branch-trigger')); ?>
 
-    <?php echo $form->textFieldRow($model,'branch_master',array('class'=>'span5','maxlength'=>128)); ?>
+    <div class="branch-toggle"<?php echo empty($model->is_branch) ? ' style="display:none"' : ''; ?>>
+        <?php echo $form->textFieldRow($model,'branch_master',array('class'=>'span5','maxlength'=>128)); ?>
+    </div>
 
-    <?php echo $form->textFieldRow($model,'is_verified',array('class'=>'span5')); ?>
+    <?php echo $form->checkBoxRow($model, 'is_verified'); ?>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(

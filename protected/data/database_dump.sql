@@ -203,7 +203,7 @@ CREATE TABLE `org_catorganization` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +212,7 @@ CREATE TABLE `org_catorganization` (
 
 LOCK TABLES `org_catorganization` WRITE;
 /*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
+INSERT INTO `org_catorganization` VALUES (3,'test','2013-01-11','sdf sdfsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,'',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -970,4 +971,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-24 15:07:01
+-- Dump completed on 2013-01-24 17:56:49
