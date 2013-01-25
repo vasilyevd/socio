@@ -1,5 +1,6 @@
 <?php
 $this->sectionMain = 'org';
+$this->sectionMainSub='org';
 $this->contentClass = 'pading';
 $this->breadcrumbs=array(
     'Организации',

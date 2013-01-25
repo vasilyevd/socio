@@ -1,6 +1,7 @@
 <?php
 /** @var $this Controller */
 $this->sectionMain = "org";
+$this->sectionMainSub='org';
 $model = $this->escalation['organization'];
 
 $this->breadcrumbs = array_merge(array(

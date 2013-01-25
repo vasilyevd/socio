@@ -4,6 +4,7 @@ $this->layout='//layouts/main';
 $this->contentClass = 'pading';
 
 $this->sectionMain = "org";
+$this->sectionMainSub='main';
 $this->breadcrumbs=array(
     'Организации',
 );
@@ -36,6 +37,7 @@ $this->breadcrumbs=array(
                     'class'=>'bootstrap-widget',
                 ),
                 'options'=>array(
+	                  'fluid'=>true,
                     'autoPlay'=>true,
                     'showTime'=>10000,
                     'effect'=>'fade',

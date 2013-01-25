@@ -82,10 +82,12 @@
 				//the string, which will contain the button-html-code
 				var buttons = '';
 
+                if(settings.theme!==false) vars.container.addClass(vars.prefix + settings.theme); //lsd
+
 				//add prev/next-buttons
 				if (settings.controlsPrevNext) {
 					vars.container.addClass(vars.prefix + 'controls-prev-next');
-					buttons = '<a class="' + vars.prefix + 'prev ' + vars.prefix + 'btn">' + settings.prevText + '</a><a class="' + vars.prefix + 'next ' + vars.prefix + 'btn">' + settings.nextText + '</a>';
+					buttons = '<a class="' + vars.prefix + 'prev ' + vars.prefix + 'btn" style="' + settings.prevStyle + '">' + settings.prevText + '</a><a class="' + vars.prefix + 'next ' + vars.prefix + 'btn" style="' + settings.nextStyle + '">' + settings.nextText + '</a>'; // lsd upd
 					vars.container.append(buttons);
 
 					vars.buttons.prev = vars.container.find('.' + vars.prefix + 'prev');
@@ -165,12 +167,32 @@
 				$.each(sliderStyles, function(i, cssAttribute){
 					style = $.trim(cssAttribute);
 					vars.container.css(style, $slider.css(style));
+                    if(settings.fluid === true) {
+                        if(style==='width'){
+                            var realCSSWidht = (100 * parseFloat($slider.css(style))/parseFloat($slider.parent().css(style)));
+                            if(realCSSWidht<100){
+                                vars.container.css(style, realCSSWidht + '%');
+                            } else {
+                                vars.container.css(style, '');
+                            }
+                        }
+                        if(style==='margin-left' && (parseInt($slider.css('margin-left'))==0 && $slider.position().left > 0)) {
+                            vars.container.css(style, 'auto');
+                        }
+                        if(style==='margin-right' && (parseInt($slider.css('margin-right'))<=0 && $slider.position().left > 0)) {
+                            vars.container.css(style, 'auto');
+                        }
+                    }
 					$slider.css(style, ' ');
 					switch(style){
 						case 'width':
 						case 'height':
 							$slider.css(style, '100%');
 							break;
+                        case 'padding-right':
+                        case 'padding-left':
+                            $slider.css(style, '');
+                            break;
 					}
 				});
 				if(vars.container.css('position') == 'static'){
@@ -186,7 +208,7 @@
 				//style items
 				vars.items.css({
 					margin: 0,
-					width: $slider.css('width'),
+				    width: (settings.fluid === true)?'100%':$slider.css('width'),
 					height: $slider.css('height'),
 					position: 'absolute',
 					top: 0,
@@ -769,14 +791,19 @@
 		slideNextDirection: 'toRight',
 		//text for the prev-button
 		prevText: 'prev',
+        prevStyle: '',
 		//text for the next-button
 		nextText: 'next',
+        nextStyle: '',
 		//text for the play-button
 		playText: 'play',
 		//text for the pause-button
 		pauseText: 'pause',
 		//style which will be transfered to the containerelement
 		styles: 'position,top,right,bottom,left,margin-top,margin-right,margin-bottom,margin-left,width,height',
+        //need fluid container (width by persents, not px)
+        fluid: false,
+        theme: '',
 		//callbacks
 		//the function, which is started bofore anything is done by this script
 		callBeforeInit: function () {

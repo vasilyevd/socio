@@ -11,11 +11,15 @@ class Controller extends CController
      */
     public $layout='//layouts/column1';
 
+	//=====================================
 	// Declarate for ALL TYPE OF SITE MENU's
 
     /** @var array context menu items. This property will be assigned to {@link CMenu::items}.
      */
     public $menu=array();
+
+		/** @var array containe the submenu items of main menu - по сути это разделы сайтов Доступность, Организации... */
+		public $_subMenu = array();
 	/** @var array */
     public $menu_org;
 
@@ -32,6 +36,8 @@ class Controller extends CController
 	 * can be showed in different parts of page
 	 */
 	public $menu_operations;
+
+	//=====================================
 
 	/** @var string variable for add description of page */
 	public $pageDescription=NULL;

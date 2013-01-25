@@ -63,14 +63,15 @@
 @buttonBackgroundColor: #111;
 @buttonBackgroundAlfa: 0.45;
 
-@PrevButtonLeft: 0;
+@PrevButtonLeft: -10px;
 @PrevButtonV: bottom;
 
-@NextButtonRight: 0;
+@NextButtonRight: -10px;
 
 
 
 // ======= CSS =====
+.rhino-socio {
 .rhino-btn {
 	z-index:10;
 	width: @buttonWidth;
@@ -82,21 +83,29 @@
 
 .rhino-prev, .rhino-next {
     .positionV(@buttonPositionV);
-    .rgba(@buttonBackgroundColor, @buttonBackgroundAlfa);
+    //.rgba(@buttonBackgroundColor, @buttonBackgroundAlfa);
+    background-repeat: no-repeat;
+    opacity: 0.6;
 }
 
 .rhino-prev {
 	left: @PrevButtonLeft;
+  background-image: url("/images/icons/slider-arrow-left.png");
+  background-position: left top;
 }
 
 .rhino-next {
 	right: @NextButtonRight;
+  background-image: url("/images/icons/slider-arrow-right.png");
+  background-position: right top;
 }
 
 .rhino-prev:hover {
+    background-image: url("/images/icons/slider-arrow-left-hover.png");
 }
 
 .rhino-next:hover {
+    background-image: url("/images/icons/slider-arrow-right-hover.png");
 }
 
 .rhino-toggle {
@@ -222,4 +231,6 @@
 .rhino-bullets li a.rhino-bullet.rhino-active-bullet {
 	color: @bulletTextColorActive;
 	background: @bulletBGColorActive;
+}
+
 }

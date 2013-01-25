@@ -69,42 +69,78 @@
 		<div id="main-menu" style="height: 25px; margin: 10px 0;">
 			<!-- MAIN MENU -->
 			<?php
-			$this->widget('bootstrap.widgets.TbMenu', array(
-							'type'=>'pills',
-							//'htmlOptions'=>array('class'=>'nav-pills'),
+			$menu = $this->beginWidget('zii.widgets.TbMenu', array(
+					'type'=>'pills',
+					//'htmlOptions'=>array('class'=>'nav-pills'),
+					'items'=>array(
+						array('label'=>'Организации',
+							'url'=>array('/organization/index'),
+							'active'=>$this->sectionMain == 'org',
 							'items'=>array(
-								array('label'=>'Организации',
-									'url'=>array('/organization/index'),
-									'active'=>$this->sectionMain == 'org'
-								),
-								array('label'=>'Доступность',
-									'url'=>array('/object/main'),
-									'active'=>$this->sectionMain == 'obj'
-								),
-								array('label'=>'Инфраструктура',
-									'url'=>array('/object/index'),
-									'active'=>$this->sectionMain == 'inf'
-								),
-								'',
-								array('label'=>'Справка',
-									'url'=>array('/site/page', 'view'=>'faq'),
-								),
-								array('label'=>'О проекте',
-									'url'=>array('/site/about', 'page'=>'comanda'),
-									'active'=>$this->sectionMain == 'about'
-								),
-							),
+								array('label'=>'Главная', 'url'=>array('/organization/index'), 'active'=>$this->sectionMainSub=='main'),
+								array('label'=>'Организации', 'url'=>array('/organization/search'), 'active'=>$this->sectionMainSub=='org'),
+								array('label'=>'Власть', 'url'=>'', 'active'=>$this->sectionMainSub=='gov'),
+								array('label'=>'Бизнес', 'url'=>'', 'active'=>$this->sectionMainSub=='commerce'),
+								array('label'=>'СМИ', 'url'=>'', 'active'=>$this->sectionMainSub=='smi'),
+								array('label'=>'Открытость', 'url'=>array('#'), 'active'=>$this->sectionMainSub=='open'),
+							)
+						),
+						array('label'=>'Доступность',
+							'url'=>array('/object/main'),
+							'active'=>$this->sectionMain == 'obj',
+							'items'=>array(
+								array('label'=>'Главная', 'url'=>array('/object/main'), 'active'=>$this->sectionMainSub=='main'),
+								array('label'=>'Карта', 'url'=>array('/map/index'), 'active'=>$this->sectionMainSub=='map'),
+								array('label'=>'Инфраструктура', 'url'=>'', 'active'=>$this->sectionMainSub=='infrastructure'),
+								array('label'=>'Территории', 'url'=>'', 'active'=>$this->sectionMainSub=='teritory'),
+								array('label'=>'Информация', 'url'=>array('/info/index'), 'active'=>$this->sectionMainSub=='info'),
+								array('label'=>'Статистика', 'url'=>'', 'active'=>$this->sectionMainSub=='stat'),
+							)
+						),
+						array('label'=>'Инфраструктура',
+							'url'=>'',
+							'active'=>$this->sectionMain == 'inf'
+						),
+						'',
+						array('label'=>'Справка',
+							'url'=>array('/site/page', 'view'=>'faq'),
+						),
+						array('label'=>'О проекте',
+							'url'=>array('/site/about', 'page'=>'comanda'),
+							'active'=>$this->sectionMain == 'about'
+						),
+					),
 				));
 
+			foreach ($menu->items as $key=>$item) {
+			if ($item['active'] && !empty($item['items'])) {
+				$this->_subMenu = $item['items'];
+			}
+			unset($menu->items[$key]['items']);
+		}
+
+			$this->endWidget();
 			?>
 		</div>
 	</div>
 
 	<div id="section-header" style="background: none repeat scroll 0 0 #CECECE; height: 110px; margin-bottom: 10px;">
-		<div class="container">
-			<div class="mainlogo" style="">
+		<div class="container" style="position: relative;">
+			<div class="mainlogo" style="float: left;">
 				<?=CHtml::link(CHtml::image(Yii::app()->request->baseUrl.'/images/logo.png', 'logo', array('style'=>'padding: 13px;')), '/', array('style'=>'outline:none;')); ?>
 			</div>
+
+			<div id="collapse_submenu" class="" style="bottom: 0; left: 200px; padding-left: 20px; position: absolute;">
+			<?php
+			if (isset($this->_subMenu)) {
+				$this->widget('zii.widgets.TbMenu', array(
+						'type'=>'pills',
+						'items' => $this->_subMenu,
+					));
+			}
+			?>
+			</div>
+
 		</div>
 	</div>
 
@@ -150,6 +186,11 @@
 			</div>
 			</div></div>
 	</div>
+<div>
+	T: <?=sprintf('%0.5f',Yii::getLogger()->getExecutionTime())?> с.,
+	M: <? echo round(memory_get_peak_usage()/(1024*1024),2)."MB"?>,
+	DB: <?php print_r(Yii::app()->db->getStats()); ?>
+</div>
 
 </body>
 </html>

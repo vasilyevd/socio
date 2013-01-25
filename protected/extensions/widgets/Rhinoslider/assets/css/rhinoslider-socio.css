@@ -1,4 +1,4 @@
-.rhino-btn {
+.rhino-socio .rhino-btn {
   z-index: 10;
   width: 56px;
   height: 100%;
@@ -10,45 +10,51 @@
   -o-user-select: none;
   user-select: none;
 }
-.rhino-prev,
-.rhino-next {
+.rhino-socio .rhino-prev,
+.rhino-socio .rhino-next {
   bottom: 0;
-  background-color: #111111;
-  background-color: rgba(18, 18, 18, 0.45);
-  zoom: 1;
-  background-color: transparent\9;
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212)";
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212);
+  background-repeat: no-repeat;
+  opacity: 0.6;
 }
-.rhino-prev {
-  left: 0;
+.rhino-socio .rhino-prev {
+  left: -10px;
+  background-image: url("/images/icons/slider-arrow-left.png");
+  background-position: left top;
 }
-.rhino-next {
-  right: 0;
+.rhino-socio .rhino-next {
+  right: -10px;
+  background-image: url("/images/icons/slider-arrow-right.png");
+  background-position: right top;
 }
-.rhino-toggle {
+.rhino-socio .rhino-prev:hover {
+  background-image: url("/images/icons/slider-arrow-left-hover.png");
+}
+.rhino-socio .rhino-next:hover {
+  background-image: url("/images/icons/slider-arrow-right-hover.png");
+}
+.rhino-socio .rhino-toggle {
   top: -4px;
   left: -6px;
 }
-.rhino-play {
+.rhino-socio .rhino-play {
   background-position: 0 0;
 }
-.rhino-play:hover {
+.rhino-socio .rhino-play:hover {
   background-position: 0 -53px;
 }
-.rhino-pause {
+.rhino-socio .rhino-pause {
   background-position: -56px 0;
 }
-.rhino-pause:hover {
+.rhino-socio .rhino-pause:hover {
   background-position: -56px -53px;
 }
-.rhino-container {
+.rhino-socio .rhino-container {
   position: relative;
 }
-.rhino-container ul li {
+.rhino-socio .rhino-container ul li {
   list-style: none outside none;
 }
-.rhino-caption {
+.rhino-socio .rhino-caption {
   position: absolute;
   background: #000;
   display: none;
@@ -64,12 +70,12 @@
   -o-user-select: none;
   user-select: none;
 }
-.rhino-nav {
+.rhino-socio .rhino-nav {
   position: absolute;
   left: 50%;
   bottom: 0;
 }
-.rhino-bullets {
+.rhino-socio .rhino-bullets {
   position: relative;
   left: -50%;
   z-index: 10;
@@ -78,7 +84,7 @@
   background: #ffffff;
   height: 20px;
 }
-.rhino-bullets .rhino-btn {
+.rhino-socio .rhino-bullets .rhino-btn {
   width: 56px;
   height: 100%;
   display: block;
@@ -89,8 +95,8 @@
   -o-user-select: none;
   user-select: none;
 }
-.rhino-bullets .rhino-prev,
-.rhino-bullets .rhino-next {
+.rhino-socio .rhino-bullets .rhino-prev,
+.rhino-socio .rhino-bullets .rhino-next {
   bottom: 0;
   background-color: #111111;
   background-color: rgba(18, 18, 18, 0.45);
@@ -99,19 +105,19 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212)";
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#73121212, endColorstr=#73121212);
 }
-.rhino-bullets .rhino-prev {
-  left: 0;
+.rhino-socio .rhino-bullets .rhino-prev {
+  left: -10px;
 }
-.rhino-bullets .rhino-next {
-  right: 0;
+.rhino-socio .rhino-bullets .rhino-next {
+  right: -10px;
 }
-.rhino-bullets li {
+.rhino-socio .rhino-bullets li {
   float: left;
   display: inline;
   margin: 0 0px;
 }
-.rhino-bullets li a.rhino-bullet,
-.rhino-bullets li a.rhino-bullet-nav {
+.rhino-socio .rhino-bullets li a.rhino-bullet,
+.rhino-socio .rhino-bullets li a.rhino-bullet-nav {
   display: block;
   height: 20px;
   line-height: 20px;
@@ -127,24 +133,24 @@
   -o-user-select: none;
   user-select: none;
 }
-.rhino-bullets li a.rhino-bullet {
+.rhino-socio .rhino-bullets li a.rhino-bullet {
   width: 14px;
   padding: 0px 2px;
 }
-.rhino-bullets li a.rhino-bullet-nav {
+.rhino-socio .rhino-bullets li a.rhino-bullet-nav {
   padding: 0px 5px;
 }
-.rhino-bullets li a.rhino-bullet:hover,
-.rhino-bullets li a.rhino-bullet:focus {
+.rhino-socio .rhino-bullets li a.rhino-bullet:hover,
+.rhino-socio .rhino-bullets li a.rhino-bullet:focus {
   color: #ffffff;
   background: #cccccc;
 }
-.rhino-bullets li a.rhino-bullet-nav:hover,
-.rhino-bullets li a.rhino-bullet-nav:focus {
+.rhino-socio .rhino-bullets li a.rhino-bullet-nav:hover,
+.rhino-socio .rhino-bullets li a.rhino-bullet-nav:focus {
   color: #ffffff;
   background: #cccccc;
 }
-.rhino-bullets li a.rhino-bullet.rhino-active-bullet {
+.rhino-socio .rhino-bullets li a.rhino-bullet.rhino-active-bullet {
   color: #ffffff;
   background: #696969;
 }

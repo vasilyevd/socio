@@ -7,6 +7,48 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
+@font-face {
+  font-family: 'PTSans';
+  src: url('/fonts/PTS55F-webfont.eot');
+  src: url('/fonts/PTS55F-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/PTS55F-webfont.woff') format('woff'), url('/fonts/PTS55F-webfont.ttf') format('truetype'), url('/fonts/PTS55F-webfont.svg#PTSansRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PTSans';
+  src: url('/fonts/PTS75F-webfont.eot');
+  src: url('/fonts/PTS75F-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/PTS75F-webfont.woff') format('woff'), url('/fonts/PTS75F-webfont.ttf') format('truetype'), url('/fonts/PTS75F-webfont.svg#PTSansBold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PTSans';
+  src: url('/fonts/PTS56F-webfont.eot');
+  src: url('/fonts/PTS56F-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/PTS56F-webfont.woff') format('woff'), url('/fonts/PTS56F-webfont.ttf') format('truetype'), url('/fonts/PTS56F-webfont.svg#PTSansItalic') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'PTSans';
+  src: url('/fonts/PTS76F-webfont.eot');
+  src: url('/fonts/PTS76F-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/PTS76F-webfont.woff') format('woff'), url('/fonts/PTS76F-webfont.ttf') format('truetype'), url('/fonts/PTS76F-webfont.svg#PTSansBoldItalic') format('svg');
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'PTSansNarrow';
+  src: url('/fonts/PTN57F-webfont.eot');
+  src: url('/fonts/PTN57F-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/PTN57F-webfont.woff') format('woff'), url('/fonts/PTN57F-webfont.ttf') format('truetype'), url('/fonts/PTN57F-webfont.svg#PTSansNarrowRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PTSansNarrow';
+  src: url('/fonts/PTN77F-webfont.eot');
+  src: url('/fonts/PTN77F-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/PTN77F-webfont.woff') format('woff'), url('/fonts/PTN77F-webfont.ttf') format('truetype'), url('/fonts/PTN77F-webfont.svg#PTSansNarrowBold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
 article,
 aside,
 details,
@@ -189,31 +231,6 @@ img.pull-left {
 .copyright em {
   color: #ff5500;
 }
-.link-menu a {
-  margin: 0 5px;
-}
-.rounded li {
-  background-image: url("/images/li21.png");
-  background-repeat: no-repeat;
-  list-style: none outside none;
-  line-height: 21px;
-  padding-left: 30px;
-  padding-right: 10px;
-  background-position: 10px 0;
-}
-.rounded li:hover {
-  background-position: 10px -21px;
-  background-color: rgba(108, 0, 0, 0.62);
-}
-.rounded li,
-.rounded li a {
-  color: #000000;
-  display: block;
-}
-.rounded li:hover,
-.rounded li a:hover {
-  text-decoration: none;
-}
 .clearfix {
   *zoom: 1;
 }
@@ -241,50 +258,6 @@ img.pull-left {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.columns5 {
-  -webkit-column-count: 5;
-  -moz-column-count: 5;
-  column-count: 5;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
-  -moz-column-rule: 1px solid #cccccc;
-  -webkit-column-rule: 1px solid #cccccc;
-  column-rule: 1px solid #cccccc;
-}
-.columns4 {
-  -webkit-column-count: 4;
-  -moz-column-count: 4;
-  column-count: 4;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
-  -moz-column-rule: 1px solid #cccccc;
-  -webkit-column-rule: 1px solid #cccccc;
-  column-rule: 1px solid #cccccc;
-}
-.columns3 {
-  -webkit-column-count: 3;
-  -moz-column-count: 3;
-  column-count: 3;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
-  -moz-column-rule: 1px solid #cccccc;
-  -webkit-column-rule: 1px solid #cccccc;
-  column-rule: 1px solid #cccccc;
-}
-.columns2 {
-  -webkit-column-count: 2;
-  -moz-column-count: 2;
-  column-count: 2;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
-  -moz-column-rule: 1px solid #cccccc;
-  -webkit-column-rule: 1px solid #cccccc;
-  column-rule: 1px solid #cccccc;
-}
 .tal {
   text-align: left;
 }
@@ -293,48 +266,6 @@ img.pull-left {
 }
 .tac {
   text-align: center;
-}
-@font-face {
-  font-family: 'PTSans';
-  src: url('PTS55F-webfont.eot');
-  src: url('PTS55F-webfont.eot?#iefix') format('embedded-opentype'), url('PTS55F-webfont.woff') format('woff'), url('PTS55F-webfont.ttf') format('truetype'), url('PTS55F-webfont.svg#PTSansRegular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'PTSans';
-  src: url('PTS75F-webfont.eot');
-  src: url('PTS75F-webfont.eot?#iefix') format('embedded-opentype'), url('PTS75F-webfont.woff') format('woff'), url('PTS75F-webfont.ttf') format('truetype'), url('PTS75F-webfont.svg#PTSansBold') format('svg');
-  font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'PTSans';
-  src: url('PTS56F-webfont.eot');
-  src: url('PTS56F-webfont.eot?#iefix') format('embedded-opentype'), url('PTS56F-webfont.woff') format('woff'), url('PTS56F-webfont.ttf') format('truetype'), url('PTS56F-webfont.svg#PTSansItalic') format('svg');
-  font-weight: normal;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'PTSans';
-  src: url('PTS76F-webfont.eot');
-  src: url('PTS76F-webfont.eot?#iefix') format('embedded-opentype'), url('PTS76F-webfont.woff') format('woff'), url('PTS76F-webfont.ttf') format('truetype'), url('PTS76F-webfont.svg#PTSansBoldItalic') format('svg');
-  font-weight: bold;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'PTSansNarrow';
-  src: url('PTN57F-webfont.eot');
-  src: url('PTN57F-webfont.eot?#iefix') format('embedded-opentype'), url('PTN57F-webfont.woff') format('woff'), url('PTN57F-webfont.ttf') format('truetype'), url('PTN57F-webfont.svg#PTSansNarrowRegular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'PTSansNarrow';
-  src: url('PTN77F-webfont.eot');
-  src: url('PTN77F-webfont.eot?#iefix') format('embedded-opentype'), url('PTN77F-webfont.woff') format('woff'), url('PTN77F-webfont.ttf') format('truetype'), url('PTN77F-webfont.svg#PTSansNarrowBold') format('svg');
-  font-weight: bold;
-  font-style: normal;
 }
 body {
   margin: 0;
@@ -397,6 +328,59 @@ a:hover {
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   width: 955px;
+}
+input.span-1,
+textarea.span-1,
+input.span-2,
+textarea.span-2,
+input.span-3,
+textarea.span-3,
+input.span-4,
+textarea.span-4,
+input.span-5,
+textarea.span-5,
+input.span-6,
+textarea.span-6,
+input.span-7,
+textarea.span-7,
+input.span-8,
+textarea.span-8,
+input.span-9,
+textarea.span-9,
+input.span-10,
+textarea.span-10,
+input.span-11,
+textarea.span-11,
+input.span-12,
+textarea.span-12,
+input.span-13,
+textarea.span-13,
+input.span-14,
+textarea.span-14,
+input.span-15,
+textarea.span-15,
+input.span-16,
+textarea.span-16,
+input.span-17,
+textarea.span-17,
+input.span-18,
+textarea.span-18,
+input.span-19,
+textarea.span-19,
+input.span-20,
+textarea.span-20,
+input.span-21,
+textarea.span-21,
+input.span-22,
+textarea.span-22,
+input.span-23,
+textarea.span-23,
+input.span-24,
+textarea.span-24 {
+  border-left-width: 1px;
+  border-right-width: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .span12 {
   width: 955px;
