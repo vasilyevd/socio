@@ -6,6 +6,7 @@
 /foto/*
 protected/runtime/*
 protected/config/Config_DB.php
+protected/config/Config_Cache.php
 .idea/
 cgi-bin/
 .htaccess
