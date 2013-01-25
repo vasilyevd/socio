@@ -7,6 +7,7 @@
 class TabularBehavior extends CActiveRecordBehavior
 {
     public $relations = array();
+    public $delete = array();
     private $_settings;
 
     /**
@@ -21,7 +22,7 @@ class TabularBehavior extends CActiveRecordBehavior
             $this->_settings = $this->owner->relations();
         }
 
-        foreach ($this->relations as $rel => $options) {
+        foreach ($this->relations as $rel) {
             // Call owners tabular method.
             $method = $rel . 'Tabular';
             list($valid, $tabular) = $this->owner->$method();
@@ -44,7 +45,7 @@ class TabularBehavior extends CActiveRecordBehavior
      */
     public function beforeSave()
     {
-        foreach ($this->relations as $rel => $options) {
+        foreach ($this->relations as $rel) {
             if ($this->_settings[$rel][0] === CActiveRecord::MANY_MANY ||
                 $this->_settings[$rel][0] === CActiveRecord::HAS_MANY
             ) {
@@ -72,10 +73,10 @@ class TabularBehavior extends CActiveRecordBehavior
      */
     public function afterSave()
     {
-        foreach ($this->relations as $rel => $options) {
+        foreach ($this->relations as $rel) {
             if ($this->_settings[$rel][0] === CActiveRecord::HAS_MANY) {
                 // If set delete option.
-                if (array_key_exists('delete', $options) && $options['delete'] === true) {
+                if (in_array($rel, $this->delete)) {
                     // Find all related models with null ID link.
                     $deleteModels = call_user_func($this->_settings[$rel][1] . '::model')->findAllByAttributes(array($this->_settings[$rel][2] => null));
                     foreach ($deleteModels as $m) {

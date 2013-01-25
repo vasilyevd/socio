@@ -93,9 +93,7 @@ class Donorship extends CActiveRecord
             ),
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    'donor' => array(),
-                ),
+                'relations' => array('name'),
             ),
         );
     }

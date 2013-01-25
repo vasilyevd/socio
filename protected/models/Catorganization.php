@@ -77,7 +77,16 @@ class Catorganization extends CActiveRecord
                 'types' => 'jpeg, jpg, gif, png',
                 // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
             ),
-            array('directions, organization', 'safe'),
+            array('organization', 'exist', 'attributeName' => 'id', 'className' => 'Organization'),
+            array(
+                'directions',
+                'ext.validators.ArrayValidator',
+                'validator' => 'exist',
+                'params' => array(
+                    'attributeName' => 'id',
+                    'className' => 'Direction',
+                ),
+            ),
 
             // array('name', 'safe', 'on'=>'search'),
         );
@@ -185,9 +194,6 @@ class Catorganization extends CActiveRecord
      */
     public function beforeSave()
     {
-        // Upload handler.
-        $this->logo = CUploadedFile::getInstance($this, 'logo');
-
         if ($this->isNewRecord) {
             // Upload handler. Set default placeholder image.
             $this->logo = $this->logo === null ? 'placeholder.jpg' : $this->logo;

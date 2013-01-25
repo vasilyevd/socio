@@ -115,11 +115,8 @@ class Massmedia extends CActiveRecord
             ),
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    'tags' => array(),
-                    'links' => array('delete' => true),
-                    'files' => array('delete' => true),
-                ),
+                'relations' => array('tags', 'links', 'files'),
+                'delete' => array('links', 'files'),
             ),
         );
     }
@@ -305,7 +302,7 @@ class Massmedia extends CActiveRecord
 
             $model->attributes = $attributes;
             // Upload handler.
-            $model->name = CUploadedFile::getInstance($model, "[$i]name");
+            $model->setUploadOffset($i);
 
             $valid = $model->validate() && $valid;
             $tabular[] = $model;
