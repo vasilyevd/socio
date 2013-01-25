@@ -195,8 +195,9 @@ class CooperationController extends Controller
     /**
      * Search organizations by its name.
      * @param string $query organization name to search.
+     * @param string $modelName the name of Organization model to search.
      */
-    public function actionDynamicSearchOrganizations($query)
+    public function actionDynamicSearchOrganizations($query, $modelName = 'Organization')
     {
         header('Content-type: application/json');
 
@@ -204,7 +205,7 @@ class CooperationController extends Controller
         $criteria = new CDbCriteria();
         $criteria->compare('name', $query, true);
         $criteria->limit = 5;
-        $organizations = Organization::model()->findAll($criteria);
+        $organizations = $modelName::model()->findAll($criteria);
 
         // // Add dummy organization to allow user selection.
         // $dummy = new Organization;

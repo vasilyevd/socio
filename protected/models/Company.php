@@ -14,10 +14,16 @@
  */
 class Company extends CActiveRecord
 {
+    public $compareDate;
+    public $compareDateType;
+
     const TYPE_INFORMATIONAL = 1;
     const TYPE_ADVERTISEMENT = 2;
     const TYPE_LEGAL = 3;
     const TYPE_PR = 4;
+
+    const COMPARE_DATE_TYPE_BEFORE = 1;
+    const COMPARE_DATE_TYPE_AFTER = 2;
 
     /**
      * Returns the static model of the specified AR class.
@@ -51,7 +57,7 @@ class Company extends CActiveRecord
                 self::TYPE_LEGAL, self::TYPE_PR,
             )),
 
-            // array('id, name, type, description', 'safe', 'on'=>'search'),
+            array('type, compareDate, compareDateType', 'safe', 'on'=>'search'),
         );
     }
 
@@ -91,6 +97,10 @@ class Company extends CActiveRecord
             'description' => 'Описание',
             'organization_id' => 'Организация',
             'massmedias' => 'Элементы СМИ',
+            'min_date' => 'Минимальная Дата',
+            'max_date' => 'Максимальная Дата',
+            'compareDate' => 'Сравнить Даты',
+            'compareDateType' => 'Тип Сравнения Даты',
         );
     }
 
@@ -100,19 +110,55 @@ class Company extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
+        $criteria = new CDbCriteria;
 
-        $criteria=new CDbCriteria;
+        // Relation.
+        $criteria->with = array();
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('type',$this->type);
-        $criteria->compare('description',$this->description,true);
+        // Relation BELONGS_TO search.
+        if (!empty($this->organization)) {
+            $criteria->with = array_merge($criteria->with, array(
+                'organization',
+            ));
+            $criteria->compare('organization.id', $this->organization);
+        }
+
+        // Check date range.
+        if (!empty($this->compareDate)) {
+            $criteria->params = array_merge($criteria->params, array(
+                ':compareDate' => $this->compareDate,
+            ));
+            // Select compare mode.
+            if ($this->compareDateType == self::COMPARE_DATE_TYPE_BEFORE) {
+                // Find all before 'compareDate'.
+                $criteria->addCondition('t.max_date <= :compareDate');
+            } elseif ($this->compareDateType == self::COMPARE_DATE_TYPE_AFTER) {
+                // Find all after 'compareDate'.
+                $criteria->addCondition('t.min_date >= :compareDate');
+            } else {
+                // Find all in date range.
+                $criteria->addCondition('t.min_date <= :compareDate');
+                $criteria->addCondition('t.max_date >= :compareDate');
+            }
+        }
+
+        $criteria->compare('t.type', $this->type);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked after the record is saved.
+     */
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        // Update date ranges ('min_date' and 'max_date') for company.
+        $this->isNewRecord = false;
+        $this->updateDateRange();
     }
 
     /**
@@ -133,5 +179,30 @@ class Company extends CActiveRecord
         }
 
         return $models;
+    }
+
+    /**
+     * Updates 'min_date' and 'max_date' for current model, based on it's
+     * massmedias 'publication_date' and 'create_time'.
+     */
+    public function updateDateRange()
+    {
+        // Create query.
+        $query = 'SELECT MIN(rdate) AS rmindate, MAX(rdate) AS rmaxdate FROM (SELECT IF (publication_date IS NULL, date(create_time), publication_date) AS rdate FROM org_massmedia WHERE company_id=:company_id) AS t2';
+        $command = Yii::app()->db->createCommand($query);
+        $command->bindValue(':company_id', $this->id);
+        $result = $command->queryRow();
+
+        // Set new range values.
+        if ($result) {
+            $this->min_date = $result['rmindate'];
+            $this->max_date = $result['rmaxdate'];
+        } else {
+            $this->min_date = '0000-00-00';
+            $this->max_date = '0000-00-00';
+        }
+
+        // Update record.
+        $this->saveAttributes(array('min_date', 'max_date'));
     }
 }

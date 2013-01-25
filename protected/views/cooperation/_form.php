@@ -12,7 +12,7 @@
     <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('CooperationSource')); ?>
 
     <?php echo $form->select2Row($model, 'type', array(
-        'data' => Lookup::items('CooperationSource'),
+        'data' => Lookup::items('CooperationType'),
         // 'asDropDownList' => false, // Tag mode.
         // 'multiple' => true, // Multiple mode without 'asDropDownList'.
         'prompt' => '', // Blank for all drop.

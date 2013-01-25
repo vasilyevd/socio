@@ -9,10 +9,10 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('CooperationSource')); ?>
+    <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('SupportSource')); ?>
 
     <?php echo $form->select2Row($model, 'type', array(
-        'data' => Lookup::items('CooperationSource'),
+        'data' => Lookup::items('SupportType'),
         // 'asDropDownList' => false, // Tag mode.
         // 'multiple' => true, // Multiple mode without 'asDropDownList'.
         'prompt' => '', // Blank for all drop.

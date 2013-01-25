@@ -1,7 +1,7 @@
 <?php
-$conf_log=array(
 
-            'class'=>'CLogRouter',
+$conf_log=array(
+'class'=>'CLogRouter',
             'routes'=>array(
 
                 array(
@@ -10,14 +10,14 @@ $conf_log=array(
                 ),
                 // uncomment the following to show log messages on web pages
 
-                
+                /*
                 array(
                         'class'=>'CWebLogRoute',
                         //'categories' => 'application, system.db.CDbCommand',
                         //'levels'=>'error, warning, trace, profile, info',
                         //'showInFireBug' => true,
                 ),
-                
+                */
 
                 /*
                 array(

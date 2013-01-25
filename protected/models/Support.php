@@ -12,6 +12,17 @@
  */
 class Support extends CActiveRecord
 {
+    const SOURCE_INTERNATIONAL = 1;
+    const SOURCE_CHARITABLE = 2;
+    const SOURCE_GOVERNMENT = 3;
+    const SOURCE_BUSINESS = 4;
+
+    const TYPE_ADMINISTRATIVE = 1;
+    const TYPE_PROJECT_SUPPORT = 2;
+    const TYPE_ECONOMIC_ACTIVITY = 3;
+    const TYPE_TOOLS_AND_EQUIPMENT = 4;
+    const TYPE_FINANCIAL_EDUCATION = 5;
+
     const FUNDS_10K = 1;
     const FUNDS_20K = 2;
     const FUNDS_80K = 3;
@@ -46,12 +57,13 @@ class Support extends CActiveRecord
             array('link', 'length', 'max'=>128),
             array('linkOrganization', 'safe'),
             array('source', 'in', 'range' => array(
-                Cooperation::SOURCE_INTERNATIONAL, Cooperation::SOURCE_PUBLIC,
-                Cooperation::SOURCE_GOVERNMENT, Cooperation::SOURCE_BUSINESS,
+                self::SOURCE_INTERNATIONAL, self::SOURCE_CHARITABLE,
+                self::SOURCE_GOVERNMENT, self::SOURCE_BUSINESS,
             )),
             array('type', 'in', 'range' => array(
-                Cooperation::TYPE_SOME, Cooperation::TYPE_OTHER,
-                Cooperation::TYPE_MORE,
+                self::TYPE_ADMINISTRATIVE, self::TYPE_PROJECT_SUPPORT,
+                self::TYPE_ECONOMIC_ACTIVITY, self::TYPE_TOOLS_AND_EQUIPMENT,
+                self::TYPE_FINANCIAL_EDUCATION,
             )),
             array('funds', 'in', 'range' => array(
                 self::FUNDS_10K, self::FUNDS_20K,
@@ -114,8 +126,8 @@ class Support extends CActiveRecord
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization_id' => 'Организация',
-            'source' => 'Источник',
-            'type' => 'Вид Деятельности',
+            'source' => 'Источник Донорства',
+            'type' => 'Целевое Назначение',
             'logo' => 'Логотип Организации',
             'delivery_year' => 'Год Вручения',
             'funds' => 'Средства',

@@ -12,9 +12,18 @@
  */
 class Donorship extends CActiveRecord
 {
+    public $donorNewName;
+
     const SOURCE_INTERNATIONAL = 1;
-    const SOURCE_COUNTRY = 2;
-    const SOURCE_PRIVATE = 3;
+    const SOURCE_NATIONAL = 2;
+    const SOURCE_REGIONAL = 3;
+    const SOURCE_PRIVATE = 4;
+
+    const TYPE_FUNDING = 1;
+    const TYPE_ASSETS_AND_CIRCULATION = 2;
+    const TYPE_REPAIR_WORK = 3;
+    const TYPE_RESEARCH_STUDIES = 4;
+    const TYPE_EDUCATION = 5;
 
     /**
      * Returns the static model of the specified AR class.
@@ -42,13 +51,15 @@ class Donorship extends CActiveRecord
         return array(
             array('donor, description, source, type, delivery_year, funds', 'required'),
             array('source, type, delivery_year, funds, funds_specific', 'numerical', 'integerOnly'=>true),
+            array('donorNewName', 'length', 'max'=>128),
             array('source', 'in', 'range' => array(
-                self::SOURCE_INTERNATIONAL, self::SOURCE_COUNTRY,
-                self::SOURCE_PRIVATE,
+                self::SOURCE_INTERNATIONAL, self::SOURCE_NATIONAL,
+                self::SOURCE_REGIONAL, self::SOURCE_PRIVATE,
             )),
             array('type', 'in', 'range' => array(
-                Cooperation::TYPE_SOME, Cooperation::TYPE_OTHER,
-                Cooperation::TYPE_MORE,
+                self::TYPE_FUNDING, self::TYPE_ASSETS_AND_CIRCULATION,
+                self::TYPE_REPAIR_WORK, self::TYPE_RESEARCH_STUDIES,
+                self::TYPE_EDUCATION,
             )),
             array('funds', 'in', 'range' => array(
                 Support::FUNDS_10K, Support::FUNDS_20K,
@@ -80,6 +91,12 @@ class Donorship extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
+            'TabularBehavior' => array(
+                'class' => 'application.components.behaviors.TabularBehavior',
+                'relations' => array(
+                    'donor' => array(),
+                ),
+            ),
         );
     }
 
@@ -90,12 +107,12 @@ class Donorship extends CActiveRecord
     {
         return array(
             'id' => 'ID',
-            'donor' => 'Донор',
+            'donor' => 'Грантодатель',
             'description' => 'Описание',
             'create_time' => 'Время Создания',
             'organization' => 'Организация',
             'source' => 'Источник',
-            'type' => 'Тип',
+            'type' => 'Назначение Гранта',
             'delivery_year' => 'Год Вручения',
             'funds' => 'Средства',
             'funds_specific' => 'Средства Конкретнее',
@@ -154,5 +171,43 @@ class Donorship extends CActiveRecord
         }
 
         return parent::beforeSave();
+    }
+
+    /**
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of validation status and relation models or single model.
+     */
+    public function donorTabular()
+    {
+        $valid = true;
+        $tabular = null;
+
+        // Restore empty relation attributes on update.
+        // Empty 'Select2' fix.
+        if (!$this->isNewRecord && empty($this->donor) && empty($this->donorNewName)) {
+            $originalModel = Donorship::model()->findByPk($this->id);
+            $this->donor = $originalModel->donor;
+        }
+
+        if (!empty($this->donor) || !empty($this->donorNewName)) {
+            // Try to find model from database.
+            if (is_object($this->donor)) {
+                $model = $this->donor;
+            } else {
+                $model = Donor::model()->findByPk($this->donor);
+            }
+
+            // Try to create new model from it's name.
+            if ($model === null) {
+                $model = new Donor;
+                $model->name = $this->donorNewName;
+                $model->source = $this->source;
+            }
+
+            $valid = $model->validate() && $valid;
+            $tabular = $model;
+        }
+
+        return array($valid, $tabular);
     }
 }

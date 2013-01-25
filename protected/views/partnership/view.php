@@ -38,11 +38,11 @@ $this->menu=array(
     'attributes'=>array(
         array(
             'name' => 'source',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->source)),
+            'value' => CHtml::encode(Lookup::item('PartnershipSource',$model->source)),
         ),
         array(
             'name' => 'type',
-            'value' => CHtml::encode(Lookup::item('CooperationSource',$model->type)),
+            'value' => CHtml::encode(Lookup::item('PartnershipType',$model->type)),
         ),
         'email',
         'contact_name',

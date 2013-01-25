@@ -6,6 +6,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Изменить Поддержку</h1>
+<h1>Изменить Донора</h1>
 
 <?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

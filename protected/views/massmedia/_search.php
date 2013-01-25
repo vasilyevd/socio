@@ -1,24 +1,46 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
+<?php
+Yii::app()->clientScript->registerScriptFile(
+    Yii::app()->baseUrl.'/js/dynamicListviewUpdate.js'
+);
+?>
+
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'get',
+    'type' => 'horizontal',
+    'htmlOptions' => array('class' => 'massmedia-filter'),
 )); ?>
 
-	<?php echo $form->textFieldRow($model,'id',array('class'=>'span5')); ?>
+    <?php echo $form->select2Row($model, 'tags', array(
+        'data' => CHtml::listData(Mmtag::getTagsForOrganization($this->escalation['organization']->id), 'id', 'name'),
+        'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+        'events' => array(
+            'change' => 'js:function() { dynamicListviewUpdate("massmedia-listview", "massmedia-filter"); }',
+        ),
+    )); ?>
 
-	<?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->select2Row($model, 'category', array(
+        'data' => Lookup::items('MassmediaCategory'),
+        // 'multiple' => true,
+        'prompt' => '', // Blank for all drop.
+        'options' => array(
+            'placeholder' => 'Выбрать...', // Blank for all drop.
+            'allowClear' => true, // Clear for normal drop.
+            'width' => '300px',
+        ),
+        'events' => array(
+            'change' => 'js:function() { dynamicListviewUpdate("massmedia-listview", "massmedia-filter"); }',
+        ),
+    )); ?>
 
-	<?php echo $form->textAreaRow($model,'content',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-
-	<?php echo $form->textFieldRow($model,'create_time',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'organization_id',array('class'=>'span5')); ?>
-
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType' => 'submit',
-			'type'=>'primary',
-			'label'=>'Search',
-		)); ?>
-	</div>
+    <?php echo $form->radioButtonListRow($model, 'direction', array('' => 'Все', false => 'СМИ о нас', true => 'Мы в СМИ'), array(
+        'onchange' => 'dynamicListviewUpdate("massmedia-listview", "massmedia-filter")',
+    )); ?>
 
 <?php $this->endWidget(); ?>
