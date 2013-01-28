@@ -116,9 +116,9 @@ class Massmedia extends CActiveRecord
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
                 'relations' => array(
-                    'tags' => array(),
-                    'links' => array('delete' => true),
-                    'files' => array('delete' => true),
+                    array('name' => 'tags'),
+                    array('name' => 'links', 'delete' => true),
+                    array('name' => 'files', 'delete' => true),
                 ),
             ),
         );
