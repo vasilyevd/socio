@@ -60,6 +60,7 @@ class Direction extends CActiveRecord
                 'org_organization_direction(direction_id, organization_id)',
                 'limit' => 3,
             ),
+            'catorganizations' => array(self::MANY_MANY, 'Catorganization', 'org_catorganization_direction(direction_id, catorganization_id)',),
         );
     }
 

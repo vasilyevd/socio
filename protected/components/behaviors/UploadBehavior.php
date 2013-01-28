@@ -3,7 +3,7 @@
 class UploadBehavior extends CActiveRecordBehavior
 {
     public $attributes = array();
-    public $originalModel;
+    private $_originalModel;
 
     /**
      * Allow upload attributes to only store not empty 'CUploadedFile' or
@@ -14,19 +14,19 @@ class UploadBehavior extends CActiveRecordBehavior
         // Remember original model.
         $originalClass = get_class($this->owner);
         if ($this->owner->isNewRecord) {
-            $this->originalModel = new $originalClass;
+            $this->_originalModel = new $originalClass;
         } else {
-            $this->originalModel = call_user_func($originalClass . '::model')->findByPk($this->owner->id);
+            $this->_originalModel = call_user_func($originalClass . '::model')->findByPk($this->owner->id);
             // Fix manual 'isNewRecord = false'.
-            if ($this->originalModel === null) {
-                $this->originalModel = new $originalClass;
+            if ($this->_originalModel === null) {
+                $this->_originalModel = new $originalClass;
             }
         }
 
         foreach ($this->attributes as $attr) {
-            // Override attribute only with 'CUploadedFile'.
+            // Override attribute only with 'CUploadedFile' instance.
             if (empty($this->owner->$attr) || !($this->owner->$attr instanceof CUploadedFile)) {
-                $this->owner->$attr = $this->originalModel->$attr;
+                $this->owner->$attr = $this->_originalModel->$attr;
             }
         }
     }
@@ -45,7 +45,7 @@ class UploadBehavior extends CActiveRecordBehavior
 
                 // Delete old upload on update.
                 if (!$this->owner->isNewRecord) {
-                    $this->originalModel->deleteUpload($attr);
+                    $this->_originalModel->deleteUpload($attr);
                 }
             }
         }

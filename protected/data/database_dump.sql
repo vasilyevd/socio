@@ -162,6 +162,91 @@ INSERT INTO `org_announcement` VALUES (1,'Первая новость','<p></p><
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_catorganization`
+--
+
+DROP TABLE IF EXISTS `org_catorganization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_catorganization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `registration_date` date NOT NULL,
+  `address` varchar(128) NOT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `region_id` int(11) DEFAULT NULL,
+  `chief_fio` varchar(128) DEFAULT NULL,
+  `registration_num` varchar(128) DEFAULT NULL,
+  `phone` varchar(128) DEFAULT NULL,
+  `website` varchar(128) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `organization_id` int(11) DEFAULT NULL,
+  `is_legal` tinyint(1) DEFAULT NULL,
+  `action_area` int(11) DEFAULT NULL,
+  `directions_more` varchar(128) DEFAULT NULL,
+  `logo` varchar(128) DEFAULT NULL,
+  `is_branch` tinyint(1) DEFAULT NULL,
+  `branch_master` varchar(128) DEFAULT NULL,
+  `is_verified` tinyint(1) DEFAULT NULL,
+  `word_name` varchar(128) DEFAULT NULL,
+  `word_registration_date` varchar(128) DEFAULT NULL,
+  `word_address` varchar(128) DEFAULT NULL,
+  `word_city` varchar(128) DEFAULT NULL,
+  `word_region` varchar(128) DEFAULT NULL,
+  `word_contact` varchar(128) DEFAULT NULL,
+  `word_contact_position` varchar(128) DEFAULT NULL,
+  `word_is_legal` tinyint(1) DEFAULT NULL,
+  `word_is_branch` tinyint(1) DEFAULT NULL,
+  `word_branch_master` varchar(128) DEFAULT NULL,
+  `word_registration_num` varchar(128) DEFAULT NULL,
+  `word_description` text,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_catorganization`
+--
+
+LOCK TABLES `org_catorganization` WRITE;
+/*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
+INSERT INTO `org_catorganization` VALUES (3,'test','2013-01-11','sdf sdfsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,'',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_catorganization_direction`
+--
+
+DROP TABLE IF EXISTS `org_catorganization_direction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_catorganization_direction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `catorganization_id` int(11) NOT NULL,
+  `direction_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`catorganization_id`),
+  KEY `image_id` (`direction_id`),
+  CONSTRAINT `org_catorganization_direction_ibfk_1` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_catorganization_direction`
+--
+
+LOCK TABLES `org_catorganization_direction` WRITE;
+/*!40000 ALTER TABLE `org_catorganization_direction` DISABLE KEYS */;
+INSERT INTO `org_catorganization_direction` VALUES (2,4,4),(3,4,6);
+/*!40000 ALTER TABLE `org_catorganization_direction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_company`
 --
 
@@ -272,7 +357,7 @@ CREATE TABLE `org_donor` (
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `source` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +394,7 @@ CREATE TABLE `org_donorship` (
   KEY `donor_id` (`donor_id`),
   CONSTRAINT `org_donorship_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_donorship_ibfk_5` FOREIGN KEY (`donor_id`) REFERENCES `org_donor` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,7 +554,7 @@ CREATE TABLE `org_massmedia` (
   KEY `mmcompany_id` (`company_id`),
   CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `org_company` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -498,7 +583,7 @@ CREATE TABLE `org_massmedia_mmtag` (
   KEY `image_id` (`mmtag_id`),
   CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,7 +613,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,7 +622,7 @@ CREATE TABLE `org_mmfile` (
 
 LOCK TABLES `org_mmfile` WRITE;
 /*!40000 ALTER TABLE `org_mmfile` DISABLE KEYS */;
-INSERT INTO `org_mmfile` VALUES (23,'50cb4c3936aa1.jpg',2,1,1,42),(24,'50cb4c3946e7d.jpg',2,2,1,42),(25,'50cb4d04294b4.jpg',2,2,1,43),(26,'50cb4d5d5d8f5.jpg',2,1,1,44),(27,'50cefba631a1e.jpg',2,1,1,45),(30,'50d08d997bc2f.doc',3,2,1,46),(37,'50d1bb09044cb.pdf',3,1,1,40),(46,'50d1db31e9f7e.docx',3,3,1,40),(47,'50d1db32060d0.ppt',3,3,1,40),(55,'50f698b5d26f9.jpg',2,1,0,41);
+INSERT INTO `org_mmfile` VALUES (23,'50cb4c3936aa1.jpg',2,1,1,42),(24,'50cb4c3946e7d.jpg',2,2,1,42),(25,'50cb4d04294b4.jpg',2,2,1,43),(26,'50cb4d5d5d8f5.jpg',2,1,1,44),(27,'50cefba631a1e.jpg',2,1,1,45),(30,'50d08d997bc2f.doc',3,2,1,46),(46,'50d1db31e9f7e.docx',3,3,1,40),(47,'50d1db32060d0.ppt',3,3,1,40),(55,'50f698b5d26f9.jpg',2,1,0,41);
 /*!40000 ALTER TABLE `org_mmfile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -556,7 +641,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,7 +650,7 @@ CREATE TABLE `org_mmlink` (
 
 LOCK TABLES `org_mmlink` WRITE;
 /*!40000 ALTER TABLE `org_mmlink` DISABLE KEYS */;
-INSERT INTO `org_mmlink` VALUES (16,'https://github.com/vasilyevd/socio/network',1,40),(21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(28,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40),(29,'https://github.com/vasilyevd/socio/3333',1,40),(30,'https://github.com/vasilyevd/socio/network',1,42),(31,'https://github.com/vasilyevd/socio/network',1,43),(32,'https://github.com/vasilyevd/socio/network',1,44),(33,'https://github.com/vasilyevd/socio/network',1,45),(34,'https://github.com/vasilyevd/socio/network',1,46);
+INSERT INTO `org_mmlink` VALUES (21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(28,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40),(29,'https://github.com/vasilyevd/socio/3333',1,40),(30,'https://github.com/vasilyevd/socio/network',1,42),(31,'https://github.com/vasilyevd/socio/network',1,43),(32,'https://github.com/vasilyevd/socio/network',1,44),(33,'https://github.com/vasilyevd/socio/network',1,45),(34,'https://github.com/vasilyevd/socio/network',1,46),(35,'https://github.com/vasilyevd/socio/networksssdsdss',1,40);
 /*!40000 ALTER TABLE `org_mmlink` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -616,6 +701,8 @@ CREATE TABLE `org_organization` (
   `phone_num` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `logobg` varchar(128) DEFAULT NULL,
+  `logobgset` varchar(128) DEFAULT NULL,
   `author_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `status` int(11) NOT NULL,
@@ -632,7 +719,7 @@ CREATE TABLE `org_organization` (
 
 LOCK TABLES `org_organization` WRITE;
 /*!40000 ALTER TABLE `org_organization` DISABLE KEYS */;
-INSERT INTO `org_organization` VALUES (1,'Лаберж ОС sd',1,3,5,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС sd',1,1,2,NULL,NULL,NULL,NULL,'<p>Morbi enim nisi, vestibulum ac volutpat vel, lobortis sit amet neque. \nDonec eleifend lacinia felis elementum consectetur. Mauris id congue \narcu. Quisque a augue aliquet odio hendrerit facilisis at id nibh. Cras \nornare, quam a venenatis pretium, quam purus aliquet justo, sit amet \nscelerisque tortor massa et arcu. Donec interdum scelerisque sem, et \nconsequat turpis vulputate ac. Vivamus pharetra dui ut tellus commodo \npretium. Aliquam id auctor nulla. Vivamus aliquam ullamcorper felis \nauctor commodo. Nulla eget justo nunc, non bibendum mi. Cras faucibus \nodio a lectus vehicula nec luctus lectus commodo. Maecenas at porttitor \nrisus.\n</p>\n','','','','','508fa2fe77003.png',2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',3,'2012-11-03 07:21:20',3,0),(8,'Royal Mail',1,1,3,NULL,NULL,NULL,NULL,'<p>Quisque massa lacus, ultrices adipiscing fringilla sit amet, commodo \neget enim. Cras fringilla adipiscing neque, dignissim vehicula lorem \nfaucibus non. Integer elementum mattis sem, ac semper mauris condimentum\n eget. Duis eu vulputate magna. In porttitor sollicitudin ante, vel \nfacilisis urna viverra sed. Aliquam erat volutpat.</p>','','','','','50c89426a7950.jpg',4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'<p>Integer nibh nisl, elementum eu porttitor et, commodo eget elit. Nam non\n porta magna. Aliquam rutrum justo sed augue consectetur rutrum. \nPellentesque nec augue ac ante gravida sollicitudin. Vestibulum tempus \nmollis eleifend. Pellentesque sem eros, aliquet non tincidunt in, \nscelerisque et enim. Praesent vel nisi leo. Vivamus sit amet urna quis \nante dapibus porta ac quis est. Vestibulum auctor, leo vitae venenatis \nsemper, turpis diam varius leo, eget tristique urna massa non orci. \nPellentesque fermentum fringilla nisi id molestie.</p>','','','','','placeholder.jpg',6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,'','','','','','50d445c4ee9e2.jpg',1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2012-12-03 16:56:46',3,0),(15,'New empty',1,1,1,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',1,'2013-01-21 13:19:42',3,0);
+INSERT INTO `org_organization` VALUES (1,'Лаберж ОС sd',1,3,5,12,6,2002,560,'<p>Lorem <i>ipsum dolor sit amet, consetetur sadipscing</i> elitr, sed diam nonumy <strike>eirmod\ntempor</strike> invidunt ut labore et dolore magna aliquyam erat, sed diam <b>voluptua</b>. At\nvero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,\nno sea takimata sanctus est Lorem ipsum dolor sit amet. <br /></p><p>sdfsdf sdfsdfsfs dfsdf sdfsdfsdfsdf<br /></p>\n','<p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est <strike>Lorem ipsum dolor amet.\nStet clita kasd gubergren</strike>, no sea takimata <strike>sanctus est Lorem ipsum</strike> dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\nStet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor amet.\n</p>','http://github.com','097-79-13-702','example@example.com','508fa2ed475ca.jpg',NULL,NULL,1,'2012-11-03 06:15:21',1,1),(6,'Корв ВС sd',1,1,2,NULL,NULL,NULL,NULL,'<p>Morbi enim nisi, vestibulum ac volutpat vel, lobortis sit amet neque. \nDonec eleifend lacinia felis elementum consectetur. Mauris id congue \narcu. Quisque a augue aliquet odio hendrerit facilisis at id nibh. Cras \nornare, quam a venenatis pretium, quam purus aliquet justo, sit amet \nscelerisque tortor massa et arcu. Donec interdum scelerisque sem, et \nconsequat turpis vulputate ac. Vivamus pharetra dui ut tellus commodo \npretium. Aliquam id auctor nulla. Vivamus aliquam ullamcorper felis \nauctor commodo. Nulla eget justo nunc, non bibendum mi. Cras faucibus \nodio a lectus vehicula nec luctus lectus commodo. Maecenas at porttitor \nrisus.\n</p>\n','','','','','508fa2fe77003.png',NULL,NULL,2,'2012-11-03 07:19:16',1,0),(7,'sdfsdf 2222',1,3,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',NULL,NULL,3,'2012-11-03 07:21:20',3,0),(8,'Royal Mail',1,1,3,NULL,NULL,NULL,NULL,'<p>Quisque massa lacus, ultrices adipiscing fringilla sit amet, commodo \neget enim. Cras fringilla adipiscing neque, dignissim vehicula lorem \nfaucibus non. Integer elementum mattis sem, ac semper mauris condimentum\n eget. Duis eu vulputate magna. In porttitor sollicitudin ante, vel \nfacilisis urna viverra sed. Aliquam erat volutpat.</p>','','','','','50c89426a7950.jpg',NULL,NULL,4,'2012-11-03 06:17:19',3,0),(9,'names',1,1,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'placeholder.jpg',NULL,NULL,5,'2012-11-03 18:11:06',3,0),(10,'new one',1,1,2,NULL,NULL,NULL,NULL,'<p>Integer nibh nisl, elementum eu porttitor et, commodo eget elit. Nam non\n porta magna. Aliquam rutrum justo sed augue consectetur rutrum. \nPellentesque nec augue ac ante gravida sollicitudin. Vestibulum tempus \nmollis eleifend. Pellentesque sem eros, aliquet non tincidunt in, \nscelerisque et enim. Praesent vel nisi leo. Vivamus sit amet urna quis \nante dapibus porta ac quis est. Vestibulum auctor, leo vitae venenatis \nsemper, turpis diam varius leo, eget tristique urna massa non orci. \nPellentesque fermentum fringilla nisi id molestie.</p>','','','','','placeholder.jpg',NULL,NULL,6,'2012-11-03 19:17:55',3,0),(11,'test 1',1,2,1,NULL,NULL,NULL,NULL,'','','','','','50d445c4ee9e2.jpg',NULL,NULL,1,'2012-11-22 15:42:24',3,0),(14,'sdfsdfsd',1,2,2,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',NULL,NULL,1,'2012-12-03 16:56:46',3,0),(15,'New empty',1,1,1,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL,'placeholder.jpg',NULL,NULL,1,'2013-01-21 13:19:42',3,0);
 /*!40000 ALTER TABLE `org_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -888,4 +975,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-23 16:06:20
+-- Dump completed on 2013-01-28 16:08:13
