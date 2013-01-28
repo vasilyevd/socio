@@ -36,7 +36,7 @@ class CatorganizationController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('admin','delete'),
+                'actions'=>array('admin', 'dynamicAdminUpdate', 'delete'),
                 'users'=>array('*'),
             ),
             array('deny',  // deny all users
@@ -128,9 +128,13 @@ class CatorganizationController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider=new CActiveDataProvider('Catorganization');
+        $model=new Catorganization('search');
+        $model->unsetAttributes(); // clear any default values
+        if(isset($_GET['Catorganization']))
+            $model->attributes=$_GET['Catorganization'];
+
         $this->render('index',array(
-            'dataProvider'=>$dataProvider,
+            'model'=>$model,
         ));
     }
 
@@ -147,6 +151,18 @@ class CatorganizationController extends Controller
         $this->render('admin',array(
             'model'=>$model,
         ));
+    }
+
+    /**
+     * AJAX model manipulation from administrator panel.
+     */
+    public function actionDynamicAdminUpdate()
+    {
+        // Or you can add import 'ext.editable.*' to config.
+        Yii::import('bootstrap.widgets.TbEditableSaver');
+        // 'User' is classname of model to be updated
+        $es = new TbEditableSaver('Catorganization');
+        $es->update();
     }
 
     /**

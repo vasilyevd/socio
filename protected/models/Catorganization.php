@@ -88,7 +88,7 @@ class Catorganization extends CActiveRecord
                 ),
             ),
 
-            // array('name', 'safe', 'on'=>'search'),
+            array('name', 'safe', 'on'=>'search'),
         );
     }
 
@@ -158,8 +158,6 @@ class Catorganization extends CActiveRecord
      */
     public function search()
     {
-        return false;
-
         $criteria=new CDbCriteria;
 
         $criteria->compare('id',$this->id);

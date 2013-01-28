@@ -213,7 +213,7 @@ CREATE TABLE `org_catorganization` (
 
 LOCK TABLES `org_catorganization` WRITE;
 /*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
-INSERT INTO `org_catorganization` VALUES (3,'test','2013-01-11','sdf sdfsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,'',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `org_catorganization` VALUES (3,'test','2013-01-11','sdf sdfsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +233,7 @@ CREATE TABLE `org_catorganization_direction` (
   KEY `image_id` (`direction_id`),
   CONSTRAINT `org_catorganization_direction_ibfk_1` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +242,7 @@ CREATE TABLE `org_catorganization_direction` (
 
 LOCK TABLES `org_catorganization_direction` WRITE;
 /*!40000 ALTER TABLE `org_catorganization_direction` DISABLE KEYS */;
-INSERT INTO `org_catorganization_direction` VALUES (2,4,4),(3,4,6);
+INSERT INTO `org_catorganization_direction` VALUES (2,4,4),(3,4,6),(4,3,3);
 /*!40000 ALTER TABLE `org_catorganization_direction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -975,4 +975,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-28 16:08:13
+-- Dump completed on 2013-01-28 17:54:23
