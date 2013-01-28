@@ -68,7 +68,8 @@ $('.branch-trigger').change(function(){
 
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
-    <?php /* echo $form->select2Row($model, 'organization', array(
+    <?php $model->organization = is_object($model->organization) ? $model->organization->id : $model->organization; ?>
+    <?php echo $form->select2Row($model, 'organization', array(
         'asDropDownList' => false,
         'prompt' => '',
         'options' => array(
@@ -97,15 +98,6 @@ $('.branch-trigger').change(function(){
             'formatSelection' => 'js:function(model) {
                 return model.name;
             }',
-        ),
-    )); */ ?>
-    <?php echo $form->select2Row($model, 'organization', array(
-        'data' => CHtml::listData(organization::model()->findAll(), 'id', 'name'),
-        'prompt' => '',
-        'options' => array(
-            'placeholder' => 'Выбрать...',
-            'allowClear' => true,
-            'width' => '300px',
         ),
     )); ?>
 

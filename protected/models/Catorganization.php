@@ -199,6 +199,11 @@ class Catorganization extends CActiveRecord
             $this->logo = $this->logo === null ? 'placeholder.jpg' : $this->logo;
         }
 
+        // Empty master name if is not branch.
+        if ($this->is_branch == false) {
+            $this->branch_master = null;
+        }
+
         return parent::beforeSave();
     }
 }
