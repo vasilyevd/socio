@@ -7,7 +7,6 @@
 class TabularBehavior extends CActiveRecordBehavior
 {
     public $relations = array();
-    public $delete = array();
     private $_settings;
 
     /**
@@ -24,14 +23,14 @@ class TabularBehavior extends CActiveRecordBehavior
 
         foreach ($this->relations as $rel) {
             // Call owners tabular method.
-            $method = $rel . 'Tabular';
+            $method = $rel['name'] . 'Tabular';
             list($valid, $tabular) = $this->owner->$method();
 
-            $this->owner->$rel = $tabular;
+            $this->owner->$rel['name'] = $tabular;
 
             // Check for validation errors.
             if (!$valid) {
-                $this->owner->addError($rel, 'Неверно задано поле ' . $this->owner->getAttributeLabel($rel));
+                $this->owner->addError($rel['name'], 'Неверно задано поле ' . $this->owner->getAttributeLabel($rel['name']));
             }
         }
     }
@@ -46,21 +45,21 @@ class TabularBehavior extends CActiveRecordBehavior
     public function beforeSave()
     {
         foreach ($this->relations as $rel) {
-            if ($this->_settings[$rel][0] === CActiveRecord::MANY_MANY ||
-                $this->_settings[$rel][0] === CActiveRecord::HAS_MANY
+            if ($this->_settings[$rel['name']][0] === CActiveRecord::MANY_MANY ||
+                $this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY
             ) {
-                foreach ($this->owner->$rel as $m) {
+                foreach ($this->owner->$rel['name'] as $m) {
                     $m->save();
                 }
-            } elseif ($this->_settings[$rel][0] === CActiveRecord::BELONGS_TO) {
-                if ($this->owner->$rel === null) {
+            } elseif ($this->_settings[$rel['name']][0] === CActiveRecord::BELONGS_TO) {
+                if ($this->owner->$rel['name'] === null) {
                     // Set link ID attribute of owner model as null.
-                    $this->owner->setAttribute($this->_settings[$rel][2], null);
+                    $this->owner->setAttribute($this->_settings[$rel['name']][2], null);
                 } else {
                     // Save related model.
-                    $this->owner->{$rel}->save();
+                    $this->owner->{$rel['name']}->save();
                     // Set link ID attribute of owner model as new relation ID.
-                    $this->owner->setAttribute($this->_settings[$rel][2], $this->owner->{$rel}->id);
+                    $this->owner->setAttribute($this->_settings[$rel['name']][2], $this->owner->{$rel['name']}->id);
                 }
             }
         }
@@ -74,11 +73,11 @@ class TabularBehavior extends CActiveRecordBehavior
     public function afterSave()
     {
         foreach ($this->relations as $rel) {
-            if ($this->_settings[$rel][0] === CActiveRecord::HAS_MANY) {
+            if ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY) {
                 // If set delete option.
-                if (in_array($rel, $this->delete)) {
+                if (array_key_exists('delete', $rel) && $rel['delete'] === true) {
                     // Find all related models with null ID link.
-                    $deleteModels = call_user_func($this->_settings[$rel][1] . '::model')->findAllByAttributes(array($this->_settings[$rel][2] => null));
+                    $deleteModels = call_user_func($this->_settings[$rel['name']][1] . '::model')->findAllByAttributes(array($this->_settings[$rel['name']][2] => null));
                     foreach ($deleteModels as $m) {
                         $m->delete();
                     }

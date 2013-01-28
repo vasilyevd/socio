@@ -3,7 +3,6 @@
 class UploadBehavior extends CActiveRecordBehavior
 {
     public $attributes = array();
-    private $_offset;
     private $_originalModel;
 
     /**
@@ -25,14 +24,7 @@ class UploadBehavior extends CActiveRecordBehavior
         }
 
         foreach ($this->attributes as $attr) {
-            // Apply offset to upload.
-            if (isset($this->_offset)) {
-                $upload = CUploadedFile::getInstance($this->owner, "[$this->_offset]$attr");
-            } else {
-                $upload = CUploadedFile::getInstance($this->owner, $attr);
-            }
-
-            // Override attribute only with 'CUploadedFile'.
+            // Override attribute only with 'CUploadedFile' instance.
             if (empty($this->owner->$attr) || !($this->owner->$attr instanceof CUploadedFile)) {
                 $this->owner->$attr = $this->_originalModel->$attr;
             }
@@ -118,14 +110,5 @@ class UploadBehavior extends CActiveRecordBehavior
             // Empty attribute.
             $this->owner->$attribute = '';
         }
-    }
-
-    /**
-     * Sets offset for current upload find.
-     * @param int $offset the offset number.
-     */
-    public function setUploadOffset($offset)
-    {
-        $this->_offset = $offset;
     }
 }

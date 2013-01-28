@@ -70,6 +70,9 @@ class CatorganizationController extends Controller
         if(isset($_POST['Catorganization']))
         {
             $model->attributes=$_POST['Catorganization'];
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
+
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
@@ -94,6 +97,9 @@ class CatorganizationController extends Controller
         if(isset($_POST['Catorganization']))
         {
             $model->attributes=$_POST['Catorganization'];
+            // Upload handler.
+            $model->logo = CUploadedFile::getInstance($model, 'logo');
+
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }

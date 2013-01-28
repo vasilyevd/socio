@@ -200,6 +200,7 @@ CREATE TABLE `org_catorganization` (
   `word_is_branch` tinyint(1) DEFAULT NULL,
   `word_branch_master` varchar(128) DEFAULT NULL,
   `word_registration_num` varchar(128) DEFAULT NULL,
+  `word_description` text,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
@@ -212,7 +213,7 @@ CREATE TABLE `org_catorganization` (
 
 LOCK TABLES `org_catorganization` WRITE;
 /*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
-INSERT INTO `org_catorganization` VALUES (3,'test','2013-01-11','sdf sdfsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,'',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',NULL,1,2,'Кошки, Собаки, Хомяки',NULL,1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `org_catorganization` VALUES (3,'test','2013-01-11','sdf sdfsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,'',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',NULL,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +233,7 @@ CREATE TABLE `org_catorganization_direction` (
   KEY `image_id` (`direction_id`),
   CONSTRAINT `org_catorganization_direction_ibfk_1` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -612,7 +613,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -640,7 +641,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -649,7 +650,7 @@ CREATE TABLE `org_mmlink` (
 
 LOCK TABLES `org_mmlink` WRITE;
 /*!40000 ALTER TABLE `org_mmlink` DISABLE KEYS */;
-INSERT INTO `org_mmlink` VALUES (16,'https://github.com/vasilyevd/socio/network',1,40),(21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(28,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40),(29,'https://github.com/vasilyevd/socio/3333',1,40),(30,'https://github.com/vasilyevd/socio/network',1,42),(31,'https://github.com/vasilyevd/socio/network',1,43),(32,'https://github.com/vasilyevd/socio/network',1,44),(33,'https://github.com/vasilyevd/socio/network',1,45),(34,'https://github.com/vasilyevd/socio/network',1,46);
+INSERT INTO `org_mmlink` VALUES (21,'https://github.com/vasilyevd/socio/network',1,41),(22,'http://www.youtube.com/watch?v=K7dcSr04G8s',2,40),(23,'http://www.yiiframework.com/extension/yiitube/',1,40),(28,'http://www.youtube.com/watch?v=INscMGmhmX4',2,40),(29,'https://github.com/vasilyevd/socio/3333',1,40),(30,'https://github.com/vasilyevd/socio/network',1,42),(31,'https://github.com/vasilyevd/socio/network',1,43),(32,'https://github.com/vasilyevd/socio/network',1,44),(33,'https://github.com/vasilyevd/socio/network',1,45),(34,'https://github.com/vasilyevd/socio/network',1,46),(35,'https://github.com/vasilyevd/socio/networksssdsdss',1,40);
 /*!40000 ALTER TABLE `org_mmlink` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -974,4 +975,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-25 17:57:59
+-- Dump completed on 2013-01-28 14:21:55
