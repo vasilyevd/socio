@@ -5,29 +5,30 @@
  */
 class Controller extends CController
 {
-    /**
-     * @var string the default layout for the controller view. Defaults to '//layouts/column1',
-     * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
-     */
-    public $layout='//layouts/column1';
+   /**
+   * @var string the default layout for the controller view. Defaults to '//layouts/column1',
+   * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
+   */
+  public $layout='//layouts/column1';
 
 	//=====================================
 	// Declarate for ALL TYPE OF SITE MENU's
 
-    /** @var array context menu items. This property will be assigned to {@link CMenu::items}.
-     */
-    public $menu=array();
+  /** @var array context menu items. This property will be assigned to {@link CMenu::items}.  */
+  public $menu=array();
 
-		/** @var array containe the submenu items of main menu - по сути это разделы сайтов Доступность, Организации... */
-		public $_subMenu = array();
+	/** @var array containe the submenu items of main menu - по сути это разделы сайтов Доступность, Организации... */
+	public $_subMenu = array();
+	public $_subsubMenu = array();
+
 	/** @var array */
-    public $menu_org;
+  public $menu_org;
 
 	/**
-	 * @var array items that showed like submenu of ITEMS (object, org, user)*/
+	* @var array items that showed like submenu of ITEMS (object, org, user)*/
 	public $menu_item_sub = array();
-	/**
-	 * @var array items like main meno of ITEM (obj, org, user, ets.) */
+
+	/** @var array items like main meno of ITEM (obj, org, user, ets.) */
 	public $menu_item;
 
 	// @todo : remove property $menu_org - because its analog of $menu_operations

@@ -1,10 +1,12 @@
 <?php
 /**
- * TbMenu class file.
- * @author Christoffer Niska <ChristofferNiska@gmail.com>
- * @copyright Copyright &copy; Christoffer Niska 2012-
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * STbMenu class file.
+ * @author lsd
  * @package bootstrap.widgets
+ * Add new types of menu - PLAIN, BOX
+ * Only because not has its in bootstrap
+ *
+ * Add new property HEADER
  */
 
 Yii::import('bootstrap.widgets.TbBaseMenu');

@@ -73,18 +73,41 @@
 					'type'=>'pills',
 					//'htmlOptions'=>array('class'=>'nav-pills'),
 					'items'=>array(
-						array('label'=>'Организации',
+						array('label'=>'Люди',
+						    'url'=>'',
+						),
+						array('label'=>'Общение',
+						    'url'=>'',
+						),
+						array('label'=>'Общество',
 							'url'=>array('/organization/index'),
 							'active'=>$this->sectionMain == 'org',
 							'items'=>array(
 								array('label'=>'Главная', 'url'=>array('/organization/index'), 'active'=>$this->sectionMainSub=='main'),
-								array('label'=>'Организации', 'url'=>array('/organization/search'), 'active'=>$this->sectionMainSub=='org'),
+								array('label'=>'Организации', 'url'=>array('/organization/search'), 'active'=>$this->sectionMainSub=='org',
+									'items'=>array(
+										array('label'=>'На сайте',
+										    'url'=>array('/organization/search'),
+										),
+										array('label'=>'Каталог',
+										    'url'=>'',
+										),
+									)
+								),
 								array('label'=>'Власть', 'url'=>'', 'active'=>$this->sectionMainSub=='gov'),
 								array('label'=>'Бизнес', 'url'=>'', 'active'=>$this->sectionMainSub=='commerce'),
 								array('label'=>'СМИ', 'url'=>'', 'active'=>$this->sectionMainSub=='smi'),
 								array('label'=>'Открытость', 'url'=>array('#'), 'active'=>$this->sectionMainSub=='open'),
 							)
 						),
+						array('label'=>'Медиа',
+						    'url'=>'',
+						),
+						array('label'=>'Инфраструктура',
+							'url'=>'',
+							'active'=>$this->sectionMain == 'inf'
+						),
+						'',
 						array('label'=>'Доступность',
 							'url'=>array('/object/main'),
 							'active'=>$this->sectionMain == 'obj',
@@ -93,13 +116,36 @@
 								array('label'=>'Карта', 'url'=>array('/map/index'), 'active'=>$this->sectionMainSub=='map'),
 								array('label'=>'Инфраструктура', 'url'=>'', 'active'=>$this->sectionMainSub=='infrastructure'),
 								array('label'=>'Территории', 'url'=>'', 'active'=>$this->sectionMainSub=='teritory'),
-								array('label'=>'Информация', 'url'=>array('/info/index'), 'active'=>$this->sectionMainSub=='info'),
-								array('label'=>'Статистика', 'url'=>'', 'active'=>$this->sectionMainSub=='stat'),
+								array('label'=>'Информация', 'url'=>array('/info/index'), 'active'=>$this->sectionMainSub=='info',
+									'items'=>array(
+										array('label'=>'Законы',
+										    'url'=>'',
+										),
+										array('label'=>'О доступности',
+										    'url'=>array('/info/index'),
+										),
+										array('label'=>'Практика',
+										    'url'=>'',
+										),
+										array('label'=>'Коммитеты',
+										    'url'=>'',
+										),
+									)
+								),
+								array('label'=>'Статистика', 'url'=>'', 'active'=>$this->sectionMainSub=='stat',
+									'items'=>array(
+										array('label'=>'Статистика',
+										    'url'=>'',
+										),
+										array('label'=>'Динамика',
+										    'url'=>'',
+										),
+									)
+								),
 							)
 						),
-						array('label'=>'Инфраструктура',
-							'url'=>'',
-							'active'=>$this->sectionMain == 'inf'
+						array('label'=>'Инваменю',
+						    'url'=>'',
 						),
 						'',
 						array('label'=>'Справка',
@@ -113,11 +159,11 @@
 				));
 
 			foreach ($menu->items as $key=>$item) {
-			if ($item['active'] && !empty($item['items'])) {
-				$this->_subMenu = $item['items'];
+				if ($item['active'] && !empty($item['items'])) {
+					$this->_subMenu = $item['items'];
+				}
+				unset($menu->items[$key]['items']);
 			}
-			unset($menu->items[$key]['items']);
-		}
 
 			$this->endWidget();
 			?>
@@ -133,10 +179,19 @@
 			<div id="collapse_submenu" class="" style="bottom: 0; left: 200px; padding-left: 20px; position: absolute;">
 			<?php
 			if (isset($this->_subMenu)) {
-				$this->widget('zii.widgets.TbMenu', array(
+				$menu_sub = $this->beginWidget('zii.widgets.TbMenu', array(
 						'type'=>'pills',
 						'items' => $this->_subMenu,
 					));
+
+				foreach ($menu_sub->items as $key=>$item) {
+					if ($item['active'] && !empty($item['items'])) {
+						$this->_subsubMenu = $item['items'];
+					}
+					unset($menu_sub->items[$key]['items']);
+				}
+
+				$this->endWidget();
 			}
 			?>
 			</div>
@@ -144,7 +199,18 @@
 		</div>
 	</div>
 
+
 	<div class="content container <?php echo $this->contentClass; ?>">
+		<div id="subsubmenu">
+			<?php
+			if (isset($this->_subsubMenu)) {
+				$this->widget('zii.widgets.TbMenu', array(
+						'type'=>'tabs',
+						'items' => $this->_subsubMenu,
+					));
+			}
+			?>
+		</div>
 		<?php echo $content; ?>
 	</div>
 
