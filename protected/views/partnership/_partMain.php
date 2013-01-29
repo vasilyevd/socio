@@ -37,14 +37,14 @@
         'minimumInputLength' => 1,
         'maximumSelectionSize' => 1,
         'ajax' => array(
-            'url' => $this->createUrl('cooperation/dynamicSearchOrganizations'),
+            'url' => $this->createUrl('organization/dynamicOrganizationSearch'),
             'quietMillis'=>500,
             'dataType' => 'json',
             'data' => 'js:function(term, page) {
-                return { query: term };
+                return { name : term, multiple : true };
             }',
             'results' => 'js:function(data, page) {
-                return { results: data.organizations };
+                return { results : data };
             }',
         ),
         'formatResult' => 'js:function(model) {

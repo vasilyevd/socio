@@ -153,16 +153,10 @@ class Cooperation extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Find new link attributes.
-        if (is_string($this->linkOrganization) && ctype_digit($this->linkOrganization)) {
+        // Set link to Organization name.
+        if (!empty($this->linkOrganization)) {
             $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
             $this->link = $this->linkOrganization->name;
-        }
-        // Restore empty link attributes on update.
-        if (!$this->isNewRecord && empty($this->link)) {
-            $originalModel = Cooperation::model()->findByPk($this->id);
-            $this->linkOrganization = $originalModel->linkOrganization;
-            $this->link = $originalModel->link;
         }
 
         return parent::beforeValidate();

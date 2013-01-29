@@ -213,7 +213,7 @@ CREATE TABLE `org_catorganization` (
 
 LOCK TABLES `org_catorganization` WRITE;
 /*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
-INSERT INTO `org_catorganization` VALUES (3,'First','2013-01-11','Adress adreass adress',24,55,334,'Гусь К.О.','234234SSF21','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,3,'Охота, рыбалка','5107c08d46246.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'Normal','2013-01-02','sdfsfsdfsd fsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `org_catorganization` VALUES (3,'First','2013-01-11','Adress adreass adress',24,55,334,'Гусь К.О.','234234SSF21','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,3,'Охота, рыбалка','5107c08d46246.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',1,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'Normal','2013-01-02','sdfsfsdfsd fsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -975,4 +975,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-29 15:42:52
+-- Dump completed on 2013-01-29 18:01:29

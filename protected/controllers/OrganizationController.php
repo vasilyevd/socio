@@ -28,7 +28,7 @@ class OrganizationController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','search'),
+                'actions'=>array('index','view','search', 'dynamicOrganizationSearch'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -225,6 +225,60 @@ class OrganizationController extends Controller
 //         }
 //
 //         $model->save();
+    }
+
+    /**
+     * Search organizations.
+     * @param string $query organization name to search.
+     * @param string $modelName the name of Organization model to search.
+     */
+    public function actionDynamicOrganizationSearch($id = null, $name = null, $multiple = false, $donor = false)
+    {
+        // Search in donor model instead.
+        if ($donor) {
+            $searchClass = 'Donor';
+        } else {
+            $searchClass = 'Organization';
+        }
+
+        header('Content-type: application/json');
+
+        $criteria = new CDbCriteria();
+
+        $criteria->compare('id', $id);
+        $criteria->compare('name', $name, true);
+
+        if ($multiple) {
+            $criteria->limit = 5;
+            $data = $searchClass::model()->findAll($criteria);
+
+            foreach ($data as $m) {
+                $this->formatDynamicOrganization($m);
+            }
+        } else {
+            $data = $searchClass::model()->find($criteria);
+            $this->formatDynamicOrganization($data);
+        }
+
+        echo CJSON::encode($data);
+        Yii::app()->end();
+    }
+
+    /**
+     * Format Organization model for dynamic search.
+     * @param CModel $model the model to format.
+     */
+    protected function formatDynamicOrganization($model)
+    {
+        // Full URL for logo.
+        $model->logo = $model->getUploadUrl('logo');
+
+        // Clean and limit length for description.
+        if (empty($model->description)) {
+            $model->description = ' ';
+        } else {
+            $model->description = mb_substr(CHtml::encode(strip_tags($model->description)), 0, 100, 'UTF-8') . '...';
+        }
     }
 
     /**
