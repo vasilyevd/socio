@@ -80,6 +80,9 @@ class OrganizationController extends Controller
             $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
             // Upload handler.
             $model->logo = CUploadedFile::getInstance($model, 'logo');
+            // Empty multi select handler.
+            $model->directions = isset($_POST['Organization']['directions']) ? $model->directions : array();
+            $model->problems = isset($_POST['Organization']['problems']) ? $model->problems : array();
 
             if($model->save())
                 $this->redirect(array('update','id'=>$model->id));
@@ -111,6 +114,9 @@ class OrganizationController extends Controller
             $model->type = isset($_POST['Organization']['type']) ? Orgtype::model()->findByPk($model->type) : null;
             // Upload handler.
             $model->logo = CUploadedFile::getInstance($model, 'logo');
+            // Empty multi select handler.
+            $model->directions = isset($_POST['Organization']['directions']) ? $model->directions : array();
+            $model->problems = isset($_POST['Organization']['problems']) ? $model->problems : array();
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));

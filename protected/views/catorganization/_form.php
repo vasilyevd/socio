@@ -68,6 +68,7 @@ $('.branch-trigger').change(function(){
 
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
+    <?php $selectText = is_object($model->organization) ? $model->organization->name : 'Организация'; ?>
     <?php $model->organization = is_object($model->organization) ? $model->organization->id : $model->organization; ?>
     <?php echo $form->select2Row($model, 'organization', array(
         'asDropDownList' => false,
@@ -97,6 +98,10 @@ $('.branch-trigger').change(function(){
             }',
             'formatSelection' => 'js:function(model) {
                 return model.name;
+            }',
+            'initSelection' => 'js:function(element, callback) {
+                callback(element.val());
+                $("#s2id_" + element.attr("id") + " .select2-choice span").text("' . $selectText . '");
             }',
         ),
     )); ?>

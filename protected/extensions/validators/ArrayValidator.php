@@ -52,7 +52,9 @@ class ArrayValidator extends CValidator {
 	{
 		if ($this->isEmpty($object->$attribute)) {
 			if ($this->allowEmpty === true) {
-				$object->$attribute = null;
+				// $object->$attribute = null;
+                // RFIX: needed empty array to resolve empty relations.
+				$object->$attribute = array();
 				return;
 			}
 			$this->addError($object, $attribute, Yii::t('', '{attribute} is not allowed to be empty', array('{attribute}'=>$attribute)));

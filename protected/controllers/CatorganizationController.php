@@ -72,6 +72,8 @@ class CatorganizationController extends Controller
             $model->attributes=$_POST['Catorganization'];
             // Upload handler.
             $model->logo = CUploadedFile::getInstance($model, 'logo');
+            // Empty multi select handler.
+            $model->directions = isset($_POST['Catorganization']['directions']) ? $model->directions : array();
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
@@ -99,6 +101,8 @@ class CatorganizationController extends Controller
             $model->attributes=$_POST['Catorganization'];
             // Upload handler.
             $model->logo = CUploadedFile::getInstance($model, 'logo');
+            // Empty multi select handler.
+            $model->directions = isset($_POST['Catorganization']['directions']) ? $model->directions : array();
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
