@@ -56,7 +56,7 @@ class Catorganization extends CActiveRecord
         return array(
             array('name, registration_date, address', 'required'),
             array('address_id, city_id, region_id, action_area', 'numerical', 'integerOnly'=>true),
-            array('name, address, chief_fio, registration_num, phone, website, email, directions_more, branch_master', 'length', 'max'=>128),
+            array('chief_fio, registration_num, phone, website, email, directions_more, branch_master', 'length', 'max'=>128),
             array('registration_date', 'date', 'format' => 'yyyy-MM-dd'),
             array('action_area', 'in', 'range' => array(
                 Organization::ACTION_AREA_NATION, Organization::ACTION_AREA_REGION,
@@ -87,8 +87,6 @@ class Catorganization extends CActiveRecord
                     'className' => 'Direction',
                 ),
             ),
-
-            // array('name', 'safe', 'on'=>'search'),
         );
     }
 
@@ -158,30 +156,28 @@ class Catorganization extends CActiveRecord
      */
     public function search()
     {
-        return false;
+        $criteria = new CDbCriteria;
 
-        $criteria=new CDbCriteria;
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('registration_date', $this->registration_date, true);
+        $criteria->compare('is_legal', $this->is_legal);
+        $criteria->compare('is_branch', $this->is_branch);
+        $criteria->compare('is_verified', $this->is_verified);
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('registration_date',$this->registration_date,true);
-        $criteria->compare('address',$this->address,true);
-        $criteria->compare('address_id',$this->address_id);
-        $criteria->compare('city_id',$this->city_id);
-        $criteria->compare('region_id',$this->region_id);
-        $criteria->compare('chief_fio',$this->chief_fio,true);
-        $criteria->compare('registration_num',$this->registration_num,true);
-        $criteria->compare('phone',$this->phone,true);
-        $criteria->compare('website',$this->website,true);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('organization_id',$this->organization_id);
-        $criteria->compare('is_legal',$this->is_legal);
-        $criteria->compare('action_area',$this->action_area);
-        $criteria->compare('directions_more',$this->directions_more,true);
-        $criteria->compare('logo',$this->logo,true);
-        $criteria->compare('is_branch',$this->is_branch);
-        $criteria->compare('branch_master',$this->branch_master,true);
-        $criteria->compare('is_verified',$this->is_verified);
+        // $criteria->compare('address',$this->address,true);
+        // $criteria->compare('address_id',$this->address_id);
+        // $criteria->compare('city_id',$this->city_id);
+        // $criteria->compare('region_id',$this->region_id);
+        // $criteria->compare('chief_fio',$this->chief_fio,true);
+        // $criteria->compare('registration_num',$this->registration_num,true);
+        // $criteria->compare('phone',$this->phone,true);
+        // $criteria->compare('website',$this->website,true);
+        // $criteria->compare('email',$this->email,true);
+        // $criteria->compare('organization_id',$this->organization_id);
+        // $criteria->compare('action_area',$this->action_area);
+        // $criteria->compare('directions_more',$this->directions_more,true);
+        // $criteria->compare('logo',$this->logo,true);
+        // $criteria->compare('branch_master',$this->branch_master,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
