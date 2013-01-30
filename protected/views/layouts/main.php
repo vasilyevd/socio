@@ -152,7 +152,7 @@
 		<div class="container"><div class="row">
 
 			<div class="span3 copyright">
-				<? echo CHtml::image('/images/logow.png', 'logo', array('class'=>'logo')); ?>
+				<?php echo CHtml::image($this->createUrl('images/logow.png'), 'Logo', array('class'=>'logo')); ?>
 				<p>Copyright &copy; <?php echo date('Y'), ". All Right Reserved" ?></p>
 				<p><em>Условия</em> и <em>Политика конфиденциальности</em> в соответствии с которыми наши услуги предоставляются для Вас</p>
 			</div>
@@ -175,10 +175,10 @@
 			</div>
 
 			<div class="span3 tac">
-				<?=CHtml::image('/images/other/coalition128.png', '', array('style'=>'width: 110px;')); ?>
-				<?=CHtml::image('/images/other/aemb128.gif', '', array('style'=>'width: 110px;')); ?>
-				<?=CHtml::image('/images/other/irf.jpg'); ?>
-				<?=CHtml::image('/images/other/prometei.png'); ?>
+				<?=CHtml::image($this->createUrl('images/other/coalition128.png'), 'Logo', array('style'=>'width: 110px;')); ?>
+				<?=CHtml::image($this->createUrl('images/other/aemb128.gif'), 'Logo', array('style'=>'width: 110px;')); ?>
+				<?=CHtml::image($this->createUrl('images/other/irf.jpg'), 'Logo'); ?>
+				<?=CHtml::image($this->createUrl('images/other/prometei.png'), 'Logo'); ?>
 
 			</div>
 

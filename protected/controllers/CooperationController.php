@@ -32,7 +32,7 @@ class CooperationController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create', 'update', 'dynamicSearchOrganizations'),
+                'actions'=>array('create', 'update'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -121,10 +121,6 @@ class CooperationController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty 'linkOrganization', relation for view.
-        //TODO: Properly restore 'linkOrganization' value and not just blank.
-        $model->linkOrganization = null;
-        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 
@@ -190,46 +186,6 @@ class CooperationController extends Controller
         $this->render('admin',array(
             'model'=>$model,
         ));
-    }
-
-    /**
-     * Search organizations by its name.
-     * @param string $query organization name to search.
-     * @param string $modelName the name of Organization model to search.
-     */
-    public function actionDynamicSearchOrganizations($query, $modelName = 'Organization')
-    {
-        header('Content-type: application/json');
-
-        // Find organizations by name.
-        $criteria = new CDbCriteria();
-        $criteria->compare('name', $query, true);
-        $criteria->limit = 5;
-        $organizations = $modelName::model()->findAll($criteria);
-
-        // // Add dummy organization to allow user selection.
-        // $dummy = new Organization;
-        // $dummy->name = $query;
-        // $dummy->id = $query;
-        // $dummy->logo = 'placeholder.jpg';
-        // $organizations[] = $dummy;
-
-        // Change formating for view.
-        foreach ($organizations as $org) {
-            // Full URL for logo.
-            $org->logo = $org->getUploadUrl('logo');
-            // Clean and limit length for description.
-            if (empty($org->description)) {
-                $org->description = ' ';
-            } else {
-                $org->description = mb_substr(CHtml::encode(strip_tags($org->description)), 0, 100, 'UTF-8') . '...';
-            }
-        }
-
-        echo CJSON::encode(array(
-            'organizations' => $organizations,
-        ));
-        Yii::app()->end();
     }
 
     /**

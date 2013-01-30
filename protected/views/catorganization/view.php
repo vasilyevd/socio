@@ -5,7 +5,9 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<?php echo CHtml::link('Изменить Организацию', array('update', 'id' => $model->id), array('class' => 'btn btn-success')); ?>
+<?php echo CHtml::link('Список Организаций', array('index'), array('class' => 'btn')); ?>
+
+<?php echo CHtml::link('Изменить Организацию', array('update', 'id' => $model->id), array('class' => 'btn')); ?>
 
 <?php echo CHtml::link('Удалить Организацию', '#', array(
     'submit' => array('delete', 'id' => $model->id),
@@ -18,8 +20,6 @@ $this->breadcrumbs=array(
 <?php $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
-        'id',
-        'name',
         'registration_date',
         'address',
         'address_id',
@@ -30,13 +30,37 @@ $this->breadcrumbs=array(
         'phone',
         'website',
         'email',
-        'organization_id',
-        'is_legal',
-        'action_area',
+        array(
+            'name' => 'action_area',
+            'value' => Lookup::item('OrganizationActionArea', $model->action_area),
+        ),
+        array(
+            'name' => 'directions',
+            'value' => CHtml::encode(implode(', ', CHtml::listData($model->directions, 'name', 'name'))),
+        ),
         'directions_more',
-        'logo',
-        'is_branch',
+        array(
+            'name' => 'organization',
+            'type' => 'raw',
+            'value' => empty($model->organization) ? 'Не задан' : CHtml::link(CHtml::encode($model->organization->name), array('organization/view', 'id' => $model->organization->id), array('target' => '_blank')),
+        ),
+        array(
+            'name' => 'logo',
+            'type' => 'raw',
+            'value' => CHtml::link(CHtml::encode($model->logo), $model->getUploadUrl('logo'), array('target' => '_blank')),
+        ),
+        array(
+            'name' => 'is_legal',
+            'value' => $model->is_legal ? 'Да' : 'Нет',
+        ),
+        array(
+            'name' => 'is_branch',
+            'value' => $model->is_legal ? 'Да' : 'Нет',
+        ),
         'branch_master',
-        'is_verified',
+        array(
+            'name' => 'is_verified',
+            'value' => $model->is_legal ? 'Да' : 'Нет',
+        ),
     ),
 )); ?>
