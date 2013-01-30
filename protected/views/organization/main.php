@@ -132,7 +132,7 @@ $this->breadcrumbs=array(
 
         <!-- C2 -->
         <div class="span6">
-	        <?
+	        <?php
 	        // Show tabs-box with DIRECTIONS & PROBLEMATICS
 	        $this->widget('ext.widgets.STbTabs', array(
 			        'type'=>'tabs-box', // 'tabs' or 'pills'

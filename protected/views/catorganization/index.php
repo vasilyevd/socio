@@ -14,7 +14,19 @@ $this->breadcrumbs=array(
     'filter'=>$model,
     'columns'=>array(
         'name',
-        'registration_date',
+        array(
+            'name' => 'registration_date',
+            'class' => 'bootstrap.widgets.TbEditableColumn',
+            'editable' => array(
+                'type' => 'date',
+                'url' => $this->createUrl('dynamicAdminUpdate'),
+                'format' => 'yyyy-mm-dd',
+                'viewformat'  => 'yyyy-mm-dd',
+                'placement' => 'top',
+                'enabled' => true,
+            ),
+        ),
+
         array(
             'name' => 'is_legal',
             'class' => 'bootstrap.widgets.TbEditableColumn',

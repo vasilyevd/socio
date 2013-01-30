@@ -70,7 +70,7 @@
                 return model.name;
             }',
             'initSelection' => 'js:function(element, callback) {
-                callback({name : "' . $model->link . '"});
+                callback({id : element.val(), name : "' . $model->link . '"});
             }',
         ),
     )); ?>

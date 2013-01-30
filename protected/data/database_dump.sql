@@ -170,9 +170,9 @@ DROP TABLE IF EXISTS `org_catorganization`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `org_catorganization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
+  `name` text NOT NULL,
   `registration_date` date NOT NULL,
-  `address` varchar(128) NOT NULL,
+  `address` text NOT NULL,
   `address_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
   `region_id` int(11) DEFAULT NULL,
@@ -189,18 +189,19 @@ CREATE TABLE `org_catorganization` (
   `is_branch` tinyint(1) DEFAULT NULL,
   `branch_master` varchar(128) DEFAULT NULL,
   `is_verified` tinyint(1) DEFAULT NULL,
-  `word_name` varchar(128) DEFAULT NULL,
-  `word_registration_date` varchar(128) DEFAULT NULL,
-  `word_address` varchar(128) DEFAULT NULL,
-  `word_city` varchar(128) DEFAULT NULL,
-  `word_region` varchar(128) DEFAULT NULL,
-  `word_contact` varchar(128) DEFAULT NULL,
-  `word_contact_position` varchar(128) DEFAULT NULL,
+  `word_name` text,
+  `word_registration_date` text,
+  `word_address` text,
+  `word_city` text,
+  `word_region` text,
+  `word_contact` text,
+  `word_contact_position` text,
   `word_is_legal` tinyint(1) DEFAULT NULL,
   `word_is_branch` tinyint(1) DEFAULT NULL,
-  `word_branch_master` varchar(128) DEFAULT NULL,
-  `word_registration_num` varchar(128) DEFAULT NULL,
+  `word_branch_master` text,
+  `word_registration_num` text,
   `word_description` text,
+  `word_phone` text,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
@@ -213,7 +214,7 @@ CREATE TABLE `org_catorganization` (
 
 LOCK TABLES `org_catorganization` WRITE;
 /*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
-INSERT INTO `org_catorganization` VALUES (3,'First','2013-01-11','Adress adreass adress',24,55,334,'Гусь К.О.','234234SSF21','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,3,'Охота, рыбалка','5107c08d46246.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',1,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'Normal','2013-01-02','sdfsfsdfsd fsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `org_catorganization` VALUES (3,'Первая общественная организация','2013-01-12','Adress adreass adress',24,55,334,'Гусь К.О.','234234SSF21','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,3,'Охота, рыбалка','5107c08d46246.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,''),(4,'Full test','2013-01-13','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',1,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,''),(5,'Normal','2013-01-02','sdfsfsdfsd fsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'');
 /*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,7 +313,7 @@ CREATE TABLE `org_cooperation` (
 
 LOCK TABLES `org_cooperation` WRITE;
 /*!40000 ALTER TABLE `org_cooperation` DISABLE KEYS */;
-INSERT INTO `org_cooperation` VALUES (24,'Не в списке с лого',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1,2,1,'50dc68589a3ff.jpg','catman@example.com','',''),(25,'Корв ВС sd',6,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1,2,1,'placeholder.jpg','catman@example.com','',''),(26,'Не в списке и без лого',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1,1,1,'placeholder.jpg','catman@example.com','',''),(29,'Royal Mail',8,'sdf sdf sdfasd fasd f','2012-12-27 17:19:23',1,4,1,'placeholder.jpg','catman@example.com','','');
+INSERT INTO `org_cooperation` VALUES (24,'Не в списке но с лого',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1,2,1,'50dc68589a3ff.jpg','catman@example.com','',''),(25,'Корв ВС sd',6,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1,2,1,'placeholder.jpg','catman@example.com','',''),(26,'Не в списке и без лого',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1,1,1,'placeholder.jpg','catman@example.com','',''),(29,'Royal Mail',8,'sdf sdf sdfasd fasd f','2012-12-27 17:19:23',1,4,1,'placeholder.jpg','catman@example.com','','');
 /*!40000 ALTER TABLE `org_cooperation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -975,4 +976,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-30 12:50:31
+-- Dump completed on 2013-01-30 15:36:27
