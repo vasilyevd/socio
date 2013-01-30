@@ -3690,8 +3690,7 @@ input[type="submit"].btn.btn-mini {
   clear: both;
 }
 .nav-tabs > li,
-.nav-pills > li,
-.nav-tabs-plain > li {
+.nav-pills > li {
   float: left;
 }
 .nav-tabs > li > a,
@@ -3708,44 +3707,13 @@ input[type="submit"].btn.btn-mini {
   margin-right: 2px;
 }
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
-}
-.nav.nav-tabs-plain {
-  margin-bottom: 0;
-}
-.nav-tabs-plain + .tab-content {
-  clear: both;
-}
-.nav-tabs-plain {
-  float: right;
-}
-.tab-content.bba-map {
-  overflow: visible;
-  min-height: 190px;
-  position: relative;
-}
-.tab-content.bba-map > .active {
-  height: 190px;
-}
-.tab-content.bba-map > .active > div:first-child {
-  height: 147px;
-}
-.bba-map:after {
-  background: url("/images/map.png") no-repeat scroll 65% 0 transparent;
-  display: block;
-  content: "";
-  height: 278px;
-  opacity: 0.5;
-  position: absolute;
-  top: -70px;
-  left: 0;
-  width: 100%;
-  z-index: -1;
+  border-bottom: 1px solid #dddddd;
 }
 .nav-tabs > li {
   margin-bottom: -1px;
 }
 .nav-tabs > li > a {
+  color: #000000;
   padding-top: 8px;
   padding-bottom: 8px;
   line-height: 17px;
@@ -3794,7 +3762,7 @@ input[type="submit"].btn.btn-mini {
 }
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
-  color: #555555;
+  color: #FF5500;
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
