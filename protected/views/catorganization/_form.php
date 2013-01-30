@@ -68,6 +68,7 @@ $('.branch-trigger').change(function(){
 
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
+    <?php $selectText = is_object($model->organization) ? $model->organization->name : ''; ?>
     <?php $model->organization = is_object($model->organization) ? $model->organization->id : $model->organization; ?>
     <?php echo $form->select2Row($model, 'organization', array(
         'asDropDownList' => false,
@@ -78,14 +79,14 @@ $('.branch-trigger').change(function(){
             'width' => '400px',
             'minimumInputLength' => 1,
             'ajax' => array(
-                'url' => $this->createUrl('cooperation/dynamicSearchOrganizations'),
-                'quietMillis'=>500,
+                'url' => $this->createUrl('organization/dynamicOrganizationSearch'),
+                'quietMillis' => 500,
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {
-                    return { query: term };
+                    return {name : term, multiple : true};
                 }',
                 'results' => 'js:function(data, page) {
-                    return { results: data.organizations };
+                    return {results : data};
                 }',
             ),
             'formatResult' => 'js:function(model) {
@@ -97,6 +98,9 @@ $('.branch-trigger').change(function(){
             }',
             'formatSelection' => 'js:function(model) {
                 return model.name;
+            }',
+            'initSelection' => 'js:function(element, callback) {
+                callback({name : "' . $selectText . '"});
             }',
         ),
     )); ?>
