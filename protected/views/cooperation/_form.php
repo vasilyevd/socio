@@ -24,7 +24,6 @@
         ),
     )); ?>
 
-    <?php $organization = $model->linkOrganization; ?>
     <?php $model->linkOrganization = is_object($model->linkOrganization) ? $model->linkOrganization->id : $model->linkOrganization; ?>
     <?php echo $form->select2Row($model, 'linkOrganization', array(
         // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
@@ -54,10 +53,10 @@
                 'quietMillis'=>500,
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {
-                    return { name : term, multiple : true };
+                    return {name : term, multiple : true};
                 }',
                 'results' => 'js:function(data, page) {
-                    return { results : data };
+                    return {results : data};
                 }',
             ),
             'formatResult' => 'js:function(model) {
@@ -71,12 +70,10 @@
                 return model.name;
             }',
             'initSelection' => 'js:function(element, callback) {
-                callback({name : "sdfsdf!!!", logo : "", description : ""});
+                callback({name : "' . $model->link . '"});
             }',
         ),
     )); ?>
-    <?php echo $model->link; ?>
-    |<?php echo $model->linkOrganization; ?>|
 
     <div class="form-hide-toggle">
         <?php echo $form->fileFieldRow($model,'logo'); ?>
