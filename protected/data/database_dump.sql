@@ -342,6 +342,88 @@ INSERT INTO `org_direction` VALUES (1,'Религия'),(2,'Благотвори
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_docauthor`
+--
+
+DROP TABLE IF EXISTS `org_docauthor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_docauthor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_docauthor`
+--
+
+LOCK TABLES `org_docauthor` WRITE;
+/*!40000 ALTER TABLE `org_docauthor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_docauthor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_doctype`
+--
+
+DROP TABLE IF EXISTS `org_doctype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_doctype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `position` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_doctype`
+--
+
+LOCK TABLES `org_doctype` WRITE;
+/*!40000 ALTER TABLE `org_doctype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_doctype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_document`
+--
+
+DROP TABLE IF EXISTS `org_document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_document` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `content` text NOT NULL,
+  `doc_date` date NOT NULL,
+  `geography` int(11) NOT NULL,
+  `registration_num` varchar(128) DEFAULT NULL,
+  `docauthor_id` int(11) DEFAULT NULL,
+  `doctype_id` int(11) DEFAULT NULL,
+  `publication_date` date DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `docauthor_id` (`docauthor_id`),
+  KEY `doctype_id` (`doctype_id`),
+  CONSTRAINT `org_document_ibfk_2` FOREIGN KEY (`doctype_id`) REFERENCES `org_doctype` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_document_ibfk_1` FOREIGN KEY (`docauthor_id`) REFERENCES `org_docauthor` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_document`
+--
+
+LOCK TABLES `org_document` WRITE;
+/*!40000 ALTER TABLE `org_document` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_donor`
 --
 
@@ -976,4 +1058,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-31 17:10:22
+-- Dump completed on 2013-01-31 17:54:27
