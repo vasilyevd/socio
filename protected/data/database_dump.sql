@@ -358,7 +358,7 @@ CREATE TABLE `org_donor` (
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `source` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE `org_donor` (
 
 LOCK TABLES `org_donor` WRITE;
 /*!40000 ALTER TABLE `org_donor` DISABLE KEYS */;
-INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(27,'Донор не в списке',NULL,NULL,NULL,NULL,'placeholder.jpg',4);
+INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(27,'Донор не в списке',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(28,'Донор 3 ываыва',NULL,NULL,NULL,NULL,'placeholder.jpg',3),(29,'ещё не в списке',NULL,NULL,NULL,NULL,'placeholder.jpg',3);
 /*!40000 ALTER TABLE `org_donor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -924,7 +924,7 @@ CREATE TABLE `org_support` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   KEY `link_organization_id` (`link_organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -933,7 +933,7 @@ CREATE TABLE `org_support` (
 
 LOCK TABLES `org_support` WRITE;
 /*!40000 ALTER TABLE `org_support` DISABLE KEYS */;
-INSERT INTO `org_support` VALUES (2,'Logo support',NULL,'sdfsdfs dfsd fsdf dfsdfs dfsdf sf','2012-12-28 16:41:26',1,2,1,'50ddaf967b38d.jpg',1997,4,37500),(3,'Корв ВС sd',6,'sdfs dfsdf sdf','2012-12-28 16:42:23',1,2,1,'placeholder.jpg',2000,2,NULL);
+INSERT INTO `org_support` VALUES (2,'Logo support',NULL,'sdfsdfs dfsd fsdf dfsdfs dfsdf sf','2012-12-28 16:41:26',1,2,1,'50ddaf967b38d.jpg',1997,4,37500),(3,'Корв ВС sd',6,'sdfs dfsdf sdf','2012-12-28 16:42:23',1,2,1,'placeholder.jpg',2000,2,NULL),(4,'Royal Mail',8,'sdf sdff','2013-01-31 17:09:12',1,2,4,'placeholder.jpg',2008,2,NULL);
 /*!40000 ALTER TABLE `org_support` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -976,4 +976,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-31 12:37:16
+-- Dump completed on 2013-01-31 17:10:22
