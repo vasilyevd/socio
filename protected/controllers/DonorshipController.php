@@ -28,7 +28,7 @@ class DonorshipController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view'),
+                'actions'=>array('index','view', 'donorAutoComplete'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -84,10 +84,6 @@ class DonorshipController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty relation for view.
-        //TODO: Properly restore value and not just blank.
-        $model->donor = null;
-        $model->donorNewName = null;
         // Escalate organization for view.
         $this->escalateOrganization($org);
 
@@ -116,10 +112,6 @@ class DonorshipController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty relation for view.
-        //TODO: Properly restore value and not just blank.
-        $model->donor = null;
-        $model->donorNewName = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 
@@ -185,6 +177,32 @@ class DonorshipController extends Controller
         $this->render('admin',array(
             'model'=>$model,
         ));
+    }
+
+    /**
+     * Search model for auto complete term.
+     * @param string $term the search text.
+     */
+    public function actionDonorAutoComplete($term)
+    {
+        header('Content-type: application/json');
+        $criteria = new CDbCriteria();
+
+        $criteria->compare('name', $term, true);
+        $criteria->limit = 5;
+
+        $data = Donor::model()->findAll($criteria);
+
+        $result = array();
+        foreach ($data as $m) {
+            $result[] = array(
+                'value' => $m->name,
+                'label' => $m->name . ' (' . Lookup::item('DonorshipSource', $m->source) . ')',
+            );
+        }
+
+        echo CJSON::encode($result);
+        Yii::app()->end();
     }
 
     /**

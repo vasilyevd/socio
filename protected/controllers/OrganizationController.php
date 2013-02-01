@@ -28,7 +28,7 @@ class OrganizationController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','search', 'dynamicOrganizationSearch'),
+                'actions'=>array('index','view','search', 'organizationAutoComplete', 'organizationSelectSearch'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -228,57 +228,64 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Search organizations.
-     * @param string $query organization name to search.
-     * @param string $modelName the name of Organization model to search.
+     * Search model for auto complete query.
+     * @param string $term the search query text.
      */
-    public function actionDynamicOrganizationSearch($id = null, $name = null, $multiple = false, $donor = false)
+    public function actionOrganizationAutoComplete($term)
     {
-        // Search in donor model instead.
-        if ($donor) {
-            $searchClass = 'Donor';
-        } else {
-            $searchClass = 'Organization';
-        }
-
         header('Content-type: application/json');
-
         $criteria = new CDbCriteria();
 
-        $criteria->compare('id', $id);
-        $criteria->compare('name', $name, true);
+        $criteria->compare('name', $term, true);
+        $criteria->limit = 5;
 
-        if ($multiple) {
-            $criteria->limit = 5;
-            $data = $searchClass::model()->findAll($criteria);
+        $data = Organization::model()->findAll($criteria);
 
-            foreach ($data as $m) {
-                $this->formatDynamicOrganization($m);
-            }
-        } else {
-            $data = $searchClass::model()->find($criteria);
-            $this->formatDynamicOrganization($data);
+        $result = array();
+        foreach ($data as $m) {
+            $result[] = array(
+                'value' => $m->name,
+                'label' => $m->name . ' (' . Lookup::item('OrganizationActionArea', $m->action_area) . ')',
+                'id' => $m->id,
+            );
         }
 
-        echo CJSON::encode($data);
+        echo CJSON::encode($result);
         Yii::app()->end();
     }
 
     /**
-     * Format Organization model for dynamic search.
-     * @param CModel $model the model to format.
+     * Search model for select2 query.
+     * @param string $query the search query text.
      */
-    protected function formatDynamicOrganization($model)
+    public function actionOrganizationSelectSearch($query)
     {
-        // Full URL for logo.
-        $model->logo = $model->getUploadUrl('logo');
+        header('Content-type: application/json');
+        $criteria = new CDbCriteria();
 
-        // Clean and limit length for description.
-        if (empty($model->description)) {
-            $model->description = ' ';
-        } else {
-            $model->description = mb_substr(CHtml::encode(strip_tags($model->description)), 0, 100, 'UTF-8') . '...';
+        $criteria->compare('name', $query, true);
+        $criteria->limit = 5;
+
+        $data = Organization::model()->findAll($criteria);
+
+        $result = array();
+        foreach ($data as $m) {
+            // Format description for view.
+            $description = '';
+            if (!empty($m->description)) {
+                $description = mb_substr(CHtml::encode(strip_tags($m->description)), 0, 100, 'UTF-8') . '...';
+            }
+
+            $result[] = array(
+                'id' => $m->id,
+                'name' => $m->name,
+                'description' => $description,
+                'logo' => $m->getUploadUrl('logo'),
+            );
         }
+
+        echo CJSON::encode($result);
+        Yii::app()->end();
     }
 
     /**

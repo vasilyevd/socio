@@ -80,7 +80,7 @@ class Catorganization extends CActiveRecord
             array('organization', 'exist', 'attributeName' => 'id', 'className' => 'Organization'),
             array(
                 'directions',
-                'ext.validators.ArrayValidator',
+                'application.components.validators.ArrayValidator',
                 'validator' => 'exist',
                 'params' => array(
                     'attributeName' => 'id',

@@ -22,42 +22,22 @@
         ),
     )); ?>
 
-    <?php echo $form->select2Row($model, 'donor', array(
-        // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
-        'asDropDownList' => false, // Tag mode.
-        'prompt' => '', // Blank for all drop.
+    <?php echo $form->labelEx($model, 'donor'); ?>
+    <?php $model->donor = is_object($model->donor) ? $model->donor->name : $model->donor; ?>
+    <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+        'model' => $model,
+        'attribute' => 'donor',
+        'source' => $this->createUrl('donorAutoComplete'),
         'options' => array(
-            'placeholder' => 'Введите название...', // Blank for all drop.
-            'allowClear' => true, // Clear for normal drop.
-            'likeinput' => true,
-            'likeinputAtribute' => 'donorNewName',
-            'multiple' => false,
-            'width' => '500px',
-            'minimumInputLength' => 1,
-            'maximumSelectionSize' => 1,
-            'ajax' => array(
-                'url' => $this->createUrl('organization/dynamicOrganizationSearch'),
-                'quietMillis'=>500,
-                'dataType' => 'json',
-                'data' => 'js:function(term, page) {
-                    return { name : term, multiple : true, donor : true };
-                }',
-                'results' => 'js:function(data, page) {
-                    return { results : data };
-                }',
-            ),
-            'formatResult' => 'js:function(model) {
-                markup = "<table><tr>";
-                markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
-                markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
-                markup += "</tr></table>";
-                return markup;
-            }',
-            'formatSelection' => 'js:function(model) {
-                return model.name;
-            }',
+            'delay' => 300,
+            'minLength' => 2,
+            'showAnim' => 'fold',
+        ),
+        'htmlOptions' => array(
+            'class' => 'span5',
         ),
     )); ?>
+    <?php echo $form->error($model, 'donor'); ?>
 
     <?php echo $form->select2Row($model, 'funds', array(
         'data' => Lookup::items('SupportFunds'),

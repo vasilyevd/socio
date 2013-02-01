@@ -14,6 +14,7 @@ Yii::app()->clientScript->registerScriptFile(
     'type'=>'horizontal',
     'htmlOptions' => array('class' => 'announcement-filter'),
 )); ?>
+
     <?php echo $form->textField($model, 'title', array(
         'class' => 'span5',
         'maxlength' => 128,
@@ -22,7 +23,13 @@ Yii::app()->clientScript->registerScriptFile(
 
     <?php echo $this->renderPartial('_calendar', array('model' => $model, 'attribute' => 'publication_time', 'listview' => 'announcement-listview', 'filter' => 'announcement-filter')); ?>
 
-    <?php echo $form->checkBoxListInlineRow($model, 'category', Lookup::items('AnnouncementCategory'), array('onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")')); ?>
+    <?php $this->beginWidget('zii.widgets.jui.CJuiButton', array(
+        'name' => CHtml::activeId($model, 'category') . '-buttonset',
+        'buttonType' => 'buttonset'
+    )); ?>
+        <?php echo CHtml::activeCheckBoxList($model, 'category', Lookup::items('AnnouncementCategory'), array('separator' => '', 'onchange' => 'dynamicListviewUpdate("announcement-listview", "announcement-filter")')); ?>
+    <?php $this->endWidget(); ?>
+
 <?php $this->endWidget(); ?>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
