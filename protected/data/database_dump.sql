@@ -352,7 +352,7 @@ CREATE TABLE `org_docauthor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,6 +361,7 @@ CREATE TABLE `org_docauthor` (
 
 LOCK TABLES `org_docauthor` WRITE;
 /*!40000 ALTER TABLE `org_docauthor` DISABLE KEYS */;
+INSERT INTO `org_docauthor` VALUES (1,'Автор тест'),(2,'автор новый'),(3,'автор ещё');
 /*!40000 ALTER TABLE `org_docauthor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +377,7 @@ CREATE TABLE `org_doctype` (
   `name` varchar(128) NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,6 +386,7 @@ CREATE TABLE `org_doctype` (
 
 LOCK TABLES `org_doctype` WRITE;
 /*!40000 ALTER TABLE `org_doctype` DISABLE KEYS */;
+INSERT INTO `org_doctype` VALUES (1,'Указ',1),(2,'Постановление',2),(3,'Распоряжение',3),(4,'Приказ',4),(5,'Решение',5),(6,'Программа',6),(7,'Закон',7);
 /*!40000 ALTER TABLE `org_doctype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,9 +411,9 @@ CREATE TABLE `org_document` (
   PRIMARY KEY (`id`),
   KEY `docauthor_id` (`docauthor_id`),
   KEY `doctype_id` (`doctype_id`),
-  CONSTRAINT `org_document_ibfk_2` FOREIGN KEY (`doctype_id`) REFERENCES `org_doctype` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `org_document_ibfk_1` FOREIGN KEY (`docauthor_id`) REFERENCES `org_docauthor` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `org_document_ibfk_1` FOREIGN KEY (`docauthor_id`) REFERENCES `org_docauthor` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_document_ibfk_2` FOREIGN KEY (`doctype_id`) REFERENCES `org_doctype` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,6 +422,7 @@ CREATE TABLE `org_document` (
 
 LOCK TABLES `org_document` WRITE;
 /*!40000 ALTER TABLE `org_document` DISABLE KEYS */;
+INSERT INTO `org_document` VALUES (1,'Первый Документ','<p></p><p>Curabitur <b>aliquet lacus eget purus</b> pharetra vitae ornare nunc varius. \nProin iaculis, odio sit amet vehicula ullamcorper, orci neque aliquet \naugue, eget laoreet magna nisl vel elit. Donec ac ante at velit sodales \nbibendum. <br /></p><ul><li>Maecenas ac risus tortor, at commodo nulla. <br /></li><li>Vestibulum eros \nnulla, egestas in pellentesque vitae.</li><li>Vestibulum a dolor. <br /></li></ul><p>Maecenas quam \nfelis, gravida ac consequat et, ultricies eu ligula. Vestibulum in \nmauris quis odio faucibus blandit nec at neque. Sed est turpis, sagittis\n id ornare quis, vulputate vitae erat. Donec ut purus et tortor mollis \naliquam. Aenean in fringilla nunc. Morbi nec ligula mauris. Nunc \nconvallis facilisis volutpat.\n</p>\n','2013-01-24',5,'HS72384-99-76J',2,7,'2013-02-01',1),(2,'Заполненный Документ','<p>Sed vel mi a lacus suscipit pretium ac ac enim. Integer elit elit, \npulvinar eu malesuada a, feugiat bibendum erat. Morbi ullamcorper \nvenenatis felis eget tristique. Proin sit amet nunc et purus interdum \ndignissim quis eget diam. Fusce consectetur, metus eu adipiscing \nvehicula, lorem leo condimentum elit, dictum tincidunt nisi nisl at dui.\n Curabitur a orci in est hendrerit scelerisque sit amet pretium nisl. \nSed a risus augue. Quisque tincidunt erat sed erat ultricies at vehicula\n tellus sollicitudin. Etiam tortor metus, bibendum sit amet bibendum \nconvallis, luctus non lacus. Aliquam facilisis, neque at porttitor \nvehicula, quam eros facilisis dui, nec facilisis massa dui ut lacus.\n</p>','2013-01-10',3,'HGSY-99-76J',2,3,'2012-12-02',1),(3,'Не заполненный Документ','<p>Ut consequat dapibus dapibus. Proin lacinia mi eget est fermentum \nhendrerit. Maecenas nisi neque, auctor eget congue eu, molestie vitae \nipsum. Nam adipiscing malesuada justo in semper. Mauris dictum erat id \nsem imperdiet adipiscing. Proin sodales justo eu ligula sollicitudin sit\n amet fringilla diam sagittis. Nam egestas sollicitudin tortor et \nmollis.\n</p>','2012-12-06',6,'',NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `org_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -598,10 +601,10 @@ CREATE TABLE `org_lookup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `code` int(11) NOT NULL,
-  `type` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
+  `type` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -610,7 +613,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Национальная',1,'OrganizationActionArea',1),(10,'Региональная',2,'OrganizationActionArea',3),(11,'Районная',3,'OrganizationActionArea',4),(12,'Городская',4,'OrganizationActionArea',5),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'CompanyType',1),(53,'Рекламная',2,'CompanyType',2),(54,'Правовая',3,'CompanyType',3),(55,'Пиар',4,'CompanyType',4),(56,'Всеукраинская',5,'OrganizationActionArea',2),(57,'Международный',1,'CooperationSource',1),(58,'Общественный',2,'CooperationSource',2),(59,'Государственный',3,'CooperationSource',3),(60,'Бизнес',4,'CooperationSource',4),(61,'10.000-20.000',1,'SupportFunds',1),(62,'20.000-40.000',2,'SupportFunds',2),(63,'40.000-80.000',3,'SupportFunds',3),(64,'Конкретнее...',4,'SupportFunds',4),(65,'Международный',1,'DonorshipSource',1),(66,'Национальный',2,'DonorshipSource',2),(67,'Региональный',3,'DonorshipSource',3),(68,'Совместная реализация проектов',1,'CooperationType',1),(69,'Совместная разработка документации',2,'CooperationType',2),(70,'Проведение мероприятий',3,'CooperationType',3),(71,'Проведение акций',4,'CooperationType',4),(72,'Представительство',1,'PartnershipType',1),(73,'Национальное',2,'PartnershipType',2),(74,'Грантовое',3,'PartnershipType',3),(75,'Программное',4,'PartnershipType',4),(76,'Договорное',5,'PartnershipType',5),(77,'Декларативное',6,'PartnershipType',6),(78,'Международный',1,'SupportSource',1),(79,'Благотворительный',2,'SupportSource',2),(80,'Государственный',3,'SupportSource',3),(81,'Бизнес',4,'SupportSource',4),(82,'Административное',1,'SupportType',1),(83,'Поддержка проекта',2,'SupportType',2),(84,'Хозяйственная деятельность',3,'SupportType',3),(85,'Средства и оборудования',4,'SupportType',4),(86,'Финансовые образования',5,'SupportType',5),(87,'Международный',1,'PartnershipSource',1),(88,'Общественный',2,'PartnershipSource',2),(89,'Государственный',3,'PartnershipSource',3),(90,'Бизнес',4,'PartnershipSource',4),(91,'Частный',4,'DonorshipSource',4),(92,'Финансирование',1,'DonorshipType',1),(93,'Приобретение средств и оборот',2,'DonorshipType',2),(94,'Ремонтно строительные работы',3,'DonorshipType',3),(95,'Научные исследования',4,'DonorshipType',4),(96,'Получение образования',5,'DonorshipType',5);
+INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,1,'OrgtypeGroup'),(7,'Неформальные объединения',2,2,'OrgtypeGroup'),(9,'Национальная',1,1,'OrganizationActionArea'),(10,'Региональная',2,3,'OrganizationActionArea'),(11,'Районная',3,4,'OrganizationActionArea'),(12,'Городская',4,5,'OrganizationActionArea'),(13,'Активна',1,1,'OrganizationStatus'),(14,'Неактивна',2,2,'OrganizationStatus'),(15,'Модерируется',3,3,'OrganizationStatus'),(21,'Право',1,1,'ProblemGroup'),(22,'Образование',2,2,'ProblemGroup'),(23,'Соц. проблемы',3,3,'ProblemGroup'),(24,'Активен',1,1,'AnnouncementStatus'),(25,'Неактивен',2,2,'AnnouncementStatus'),(26,'Общие',1,1,'AnnouncementCategory'),(27,'Новости',2,2,'AnnouncementCategory'),(29,'Активен',1,1,'EventStatus'),(30,'Неактивен',2,2,'EventStatus'),(31,'Организационные',1,1,'EvtypeCategory'),(32,'Внутренние',2,2,'EvtypeCategory'),(33,'Публичные',3,3,'EvtypeCategory'),(34,'Общество',4,4,'ProblemGroup'),(35,'Здоровье',5,5,'ProblemGroup'),(36,'Культура',6,6,'ProblemGroup'),(37,'Глобальные проблемы',7,7,'ProblemGroup'),(38,'Инвалидность',8,8,'ProblemGroup'),(39,'СМИ',9,9,'ProblemGroup'),(40,'Публикация (статья)',1,1,'MassmediaCategory'),(41,'Пресс-анонс (новость)',2,2,'MassmediaCategory'),(42,'Пресс-конференция',3,3,'MassmediaCategory'),(43,'Публичное выступление',4,4,'MassmediaCategory'),(44,'ТВ-Проект',5,5,'MassmediaCategory'),(45,'Радио-Проект',6,6,'MassmediaCategory'),(46,'Социальная реклама (ролик)',7,7,'MassmediaCategory'),(49,'Общие',1,1,'MmfileCategory'),(50,'Пресс-релиз',2,2,'MmfileCategory'),(51,'Презентация',3,3,'MmfileCategory'),(52,'Информационная',1,1,'CompanyType'),(53,'Рекламная',2,2,'CompanyType'),(54,'Правовая',3,3,'CompanyType'),(55,'Пиар',4,4,'CompanyType'),(56,'Всеукраинская',5,2,'OrganizationActionArea'),(57,'Международный',1,1,'CooperationSource'),(58,'Общественный',2,2,'CooperationSource'),(59,'Государственный',3,3,'CooperationSource'),(60,'Бизнес',4,4,'CooperationSource'),(61,'10.000-20.000',1,1,'SupportFunds'),(62,'20.000-40.000',2,2,'SupportFunds'),(63,'40.000-80.000',3,3,'SupportFunds'),(64,'Конкретнее...',4,4,'SupportFunds'),(65,'Международный',1,1,'DonorshipSource'),(66,'Национальный',2,2,'DonorshipSource'),(67,'Региональный',3,3,'DonorshipSource'),(68,'Совместная реализация проектов',1,1,'CooperationType'),(69,'Совместная разработка документации',2,2,'CooperationType'),(70,'Проведение мероприятий',3,3,'CooperationType'),(71,'Проведение акций',4,4,'CooperationType'),(72,'Представительство',1,1,'PartnershipType'),(73,'Национальное',2,2,'PartnershipType'),(74,'Грантовое',3,3,'PartnershipType'),(75,'Программное',4,4,'PartnershipType'),(76,'Договорное',5,5,'PartnershipType'),(77,'Декларативное',6,6,'PartnershipType'),(78,'Международный',1,1,'SupportSource'),(79,'Благотворительный',2,2,'SupportSource'),(80,'Государственный',3,3,'SupportSource'),(81,'Бизнес',4,4,'SupportSource'),(82,'Административное',1,1,'SupportType'),(83,'Поддержка проекта',2,2,'SupportType'),(84,'Хозяйственная деятельность',3,3,'SupportType'),(85,'Средства и оборудования',4,4,'SupportType'),(86,'Финансовые образования',5,5,'SupportType'),(87,'Международный',1,1,'PartnershipSource'),(88,'Общественный',2,2,'PartnershipSource'),(89,'Государственный',3,3,'PartnershipSource'),(90,'Бизнес',4,4,'PartnershipSource'),(91,'Частный',4,4,'DonorshipSource'),(92,'Финансирование',1,1,'DonorshipType'),(93,'Приобретение средств и оборот',2,2,'DonorshipType'),(94,'Ремонтно строительные работы',3,3,'DonorshipType'),(95,'Научные исследования',4,4,'DonorshipType'),(96,'Получение образования',5,5,'DonorshipType'),(97,'Международный',1,1,'DocumentGeography'),(98,'Национальный',2,2,'DocumentGeography'),(99,'Городской',3,3,'DocumentGeography'),(100,'Областной',4,4,'DocumentGeography'),(101,'Сельский',5,5,'DocumentGeography'),(102,'Районный',6,6,'DocumentGeography');
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1058,4 +1061,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-31 17:54:27
+-- Dump completed on 2013-02-01 21:48:23

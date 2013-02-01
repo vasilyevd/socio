@@ -28,7 +28,7 @@ class OrganizationController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view','search', 'organizationAutoComplete'),
+                'actions'=>array('index','view','search', 'organizationAutoComplete', 'organizationSelectSearch'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -228,8 +228,8 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Search model for auto complete term.
-     * @param string $term the search text.
+     * Search model for auto complete query.
+     * @param string $term the search query text.
      */
     public function actionOrganizationAutoComplete($term)
     {
@@ -247,6 +247,40 @@ class OrganizationController extends Controller
                 'value' => $m->name,
                 'label' => $m->name . ' (' . Lookup::item('OrganizationActionArea', $m->action_area) . ')',
                 'id' => $m->id,
+            );
+        }
+
+        echo CJSON::encode($result);
+        Yii::app()->end();
+    }
+
+    /**
+     * Search model for select2 query.
+     * @param string $query the search query text.
+     */
+    public function actionOrganizationSelectSearch($query)
+    {
+        header('Content-type: application/json');
+        $criteria = new CDbCriteria();
+
+        $criteria->compare('name', $query, true);
+        $criteria->limit = 5;
+
+        $data = Organization::model()->findAll($criteria);
+
+        $result = array();
+        foreach ($data as $m) {
+            // Format description for view.
+            $description = '';
+            if (!empty($m->description)) {
+                $description = mb_substr(CHtml::encode(strip_tags($m->description)), 0, 100, 'UTF-8') . '...';
+            }
+
+            $result[] = array(
+                'id' => $m->id,
+                'name' => $m->name,
+                'description' => $description,
+                'logo' => $m->getUploadUrl('logo'),
             );
         }
 

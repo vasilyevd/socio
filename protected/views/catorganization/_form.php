@@ -79,11 +79,11 @@ $('.branch-trigger').change(function(){
             'width' => '400px',
             'minimumInputLength' => 1,
             'ajax' => array(
-                'url' => $this->createUrl('organization/dynamicOrganizationSearch'),
+                'url' => $this->createUrl('organization/organizationSelectSearch'),
                 'quietMillis' => 500,
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {
-                    return {name : term, multiple : true};
+                    return {query : term};
                 }',
                 'results' => 'js:function(data, page) {
                     return {results : data};
