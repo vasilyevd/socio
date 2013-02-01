@@ -26,7 +26,6 @@ $this->breadcrumbs=array(
                 'enabled' => true,
             ),
         ),
-
         array(
             'name' => 'is_legal',
             'class' => 'bootstrap.widgets.TbEditableColumn',
