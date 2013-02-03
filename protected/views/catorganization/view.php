@@ -42,7 +42,7 @@ $this->breadcrumbs=array(
         array(
             'name' => 'organization',
             'type' => 'raw',
-            'value' => empty($model->organization) ? 'Не задан' : CHtml::link(CHtml::encode($model->organization->name), array('organization/view', 'id' => $model->organization->id), array('target' => '_blank')),
+            'value' => empty($model->organization) ? '' : CHtml::link(CHtml::encode($model->organization->name), array('organization/view', 'id' => $model->organization->id), array('target' => '_blank')),
         ),
         array(
             'name' => 'logo',

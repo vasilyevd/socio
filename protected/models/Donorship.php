@@ -12,8 +12,6 @@
  */
 class Donorship extends CActiveRecord
 {
-    public $donorNewName;
-
     const SOURCE_INTERNATIONAL = 1;
     const SOURCE_NATIONAL = 2;
     const SOURCE_REGIONAL = 3;
@@ -51,7 +49,6 @@ class Donorship extends CActiveRecord
         return array(
             array('donor, description, source, type, delivery_year, funds', 'required'),
             array('source, type, delivery_year, funds, funds_specific', 'numerical', 'integerOnly'=>true),
-            array('donorNewName', 'length', 'max'=>128),
             array('source', 'in', 'range' => array(
                 self::SOURCE_INTERNATIONAL, self::SOURCE_NATIONAL,
                 self::SOURCE_REGIONAL, self::SOURCE_PRIVATE,
@@ -182,25 +179,13 @@ class Donorship extends CActiveRecord
         $valid = true;
         $tabular = null;
 
-        // Restore empty relation attributes on update.
-        // Empty 'Select2' fix.
-        if (!$this->isNewRecord && empty($this->donor) && empty($this->donorNewName)) {
-            $originalModel = Donorship::model()->findByPk($this->id);
-            $this->donor = $originalModel->donor;
-        }
-
-        if (!empty($this->donor) || !empty($this->donorNewName)) {
-            // Try to find model from database.
-            if (is_object($this->donor)) {
-                $model = $this->donor;
-            } else {
-                $model = Donor::model()->findByPk($this->donor);
-            }
-
-            // Try to create new model from it's name.
+        if (!empty($this->donor)) {
+            $model = Donor::model()->findByAttributes(array(
+                'name' => $this->donor,
+            ));
             if ($model === null) {
                 $model = new Donor;
-                $model->name = $this->donorNewName;
+                $model->name = $this->donor;
                 $model->source = $this->source;
             }
 

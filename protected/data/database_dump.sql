@@ -170,9 +170,9 @@ DROP TABLE IF EXISTS `org_catorganization`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `org_catorganization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
+  `name` text NOT NULL,
   `registration_date` date NOT NULL,
-  `address` varchar(128) NOT NULL,
+  `address` text NOT NULL,
   `address_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
   `region_id` int(11) DEFAULT NULL,
@@ -189,18 +189,19 @@ CREATE TABLE `org_catorganization` (
   `is_branch` tinyint(1) DEFAULT NULL,
   `branch_master` varchar(128) DEFAULT NULL,
   `is_verified` tinyint(1) DEFAULT NULL,
-  `word_name` varchar(128) DEFAULT NULL,
-  `word_registration_date` varchar(128) DEFAULT NULL,
-  `word_address` varchar(128) DEFAULT NULL,
-  `word_city` varchar(128) DEFAULT NULL,
-  `word_region` varchar(128) DEFAULT NULL,
-  `word_contact` varchar(128) DEFAULT NULL,
-  `word_contact_position` varchar(128) DEFAULT NULL,
+  `word_name` text,
+  `word_registration_date` text,
+  `word_address` text,
+  `word_city` text,
+  `word_region` text,
+  `word_contact` text,
+  `word_contact_position` text,
   `word_is_legal` tinyint(1) DEFAULT NULL,
   `word_is_branch` tinyint(1) DEFAULT NULL,
-  `word_branch_master` varchar(128) DEFAULT NULL,
-  `word_registration_num` varchar(128) DEFAULT NULL,
+  `word_branch_master` text,
+  `word_registration_num` text,
   `word_description` text,
+  `word_phone` text,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
@@ -213,7 +214,7 @@ CREATE TABLE `org_catorganization` (
 
 LOCK TABLES `org_catorganization` WRITE;
 /*!40000 ALTER TABLE `org_catorganization` DISABLE KEYS */;
-INSERT INTO `org_catorganization` VALUES (3,'First','2013-01-11','Adress adreass adress',24,55,334,'Гусь К.О.','234234SSF21','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,3,'Охота, рыбалка','5107c08d46246.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'Full test','2013-01-25','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',1,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'Normal','2013-01-02','sdfsfsdfsd fsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `org_catorganization` VALUES (3,'Первая общественная организация','2013-01-12','Adress adreass adress',24,55,334,'Гусь К.О.','234234SSF21','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',6,1,3,'Охота, рыбалка','5107c08d46246.jpg',1,'Супер главная организация',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,''),(4,'Full test','2013-01-13','Адресс 242ы24 вва3',2,4,6,'Гусь К.О.','7672HJ8','993-234-99','https://github.com/vasilyevd/socio/network','cheese@example.com',1,1,2,'Кошки, Собаки, Хомяки','51066b5823e26.jpg',1,'Main Org',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,''),(5,'Normal','2013-01-02','sdfsfsdfsd fsdf',NULL,NULL,NULL,'','','','','',NULL,NULL,NULL,'','placeholder.jpg',0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'');
 /*!40000 ALTER TABLE `org_catorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,7 +313,7 @@ CREATE TABLE `org_cooperation` (
 
 LOCK TABLES `org_cooperation` WRITE;
 /*!40000 ALTER TABLE `org_cooperation` DISABLE KEYS */;
-INSERT INTO `org_cooperation` VALUES (24,'Не в списке с лого',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1,2,1,'50dc68589a3ff.jpg','catman@example.com','',''),(25,'Корв ВС sd',6,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1,2,1,'placeholder.jpg','catman@example.com','',''),(26,'Не в списке и без лого',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1,1,1,'placeholder.jpg','catman@example.com','',''),(29,'Royal Mail',8,'sdf sdf sdfasd fasd f','2012-12-27 17:19:23',1,4,1,'placeholder.jpg','catman@example.com','','');
+INSERT INTO `org_cooperation` VALUES (24,'Не в списке но с лого',NULL,'Phasellus non fermentum eros. Sed tincidunt nibh ut est gravida semper. Sed pretium cursus justo, id condimentum magna auctor in. Nunc quis luctus sem. Nullam viverra neque ac sem vestibulum dictum. Nulla et risus in risus vulputate aliquet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dictum convallis aliquet.','2012-12-24 17:38:14',1,2,1,'50dc68589a3ff.jpg','catman@example.com','',''),(25,'Корв ВС sd',6,'Sed venenatis consectetur purus, vel consequat nisl accumsan in. Ut nec massa massa. Integer bibendum adipiscing laoreet. In hac habitasse platea dictumst. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu tellus in enim varius ultricies. Sed nec massa ac massa tincidunt tempus. Integer nec leo a sapien ornare tempus ut non lectus. Morbi nulla est, venenatis ut posuere eu, elementum ac leo. Nam molestie quam eros, scelerisque hendrerit purus. ','2012-12-24 17:47:58',1,2,1,'placeholder.jpg','catman@example.com','',''),(26,'Не в списке и без лого',NULL,'Proin lorem magna, consequat ut hendrerit a, tempor luctus magna. Proin laoreet quam sed urna tristique vitae pellentesque leo faucibus.','2012-12-25 13:05:15',1,1,1,'placeholder.jpg','catman@example.com','',''),(29,'Royal Mail',8,'sdf sdf sdfasd fasd f','2012-12-27 17:19:23',1,4,1,'placeholder.jpg','catman@example.com','','');
 /*!40000 ALTER TABLE `org_cooperation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,6 +342,91 @@ INSERT INTO `org_direction` VALUES (1,'Религия'),(2,'Благотвори
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_docauthor`
+--
+
+DROP TABLE IF EXISTS `org_docauthor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_docauthor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_docauthor`
+--
+
+LOCK TABLES `org_docauthor` WRITE;
+/*!40000 ALTER TABLE `org_docauthor` DISABLE KEYS */;
+INSERT INTO `org_docauthor` VALUES (1,'Автор тест'),(2,'автор новый'),(3,'автор ещё');
+/*!40000 ALTER TABLE `org_docauthor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_doctype`
+--
+
+DROP TABLE IF EXISTS `org_doctype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_doctype` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `position` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_doctype`
+--
+
+LOCK TABLES `org_doctype` WRITE;
+/*!40000 ALTER TABLE `org_doctype` DISABLE KEYS */;
+INSERT INTO `org_doctype` VALUES (1,'Указ',1),(2,'Постановление',2),(3,'Распоряжение',3),(4,'Приказ',4),(5,'Решение',5),(6,'Программа',6),(7,'Закон',7);
+/*!40000 ALTER TABLE `org_doctype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_document`
+--
+
+DROP TABLE IF EXISTS `org_document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_document` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `content` text NOT NULL,
+  `doc_date` date NOT NULL,
+  `geography` int(11) NOT NULL,
+  `registration_num` varchar(128) DEFAULT NULL,
+  `docauthor_id` int(11) DEFAULT NULL,
+  `doctype_id` int(11) DEFAULT NULL,
+  `publication_date` date DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `docauthor_id` (`docauthor_id`),
+  KEY `doctype_id` (`doctype_id`),
+  CONSTRAINT `org_document_ibfk_1` FOREIGN KEY (`docauthor_id`) REFERENCES `org_docauthor` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_document_ibfk_2` FOREIGN KEY (`doctype_id`) REFERENCES `org_doctype` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_document`
+--
+
+LOCK TABLES `org_document` WRITE;
+/*!40000 ALTER TABLE `org_document` DISABLE KEYS */;
+INSERT INTO `org_document` VALUES (1,'Первый Документ','<p></p><p>Curabitur <b>aliquet lacus eget purus</b> pharetra vitae ornare nunc varius. \nProin iaculis, odio sit amet vehicula ullamcorper, orci neque aliquet \naugue, eget laoreet magna nisl vel elit. Donec ac ante at velit sodales \nbibendum. <br /></p><ul><li>Maecenas ac risus tortor, at commodo nulla. <br /></li><li>Vestibulum eros \nnulla, egestas in pellentesque vitae.</li><li>Vestibulum a dolor. <br /></li></ul><p>Maecenas quam \nfelis, gravida ac consequat et, ultricies eu ligula. Vestibulum in \nmauris quis odio faucibus blandit nec at neque. Sed est turpis, sagittis\n id ornare quis, vulputate vitae erat. Donec ut purus et tortor mollis \naliquam. Aenean in fringilla nunc. Morbi nec ligula mauris. Nunc \nconvallis facilisis volutpat.\n</p>\n','2013-01-24',5,'HS72384-99-76J',2,7,'2013-02-01',1),(2,'Заполненный Документ','<p>Sed vel mi a lacus suscipit pretium ac ac enim. Integer elit elit, \npulvinar eu malesuada a, feugiat bibendum erat. Morbi ullamcorper \nvenenatis felis eget tristique. Proin sit amet nunc et purus interdum \ndignissim quis eget diam. Fusce consectetur, metus eu adipiscing \nvehicula, lorem leo condimentum elit, dictum tincidunt nisi nisl at dui.\n Curabitur a orci in est hendrerit scelerisque sit amet pretium nisl. \nSed a risus augue. Quisque tincidunt erat sed erat ultricies at vehicula\n tellus sollicitudin. Etiam tortor metus, bibendum sit amet bibendum \nconvallis, luctus non lacus. Aliquam facilisis, neque at porttitor \nvehicula, quam eros facilisis dui, nec facilisis massa dui ut lacus.\n</p>','2013-01-10',3,'HGSY-99-76J',2,3,'2012-12-02',1),(3,'Не заполненный Документ','<p>Ut consequat dapibus dapibus. Proin lacinia mi eget est fermentum \nhendrerit. Maecenas nisi neque, auctor eget congue eu, molestie vitae \nipsum. Nam adipiscing malesuada justo in semper. Mauris dictum erat id \nsem imperdiet adipiscing. Proin sodales justo eu ligula sollicitudin sit\n amet fringilla diam sagittis. Nam egestas sollicitudin tortor et \nmollis.\n</p>','2012-12-06',6,'',NULL,NULL,NULL,0);
+/*!40000 ALTER TABLE `org_document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_donor`
 --
 
@@ -357,7 +443,7 @@ CREATE TABLE `org_donor` (
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `source` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,7 +452,7 @@ CREATE TABLE `org_donor` (
 
 LOCK TABLES `org_donor` WRITE;
 /*!40000 ALTER TABLE `org_donor` DISABLE KEYS */;
-INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(27,'Донор не в списке',NULL,NULL,NULL,NULL,'placeholder.jpg',4);
+INSERT INTO `org_donor` VALUES (1,'Донор 1','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50d334e8c3a96.jpg',1),(2,'Донор 2','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50daec116d71d.jpg',1),(3,'Донор 3','Описание описание','Украина','https://github.com/vasilyevd/socio/network','catman@example.com','50dd884b867ec.jpg',1),(27,'Донор не в списке',NULL,NULL,NULL,NULL,'placeholder.jpg',4),(28,'Донор 3 ываыва',NULL,NULL,NULL,NULL,'placeholder.jpg',3),(29,'ещё не в списке',NULL,NULL,NULL,NULL,'placeholder.jpg',3);
 /*!40000 ALTER TABLE `org_donor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,10 +601,10 @@ CREATE TABLE `org_lookup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `code` int(11) NOT NULL,
-  `type` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
+  `type` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -527,7 +613,7 @@ CREATE TABLE `org_lookup` (
 
 LOCK TABLES `org_lookup` WRITE;
 /*!40000 ALTER TABLE `org_lookup` DISABLE KEYS */;
-INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,'OrgtypeGroup',1),(7,'Неформальные объединения',2,'OrgtypeGroup',2),(9,'Национальная',1,'OrganizationActionArea',1),(10,'Региональная',2,'OrganizationActionArea',3),(11,'Районная',3,'OrganizationActionArea',4),(12,'Городская',4,'OrganizationActionArea',5),(13,'Активна',1,'OrganizationStatus',1),(14,'Неактивна',2,'OrganizationStatus',2),(15,'Модерируется',3,'OrganizationStatus',3),(21,'Право',1,'ProblemGroup',1),(22,'Образование',2,'ProblemGroup',2),(23,'Соц. проблемы',3,'ProblemGroup',3),(24,'Активен',1,'AnnouncementStatus',1),(25,'Неактивен',2,'AnnouncementStatus',2),(26,'Общие',1,'AnnouncementCategory',1),(27,'Новости',2,'AnnouncementCategory',2),(29,'Активен',1,'EventStatus',1),(30,'Неактивен',2,'EventStatus',2),(31,'Организационные',1,'EvtypeCategory',1),(32,'Внутренние',2,'EvtypeCategory',2),(33,'Публичные',3,'EvtypeCategory',3),(34,'Общество',4,'ProblemGroup',4),(35,'Здоровье',5,'ProblemGroup',5),(36,'Культура',6,'ProblemGroup',6),(37,'Глобальные проблемы',7,'ProblemGroup',7),(38,'Инвалидность',8,'ProblemGroup',8),(39,'СМИ',9,'ProblemGroup',9),(40,'Публикация (статья)',1,'MassmediaCategory',1),(41,'Пресс-анонс (новость)',2,'MassmediaCategory',2),(42,'Пресс-конференция',3,'MassmediaCategory',3),(43,'Публичное выступление',4,'MassmediaCategory',4),(44,'ТВ-Проект',5,'MassmediaCategory',5),(45,'Радио-Проект',6,'MassmediaCategory',6),(46,'Социальная реклама (ролик)',7,'MassmediaCategory',7),(49,'Общие',1,'MmfileCategory',1),(50,'Пресс-релиз',2,'MmfileCategory',2),(51,'Презентация',3,'MmfileCategory',3),(52,'Информационная',1,'CompanyType',1),(53,'Рекламная',2,'CompanyType',2),(54,'Правовая',3,'CompanyType',3),(55,'Пиар',4,'CompanyType',4),(56,'Всеукраинская',5,'OrganizationActionArea',2),(57,'Международный',1,'CooperationSource',1),(58,'Общественный',2,'CooperationSource',2),(59,'Государственный',3,'CooperationSource',3),(60,'Бизнес',4,'CooperationSource',4),(61,'10.000-20.000',1,'SupportFunds',1),(62,'20.000-40.000',2,'SupportFunds',2),(63,'40.000-80.000',3,'SupportFunds',3),(64,'Конкретнее...',4,'SupportFunds',4),(65,'Международный',1,'DonorshipSource',1),(66,'Национальный',2,'DonorshipSource',2),(67,'Региональный',3,'DonorshipSource',3),(68,'Совместная реализация проектов',1,'CooperationType',1),(69,'Совместная разработка документации',2,'CooperationType',2),(70,'Проведение мероприятий',3,'CooperationType',3),(71,'Проведение акций',4,'CooperationType',4),(72,'Представительство',1,'PartnershipType',1),(73,'Национальное',2,'PartnershipType',2),(74,'Грантовое',3,'PartnershipType',3),(75,'Программное',4,'PartnershipType',4),(76,'Договорное',5,'PartnershipType',5),(77,'Декларативное',6,'PartnershipType',6),(78,'Международный',1,'SupportSource',1),(79,'Благотворительный',2,'SupportSource',2),(80,'Государственный',3,'SupportSource',3),(81,'Бизнес',4,'SupportSource',4),(82,'Административное',1,'SupportType',1),(83,'Поддержка проекта',2,'SupportType',2),(84,'Хозяйственная деятельность',3,'SupportType',3),(85,'Средства и оборудования',4,'SupportType',4),(86,'Финансовые образования',5,'SupportType',5),(87,'Международный',1,'PartnershipSource',1),(88,'Общественный',2,'PartnershipSource',2),(89,'Государственный',3,'PartnershipSource',3),(90,'Бизнес',4,'PartnershipSource',4),(91,'Частный',4,'DonorshipSource',4),(92,'Финансирование',1,'DonorshipType',1),(93,'Приобретение средств и оборот',2,'DonorshipType',2),(94,'Ремонтно строительные работы',3,'DonorshipType',3),(95,'Научные исследования',4,'DonorshipType',4),(96,'Получение образования',5,'DonorshipType',5);
+INSERT INTO `org_lookup` VALUES (6,'Объединения граждан',1,1,'OrgtypeGroup'),(7,'Неформальные объединения',2,2,'OrgtypeGroup'),(9,'Национальная',1,1,'OrganizationActionArea'),(10,'Региональная',2,3,'OrganizationActionArea'),(11,'Районная',3,4,'OrganizationActionArea'),(12,'Городская',4,5,'OrganizationActionArea'),(13,'Активна',1,1,'OrganizationStatus'),(14,'Неактивна',2,2,'OrganizationStatus'),(15,'Модерируется',3,3,'OrganizationStatus'),(21,'Право',1,1,'ProblemGroup'),(22,'Образование',2,2,'ProblemGroup'),(23,'Соц. проблемы',3,3,'ProblemGroup'),(24,'Активен',1,1,'AnnouncementStatus'),(25,'Неактивен',2,2,'AnnouncementStatus'),(26,'Общие',1,1,'AnnouncementCategory'),(27,'Новости',2,2,'AnnouncementCategory'),(29,'Активен',1,1,'EventStatus'),(30,'Неактивен',2,2,'EventStatus'),(31,'Организационные',1,1,'EvtypeCategory'),(32,'Внутренние',2,2,'EvtypeCategory'),(33,'Публичные',3,3,'EvtypeCategory'),(34,'Общество',4,4,'ProblemGroup'),(35,'Здоровье',5,5,'ProblemGroup'),(36,'Культура',6,6,'ProblemGroup'),(37,'Глобальные проблемы',7,7,'ProblemGroup'),(38,'Инвалидность',8,8,'ProblemGroup'),(39,'СМИ',9,9,'ProblemGroup'),(40,'Публикация (статья)',1,1,'MassmediaCategory'),(41,'Пресс-анонс (новость)',2,2,'MassmediaCategory'),(42,'Пресс-конференция',3,3,'MassmediaCategory'),(43,'Публичное выступление',4,4,'MassmediaCategory'),(44,'ТВ-Проект',5,5,'MassmediaCategory'),(45,'Радио-Проект',6,6,'MassmediaCategory'),(46,'Социальная реклама (ролик)',7,7,'MassmediaCategory'),(49,'Общие',1,1,'MmfileCategory'),(50,'Пресс-релиз',2,2,'MmfileCategory'),(51,'Презентация',3,3,'MmfileCategory'),(52,'Информационная',1,1,'CompanyType'),(53,'Рекламная',2,2,'CompanyType'),(54,'Правовая',3,3,'CompanyType'),(55,'Пиар',4,4,'CompanyType'),(56,'Всеукраинская',5,2,'OrganizationActionArea'),(57,'Международный',1,1,'CooperationSource'),(58,'Общественный',2,2,'CooperationSource'),(59,'Государственный',3,3,'CooperationSource'),(60,'Бизнес',4,4,'CooperationSource'),(61,'10.000-20.000',1,1,'SupportFunds'),(62,'20.000-40.000',2,2,'SupportFunds'),(63,'40.000-80.000',3,3,'SupportFunds'),(64,'Конкретнее...',4,4,'SupportFunds'),(65,'Международный',1,1,'DonorshipSource'),(66,'Национальный',2,2,'DonorshipSource'),(67,'Региональный',3,3,'DonorshipSource'),(68,'Совместная реализация проектов',1,1,'CooperationType'),(69,'Совместная разработка документации',2,2,'CooperationType'),(70,'Проведение мероприятий',3,3,'CooperationType'),(71,'Проведение акций',4,4,'CooperationType'),(72,'Представительство',1,1,'PartnershipType'),(73,'Национальное',2,2,'PartnershipType'),(74,'Грантовое',3,3,'PartnershipType'),(75,'Программное',4,4,'PartnershipType'),(76,'Договорное',5,5,'PartnershipType'),(77,'Декларативное',6,6,'PartnershipType'),(78,'Международный',1,1,'SupportSource'),(79,'Благотворительный',2,2,'SupportSource'),(80,'Государственный',3,3,'SupportSource'),(81,'Бизнес',4,4,'SupportSource'),(82,'Административное',1,1,'SupportType'),(83,'Поддержка проекта',2,2,'SupportType'),(84,'Хозяйственная деятельность',3,3,'SupportType'),(85,'Средства и оборудования',4,4,'SupportType'),(86,'Финансовые образования',5,5,'SupportType'),(87,'Международный',1,1,'PartnershipSource'),(88,'Общественный',2,2,'PartnershipSource'),(89,'Государственный',3,3,'PartnershipSource'),(90,'Бизнес',4,4,'PartnershipSource'),(91,'Частный',4,4,'DonorshipSource'),(92,'Финансирование',1,1,'DonorshipType'),(93,'Приобретение средств и оборот',2,2,'DonorshipType'),(94,'Ремонтно строительные работы',3,3,'DonorshipType'),(95,'Научные исследования',4,4,'DonorshipType'),(96,'Получение образования',5,5,'DonorshipType'),(97,'Международный',1,1,'DocumentGeography'),(98,'Национальный',2,2,'DocumentGeography'),(99,'Городской',3,3,'DocumentGeography'),(100,'Областной',4,4,'DocumentGeography'),(101,'Сельский',5,5,'DocumentGeography'),(102,'Районный',6,6,'DocumentGeography');
 /*!40000 ALTER TABLE `org_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -923,7 +1009,7 @@ CREATE TABLE `org_support` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   KEY `link_organization_id` (`link_organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -932,7 +1018,7 @@ CREATE TABLE `org_support` (
 
 LOCK TABLES `org_support` WRITE;
 /*!40000 ALTER TABLE `org_support` DISABLE KEYS */;
-INSERT INTO `org_support` VALUES (2,'Logo support',NULL,'sdfsdfs dfsd fsdf dfsdfs dfsdf sf','2012-12-28 16:41:26',1,2,1,'50ddaf967b38d.jpg',1997,4,37500),(3,'Корв ВС sd',6,'sdfs dfsdf sdf','2012-12-28 16:42:23',1,2,1,'placeholder.jpg',2000,2,NULL);
+INSERT INTO `org_support` VALUES (2,'Logo support',NULL,'sdfsdfs dfsd fsdf dfsdfs dfsdf sf','2012-12-28 16:41:26',1,2,1,'50ddaf967b38d.jpg',1997,4,37500),(3,'Корв ВС sd',6,'sdfs dfsdf sdf','2012-12-28 16:42:23',1,2,1,'placeholder.jpg',2000,2,NULL),(4,'Royal Mail',8,'sdf sdff','2013-01-31 17:09:12',1,2,4,'placeholder.jpg',2008,2,NULL);
 /*!40000 ALTER TABLE `org_support` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -975,4 +1061,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-30 12:50:31
+-- Dump completed on 2013-02-01 21:48:23

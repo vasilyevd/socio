@@ -1,3 +1,20 @@
+<?php
+Yii::app()->clientScript->registerScript('organizationAutoComplete', "
+(function () {
+    var previous;
+
+    $('#" . CHtml::activeId($model, 'link') . "').focus(function () {
+        previous = this.value;
+    }).change(function() {
+        if (previous != this.value) {
+            $('#" . CHtml::activeId($model, 'linkOrganization') . "').val('');
+            $('.cooperation-form-toggle').show();
+        }
+    });
+})();
+");
+?>
+
 <?php echo $form->radioButtonListRow($model, 'source', Lookup::items('PartnershipSource')); ?>
 
 <?php echo $form->select2Row($model, 'type', array(
@@ -13,54 +30,29 @@
     ),
 )); ?>
 
-<?php echo $form->select2Row($model, 'linkOrganization', array(
-    // 'data' => CHtml::listData(Organization::model()->findAll(), 'id', 'name'),
-    'asDropDownList' => false, // Tag mode.
-    'prompt' => '', // Blank for all drop.
-    'events' => array(
-        'change' => 'js:function(e) {
-            if (e.val == "") {
-                $(".form-hide-toggle").show();
-            } else {
-                $(".form-hide-toggle").hide();
-            }
-            return false;
-        }',
-    ),
+<?php echo $form->labelEx($model, 'link'); ?>
+<?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+    'model' => $model,
+    'attribute' => 'link',
+    'source' => $this->createUrl('organization/organizationAutoComplete'),
     'options' => array(
-        'placeholder' => 'Введите название...', // Blank for all drop.
-        'allowClear' => true, // Clear for normal drop.
-        'likeinput' => true,
-        'likeinputAtribute' => 'link',
-        'multiple' => false,
-        'width' => '500px',
-        'minimumInputLength' => 1,
-        'maximumSelectionSize' => 1,
-        'ajax' => array(
-            'url' => $this->createUrl('organization/dynamicOrganizationSearch'),
-            'quietMillis'=>500,
-            'dataType' => 'json',
-            'data' => 'js:function(term, page) {
-                return { name : term, multiple : true };
-            }',
-            'results' => 'js:function(data, page) {
-                return { results : data };
-            }',
-        ),
-        'formatResult' => 'js:function(model) {
-            markup = "<table><tr>";
-            markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
-            markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
-            markup += "</tr></table>";
-            return markup;
-        }',
-        'formatSelection' => 'js:function(model) {
-            return model.name;
-        }',
+        'delay' => 300,
+        'minLength' => 2,
+        'showAnim' => 'fold',
+        'select' => "js:function(event, ui) {
+            $('#" . CHtml::activeId($model, 'linkOrganization') . "').val(ui.item.id);
+            $('.cooperation-form-toggle').hide();
+        }",
+    ),
+    'htmlOptions' => array(
+        'class' => 'span5',
     ),
 )); ?>
+<?php $model->linkOrganization = is_object($model->linkOrganization) ? $model->linkOrganization->id : $model->linkOrganization; ?>
+<?php echo $form->hiddenField($model, 'linkOrganization'); ?>
+<?php echo $form->error($model, 'link'); ?>
 
-<div class="form-hide-toggle">
+<div class="cooperation-form-toggle"<?php echo !empty($model->linkOrganization) ? ' style="display:none"' : ''; ?>>
     <?php echo $form->fileFieldRow($model,'logo'); ?>
 </div>
 

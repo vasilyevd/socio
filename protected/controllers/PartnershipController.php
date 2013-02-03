@@ -86,10 +86,6 @@ class PartnershipController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty 'linkOrganization', relation for view.
-        //TODO: Properly restore 'linkOrganization' value and not just blank.
-        $model->linkOrganization = null;
-        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($org);
 
@@ -121,10 +117,6 @@ class PartnershipController extends Controller
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Empty 'linkOrganization', relation for view.
-        //TODO: Properly restore 'linkOrganization' value and not just blank.
-        $model->linkOrganization = null;
-        $model->link = null;
         // Escalate organization for view.
         $this->escalateOrganization($model->organization);
 

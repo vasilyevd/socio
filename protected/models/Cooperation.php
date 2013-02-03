@@ -153,7 +153,7 @@ class Cooperation extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Save link as link Organization name.
+        // In case link Organization model is set, save it's name to link.
         if (!empty($this->linkOrganization)) {
             $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
             $this->link = $this->linkOrganization->name;

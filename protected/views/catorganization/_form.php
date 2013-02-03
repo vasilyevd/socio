@@ -20,14 +20,14 @@ $('.branch-trigger').change(function(){
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->textAreaRow($model, 'name', array('class'=>'span8', 'rows'=>5)); ?>
 
     <?php echo $form->datepickerRow($model, 'registration_date', array(
         'options' => array('format' => 'yyyy-mm-dd', 'weekStart' => 1),
         'append' => '<i class="icon-calendar"></i>',
     )); ?>
 
-    <?php echo $form->textFieldRow($model,'address',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->textAreaRow($model, 'address', array('class'=>'span8', 'rows'=>5)); ?>
 
     <?php echo $form->textFieldRow($model,'address_id',array('class'=>'span5')); ?>
 
@@ -79,11 +79,11 @@ $('.branch-trigger').change(function(){
             'width' => '400px',
             'minimumInputLength' => 1,
             'ajax' => array(
-                'url' => $this->createUrl('organization/dynamicOrganizationSearch'),
+                'url' => $this->createUrl('organization/organizationSelectSearch'),
                 'quietMillis' => 500,
                 'dataType' => 'json',
                 'data' => 'js:function(term, page) {
-                    return {name : term, multiple : true};
+                    return {query : term};
                 }',
                 'results' => 'js:function(data, page) {
                     return {results : data};
@@ -100,7 +100,7 @@ $('.branch-trigger').change(function(){
                 return model.name;
             }',
             'initSelection' => 'js:function(element, callback) {
-                callback({name : "' . $selectText . '"});
+                callback({id : element.val(), name : "' . $selectText . '"});
             }',
         ),
     )); ?>

@@ -162,16 +162,10 @@ class Support extends CActiveRecord
      */
     public function beforeValidate()
     {
-        // Find new link attributes.
-        if (is_string($this->linkOrganization) && ctype_digit($this->linkOrganization)) {
+        // In case link Organization model is set, save it's name to link.
+        if (!empty($this->linkOrganization)) {
             $this->linkOrganization = Organization::model()->findByPk($this->linkOrganization);
             $this->link = $this->linkOrganization->name;
-        }
-        // Restore empty link attributes on update.
-        if (!$this->isNewRecord && empty($this->link)) {
-            $originalModel = Support::model()->findByPk($this->id);
-            $this->linkOrganization = $originalModel->linkOrganization;
-            $this->link = $originalModel->link;
         }
 
         // Don't allow empty 'funds_specific' on funds 'FUNDS_OTHER'.

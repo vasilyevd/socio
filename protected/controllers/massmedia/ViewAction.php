@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.controllers.massmedia.BaseMassmediaAction');
+
 class ViewAction extends BaseMassmediaAction
 {
     public function run()
