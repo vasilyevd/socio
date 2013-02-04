@@ -1,15 +1,5 @@
-<?php
-$this->breadcrumbs=array(
-	'Govorganizations'=>array('index'),
-	'Create',
-);
+<?php echo CHtml::link('Список Организаций', array('index'), array('class' => 'btn')); ?>
 
-$this->menu=array(
-	array('label'=>'List Govorganization','url'=>array('index')),
-	array('label'=>'Manage Govorganization','url'=>array('admin')),
-);
-?>
-
-<h1>Create Govorganization</h1>
+<h1>Создать Государственную Организацию</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

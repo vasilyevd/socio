@@ -60,13 +60,7 @@ class Govorganization extends CActiveRecord
             array('name, type, action_area', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
-            array(
-                'action_area',
-                'exist',
-                'attributeName' => 'code',
-                'className' => 'Lookup',
-                'condition' => 'type="OrganizationActionArea"',
-            ),
+            array('action_area', 'in', 'range' => array_keys(self::model()->ActionArea->list)),
             array(
                 'description, goal',
                 'filter',
@@ -105,6 +99,29 @@ class Govorganization extends CActiveRecord
                 'Govorganization',
                 array('parent_id' => 'id'),
                 'through' => 'profile',
+            ),
+        );
+    }
+
+    /**
+     * @return array behaviors for current model.
+     */
+    public function behaviors()
+    {
+        return array(
+            // Advanced relations
+            'EActiveRecordRelationBehavior' => array(
+                'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
+            ),
+            // Upload handler.
+            'UploadBehavior' => array(
+                'class' => 'application.components.behaviors.UploadBehavior',
+                'attributes' => array('logo'),
+            ),
+            // Constants.
+            'ActionArea' => array(
+                'class' => 'application.components.behaviors.constants.OrganizationActionAreaBehavior',
+                'attribute' => 'action_area',
             ),
         );
     }

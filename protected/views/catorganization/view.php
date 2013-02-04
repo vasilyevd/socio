@@ -1,10 +1,3 @@
-<?php
-$this->breadcrumbs=array(
-    'Catorganizations'=>array('index'),
-    $model->name,
-);
-?>
-
 <?php echo CHtml::link('Список Организаций', array('index'), array('class' => 'btn')); ?>
 
 <?php echo CHtml::link('Изменить Организацию', array('update', 'id' => $model->id), array('class' => 'btn')); ?>

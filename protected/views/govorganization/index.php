@@ -1,17 +1,8 @@
-<?php
-$this->breadcrumbs=array(
-	'Govorganizations',
-);
+<?php echo CHtml::link('Добавить Организацию', array('create'), array('class' => 'btn')); ?>
 
-$this->menu=array(
-	array('label'=>'Create Govorganization','url'=>array('create')),
-	array('label'=>'Manage Govorganization','url'=>array('admin')),
-);
-?>
-
-<h1>Govorganizations</h1>
+<h1>Государственные Организации</h1>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+    'dataProvider'=>$dataProvider,
+    'itemView'=>'_view',
 )); ?>
