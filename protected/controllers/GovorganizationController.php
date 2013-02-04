@@ -1,12 +1,12 @@
 <?php
 
-class DocumentController extends Controller
+class GovorganizationController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/column1';
+    public $layout='//layouts/column2';
 
     /**
      * @return array action filters
@@ -28,11 +28,11 @@ class DocumentController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view', 'docauthorAutoComplete'),
+                'actions'=>array('index','view'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update', 'editableUpdate'),
+                'actions'=>array('create','update'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -56,52 +56,8 @@ class DocumentController extends Controller
             'create' => 'application.components.actions.CreateAction',
             'update' => 'application.components.actions.UpdateAction',
             'delete' => 'application.components.actions.DeleteAction',
-            // 'index' => 'application.components.actions.IndexAction',
+            'index' => 'application.components.actions.IndexAction',
             'admin' => 'application.components.actions.AdminAction',
-
-            // Editable fields and widgets update model action.
-            'editableUpdate' => 'application.components.actions.EditableUpdateAction',
         );
-    }
-
-    /**
-     * Lists all models.
-     */
-    public function actionIndex()
-    {
-        $model=new Document('search');
-        $model->unsetAttributes(); // clear any default values
-        if(isset($_GET['Document']))
-            $model->attributes=$_GET['Document'];
-
-        $this->render('index',array(
-            'model'=>$model,
-        ));
-    }
-
-    /**
-     * Search model for auto complete term.
-     * @param string $term the search text.
-     */
-    public function actionDocauthorAutoComplete($term)
-    {
-        header('Content-type: application/json');
-        $criteria = new CDbCriteria();
-
-        $criteria->compare('name', $term, true);
-        $criteria->limit = 5;
-
-        $data = Docauthor::model()->findAll($criteria);
-
-        $result = array();
-        foreach ($data as $m) {
-            $result[] = array(
-                'value' => $m->name,
-                'label' => $m->name,
-            );
-        }
-
-        echo CJSON::encode($result);
-        Yii::app()->end();
     }
 }

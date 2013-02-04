@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.30, for Linux (x86_64)
 --
 -- Host: localhost    Database: socio
 -- ------------------------------------------------------
--- Server version	5.5.29-log
+-- Server version	5.5.30-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -563,6 +563,78 @@ INSERT INTO `org_evtype` VALUES (1,'Другой...',1,999),(2,'Другой...'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `org_govorganization`
+--
+
+DROP TABLE IF EXISTS `org_govorganization`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_govorganization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `type_group` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `action_area` int(11) NOT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `foundation_year` int(11) DEFAULT NULL,
+  `staff_size` int(11) DEFAULT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `goal` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `website` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone_num` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `email` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `logobg` varchar(128) DEFAULT NULL,
+  `logobgset` varchar(128) DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `status` int(11) NOT NULL,
+  `verified` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_id` (`type_id`),
+  CONSTRAINT `org_govorganization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_govorganization`
+--
+
+LOCK TABLES `org_govorganization` WRITE;
+/*!40000 ALTER TABLE `org_govorganization` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_govorganization` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_govprofile`
+--
+
+DROP TABLE IF EXISTS `org_govprofile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_govprofile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `organization_id` (`organization_id`),
+  KEY `parent_id` (`parent_id`),
+  CONSTRAINT `org_govprofile_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `org_govprofile_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_govorganization` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_govprofile`
+--
+
+LOCK TABLES `org_govprofile` WRITE;
+/*!40000 ALTER TABLE `org_govprofile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `org_govprofile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `org_image`
 --
 
@@ -1061,4 +1133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-02-01 21:48:23
+-- Dump completed on 2013-02-04 14:47:02
