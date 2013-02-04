@@ -116,7 +116,7 @@
 								array('label'=>'Карта', 'url'=>array('/map/index'), 'active'=>$this->sectionMainSub=='map'),
 								array('label'=>'Инфраструктура', 'url'=>'', 'active'=>$this->sectionMainSub=='infrastructure'),
 								array('label'=>'Территории', 'url'=>'', 'active'=>$this->sectionMainSub=='teritory'),
-								array('label'=>'Информация', 'url'=>array('/info/index'), 'active'=>$this->sectionMainSub=='info',
+								array('label'=>'Информация', 'url'=>array('/info'), 'active'=>$this->sectionMainSub=='info',
 									'items'=>array(
 										array('label'=>'Законы',
 										    'url'=>'',

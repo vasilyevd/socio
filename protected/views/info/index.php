@@ -2,7 +2,7 @@
 //$this->contentClass = 'pading';
 $this->sectionMain = "obj";
 ?>
-<div class="row">
+<div class="row" style="margin-bottom: 20px;">
 
 	<div class="span2">
 		<?php $this->widget('bootstrap.widgets.TbMenu', array(

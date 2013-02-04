@@ -1,13 +1,8 @@
-<div class="row-fluid">
-	<div class="page-header">
-		<div class="header-menu">
-			<?php // echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-colored')); ?>
-		</div>
-		<h4>Информация</h4>
-	</div>
-</div>
-
-<div class="row">
+<?php
+//$this->contentClass = 'pading';
+$this->sectionMain = "obj";
+?>
+<div class="row" style="margin-bottom: 20px;">
 
 	<div class="span2">
 		<?php $this->widget('bootstrap.widgets.TbMenu', array(
@@ -26,6 +21,13 @@
 	</div>
 
 	<div class="span10">
+		<?php $this->widget('bootstrap.widgets.TbListView',array(
+			'dataProvider' => $model->search(),
+			'template' => '{items}{pager}',
+			'htmlOptions'=>array('class'=>''),
+			//'itemsCssClass' => 'row',
+			'itemView' => '_view',
+		)); ?>
 	</div>
 
 

@@ -11,7 +11,7 @@ class InfoController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/main';
-	public $defaultAction = 'index';
+	public $defaultAction = 'metodic';
 
 	/**
 	 * Specifies the access control rules.
@@ -21,7 +21,7 @@ class InfoController extends Controller
 	public function accessRules()	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'view'),
+				'actions'=>array('index', 'view', 'section', 'metodic'),
 				'users'=>array('*'),
 			),
 		);
@@ -42,7 +42,17 @@ class InfoController extends Controller
 	}
 
 	public function actionSection($id)	{
-		$this->render('section',array());
+		$model = new Infoitem('search');
+		$model->unsetAttributes();
+		$model->section = $id;
+
+		$this->render('section',array(
+				'model'=>$model,
+			));
+	}
+
+	public function actionMetodic()	{
+		$this->redirect( Yii::app()->createUrl('/info/section',array('id'=>3)) );
 	}
 
 	/**
