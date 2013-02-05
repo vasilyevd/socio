@@ -67,7 +67,7 @@ class InfoController extends Controller
 		return $model;
 	}
 
-	protected function performAjaxValidation($model)
+	public function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='info-form')
 		{

@@ -1,6 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'govorganization-form',
     'enableAjaxValidation'=>true,
+    'type' => 'horizontal',
 )); ?>
 
     <p class="help-block">Поля с <span class="required">*</span> обязательны.</p>
@@ -9,9 +10,15 @@
 
     <?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>128)); ?>
 
-    <?php echo $form->textFieldRow($model,'type_group',array('class'=>'span5')); ?>
-
-    <?php echo $form->textFieldRow($model,'type_id',array('class'=>'span5')); ?>
+    <?php echo $form->select2Row($model, 'type', array(
+        'data' => CHtml::listData(Orgtype::model()->findAll(), 'id', 'name'),
+        'prompt' => '',
+        'options' => array(
+            'placeholder' => 'Выбрать...',
+            'allowClear' => true,
+            'width' => '300px',
+        ),
+    )); ?>
 
     <?php echo $form->select2Row($model, 'action_area', array(
         'data' => $model->ActionArea->list,
@@ -27,33 +34,27 @@
 
     <?php echo $form->textFieldRow($model,'address_id',array('class'=>'span5')); ?>
 
-    <?php echo $form->textFieldRow($model,'foundation_year',array('class'=>'span5')); ?>
+    <?php echo $form->redactorRow($model, 'description', array('class'=>'span4', 'rows'=>5)); ?>
+
+    <?php echo $form->redactorRow($model, 'goal', array('class'=>'span4', 'rows'=>5)); ?>
+
+    <?php echo $form->select2Row($model, 'foundation_year', array(
+        'data' => array_combine(range(date('Y'), 1900), range(date('Y'), 1900)),
+        'prompt' => '',
+        'options' => array(
+            'placeholder' => 'Выбрать...',
+            'allowClear' => true,
+            'width' => '300px',
+        ),
+    )); ?>
 
     <?php echo $form->textFieldRow($model,'staff_size',array('class'=>'span5')); ?>
 
-    <?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-
-    <?php echo $form->textAreaRow($model,'goal',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-
-    <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128)); ?>
-
     <?php echo $form->textAreaRow($model,'phone_num',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
 
-    <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128)); ?>
+    <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-globe"></i>')); ?>
 
-    <?php echo $form->textFieldRow($model,'logo',array('class'=>'span5','maxlength'=>128)); ?>
-
-    <?php echo $form->textFieldRow($model,'logobg',array('class'=>'span5','maxlength'=>128)); ?>
-
-    <?php echo $form->textFieldRow($model,'logobgset',array('class'=>'span5','maxlength'=>128)); ?>
-
-    <?php echo $form->textFieldRow($model,'author_id',array('class'=>'span5')); ?>
-
-    <?php echo $form->textFieldRow($model,'create_time',array('class'=>'span5')); ?>
-
-    <?php echo $form->textFieldRow($model,'status',array('class'=>'span5')); ?>
-
-    <?php echo $form->textFieldRow($model,'verified',array('class'=>'span5')); ?>
+    <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(

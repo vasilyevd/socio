@@ -60,7 +60,6 @@ class Govorganization extends CActiveRecord
             array('name, type, action_area', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
-            array('action_area', 'in', 'range' => array_keys(self::model()->ActionArea->list)),
             array(
                 'description, goal',
                 'filter',
@@ -81,6 +80,8 @@ class Govorganization extends CActiveRecord
                 'on' => 'update',
             ),
             array('phone_num, directions, problems', 'safe'),
+            array('action_area', 'in', 'range' => self::model()->ActionArea->rule),
+            array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
 
             // array('directions, problems, id, name, type_group, type, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
@@ -122,6 +123,14 @@ class Govorganization extends CActiveRecord
             'ActionArea' => array(
                 'class' => 'application.components.behaviors.constants.OrganizationActionAreaBehavior',
                 'attribute' => 'action_area',
+            ),
+            'Status' => array(
+                'class' => 'application.components.behaviors.constants.OrganizationStatusBehavior',
+                'attribute' => 'status',
+            ),
+            'TypeGroup' => array(
+                'class' => 'application.components.behaviors.constants.OrtypeGroupBehavior',
+                'attribute' => 'type_group',
             ),
         );
     }
@@ -192,5 +201,38 @@ class Govorganization extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
+    }
+
+    /**
+     * This is invoked before the record is saved.
+     * @return boolean whether the record should be saved.
+     */
+    public function beforeSave()
+    {
+        if ($this->isNewRecord) {
+            // Save current time.
+            $this->create_time = new CDbExpression('NOW()');
+
+            $this->status = $this->Status->find('MODERATION');
+            $this->verified = false;
+
+            // TODO: get author form user model.
+            $this->author_id = 1;
+
+            // Set default logo.
+            if (empty($this->logo)) {
+                $this->logo = 'placeholder.jpg';
+            }
+        }
+
+        // Get group from type relation.
+        if (!empty($this->type)) {
+            if (!is_object($this->type)) {
+                $this->type = Orgtype::model()->findByPk($this->type);
+            }
+            $this->type_group = $this->type->group;
+        }
+
+        return parent::beforeSave();
     }
 }

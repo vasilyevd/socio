@@ -48,12 +48,12 @@
         ),
         array(
             'name' => 'is_branch',
-            'value' => $model->is_legal ? 'Да' : 'Нет',
+            'value' => $model->is_branch ? 'Да' : 'Нет',
         ),
         'branch_master',
         array(
             'name' => 'is_verified',
-            'value' => $model->is_legal ? 'Да' : 'Нет',
+            'value' => $model->is_verified ? 'Да' : 'Нет',
         ),
     ),
 )); ?>

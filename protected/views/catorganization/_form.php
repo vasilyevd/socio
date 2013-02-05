@@ -9,7 +9,7 @@ $('.branch-trigger').change(function(){
 
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'catorganization-form',
-    'enableAjaxValidation' => false,
+    'enableAjaxValidation' => true,
     'type' => 'horizontal',
 
     // Upload handler.

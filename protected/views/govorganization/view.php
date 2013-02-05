@@ -13,17 +13,30 @@
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
     'data'=>$model,
     'attributes'=>array(
-        'id',
-        'name',
-        'type_group',
-        'type_id',
-        'action_area',
+        array(
+            'name' => 'type_group',
+            'value' => $model->TypeGroup->text,
+        ),
+        array(
+            'name' => 'type',
+            'value' => empty($model->type) ? '' : $model->type->name,
+        ),
+        array(
+            'name' => 'action_area',
+            'value' => $model->ActionArea->text,
+        ),
         'city_id',
         'address_id',
         'foundation_year',
         'staff_size',
-        'description',
-        'goal',
+        array(
+            'name' => 'description',
+            'type' => 'raw',
+        ),
+        array(
+            'name' => 'goal',
+            'type' => 'raw',
+        ),
         'website',
         'phone_num',
         'email',
@@ -32,7 +45,13 @@
         'logobgset',
         'author_id',
         'create_time',
-        'status',
-        'verified',
+        array(
+            'name' => 'status',
+            'value' => $model->Status->text,
+        ),
+        array(
+            'name' => 'verified',
+            'value' => $model->verified ? 'Да' : 'Нет',
+        ),
     ),
 )); ?>

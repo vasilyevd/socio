@@ -56,7 +56,7 @@ class GovorganizationController extends Controller
             'create' => 'application.components.actions.CreateAction',
             'update' => 'application.components.actions.UpdateAction',
             'delete' => 'application.components.actions.DeleteAction',
-            'index' => 'application.components.actions.IndexAction',
+            'index' => 'application.components.actions.SearchIndexAction',
             'admin' => 'application.components.actions.AdminAction',
         );
     }

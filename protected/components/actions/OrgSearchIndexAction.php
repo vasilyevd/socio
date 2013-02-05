@@ -1,6 +1,6 @@
 <?php
 
-class OrgIndexAction extends CAction
+class OrgSearchIndexAction extends CAction
 {
     public function run()
     {
@@ -10,18 +10,21 @@ class OrgIndexAction extends CAction
         $controller = $this->getController();
         $modelName = ucfirst($controller->getId());
 
-        $criteria = new CDbCriteria;
-        $criteria->compare('organization_id', $_GET['org']);
+        $model = new $modelName('search');
+        // Clear any default values.
+        $model->unsetAttributes();
+        if (isset($_GET[$modelName])) {
+            $model->attributes = $_GET[$modelName];
+        }
 
-        $dataProvider = new CActiveDataProvider($modelName, array(
-            'criteria' => $criteria,
-        ));
+        // Limit search to only this organization.
+        $model->organization = $_GET['org'];
 
         // Escalate organization for view.
         $controller->escalateOrganization($_GET['org']);
 
         $controller->render('index', array(
-            'dataProvider' => $dataProvider,
+            'model' => $model,
         ));
     }
 }

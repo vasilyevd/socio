@@ -56,27 +56,12 @@ class DocumentController extends Controller
             'create' => 'application.components.actions.CreateAction',
             'update' => 'application.components.actions.UpdateAction',
             'delete' => 'application.components.actions.DeleteAction',
-            // 'index' => 'application.components.actions.IndexAction',
+            'index' => 'application.components.actions.SearchIndexAction',
             'admin' => 'application.components.actions.AdminAction',
 
             // Editable fields and widgets update model action.
             'editableUpdate' => 'application.components.actions.EditableUpdateAction',
         );
-    }
-
-    /**
-     * Lists all models.
-     */
-    public function actionIndex()
-    {
-        $model=new Document('search');
-        $model->unsetAttributes(); // clear any default values
-        if(isset($_GET['Document']))
-            $model->attributes=$_GET['Document'];
-
-        $this->render('index',array(
-            'model'=>$model,
-        ));
     }
 
     /**

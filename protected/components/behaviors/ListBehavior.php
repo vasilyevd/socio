@@ -77,6 +77,16 @@ abstract class ListBehavior extends CActiveRecordBehavior
         return array_map(array($this, 'extractText'), $this->data());
     }
 
+    public function getRule()
+    {
+        return array_keys($this->data());
+    }
+
+    public function find($name)
+    {
+        return constant('static::' . $name);
+    }
+
     /**
     * returns array of key => html.
     *

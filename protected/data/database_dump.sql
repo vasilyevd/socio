@@ -422,7 +422,7 @@ CREATE TABLE `org_document` (
 
 LOCK TABLES `org_document` WRITE;
 /*!40000 ALTER TABLE `org_document` DISABLE KEYS */;
-INSERT INTO `org_document` VALUES (1,'Первый Документ','<p></p><p>Curabitur <b>aliquet lacus eget purus</b> pharetra vitae ornare nunc varius. \nProin iaculis, odio sit amet vehicula ullamcorper, orci neque aliquet \naugue, eget laoreet magna nisl vel elit. Donec ac ante at velit sodales \nbibendum. <br /></p><ul><li>Maecenas ac risus tortor, at commodo nulla. <br /></li><li>Vestibulum eros \nnulla, egestas in pellentesque vitae.</li><li>Vestibulum a dolor. <br /></li></ul><p>Maecenas quam \nfelis, gravida ac consequat et, ultricies eu ligula. Vestibulum in \nmauris quis odio faucibus blandit nec at neque. Sed est turpis, sagittis\n id ornare quis, vulputate vitae erat. Donec ut purus et tortor mollis \naliquam. Aenean in fringilla nunc. Morbi nec ligula mauris. Nunc \nconvallis facilisis volutpat.\n</p>\n','2013-01-24',5,'HS72384-99-76J',2,7,'2013-02-01',1),(2,'Заполненный Документ','<p>Sed vel mi a lacus suscipit pretium ac ac enim. Integer elit elit, \npulvinar eu malesuada a, feugiat bibendum erat. Morbi ullamcorper \nvenenatis felis eget tristique. Proin sit amet nunc et purus interdum \ndignissim quis eget diam. Fusce consectetur, metus eu adipiscing \nvehicula, lorem leo condimentum elit, dictum tincidunt nisi nisl at dui.\n Curabitur a orci in est hendrerit scelerisque sit amet pretium nisl. \nSed a risus augue. Quisque tincidunt erat sed erat ultricies at vehicula\n tellus sollicitudin. Etiam tortor metus, bibendum sit amet bibendum \nconvallis, luctus non lacus. Aliquam facilisis, neque at porttitor \nvehicula, quam eros facilisis dui, nec facilisis massa dui ut lacus.\n</p>','2013-01-10',3,'HGSY-99-76J',2,3,'2012-12-02',1),(3,'Не заполненный Документ','<p>Ut consequat dapibus dapibus. Proin lacinia mi eget est fermentum \nhendrerit. Maecenas nisi neque, auctor eget congue eu, molestie vitae \nipsum. Nam adipiscing malesuada justo in semper. Mauris dictum erat id \nsem imperdiet adipiscing. Proin sodales justo eu ligula sollicitudin sit\n amet fringilla diam sagittis. Nam egestas sollicitudin tortor et \nmollis.\n</p>','2012-12-06',6,'',NULL,NULL,NULL,0);
+INSERT INTO `org_document` VALUES (1,'Первый Документ','<p></p><p>Curabitur <b>aliquet lacus eget purus</b> pharetra vitae ornare nunc varius. \nProin iaculis, odio sit amet vehicula ullamcorper, orci neque aliquet \naugue, eget laoreet magna nisl vel elit. Donec ac ante at velit sodales \nbibendum. <br /></p><ul><li>Maecenas ac risus tortor, at commodo nulla. <br /></li><li>Vestibulum eros \nnulla, egestas in pellentesque vitae.</li><li>Vestibulum a dolor. <br /></li></ul><p>Maecenas quam \nfelis, gravida ac consequat et, ultricies eu ligula. Vestibulum in \nmauris quis odio faucibus blandit nec at neque. Sed est turpis, sagittis\n id ornare quis, vulputate vitae erat. Donec ut purus et tortor mollis \naliquam. Aenean in fringilla nunc. Morbi nec ligula mauris. Nunc \nconvallis facilisis volutpat.\n</p>\n','2013-01-22',3,'HS72384-99-76J',2,7,'2013-02-01',1),(2,'Заполненный Документ','<p>Sed vel mi a lacus suscipit pretium ac ac enim. Integer elit elit, \npulvinar eu malesuada a, feugiat bibendum erat. Morbi ullamcorper \nvenenatis felis eget tristique. Proin sit amet nunc et purus interdum \ndignissim quis eget diam. Fusce consectetur, metus eu adipiscing \nvehicula, lorem leo condimentum elit, dictum tincidunt nisi nisl at dui.\n Curabitur a orci in est hendrerit scelerisque sit amet pretium nisl. \nSed a risus augue. Quisque tincidunt erat sed erat ultricies at vehicula\n tellus sollicitudin. Etiam tortor metus, bibendum sit amet bibendum \nconvallis, luctus non lacus. Aliquam facilisis, neque at porttitor \nvehicula, quam eros facilisis dui, nec facilisis massa dui ut lacus.\n</p>','2013-01-10',3,'HGSY-99-76J',2,3,'2012-12-02',1),(3,'Не заполненный Документ','<p>Ut consequat dapibus dapibus. Proin lacinia mi eget est fermentum \nhendrerit. Maecenas nisi neque, auctor eget congue eu, molestie vitae \nipsum. Nam adipiscing malesuada justo in semper. Mauris dictum erat id \nsem imperdiet adipiscing. Proin sodales justo eu ligula sollicitudin sit\n amet fringilla diam sagittis. Nam egestas sollicitudin tortor et \nmollis.\n</p>','2012-12-06',5,'',NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `org_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -594,7 +594,7 @@ CREATE TABLE `org_govorganization` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_govorganization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -603,6 +603,7 @@ CREATE TABLE `org_govorganization` (
 
 LOCK TABLES `org_govorganization` WRITE;
 /*!40000 ALTER TABLE `org_govorganization` DISABLE KEYS */;
+INSERT INTO `org_govorganization` VALUES (1,'Первая полная гос. орг.',1,2,3,34,67,2009,42,'<p></p><p></p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Aenean <strike><b>eget</b></strike> est\n felis</i>. Donec mattis lacus ac diam hendrerit egestas. In semper rutrum \nnisl, at adipiscing sapien molestie in. <b>Maecenas consequat pretium</b> neque\n sed ultricies. Ut quis lobortis nulla. Maecenas vel orci libero, \nfaucibus venenatis ipsum. Praesent sed enim nisl. Phasellus at bibendum \ndolor. Phasellus molestie, enim eu commodo dignissim, nisl massa cursus \ndolor, molestie tempor eros libero vel massa. Mauris id neque turpis, a \niaculis est.\n','<p>Vestibulum quam justo, scelerisque vitae porta at, venenatis rutrum dui.\n Class aptent taciti sociosqu ad litora torquent per conubia nostra, per\n inceptos himenaeos. Donec quis imperdiet lacus. Nulla facilisi. Etiam \nsapien quam, bibendum vel consequat non, elementum nec ligula. \nVestibulum gravida, urna fermentum tincidunt tristique, metus elit \ncommodo orci, vitae cursus massa turpis posuere sem. Mauris sagittis \ncongue felis, vel vestibulum nisl dapibus sit amet. Nullam aliquam enim \nnon mi tincidunt id cursus enim tempor. Cras et sem vel lacus vestibulum\n imperdiet. Curabitur ac lorem eu nisi accumsan pharetra nec ut sem. \nPraesent vitae vulputate turpis.</p>\n','http://example.com/','Cat: 23-234-024\r\nDog: 234-234-23','user@example.com','placeholder.jpg',NULL,NULL,1,'2013-02-05 16:54:53',3,0),(2,'Пустая',1,7,5,NULL,NULL,NULL,NULL,'','','','','','placeholder.jpg',NULL,NULL,1,'2013-02-05 17:08:20',3,0);
 /*!40000 ALTER TABLE `org_govorganization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -620,8 +621,8 @@ CREATE TABLE `org_govprofile` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   KEY `parent_id` (`parent_id`),
-  CONSTRAINT `org_govprofile_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `org_govprofile_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_govorganization` (`id`) ON DELETE CASCADE
+  CONSTRAINT `org_govprofile_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_govorganization` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_govprofile_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1133,4 +1134,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-02-04 17:52:46
+-- Dump completed on 2013-02-05 17:59:27
