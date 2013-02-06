@@ -53,11 +53,66 @@ class GovorganizationController extends Controller
         return array(
             // General CRUD actions.
             'view' => 'application.components.actions.ViewAction',
-            'create' => 'application.components.actions.CreateAction',
-            'update' => 'application.components.actions.UpdateAction',
+            // 'create' => 'application.components.actions.CreateAction',
+            // 'update' => 'application.components.actions.UpdateAction',
             'delete' => 'application.components.actions.DeleteAction',
             'index' => 'application.components.actions.SearchIndexAction',
             'admin' => 'application.components.actions.AdminAction',
         );
+    }
+
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+    public function actionCreate()
+    {
+        $model=new Govorganization;
+
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($model);
+
+        if(isset($_POST['Govorganization']))
+        {
+            $model->attributes=$_POST['Govorganization'];
+
+            // Relations.
+            $model->profile = $_POST['Govprofile'];
+
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
+
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id)
+    {
+        $model=$this->loadModel($id);
+
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($model);
+
+        if(isset($_POST['Govorganization']))
+        {
+            $model->attributes=$_POST['Govorganization'];
+
+            // Relations.
+            $model->profile = $_POST['Govprofile'];
+
+            if($model->save())
+                $this->redirect(array('view','id'=>$model->id));
+        }
+
+        $this->render('update',array(
+            'model'=>$model,
+        ));
     }
 }

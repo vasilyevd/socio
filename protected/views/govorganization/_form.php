@@ -56,6 +56,12 @@
 
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
+    <div class="well">
+        <?php echo $form->labelEx($model, 'profile'); ?>
+            <?php echo $this->renderPartial('_profile', array('form' => $form, 'model' => $model->profile)); ?>
+        <?php echo $form->error($model, 'profile'); ?>
+    </div>
+
     <div class="form-actions">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',

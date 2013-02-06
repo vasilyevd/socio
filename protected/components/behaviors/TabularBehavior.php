@@ -51,6 +51,8 @@ class TabularBehavior extends CActiveRecordBehavior
                 foreach ($this->owner->$rel['name'] as $m) {
                     $m->save();
                 }
+            } elseif ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_ONE) {
+                $this->owner->{$rel['name']}->save();
             } elseif ($this->_settings[$rel['name']][0] === CActiveRecord::BELONGS_TO) {
                 if ($this->owner->$rel['name'] === null) {
                     // Set link ID attribute of owner model as null.
@@ -73,7 +75,9 @@ class TabularBehavior extends CActiveRecordBehavior
     public function afterSave()
     {
         foreach ($this->relations as $rel) {
-            if ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY) {
+            if ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY ||
+                $this->_settings[$rel['name']][0] === CActiveRecord::HAS_ONE
+            ) {
                 // If set delete option.
                 if (array_key_exists('delete', $rel) && $rel['delete'] === true) {
                     // Find all related models with null ID link.

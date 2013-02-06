@@ -139,7 +139,7 @@ class Catorganization extends CActiveRecord
             'email' => 'Емейл',
             'organization_id' => 'Организация',
             'is_legal' => 'Легальная',
-            'action_area' => 'Область Действий',
+            'action_area' => 'Масштаб Деятельности',
             'directions_more' => 'Дополнительные Направления',
             'logo' => 'Лого',
             'is_branch' => 'Является Веткой Организации',

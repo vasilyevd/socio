@@ -57,7 +57,7 @@ class Govorganization extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name, type, action_area', 'required'),
+            array('name, type, action_area, profile', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
             array(
@@ -114,6 +114,12 @@ class Govorganization extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
+            'TabularBehavior' => array(
+                'class' => 'application.components.behaviors.TabularBehavior',
+                'relations' => array(
+                    array('name' => 'profile', 'delete' => true),
+                ),
+            ),
             // Upload handler.
             'UploadBehavior' => array(
                 'class' => 'application.components.behaviors.UploadBehavior',
@@ -143,9 +149,9 @@ class Govorganization extends CActiveRecord
         return array(
             'id' => 'ID',
             'name' => 'Название',
-            'type_group' => 'Группа Типа',
-            'type' => 'Тип',
-            'action_area' => 'Область Действий',
+            'type_group' => 'Группа Формы',
+            'type' => 'Форма Организации',
+            'action_area' => 'Масштаб Деятельности',
             'city_id' => 'Город',
             'address_id' => 'Адрес',
             'foundation_year' => 'Год Основания',
@@ -162,6 +168,7 @@ class Govorganization extends CActiveRecord
             'create_time' => 'Время Создания',
             'status' => 'Статус',
             'verified' => 'Проверенно',
+            'profile' => 'Профиль',
         );
     }
 
@@ -234,5 +241,33 @@ class Govorganization extends CActiveRecord
         }
 
         return parent::beforeSave();
+    }
+
+    /**
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of validation status and relation models or single model.
+     */
+    public function profileTabular()
+    {
+        $valid = true;
+        $tabular = null;
+
+        if (!empty($this->profile)) {
+            if (is_object($this->profile)) {
+                $model = $this->profile;
+            } else {
+                $model = Govprofile::model()->findByPk($this->profile['id']);
+                if ($model === null) {
+                    $model = new Govprofile;
+                }
+
+                $model->attributes = $this->profile;
+            }
+
+            $valid = $model->validate() && $valid;
+            $tabular = $model;
+        }
+
+        return array($valid, $tabular);
     }
 }
