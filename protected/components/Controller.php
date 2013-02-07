@@ -80,7 +80,7 @@ class Controller extends CController
 
         $model = $modelName::model()->findByPk($id);
 
-        if($model===null) {
+        if ($model === null) {
             throw new CHttpException(404, 'Запрашиваемая страница не существует.');
         }
 

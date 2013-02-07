@@ -329,7 +329,7 @@ CREATE TABLE `org_govorganization` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_govorganization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_govprofile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -343,7 +343,7 @@ CREATE TABLE `org_govprofile` (
   KEY `parent_id` (`parent_id`),
   CONSTRAINT `org_govprofile_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_govorganization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_govprofile_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_image`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -431,7 +431,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_mmtag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

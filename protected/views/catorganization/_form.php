@@ -68,8 +68,13 @@ $('.branch-trigger').change(function(){
 
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128,'append'=>'<i class="icon-envelope"></i>')); ?>
 
-    <?php $selectText = is_object($model->organization) ? $model->organization->name : ''; ?>
-    <?php $model->organization = is_object($model->organization) ? $model->organization->id : $model->organization; ?>
+    <?php
+        if (!is_object($model->organization)) {
+            $model->organization = Organization::model()->findByPk($model->organization);
+        }
+        $selectText = $model->organization->name;
+        $model->organization = $model->organization->id;
+    ?>
     <?php echo $form->select2Row($model, 'organization', array(
         'asDropDownList' => false,
         'prompt' => '',

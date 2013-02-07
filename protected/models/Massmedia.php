@@ -274,12 +274,21 @@ class Massmedia extends CActiveRecord
         $tabular = array();
 
         foreach ($this->links as $attributes) {
-            $model = Mmlink::model()->findByPk($attributes['id']);
-            if ($model === null) {
-                $model = new Mmlink;
+            if (is_object($attributes)) {
+                $model = $attributes;
+            } else {
+                if (is_numeric($attributes['id'])) {
+                    $model = Mmlink::model()->findByPk($attributes['id']);
+                    // Don't allow move between relations.
+                    if ($model === null || $model->massmedia_id !== $this->id) {
+                        $valid = false;
+                    }
+                }
+                if ($model === null) {
+                    $model = new Mmlink;
+                }
+                $model->attributes = $attributes;
             }
-
-            $model->attributes = $attributes;
 
             $valid = $model->validate() && $valid;
             $tabular[] = $model;
@@ -299,6 +308,10 @@ class Massmedia extends CActiveRecord
 
         foreach ($this->files as $i => $attributes) {
             $model = Mmfile::model()->findByPk($attributes['id']);
+            // Don't allow move between relations.
+            if (is_object($model) && $model->massmedia_id !== $this->id) {
+                $valid = false;
+            }
             if ($model === null) {
                 $model = new Mmfile;
             }
