@@ -2,9 +2,9 @@
 	<div style="background-image: url('/images/mapu.png'), url('/images/mapgos.jpg'), url('/images/mapgosbg.jpg'); background-repeat: no-repeat, no-repeat, repeat-x; height: 180px; background-position: 65% top, left top, left top; ">
 
 
-		<div style="float: right; margin-right: 10px; margin-top: 0px; min-width: 320px; padding: 3px; width: 50%;">
+		<div style="float: right; margin-right: 10px; margin-top: 0px; padding: 3px; min-width: 50%;">
 
-			<ul class="rounded columns2" style="float: none; text-transform: uppercase; font-weight: bold;">
+			<ul class="rounded columns2" style="float: none; text-transform: uppercase; font-weight: bold; min-width: 320px;">
 				<li><a href="#">Администрации</a></li>
 				<li>Законодательная власть</li>
 				<li>Правоохранительные органы</li>

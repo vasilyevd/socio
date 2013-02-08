@@ -24,7 +24,9 @@ class Direction extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_direction';
+	    $name = preg_match("/dbname=([^;]*)/", $this->dbConnection->connectionString, $matches);
+	    return $matches[1].'.org_direction';
+	    //return 'org_direction';
     }
 
     /**

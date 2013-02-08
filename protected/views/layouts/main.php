@@ -173,7 +173,7 @@
 	<div id="section-header" style="background: none repeat scroll 0 0 #CECECE; height: 110px; margin-bottom: 10px;">
 		<div class="container" style="position: relative;">
 			<div class="mainlogo" style="float: left;">
-				<?=CHtml::link(CHtml::image(Yii::app()->request->baseUrl.'/images/logo.png', 'logo', array('style'=>'padding: 13px;')), '/', array('style'=>'outline:none;')); ?>
+				<?=CHtml::link(CHtml::image(Yii::app()->request->baseUrl.'/images/logo.png', 'logo', array('style'=>'padding: 16px;')), '/', array('style'=>'outline:none;')); ?>
 			</div>
 
 			<div id="collapse_submenu" class="" style="bottom: 0; left: 200px; padding-left: 20px; position: absolute;">

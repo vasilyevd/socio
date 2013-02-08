@@ -1,7 +1,9 @@
 <?php
 
 // uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+Yii::setPathOfAlias('global',realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'../../../'));
+Yii::setPathOfAlias('common',Yii::getPathOfAlias('global.common.socio'));
+Yii::setPathOfAlias('gext',Yii::getPathOfAlias('global.yii.extensions'));
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -30,6 +32,8 @@ return array(
 
     // autoloading model and component classes
     'import'=>array(
+	      'common.models.*',
+	      'gext.widgets.*',
         'application.models.*',
         'application.models.dostup.*',
         'application.components.*',
@@ -79,5 +83,6 @@ return array(
     'params'=>array(
         // this is used in contact page
         'adminEmail'=>'admin@socinfo.net.ua',
+	    'dbname'=>'socio',
     ),
 );

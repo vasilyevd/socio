@@ -45,7 +45,10 @@ class Catorganization extends CActiveRecord
      */
     public function tableName()
     {
-        return 'org_catorganization';
+      //return 'org_catorganization';
+	    // return table name with DB name to get relations from different DBs to work
+	    $name = preg_match("/dbname=([^;]*)/", $this->dbConnection->connectionString, $matches);
+	    return $matches[1].'.org_catorganization';
     }
 
     /**
