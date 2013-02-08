@@ -431,7 +431,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_mmtag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

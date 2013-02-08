@@ -243,7 +243,7 @@ class Massmedia extends CActiveRecord
         $valid = true;
         $tabular = array();
 
-        if (!empty($this->tags)) {
+        if (is_string($this->tags)) {
             $tagsNames = explode(',', $this->tags);
 
             foreach ($tagsNames as $n) {
@@ -259,6 +259,12 @@ class Massmedia extends CActiveRecord
                 $valid = $model->validate() && $valid;
                 $tabular[] = $model;
             }
+        } elseif (is_array($this->tags)) {
+            // Relations object array.
+            foreach ($this->tags as $model) {
+                $valid = $model->validate() && $valid;
+            }
+            $tabular = $this->tags;
         }
 
         return array($valid, $tabular);
@@ -273,21 +279,19 @@ class Massmedia extends CActiveRecord
         $valid = true;
         $tabular = array();
 
-        foreach ($this->links as $attributes) {
-            if (is_object($attributes)) {
-                $model = $attributes;
+        foreach ($this->links as $data) {
+            if (is_object($data)) {
+                $model = $data;
             } else {
-                if (is_numeric($attributes['id'])) {
-                    $model = Mmlink::model()->findByPk($attributes['id']);
-                    // Don't allow move between relations.
-                    if ($model === null || $model->massmedia_id !== $this->id) {
-                        $valid = false;
-                    }
-                }
-                if ($model === null) {
+                $model = Mmlink::model()->findByAttributes(array(
+                    'id' => $data['id'],
+                    'massmedia_id' => $this->id,
+                ));
+                if (is_null($model)) {
                     $model = new Mmlink;
                 }
-                $model->attributes = $attributes;
+
+                $model->attributes = $data;
             }
 
             $valid = $model->validate() && $valid;
@@ -306,19 +310,22 @@ class Massmedia extends CActiveRecord
         $valid = true;
         $tabular = array();
 
-        foreach ($this->files as $i => $attributes) {
-            $model = Mmfile::model()->findByPk($attributes['id']);
-            // Don't allow move between relations.
-            if (is_object($model) && $model->massmedia_id !== $this->id) {
-                $valid = false;
-            }
-            if ($model === null) {
-                $model = new Mmfile;
-            }
+        foreach ($this->files as $i => $data) {
+            if (is_object($data)) {
+                $model = $data;
+            } else {
+                $model = Mmfile::model()->findByAttributes(array(
+                    'id' => $data['id'],
+                    'massmedia_id' => $this->id,
+                ));
+                if (is_null($model)) {
+                    $model = new Mmfile;
+                }
 
-            $model->attributes = $attributes;
-            // Upload handler.
-            $model->name = CUploadedFile::getInstance($model, "[$i]name");
+                $model->attributes = $data;
+                // Upload handler.
+                $model->name = CUploadedFile::getInstance($model, "[$i]name");
+            }
 
             $valid = $model->validate() && $valid;
             $tabular[] = $model;

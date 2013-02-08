@@ -256,13 +256,12 @@ class Govorganization extends CActiveRecord
             if (is_object($this->profile)) {
                 $model = $this->profile;
             } else {
-                $model = Govprofile::model()->findByPk($this->profile['id']);
-                // Don't allow move between relations.
-                if (is_object($model) && $model->organization_id !== $this->id) {
-                    $valid = false;
-                }
-                if ($model === null) {
-                    $model = new Govprofile;
+                $model = Govorganization::model()->findByAttributes(array(
+                    'id' => $this->profile['id'],
+                    'organization_id' => $this->id,
+                ));
+                if (is_null($model)) {
+                    $model = new Govorganization;
                 }
 
                 $model->attributes = $this->profile;
