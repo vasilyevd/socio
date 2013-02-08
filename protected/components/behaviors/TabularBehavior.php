@@ -24,11 +24,19 @@ class TabularBehavior extends CActiveRecordBehavior
         foreach ($this->relations as $rel) {
             // Call owners tabular method.
             $method = $rel['name'] . 'Tabular';
-            list($valid, $tabular) = $this->owner->$method();
+            $tabular = $this->owner->$method();
 
             $this->owner->$rel['name'] = $tabular;
 
             // Check for validation errors.
+            $valid = true;
+            if (is_array($tabular)) {
+                foreach ($tabular as $m) {
+                    $valid = $m->validate() && $valid;
+                }
+            } elseif(is_object($tabular)) {
+                $valid = $tabular->validate() && $valid;
+            }
             if (!$valid) {
                 $this->owner->addError($rel['name'], 'Неверно задано поле ' . $this->owner->getAttributeLabel($rel['name']));
             }
