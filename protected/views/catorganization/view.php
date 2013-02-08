@@ -1,10 +1,3 @@
-<?php
-$this->breadcrumbs=array(
-    'Catorganizations'=>array('index'),
-    $model->name,
-);
-?>
-
 <?php echo CHtml::link('Список Организаций', array('index'), array('class' => 'btn')); ?>
 
 <?php echo CHtml::link('Изменить Организацию', array('update', 'id' => $model->id), array('class' => 'btn')); ?>
@@ -55,12 +48,12 @@ $this->breadcrumbs=array(
         ),
         array(
             'name' => 'is_branch',
-            'value' => $model->is_legal ? 'Да' : 'Нет',
+            'value' => $model->is_branch ? 'Да' : 'Нет',
         ),
         'branch_master',
         array(
             'name' => 'is_verified',
-            'value' => $model->is_legal ? 'Да' : 'Нет',
+            'value' => $model->is_verified ? 'Да' : 'Нет',
         ),
     ),
 )); ?>

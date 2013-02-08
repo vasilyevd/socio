@@ -56,27 +56,12 @@ class DocumentController extends Controller
             'create' => 'application.components.actions.CreateAction',
             'update' => 'application.components.actions.UpdateAction',
             'delete' => 'application.components.actions.DeleteAction',
-            // 'index' => 'application.components.actions.IndexAction',
+            'index' => 'application.components.actions.SearchIndexAction',
             'admin' => 'application.components.actions.AdminAction',
 
             // Editable fields and widgets update model action.
             'editableUpdate' => 'application.components.actions.EditableUpdateAction',
         );
-    }
-
-    /**
-     * Lists all models.
-     */
-    public function actionIndex()
-    {
-        $model=new Document('search');
-        $model->unsetAttributes(); // clear any default values
-        if(isset($_GET['Document']))
-            $model->attributes=$_GET['Document'];
-
-        $this->render('index',array(
-            'model'=>$model,
-        ));
     }
 
     /**
@@ -103,31 +88,5 @@ class DocumentController extends Controller
 
         echo CJSON::encode($result);
         Yii::app()->end();
-    }
-
-    /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     */
-    public function loadModel($id)
-    {
-        $model=Document::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
-    }
-
-    /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    public function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='document-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
     }
 }

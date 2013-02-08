@@ -1,9 +1,3 @@
-<?php
-$this->breadcrumbs=array(
-    'Catorganizations',
-);
-?>
-
 <?php echo CHtml::link('Добавить Организацию', array('create'), array('class' => 'btn')); ?>
 
 <h1>Общественные Организации</h1>

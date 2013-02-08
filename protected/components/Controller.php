@@ -71,6 +71,38 @@ class Controller extends CController
     public $breadcrumbs=array();
 
     /**
+     * Returns the data model based on the primary key given in the GET variable.
+     * If the data model is not found, an HTTP exception will be raised.
+     * @param integer the ID of the model to be loaded
+     */
+    public function loadModel($id)
+    {
+        $modelName = ucfirst($this->getId());
+
+        $model = $modelName::model()->findByPk($id);
+
+        if ($model === null) {
+            throw new CHttpException(404, 'Запрашиваемая страница не существует.');
+        }
+
+        return $model;
+    }
+
+    /**
+     * Performs the AJAX validation.
+     * @param CModel the model to be validated
+     */
+    public function performAjaxValidation($model)
+    {
+        $formName = $this->getId() . '-form';
+
+        if (isset($_POST['ajax']) && $_POST['ajax'] === $formName) {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
+    /**
      * Transforms organization model to views layout.
      * @param mixed $organization the Organization ID or Organization model.
      */
