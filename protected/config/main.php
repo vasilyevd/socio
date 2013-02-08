@@ -32,10 +32,12 @@ return array(
 
     // autoloading model and component classes
     'import'=>array(
-	      'common.models.*',
-	      'gext.widgets.*',
+	      //'common.models.*',
+	      //'gext.widgets.*',
+
+	      'application.models.common.*',
         'application.models.*',
-        'application.models.dostup.*',
+        'application.models.common.dostup.*',
         'application.components.*',
         'application.controllers.*',
         'application.extensions.*',
