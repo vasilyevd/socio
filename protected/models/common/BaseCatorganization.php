@@ -28,7 +28,7 @@
  * The followings are the available model relations:
  * @property CatorganizationDirection[] $catorganizationDirections
  */
-class Catorganization extends CActiveRecord
+class BaseCatorganization extends CActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
