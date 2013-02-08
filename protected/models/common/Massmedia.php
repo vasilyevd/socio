@@ -236,11 +236,10 @@ class Massmedia extends CActiveRecord
 
     /**
      * Relations with new models 'TabularBehavior' handler.
-     * @return array of validation status and relation models or single model.
+     * @return array of relation models or single model.
      */
     public function tagsTabular()
     {
-        $valid = true;
         $tabular = array();
 
         if (is_string($this->tags)) {
@@ -256,27 +255,22 @@ class Massmedia extends CActiveRecord
                     $model->name = $n;
                 }
 
-                $valid = $model->validate() && $valid;
                 $tabular[] = $model;
             }
         } elseif (is_array($this->tags)) {
             // Relations object array.
-            foreach ($this->tags as $model) {
-                $valid = $model->validate() && $valid;
-            }
             $tabular = $this->tags;
         }
 
-        return array($valid, $tabular);
+        return $tabular;
     }
 
     /**
      * Relations with new models 'TabularBehavior' handler.
-     * @return array of validation status and relation models or single model.
+     * @return array of relation models or single model.
      */
     public function linksTabular()
     {
-        $valid = true;
         $tabular = array();
 
         foreach ($this->links as $data) {
@@ -294,20 +288,18 @@ class Massmedia extends CActiveRecord
                 $model->attributes = $data;
             }
 
-            $valid = $model->validate() && $valid;
             $tabular[] = $model;
         }
 
-        return array($valid, $tabular);
+        return $tabular;
     }
 
     /**
      * Relations with new models 'TabularBehavior' handler.
-     * @return array of validation status and relation models or single model.
+     * @return array of relation models or single model.
      */
     public function filesTabular()
     {
-        $valid = true;
         $tabular = array();
 
         foreach ($this->files as $i => $data) {
@@ -327,11 +319,10 @@ class Massmedia extends CActiveRecord
                 $model->name = CUploadedFile::getInstance($model, "[$i]name");
             }
 
-            $valid = $model->validate() && $valid;
             $tabular[] = $model;
         }
 
-        return array($valid, $tabular);
+        return $tabular;
     }
 
     /**

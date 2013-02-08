@@ -172,11 +172,10 @@ class Donorship extends CActiveRecord
 
     /**
      * Relations with new models 'TabularBehavior' handler.
-     * @return array of validation status and relation models or single model.
+     * @return array of relation models or single model.
      */
     public function donorTabular()
     {
-        $valid = true;
         $tabular = null;
 
         if (!empty($this->donor)) {
@@ -189,10 +188,9 @@ class Donorship extends CActiveRecord
                 $model->source = $this->source;
             }
 
-            $valid = $model->validate() && $valid;
             $tabular = $model;
         }
 
-        return array($valid, $tabular);
+        return $tabular;
     }
 }

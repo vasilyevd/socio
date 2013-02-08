@@ -104,6 +104,12 @@ class Partnership extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
+            'TabularBehavior' => array(
+                'class' => 'application.components.behaviors.TabularBehavior',
+                'relations' => array(
+                    array('name' => 'files'),
+                ),
+            ),
             // Upload handler.
             'UploadBehavior' => array(
                 'class' => 'application.components.behaviors.UploadBehavior',
@@ -180,10 +186,6 @@ class Partnership extends CActiveRecord
             $this->link = $this->linkOrganization->name;
         }
 
-        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
-        // Find or create objects and validate.
-        $this->filesTabular();
-
         return parent::beforeValidate();
     }
 
@@ -206,34 +208,27 @@ class Partnership extends CActiveRecord
             }
         }
 
-        // Relations with new models handler 'HAS_MANY' and 'MANY_MANY'.
-        // Save new models.
-        foreach ($this->files as $m) $m->save();
-
         return parent::beforeSave();
     }
 
     /**
-     * Relations with new models handler.
-     * Finds, creates and validates models from tabular input.
+     * Relations with new models 'TabularBehavior' handler.
+     * @return array of relation models or single model.
      */
     public function filesTabular()
     {
-        $valid = true;
-        $modelArray = array();
+        $tabular = array();
 
         // Upload handler.
         $uploads = CUploadedFile::getInstances($this, 'files');
         foreach ($uploads as $file) {
             $model = new Partfile;
-
             $model->name = $file;
 
-            $valid = $model->validate() && $valid;
-            $modelArray[] = $model;
+            $tabular[] = $model;
         }
+        $tabular = array_merge($this->files, $tabular);
 
-        $this->files = array_merge($this->files, $modelArray);
-        if (!$valid) $this->addError('files', 'Неверно задано поле ' . $this->getAttributeLabel('files'));
+        return $tabular;
     }
 }

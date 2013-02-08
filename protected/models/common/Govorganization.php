@@ -169,6 +169,7 @@ class Govorganization extends CActiveRecord
             'status' => 'Статус',
             'verified' => 'Проверенно',
             'profile' => 'Профиль',
+            'parent' => 'Организация Предок',
         );
     }
 
@@ -245,32 +246,30 @@ class Govorganization extends CActiveRecord
 
     /**
      * Relations with new models 'TabularBehavior' handler.
-     * @return array of validation status and relation models or single model.
+     * @return array of relation models or single model.
      */
     public function profileTabular()
     {
-        $valid = true;
         $tabular = null;
 
         if (!empty($this->profile)) {
             if (is_object($this->profile)) {
                 $model = $this->profile;
             } else {
-                $model = Govorganization::model()->findByAttributes(array(
+                $model = Govprofile::model()->findByAttributes(array(
                     'id' => $this->profile['id'],
                     'organization_id' => $this->id,
                 ));
                 if (is_null($model)) {
-                    $model = new Govorganization;
+                    $model = new Govprofile;
                 }
 
                 $model->attributes = $this->profile;
             }
 
-            $valid = $model->validate() && $valid;
             $tabular = $model;
         }
 
-        return array($valid, $tabular);
+        return $tabular;
     }
 }
