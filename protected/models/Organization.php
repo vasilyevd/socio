@@ -157,9 +157,9 @@ class Organization extends CActiveRecord
         return array(
             'id' => 'ID',
             'name' => 'Название',
-            'type_group' => 'Группа Типа',
-            'type' => 'Тип',
-            'action_area' => 'Область Действий',
+            'type_group' => 'Группа Формы',
+            'type' => 'Форма Организации',
+            'action_area' => 'Масштаб Деятельности',
             'city_id' => 'Город',
             'address_id' => 'Адрес',
             'foundation_year' => 'Год Основания',

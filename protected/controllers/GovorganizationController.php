@@ -1,12 +1,12 @@
 <?php
 
-class CooperationController extends Controller
+class GovorganizationController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/potential';
+    public $layout='//layouts/column1';
 
     /**
      * @return array action filters
@@ -32,7 +32,7 @@ class CooperationController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create', 'update'),
+                'actions'=>array('create','update', 'govorganizationSelectSearch'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -52,11 +52,11 @@ class CooperationController extends Controller
     {
         return array(
             // General CRUD actions.
-            'view' => 'application.components.actions.OrgViewAction',
-            // 'create' => 'application.components.actions.OrgCreateAction',
-            // 'update' => 'application.components.actions.OrgUpdateAction',
-            'delete' => 'application.components.actions.OrgDeleteAction',
-            'index' => 'application.components.actions.OrgIndexAction',
+            'view' => 'application.components.actions.ViewAction',
+            // 'create' => 'application.components.actions.CreateAction',
+            // 'update' => 'application.components.actions.UpdateAction',
+            'delete' => 'application.components.actions.DeleteAction',
+            'index' => 'application.components.actions.SearchIndexAction',
             'admin' => 'application.components.actions.AdminAction',
         );
     }
@@ -64,30 +64,24 @@ class CooperationController extends Controller
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param integer $org the ID of the organization model.
      */
-   public function actionCreate($org)
+    public function actionCreate()
     {
-        $model=new Cooperation;
+        $model=new Govorganization;
 
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Cooperation']))
+        if(isset($_POST['Govorganization']))
         {
-            $model->attributes=$_POST['Cooperation'];
+            $model->attributes=$_POST['Govorganization'];
 
             // Relations.
-            $model->organization = $org;
-            // Upload handler.
-            $model->logo = CUploadedFile::getInstance($model, 'logo');
+            $model->profile = $_POST['Govprofile'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
-
-        // Escalate organization for view.
-        $this->escalateOrganization($org);
 
         $this->render('create',array(
             'model'=>$model,
@@ -106,22 +100,53 @@ class CooperationController extends Controller
         // Uncomment the following line if AJAX validation is needed
         $this->performAjaxValidation($model);
 
-        if(isset($_POST['Cooperation']))
+        if(isset($_POST['Govorganization']))
         {
-            $model->attributes=$_POST['Cooperation'];
+            $model->attributes=$_POST['Govorganization'];
 
-            // Upload handler.
-            $model->logo = CUploadedFile::getInstance($model, 'logo');
+            // Relations.
+            $model->profile = $_POST['Govprofile'];
 
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
         }
 
-        // Escalate organization for view.
-        $this->escalateOrganization($model->organization);
-
         $this->render('update',array(
             'model'=>$model,
         ));
+    }
+
+    /**
+     * Search model for select2 query.
+     * @param string $query the search query text.
+     */
+    public function actionGovorganizationSelectSearch($query)
+    {
+        header('Content-type: application/json');
+        $criteria = new CDbCriteria();
+
+        $criteria->compare('name', $query, true);
+        $criteria->limit = 5;
+
+        $data = Govorganization::model()->findAll($criteria);
+
+        $result = array();
+        foreach ($data as $m) {
+            // Format description for view.
+            $description = '';
+            if (!empty($m->description)) {
+                $description = mb_substr(CHtml::encode(strip_tags($m->description)), 0, 100, 'UTF-8') . '...';
+            }
+
+            $result[] = array(
+                'id' => $m->id,
+                'name' => $m->name,
+                'description' => $description,
+                'logo' => $m->getUploadUrl('logo'),
+            );
+        }
+
+        echo CJSON::encode($result);
+        Yii::app()->end();
     }
 }

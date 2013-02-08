@@ -46,19 +46,19 @@ class SupportController extends Controller
     }
 
     /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
+     * Declares class-based actions.
      */
-    public function actionView($id)
+    public function actions()
     {
-        $model = $this->loadModel($id);
-
-        // Escalate organization for view.
-        $this->escalateOrganization($model->organization);
-
-        $this->render('view', array(
-            'model' => $model,
-        ));
+        return array(
+            // General CRUD actions.
+            'view' => 'application.components.actions.OrgViewAction',
+            // 'create' => 'application.components.actions.OrgCreateAction',
+            // 'update' => 'application.components.actions.OrgUpdateAction',
+            'delete' => 'application.components.actions.OrgDeleteAction',
+            'index' => 'application.components.actions.OrgIndexAction',
+            'admin' => 'application.components.actions.AdminAction',
+        );
     }
 
     /**
@@ -123,90 +123,5 @@ class SupportController extends Controller
         $this->render('update',array(
             'model'=>$model,
         ));
-    }
-
-    /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionDelete($id)
-    {
-        // $this->loadModel($id)->delete();
-
-        // // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        // if(!isset($_GET['ajax']))
-        //     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-
-        $model = $this->loadModel($id);
-        $model->delete();
-        if(!isset($_GET['ajax']))
-            $this->redirect(array('index','org' => $model->organization_id));
-    }
-
-    /**
-     * Lists all models.
-     * @param integer $org the ID of the organization model.
-     */
-    public function actionIndex($org)
-    {
-        // $dataProvider=new CActiveDataProvider('Support');
-        // $this->render('index',array(
-        //     'dataProvider'=>$dataProvider,
-        // ));
-
-        $criteria = new CDbCriteria;
-        $criteria->compare('organization_id', $org);
-        $dataProvider = new CActiveDataProvider('Support', array(
-            'criteria' => $criteria,
-        ));
-
-        // Escalate organization for view.
-        $this->escalateOrganization($org);
-
-        $this->render('index',array(
-            'dataProvider'=>$dataProvider,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model=new Support('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Support']))
-            $model->attributes=$_GET['Support'];
-
-        $this->render('admin',array(
-            'model'=>$model,
-        ));
-    }
-
-    /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     */
-    public function loadModel($id)
-    {
-        $model=Support::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
-    }
-
-    /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    protected function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='support-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
     }
 }

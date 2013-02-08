@@ -1,6 +1,6 @@
 <?php
 
-class EditableUpdateAction extends BaseMassmediaAction
+class EditableUpdateAction extends CAction
 {
     public function run()
     {
