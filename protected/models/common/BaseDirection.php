@@ -7,7 +7,7 @@
  * @property integer $id
  * @property string $name
  */
-class Direction extends CActiveRecord
+class BaseDirection extends CActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
