@@ -5,7 +5,11 @@
  */
 class Controller extends CController
 {
-   /**
+
+	// rewrite some functions for can set ViewPath fron config file
+	private $_viewPath;
+
+	/**
    * @var string the default layout for the controller view. Defaults to '//layouts/column1',
    * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
    */
@@ -62,6 +66,9 @@ class Controller extends CController
 	/** @var string set Class of content container in main layout when is need */
 	public $contentClass = '';
 
+	/** @var string - contains name of model that is main model in controller  */
+	public $work_model_name=NULL;
+
 
 	/**
      * @var array the breadcrumbs of the current page. The value of this property will
@@ -70,39 +77,39 @@ class Controller extends CController
      */
     public $breadcrumbs=array();
 
-    /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     */
-    public function loadModel($id)
-    {
-        $modelName = ucfirst($this->getId());
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer the ID of the model to be loaded
+	 */
+	public function loadModel($id)
+	{
+		$modelName = ucfirst($this->getId());
 
-        $model = $modelName::model()->findByPk($id);
+		$model = $modelName::model()->findByPk($id);
 
-        if ($model === null) {
-            throw new CHttpException(404, 'Запрашиваемая страница не существует.');
-        }
+		if ($model === null) {
+			throw new CHttpException(404, 'Запрашиваемая страница не существует.');
+		}
 
-        return $model;
-    }
+		return $model;
+	}
 
-    /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    public function performAjaxValidation($model)
-    {
-        $formName = $this->getId() . '-form';
+	/**
+	 * Performs the AJAX validation.
+	 * @param CModel the model to be validated
+	 */
+	public function performAjaxValidation($model)
+	{
+		$formName = $this->getId() . '-form';
 
-        if (isset($_POST['ajax']) && $_POST['ajax'] === $formName) {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-    }
+		if (isset($_POST['ajax']) && $_POST['ajax'] === $formName) {
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
 
-    /**
+	/**
      * Transforms organization model to views layout.
      * @param mixed $organization the Organization ID or Organization model.
      */
@@ -130,4 +137,28 @@ class Controller extends CController
             throw new CHttpException(404,'Не найдено');
         return $model;
     }
+
+
+	public function newModel(){
+		$model= new $this->work_model_name();
+		if($model===null)
+			throw new CHttpException(404,'Something wrong (x0001)');
+		return $model;
+	}
+
+	public function setViewPath($path) {
+		// если параметр содержит в себе слеши (или наоборот точки) то возвращаем либо путь как есть (либо обрабатываем алиас)
+		$this->_viewPath = Yii::getPathOfAlias($path);
+		echo $this->_viewPath;
+	}
+
+	public function getViewPath()	{
+		if(!$this->_viewPath){
+			if(($module=$this->getModule())===null)
+				$module=Yii::app();
+			$this->_viewPath = $module->getViewPath().DIRECTORY_SEPARATOR.$this->getId();
+		}
+		return $this->_viewPath;
+	}
+
 }

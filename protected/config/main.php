@@ -1,9 +1,11 @@
 <?php
-
-// uncomment the following to define a path alias
+include ('Config_Vars.php');
+// global directory ftp (related from this file)
 Yii::setPathOfAlias('global',realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'../../../'));
-Yii::setPathOfAlias('common',Yii::getPathOfAlias('global.common.socio'));
-Yii::setPathOfAlias('gext',Yii::getPathOfAlias('global.yii.extensions'));
+// directory of project where live common directory
+Yii::setPathOfAlias('mainproject',Yii::getPathOfAlias('global').'/'.$main_site);
+// common directory for all
+Yii::setPathOfAlias('common',Yii::getPathOfAlias('mainproject.protected.common'));
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -32,12 +34,10 @@ return array(
 
     // autoloading model and component classes
     'import'=>array(
-	      //'common.models.*',
-	      //'gext.widgets.*',
+	      'common.models.*',
+	      'common.models.dostup.*',
 
-	      'application.models.common.*',
         'application.models.*',
-        'application.models.common.dostup.*',
         'application.components.*',
         'application.controllers.*',
         'application.extensions.*',
@@ -80,7 +80,16 @@ return array(
         ),
     ),
 
-    // application-level parameters that can be accessed
+/*
+		'controllerMap'=>array(
+			'gotme'=>array(
+				'class'=>'common.controllers.GotmeController',
+				'viewPath'=>'common.views.gotme', //now
+			),
+		),
+*/
+
+	// application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params'=>array(
         // this is used in contact page

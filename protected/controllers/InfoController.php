@@ -31,7 +31,6 @@ class InfoController extends Controller
 	 * Lists all models.
 	 */
 	public function actionIndex()	{
-
 		$model = new Infoitem('search');
 		$model->unsetAttributes();
 		$model->section = 1;
@@ -67,8 +66,6 @@ class InfoController extends Controller
 	}
 
 
-
-
 	public function loadModel($id)
 	{
 		$model= Infoitem::model()->findByPk($id);
@@ -84,6 +81,17 @@ class InfoController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function getInfoMenu($model=null){
+		return array(
+			array('label' => 'Контроль', 'url' => array('info/index'),'active'=>$model->section==1),
+			array('label' => 'Власть', 'url' => array('info/section', 'id'=>2),'active'=>$model->section==2),
+			array('label' => 'Обучение', 'url' => array('info/section', 'id' =>3),'active'=>$model->section==3),
+			array('label' => 'Программы', 'url' => array('info/section', 'id' =>4),'active'=>$model->section==4),
+			array('label' => 'Инваспорт', 'url' => array('info/section', 'id' =>5),'active'=>$model->section==5),
+			array('label' => 'Инватуризм', 'url' => array('info/section', 'id' =>6),'active'=>$model->section==6),
+		);
 	}
 
 }

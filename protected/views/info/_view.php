@@ -1,10 +1,12 @@
 <div class="row-fluid">
-	<div class="page-header">
-		<div class="header-menu">
-			<?php // echo CHtml::link('Создать организацию', array('organization/create'), array('class'=>'btn btn-colored')); ?>
-		</div>
-		<h4 style="color:#000;">	<?php	echo $data->title;	?> </h4>
-	</div>
+	<?php
+	$this->widget('ext.widgets.SHeader',array(
+			'text'=>CHtml::link($data->title, array('/info/view', 'id'=>$data->id)),
+			'menu'=>CHtml::link('подробнее...', array('/info/view', 'id'=>$data->id), array('class'=>'href')),
+			'htmlOptions'=>array('style'=>'color:#000;'),
+		)
+	);
+	?>
 
 	<div>
 	<?php echo $data->desc; ?>

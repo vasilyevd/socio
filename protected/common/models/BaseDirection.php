@@ -26,7 +26,6 @@ class BaseDirection extends CActiveRecord
     {
 	    $name = preg_match("/dbname=([^;]*)/", $this->dbConnection->connectionString, $matches);
 	    return $matches[1].'.org_direction';
-	    //return 'org_direction';
     }
 
     /**

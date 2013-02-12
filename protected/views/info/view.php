@@ -1,6 +1,5 @@
 <?php
-//$this->contentClass = 'pading';
-$this->sectionMain = "obj";
+/** @var $model Infoitem */
 ?>
 <div class="row" style="margin-bottom: 20px;">
 
@@ -13,13 +12,22 @@ $this->sectionMain = "obj";
 	</div>
 
 	<div class="span10">
-		<?php $this->widget('bootstrap.widgets.TbListView',array(
-			'dataProvider' => $model->search(),
-			'template' => '{items}{pager}',
-			'htmlOptions'=>array('class'=>''),
-			//'itemsCssClass' => 'row',
-			'itemView' => '_view',
-		)); ?>
+
+		<div class="row-fluid">
+			<?php
+			$this->widget('ext.widgets.SHeader',array(
+					'text'=>$model->title,
+					'htmlOptions'=>array('style'=>'color:#000;'),
+				)
+			);
+			?>
+
+			<div class="text-block">
+				<?php echo $model->full_text; ?>
+			</div>
+		</div>
+
+
 	</div>
 
 
