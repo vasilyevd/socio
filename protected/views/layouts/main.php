@@ -90,7 +90,7 @@
 										    'url'=>array('/organization/search'),
 										),
 										array('label'=>'Каталог',
-										    'url'=>'',
+										    'url'=>array('/catorganization/search'),
 										),
 									)
 								),

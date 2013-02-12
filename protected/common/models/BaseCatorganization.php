@@ -161,29 +161,27 @@ class BaseCatorganization extends CActiveRecord
     {
         $criteria = new CDbCriteria;
 
-        $criteria->compare('name', $this->name, true);
-        $criteria->compare('registration_date', $this->registration_date, true);
-        $criteria->compare('is_legal', $this->is_legal);
-        $criteria->compare('is_branch', $this->is_branch);
-        $criteria->compare('is_verified', $this->is_verified);
+        $criteria->with = array(
+            'directions' => array('select' => false),
+        );
 
-        // $criteria->compare('address',$this->address,true);
-        // $criteria->compare('address_id',$this->address_id);
-        // $criteria->compare('city_id',$this->city_id);
-        // $criteria->compare('region_id',$this->region_id);
-        // $criteria->compare('chief_fio',$this->chief_fio,true);
-        // $criteria->compare('registration_num',$this->registration_num,true);
-        // $criteria->compare('phone',$this->phone,true);
-        // $criteria->compare('website',$this->website,true);
-        // $criteria->compare('email',$this->email,true);
-        // $criteria->compare('organization_id',$this->organization_id);
-        // $criteria->compare('action_area',$this->action_area);
-        // $criteria->compare('directions_more',$this->directions_more,true);
-        // $criteria->compare('logo',$this->logo,true);
-        // $criteria->compare('branch_master',$this->branch_master,true);
+        if (!empty($this->directions)) {
+            $criteria->with['directions']['together'] = true;
+            $criteria->addInCondition('directions.id', $this->directions);
+        }
+
+        $criteria->compare('t.name', $this->name, true);
+        $criteria->compare('t.action_area', $this->action_area);
+        $criteria->compare('t.city_id', $this->city_id);
+
+        // Admin cgridview search options.
+        $criteria->compare('t.registration_date', $this->registration_date, true);
+        $criteria->compare('t.is_legal', $this->is_legal);
+        $criteria->compare('t.is_branch', $this->is_branch);
+        $criteria->compare('t.is_verified', $this->is_verified);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 
