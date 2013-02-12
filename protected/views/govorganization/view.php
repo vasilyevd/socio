@@ -53,5 +53,10 @@
             'name' => 'verified',
             'value' => $model->verified ? 'Да' : 'Нет',
         ),
+        array(
+            'name' => 'parent',
+            'type' => 'raw',
+            'value' => empty($model->parent) ? '' : CHtml::link(CHtml::encode($model->parent->name), array('govorganization/view', 'id' => $model->parent->id), array('target' => '_blank')),
+        ),
     ),
 )); ?>

@@ -152,32 +152,28 @@ class Document extends CActiveRecord
 
     /**
      * Relations with new models 'TabularBehavior' handler.
-     * @return array of validation status and relation models or single model.
+     * @return array of relation models or single model.
      */
     public function docauthorTabular()
     {
-        $valid = true;
         $tabular = null;
 
         if (!empty($this->docauthor)) {
             if (is_object($this->docauthor)) {
-                // Handle editable update action.
-                // Gives relation model, not string.
                 $model = $this->docauthor;
             } else {
                 $model = Docauthor::model()->findByAttributes(array(
                     'name' => $this->docauthor,
                 ));
-            }
-            if ($model === null) {
-                $model = new Docauthor;
-                $model->name = $this->docauthor;
+                if (is_null($model)) {
+                    $model = new Docauthor;
+                    $model->name = $this->docauthor;
+                }
             }
 
-            $valid = $model->validate() && $valid;
             $tabular = $model;
         }
 
-        return array($valid, $tabular);
+        return $tabular;
     }
 }
