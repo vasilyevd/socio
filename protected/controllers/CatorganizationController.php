@@ -28,7 +28,7 @@ class CatorganizationController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view'),
+                'actions'=>array('index','view', 'search'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -154,6 +154,24 @@ class CatorganizationController extends Controller
 
         $this->render('admin',array(
             'model'=>$model,
+        ));
+    }
+
+    /**
+     * Search filters for models.
+     */
+    public function actionSearch()
+    {
+        $model = new Catorganization('search');
+        // Clear any default values.
+        $model->unsetAttributes();
+
+        if(isset($_GET['Catorganization'])) {
+            $model->attributes = $_GET['Catorganization'];
+        }
+
+        $this->render('search', array(
+            'model' => $model,
         ));
     }
 

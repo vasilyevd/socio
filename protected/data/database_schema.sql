@@ -60,7 +60,7 @@ CREATE TABLE `org_annfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`announcement_id`),
   CONSTRAINT `org_annfile_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `org_announcement` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_announcement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -431,7 +431,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_mmtag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
