@@ -22,7 +22,7 @@
         'width' => '400px',
         'minimumInputLength' => 1,
         'ajax' => array(
-            'url' => $this->createUrl('govorganizationSelectSearch'),
+            'url' => $this->createUrl('select/govorganizationSelectSearch'),
             'quietMillis' => 500,
             'dataType' => 'json',
             'data' => 'js:function(term, page) {

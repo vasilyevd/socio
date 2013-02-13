@@ -32,7 +32,7 @@ class GovorganizationController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update', 'govorganizationSelectSearch'),
+                'actions'=>array('create','update'),
                 'users'=>array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -114,39 +114,5 @@ class GovorganizationController extends Controller
         $this->render('update',array(
             'model'=>$model,
         ));
-    }
-
-    /**
-     * Search model for select2 query.
-     * @param string $query the search query text.
-     */
-    public function actionGovorganizationSelectSearch($query)
-    {
-        header('Content-type: application/json');
-        $criteria = new CDbCriteria();
-
-        $criteria->compare('name', $query, true);
-        $criteria->limit = 5;
-
-        $data = Govorganization::model()->findAll($criteria);
-
-        $result = array();
-        foreach ($data as $m) {
-            // Format description for view.
-            $description = '';
-            if (!empty($m->description)) {
-                $description = mb_substr(CHtml::encode(strip_tags($m->description)), 0, 100, 'UTF-8') . '...';
-            }
-
-            $result[] = array(
-                'id' => $m->id,
-                'name' => $m->name,
-                'description' => $description,
-                'logo' => $m->getUploadUrl('logo'),
-            );
-        }
-
-        echo CJSON::encode($result);
-        Yii::app()->end();
     }
 }

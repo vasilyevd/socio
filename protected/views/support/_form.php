@@ -45,7 +45,7 @@ Yii::app()->clientScript->registerScript('organizationAutoComplete', "
     <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
         'model' => $model,
         'attribute' => 'link',
-        'source' => $this->createUrl('organization/organizationAutoComplete'),
+        'source' => $this->createUrl('select/organizationAutoComplete'),
         'options' => array(
             'delay' => 300,
             'minLength' => 2,
