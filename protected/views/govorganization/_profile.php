@@ -3,14 +3,14 @@
 <?php echo $form->hiddenField($model, 'id'); ?>
 
 <?php
-    if (!is_object($model->parent)) {
+    if (is_numeric($model->parent)) {
         $model->parent = Govorganization::model()->findByPk($model->parent);
     }
-    if ($model->parent === null) {
-        $selectText = '';
-    } else {
+    if (is_object($model->parent)) {
         $selectText = $model->parent->name;
         $model->parent = $model->parent->id;
+    } else {
+        $selectText = '';
     }
 ?>
 <?php echo $form->select2Row($model, 'parent', array(

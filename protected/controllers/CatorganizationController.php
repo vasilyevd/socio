@@ -46,14 +46,19 @@ class CatorganizationController extends Controller
     }
 
     /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
+     * Declares class-based actions.
      */
-    public function actionView($id)
+    public function actions()
     {
-        $this->render('view',array(
-            'model'=>$this->loadModel($id),
-        ));
+        return array(
+            // General CRUD actions.
+            'view' => 'application.components.actions.ViewAction',
+            // 'create' => 'application.components.actions.CreateAction',
+            // 'update' => 'application.components.actions.UpdateAction',
+            'delete' => 'application.components.actions.DeleteAction',
+            'index' => 'application.components.actions.SearchIndexAction',
+            'admin' => 'application.components.actions.AdminAction',
+        );
     }
 
     /**
@@ -114,50 +119,6 @@ class CatorganizationController extends Controller
     }
 
     /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionDelete($id)
-    {
-        $this->loadModel($id)->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-    }
-
-    /**
-     * Lists all models.
-     */
-    public function actionIndex()
-    {
-        $model=new Catorganization('search');
-        $model->unsetAttributes(); // clear any default values
-        if(isset($_GET['Catorganization']))
-            $model->attributes=$_GET['Catorganization'];
-
-        $this->render('index',array(
-            'model'=>$model,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model=new Catorganization('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Catorganization']))
-            $model->attributes=$_GET['Catorganization'];
-
-        $this->render('admin',array(
-            'model'=>$model,
-        ));
-    }
-
-    /**
      * Search filters for models.
      */
     public function actionSearch()
@@ -185,31 +146,5 @@ class CatorganizationController extends Controller
         // 'User' is classname of model to be updated
         $es = new TbEditableSaver('Catorganization');
         $es->update();
-    }
-
-    /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     */
-    public function loadModel($id)
-    {
-        $model=Catorganization::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
-    }
-
-    /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    public function performAjaxValidation($model)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='catorganization-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
     }
 }
