@@ -1,17 +1,12 @@
 <?php
-Yii::app()->clientScript->registerScript('organizationAutoComplete', "
-(function () {
-    var previous;
-
-    $('#" . CHtml::activeId($model, 'link') . "').focus(function () {
-        previous = this.value;
-    }).change(function() {
-        if (previous != this.value) {
-            $('#" . CHtml::activeId($model, 'linkOrganization') . "').val('');
-            $('.cooperation-form-toggle').show();
-        }
-    });
-})();
+Yii::app()->clientScript->registerScript('cooperationLinkAutocomplete', "
+$('#" . CHtml::activeId($model, 'link') . "').change(function() {
+    var idField = $('#" . CHtml::activeId($model, 'linkOrganization') . "');
+    if (idField.data('text') != this.value) {
+        idField.val('');
+        $('.cooperation-form-toggle').show();
+    }
+});
 ");
 ?>
 
@@ -45,13 +40,15 @@ Yii::app()->clientScript->registerScript('organizationAutoComplete', "
     <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
         'model' => $model,
         'attribute' => 'link',
-        'source' => $this->createUrl('organization/organizationAutoComplete'),
+        'source' => $this->createUrl('select/organizationAutoComplete'),
         'options' => array(
             'delay' => 300,
             'minLength' => 2,
             'showAnim' => 'fold',
             'select' => "js:function(event, ui) {
-                $('#" . CHtml::activeId($model, 'linkOrganization') . "').val(ui.item.id);
+                var idField = $('#" . CHtml::activeId($model, 'linkOrganization') . "');
+                idField.data('text', ui.item.value);
+                idField.val(ui.item.id);
                 $('.cooperation-form-toggle').hide();
             }",
         ),

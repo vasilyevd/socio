@@ -34,8 +34,8 @@ return array(
 
     // autoloading model and component classes
     'import'=>array(
-	      'common.models.*',
-	      'common.models.dostup.*',
+          'common.models.*',
+          'common.models.dostup.*',
 
         'application.models.*',
         'application.components.*',
@@ -80,20 +80,18 @@ return array(
         ),
     ),
 
-/*
-		'controllerMap'=>array(
-			'gotme'=>array(
-				'class'=>'common.controllers.GotmeController',
-				'viewPath'=>'common.views.gotme', //now
-			),
-		),
-*/
+    'controllerMap' => array(
+        'select' => array(
+            'class' => 'common.controllers.SelectController',
+            'viewPath' => 'common.views.select',
+        ),
+    ),
 
-	// application-level parameters that can be accessed
+    // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params'=>array(
         // this is used in contact page
         'adminEmail'=>'admin@socinfo.net.ua',
-	    'dbname'=>'socio',
+        'dbname'=>'socio',
     ),
 );

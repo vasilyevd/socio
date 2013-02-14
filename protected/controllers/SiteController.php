@@ -106,26 +106,4 @@ class SiteController extends Controller
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
-
-    /**
-     * Upload handler.
-     * AJAX select images for text editor.
-     * @param integer $org the ID of the organization model.
-     */
-    public function actionDynamicImageGetJson($org)
-    {
-        $model = $this->loadOrganizationModel($org);
-
-        $jsonArray = array();
-
-        foreach ($model->images as $img) {
-            $jsonArray[] = array(
-                'thumb' => $img->getUploadUrl('file'),
-                'image' => $img->getUploadUrl('file'),
-            );
-        }
-
-        header('Content-type: application/json');
-        echo CJSON::encode($jsonArray);
-    }
 }

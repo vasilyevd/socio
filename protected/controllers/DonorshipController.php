@@ -28,7 +28,7 @@ class DonorshipController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view', 'donorAutoComplete'),
+                'actions'=>array('index','view'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -59,31 +59,5 @@ class DonorshipController extends Controller
             'index' => 'application.components.actions.OrgIndexAction',
             'admin' => 'application.components.actions.AdminAction',
         );
-    }
-
-    /**
-     * Search model for auto complete term.
-     * @param string $term the search text.
-     */
-    public function actionDonorAutoComplete($term)
-    {
-        header('Content-type: application/json');
-        $criteria = new CDbCriteria();
-
-        $criteria->compare('name', $term, true);
-        $criteria->limit = 5;
-
-        $data = Donor::model()->findAll($criteria);
-
-        $result = array();
-        foreach ($data as $m) {
-            $result[] = array(
-                'value' => $m->name,
-                'label' => $m->name . ' (' . Lookup::item('DonorshipSource', $m->source) . ')',
-            );
-        }
-
-        echo CJSON::encode($result);
-        Yii::app()->end();
     }
 }

@@ -21,7 +21,7 @@ CREATE TABLE `org_achievement` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_achievement_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_album`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -33,7 +33,7 @@ CREATE TABLE `org_album` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_album_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_album_image`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -48,7 +48,7 @@ CREATE TABLE `org_album_image` (
   KEY `image_id` (`image_id`),
   CONSTRAINT `org_album_image_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `org_album` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_album_image_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `org_image` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_annfile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -60,7 +60,7 @@ CREATE TABLE `org_annfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`announcement_id`),
   CONSTRAINT `org_annfile_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `org_announcement` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_announcement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -78,7 +78,7 @@ CREATE TABLE `org_announcement` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_announcement_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_catorganization`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -120,7 +120,7 @@ CREATE TABLE `org_catorganization` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_catorganization_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_catorganization_direction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -134,7 +134,7 @@ CREATE TABLE `org_catorganization_direction` (
   KEY `image_id` (`direction_id`),
   CONSTRAINT `org_catorganization_direction_ibfk_1` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -150,7 +150,7 @@ CREATE TABLE `org_company` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_company_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_cooperation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -174,7 +174,7 @@ CREATE TABLE `org_cooperation` (
   KEY `link_organization_id` (`link_organization_id`),
   CONSTRAINT `org_cooperation_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_cooperation_ibfk_2` FOREIGN KEY (`link_organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_direction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -183,7 +183,7 @@ CREATE TABLE `org_direction` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_docauthor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -192,7 +192,7 @@ CREATE TABLE `org_docauthor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_doctype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -202,7 +202,7 @@ CREATE TABLE `org_doctype` (
   `name` varchar(128) NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -223,7 +223,7 @@ CREATE TABLE `org_document` (
   KEY `doctype_id` (`doctype_id`),
   CONSTRAINT `org_document_ibfk_1` FOREIGN KEY (`docauthor_id`) REFERENCES `org_docauthor` (`id`) ON DELETE SET NULL,
   CONSTRAINT `org_document_ibfk_2` FOREIGN KEY (`doctype_id`) REFERENCES `org_doctype` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_donor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -238,7 +238,7 @@ CREATE TABLE `org_donor` (
   `logo` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `source` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_donorship`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -260,7 +260,7 @@ CREATE TABLE `org_donorship` (
   KEY `donor_id` (`donor_id`),
   CONSTRAINT `org_donorship_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_donorship_ibfk_5` FOREIGN KEY (`donor_id`) REFERENCES `org_donor` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -288,7 +288,7 @@ CREATE TABLE `org_event` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_event_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_event_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `org_evtype` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_evtype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -299,7 +299,7 @@ CREATE TABLE `org_evtype` (
   `category` int(11) NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_govorganization`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -329,7 +329,7 @@ CREATE TABLE `org_govorganization` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_govorganization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_govprofile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -343,7 +343,7 @@ CREATE TABLE `org_govprofile` (
   KEY `parent_id` (`parent_id`),
   CONSTRAINT `org_govprofile_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_govorganization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_govprofile_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_image`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -356,7 +356,7 @@ CREATE TABLE `org_image` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_image_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_lookup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -368,7 +368,7 @@ CREATE TABLE `org_lookup` (
   `position` int(11) NOT NULL,
   `type` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_massmedia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -389,7 +389,7 @@ CREATE TABLE `org_massmedia` (
   KEY `mmcompany_id` (`company_id`),
   CONSTRAINT `org_massmedia_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_ibfk_2` FOREIGN KEY (`company_id`) REFERENCES `org_company` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_massmedia_mmtag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -403,7 +403,7 @@ CREATE TABLE `org_massmedia_mmtag` (
   KEY `image_id` (`mmtag_id`),
   CONSTRAINT `org_massmedia_mmtag_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_massmedia_mmtag_ibfk_2` FOREIGN KEY (`mmtag_id`) REFERENCES `org_mmtag` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_mmfile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -418,7 +418,7 @@ CREATE TABLE `org_mmfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmfile_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_mmlink`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -431,7 +431,7 @@ CREATE TABLE `org_mmlink` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`massmedia_id`),
   CONSTRAINT `org_mmlink_ibfk_1` FOREIGN KEY (`massmedia_id`) REFERENCES `org_massmedia` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_mmtag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -440,7 +440,7 @@ CREATE TABLE `org_mmtag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_organization`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -470,7 +470,7 @@ CREATE TABLE `org_organization` (
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `org_organization_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `org_orgtype` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_organization_direction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -484,7 +484,7 @@ CREATE TABLE `org_organization_direction` (
   KEY `image_id` (`direction_id`),
   CONSTRAINT `org_organization_direction_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_organization_problem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -498,7 +498,7 @@ CREATE TABLE `org_organization_problem` (
   KEY `image_id` (`problem_id`),
   CONSTRAINT `org_organization_problem_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE,
   CONSTRAINT `org_organization_problem_ibfk_2` FOREIGN KEY (`problem_id`) REFERENCES `org_problem` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_orgtype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -508,7 +508,7 @@ CREATE TABLE `org_orgtype` (
   `group` int(11) NOT NULL,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_partfile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -520,7 +520,7 @@ CREATE TABLE `org_partfile` (
   PRIMARY KEY (`id`),
   KEY `massmedia_id` (`partnership_id`),
   CONSTRAINT `org_partfile_ibfk_1` FOREIGN KEY (`partnership_id`) REFERENCES `org_partnership` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_partnership`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -546,7 +546,7 @@ CREATE TABLE `org_partnership` (
   KEY `link_organization_id` (`link_organization_id`),
   CONSTRAINT `org_partnership_ibfk_1` FOREIGN KEY (`link_organization_id`) REFERENCES `org_organization` (`id`) ON DELETE SET NULL,
   CONSTRAINT `org_partnership_ibfk_2` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_problem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -556,7 +556,7 @@ CREATE TABLE `org_problem` (
   `group` int(11) NOT NULL,
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_support`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -578,7 +578,7 @@ CREATE TABLE `org_support` (
   KEY `organization_id` (`organization_id`),
   KEY `organization_id_2` (`organization_id`),
   KEY `link_organization_id` (`link_organization_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_verification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
