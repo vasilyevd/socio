@@ -79,7 +79,7 @@ class Govorganization extends CActiveRecord
                 // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
                 'on' => 'update',
             ),
-            array('phone_num, directions, problems', 'safe'),
+            array('phone_num', 'safe'),
             array('action_area', 'in', 'range' => self::model()->ActionArea->rule),
             array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
 
@@ -179,35 +179,32 @@ class Govorganization extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
+        $criteria = new CDbCriteria;
 
-        $criteria=new CDbCriteria;
+        $criteria->with = array(
+            'type',
+        );
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('name',$this->name,true);
-        $criteria->compare('type_group',$this->type_group);
-        $criteria->compare('type_id',$this->type_id);
-        $criteria->compare('action_area',$this->action_area);
-        $criteria->compare('city_id',$this->city_id);
-        $criteria->compare('address_id',$this->address_id);
-        $criteria->compare('foundation_year',$this->foundation_year);
-        $criteria->compare('staff_size',$this->staff_size);
-        $criteria->compare('description',$this->description,true);
-        $criteria->compare('goal',$this->goal,true);
-        $criteria->compare('website',$this->website,true);
-        $criteria->compare('phone_num',$this->phone_num,true);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('logo',$this->logo,true);
-        $criteria->compare('logobg',$this->logobg,true);
-        $criteria->compare('logobgset',$this->logobgset,true);
-        $criteria->compare('author_id',$this->author_id);
-        $criteria->compare('create_time',$this->create_time,true);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('verified',$this->verified);
+        $criteria->compare('type.id', $this->type);
+
+        $criteria->compare('t.name', $this->name, true);
+        $criteria->compare('t.action_area', $this->action_area);
+        $criteria->compare('t.city_id', $this->city_id);
+        $criteria->compare('t.address_id', $this->address_id);
+        $criteria->compare('t.foundation_year', $this->foundation_year);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
+            'sort' => array(
+                'attributes' => array(
+                    'type' => array(
+                        'asc' => 'type.id',
+                        'desc' => 'type.id DESC',
+                    ),
+                    'name',
+                    'action_area',
+                ),
+            ),
         ));
     }
 

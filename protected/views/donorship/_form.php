@@ -27,7 +27,7 @@
     <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
         'model' => $model,
         'attribute' => 'donor',
-        'source' => $this->createUrl('donorAutoComplete'),
+        'source' => $this->createUrl('select/donorAutoComplete'),
         'options' => array(
             'delay' => 300,
             'minLength' => 2,

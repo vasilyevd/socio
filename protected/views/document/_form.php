@@ -36,7 +36,7 @@
             <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'model' => $model,
                 'attribute' => 'docauthor',
-                'source' => $this->createUrl('docauthorAutoComplete'),
+                'source' => $this->createUrl('select/docauthorAutoComplete'),
                 'options' => array(
                     'delay' => 300,
                     'minLength' => 2,
