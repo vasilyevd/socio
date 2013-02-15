@@ -358,6 +358,68 @@ CREATE TABLE `org_image` (
   CONSTRAINT `org_image_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `org_infocategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_infocategory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `org_infofile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_infofile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `type` int(11) NOT NULL,
+  `preview` tinyint(1) NOT NULL,
+  `inforequest_id` int(11) DEFAULT NULL,
+  `group` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `massmedia_id` (`inforequest_id`),
+  CONSTRAINT `org_infofile_ibfk_1` FOREIGN KEY (`inforequest_id`) REFERENCES `org_inforequest` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `org_inforequest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_inforequest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text,
+  `type` int(11) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `send_date` date NOT NULL,
+  `receive_date` date DEFAULT NULL,
+  `finished_status` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `sender_text` varchar(128) NOT NULL,
+  `sender_id` int(11) DEFAULT NULL,
+  `sender_type` int(11) NOT NULL,
+  `receiver_text` varchar(128) NOT NULL,
+  `receiver_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `receiver_id` (`receiver_id`),
+  KEY `sender_id` (`sender_id`),
+  CONSTRAINT `org_inforequest_ibfk_1` FOREIGN KEY (`receiver_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `org_inforequest_infocategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_inforequest_infocategory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `inforequest_id` int(11) NOT NULL,
+  `infocategory_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`inforequest_id`),
+  KEY `image_id` (`infocategory_id`),
+  CONSTRAINT `org_inforequest_infocategory_ibfk_2` FOREIGN KEY (`infocategory_id`) REFERENCES `org_infocategory` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_inforequest_infocategory_ibfk_1` FOREIGN KEY (`inforequest_id`) REFERENCES `org_inforequest` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_lookup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

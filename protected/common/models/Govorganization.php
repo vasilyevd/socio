@@ -101,6 +101,7 @@ class Govorganization extends CActiveRecord
                 array('parent_id' => 'id'),
                 'through' => 'profile',
             ),
+            'inforequests' => array(self::HAS_MANY, 'Inforequest', 'govorganization_id'),
         );
     }
 
