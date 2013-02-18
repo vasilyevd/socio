@@ -1,12 +1,14 @@
 <?php
+Yii::import('application.modules.person.models.*');
+
 class WebUserPerson extends CWebUser
 {
 	public $loginUrl = array('/Person/');
-	
+
 	private $_data;
-	
-	/** TODO 
-	 * сделать нормальный кеш данных пользователя не завязанный на ActiveRecords 
+
+	/** TODO
+	 * сделать нормальный кеш данных пользователя не завязанный на ActiveRecords
 	 */
 	public function data() {
 		if($this->_data instanceof PersonUser)
@@ -16,14 +18,14 @@ class WebUserPerson extends CWebUser
 		else
 			return new PersonUser();
 	}
-	
+
 	// переписываем свой метод входа
 	public function login($identity,$duration=0)
 	{
-	    $id=$identity->getId();	 
-	    $states=$identity->getPersistentStates();	   
+	    $id=$identity->getId();
+	    $states=$identity->getPersistentStates();
 	    if($this->beforeLogin($id,$states,false))
-	    {	    	
+	    {
 	        $this->PChangeIdentity($id,$identity->getName(),$identity->getRecovery(), $states);
 
 	        if($duration>0)
@@ -38,7 +40,7 @@ class WebUserPerson extends CWebUser
 	        $this->afterLogin(false);
 	    }
 	}
-	
+
 	/**
 	 * updates the identity of the user
 	 * @param string $id
@@ -59,7 +61,7 @@ class WebUserPerson extends CWebUser
 	    $this->loadIdentityStates($states);
 			$this->setRecovery($recovery);
 	}
-	
+
 	protected function saveToCookie($duration)
 	{
 		$app=Yii::app();
@@ -74,12 +76,12 @@ class WebUserPerson extends CWebUser
 		$cookie->value=$app->getSecurityManager()->hashData(serialize($data));
 		$app->getRequest()->getCookies()->add($cookie->name,$cookie);
 	}
-	
+
 	public function getEmail()
 	{
 		return $this->data()->email;
 	}
-	
+
 	public function setRecovery($value)
 	{
 		$this->setState('__recovery',$value);
@@ -93,5 +95,5 @@ class WebUserPerson extends CWebUser
 	{
 		return $this->getState('__recovery');
 	}
-	
+
 }

@@ -32,7 +32,7 @@
 		'items'=> array(
 				Yii::app()->user->isGuest ? array('template'=>'
                             <div class="row-fluid">
-                            <form method="post" action="/person/auth" id="login-form" style="padding: 0 5px; margin: 0;">
+                            <form method="post" action="' . $this->createUrl('person/auth') . '" id="login-form" style="padding: 0 5px; margin: 0;">
                             <input type="text" id="PersonUser_email" name="PersonUser[email]" placeholder="Логин" maxlength="255" class="input-medium span">
                             <input type="password" id="PersonUser_password" name="PersonUser[password]" maxlength="255" placeholder="Пароль" class="input-medium span" >
                              <button type="submit" class="btn btn-small btn-block" style="margin-top: 0;">Вход</button>

@@ -393,7 +393,7 @@ CREATE TABLE `org_inforequest` (
   `create_time` datetime NOT NULL,
   `send_date` date NOT NULL,
   `receive_date` date DEFAULT NULL,
-  `finished_status` int(11) NOT NULL,
+  `is_finished` tinyint(1) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `sender_text` varchar(128) NOT NULL,
   `sender_id` int(11) DEFAULT NULL,
@@ -416,8 +416,8 @@ CREATE TABLE `org_inforequest_infocategory` (
   PRIMARY KEY (`id`),
   KEY `album_id` (`inforequest_id`),
   KEY `image_id` (`infocategory_id`),
-  CONSTRAINT `org_inforequest_infocategory_ibfk_2` FOREIGN KEY (`infocategory_id`) REFERENCES `org_infocategory` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `org_inforequest_infocategory_ibfk_1` FOREIGN KEY (`inforequest_id`) REFERENCES `org_inforequest` (`id`) ON DELETE CASCADE
+  CONSTRAINT `org_inforequest_infocategory_ibfk_1` FOREIGN KEY (`inforequest_id`) REFERENCES `org_inforequest` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_inforequest_infocategory_ibfk_2` FOREIGN KEY (`infocategory_id`) REFERENCES `org_infocategory` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_lookup`;
@@ -657,6 +657,34 @@ CREATE TABLE `org_verification` (
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `org_verification_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `org_organization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `user_persons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_persons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(40) NOT NULL,
+  `password` varchar(120) DEFAULT NULL,
+  `email` varchar(120) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `second_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `question` text,
+  `answer` text,
+  `creation_date` datetime DEFAULT NULL,
+  `activation_code` varchar(32) DEFAULT NULL,
+  `activation_time` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `ban` datetime DEFAULT NULL,
+  `ban_reason` text,
+  `params` text NOT NULL,
+  `lastaction` datetime DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `notifyType` enum('None','Digest','Instant','Threshold') DEFAULT 'Instant',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`,`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -114,7 +114,7 @@ $('.branch-trigger').change(function(){
         ),
     )); ?>
 
-    <?php echo $form->radioButtonListInlineRow($model, 'is_legal', array('' => 'Не известно', true => 'Да', false => 'Нет')); ?>
+    <?php echo $form->radioButtonListInlineRow($model, 'is_legal', array('' => 'Неизвестно', true => 'Да', false => 'Нет')); ?>
 
     <?php echo $form->fileFieldRow($model, 'logo', array('hint' => CHtml::link(CHtml::encode($model->logo), $model->getUploadUrl('logo'), array('target' => '_blank')))); ?>
 
