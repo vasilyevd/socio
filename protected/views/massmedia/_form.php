@@ -46,7 +46,7 @@ $('.removelink').click(function(){
             // 'imageUpload' => null,
             // Add image gallery.
             'imageGetJson' => Yii::app()->createAbsoluteUrl(
-                'site/dynamicImageGetJson',
+                'select/dynamicImageGetJson',
                 array('org' => $model->isNewRecord ? $_GET['org'] : $model->organization_id)
             ),
             // Add file upload.

@@ -28,7 +28,7 @@ class DocumentController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view', 'docauthorAutoComplete'),
+                'actions'=>array('index','view'),
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -62,31 +62,5 @@ class DocumentController extends Controller
             // Editable fields and widgets update model action.
             'editableUpdate' => 'application.components.actions.EditableUpdateAction',
         );
-    }
-
-    /**
-     * Search model for auto complete term.
-     * @param string $term the search text.
-     */
-    public function actionDocauthorAutoComplete($term)
-    {
-        header('Content-type: application/json');
-        $criteria = new CDbCriteria();
-
-        $criteria->compare('name', $term, true);
-        $criteria->limit = 5;
-
-        $data = Docauthor::model()->findAll($criteria);
-
-        $result = array();
-        foreach ($data as $m) {
-            $result[] = array(
-                'value' => $m->name,
-                'label' => $m->name,
-            );
-        }
-
-        echo CJSON::encode($result);
-        Yii::app()->end();
     }
 }

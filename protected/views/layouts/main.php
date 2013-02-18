@@ -94,7 +94,7 @@
 										),
 									)
 								),
-								array('label'=>'Власть', 'url'=>'', 'active'=>$this->sectionMainSub=='gov'),
+								array('label'=>'Власть', 'url'=>array('/govorganization/search'), 'active'=>$this->sectionMainSub=='gov'),
 								array('label'=>'Бизнес', 'url'=>'', 'active'=>$this->sectionMainSub=='commerce'),
 								array('label'=>'СМИ', 'url'=>'', 'active'=>$this->sectionMainSub=='smi'),
 								array('label'=>'Открытость', 'url'=>array('#'), 'active'=>$this->sectionMainSub=='open'),
