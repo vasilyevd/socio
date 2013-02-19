@@ -20,10 +20,6 @@
  */
 class Inforequest extends CActiveRecord
 {
-    public $senderUser;
-    public $senderOrganization;
-    public $senderBizorganization;
-
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -48,17 +44,68 @@ class Inforequest extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name, type, send_date, sender_text, sender_type, receiver_text', 'required'),
-            array('type, sender_type, senderUser, senderOrganization, senderBizorganization receiver', 'numerical', 'integerOnly' => true),
-            array('name, sender_text, receiver_text', 'length', 'max' => 128),
+            array('name, type, send_date, sender_type', 'required'),
+            array('type, sender_type, receiverGovorganization', 'numerical', 'integerOnly' => true),
+            array('name', 'length', 'max' => 128),
             array('description', 'safe'),
             array('type', 'in', 'range' => self::model()->Type->rule),
             array('sender_type', 'in', 'range' => self::model()->SenderType->rule),
             array('send_date, receive_date', 'date', 'format' => 'yyyy-MM-dd'),
             array('is_finished', 'boolean'),
-            array('senderUser', 'exist', 'attributeName' => 'id', 'className' => 'PersonUser'),
-            array('senderOrganization', 'exist', 'attributeName' => 'id', 'className' => 'Organization'),
-            array('senderBizorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
+            array('receiverGovorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
+            // Apply validation rules for attributes, based on 'sender_type'.
+            // array(
+            //     'sender_type',
+            //     'application.components.validators.YiiConditionalValidator',
+            //     'if' => array(
+            //         array('sender_type', 'compare', 'compareValue' => self::model()->SenderType->find('USER')),
+            //     ),
+            //     'then' => array(
+            //         array('sender_text', 'required'),
+            //         array('sender_text', 'length', 'max' => 128),
+            //     ),
+            // ),
+            // array(
+            //     'sender_type',
+            //     'application.components.validators.YiiConditionalValidator',
+            //     'if' => array(
+            //         array('sender_type', 'compare', 'compareValue' => self::model()->SenderType->find('ORGANIZATION')),
+            //     ),
+            //     'then' => array(
+            //         array('senderOrganization', 'required'),
+            //         array('senderOrganization', 'numerical', 'integerOnly' => true),
+            //         array('senderOrganization', 'exist', 'attributeName' => 'id', 'className' => 'Organization'),
+            //     ),
+            // ),
+            // array(
+            //     'sender_type',
+            //     'application.components.validators.YiiConditionalValidator',
+            //     'if' => array(
+            //         array('sender_type', 'compare', 'compareValue' => self::model()->SenderType->find('BIZORGANIZATION')),
+            //     ),
+            //     'then' => array(
+            //         array('senderBizorganization', 'required'),
+            //         array('senderBizorganization', 'numerical', 'integerOnly' => true),
+            //         array('senderBizorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
+            //     ),
+            // ),
+            //
+            //
+            //
+           //  array('sender_type', 'application.components.validators.FSwitchValidator',
+           //  'cases'=>array(
+           //     'image'=>array(
+           //          array('file',  'required'),
+           //          array('file',  'file', 'types'=>'jpg,png'),
+           //     ),
+           //     3=>array(
+           //          array('senderBizorganization', 'required'),
+           //          array('senderBizorganization', 'numerical', 'integerOnly' => true),
+           //          array('senderBizorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
+           //     )
+           //  ),
+           //  'default'=>array('url', 'url', 'defaultSchema'=>'http') //simple array if only one validator
+           // ),
 
             // array('id, name, description, type, create_time, send_date, receive_date, user_id', 'safe', 'on' => 'search'),
         );
@@ -70,10 +117,14 @@ class Inforequest extends CActiveRecord
     public function relations()
     {
         return array(
-            'requestFiles' => array(self::HAS_MANY, 'Infofile', 'inforequest_id'),
+            'user' => array(self::BELONGS_TO, 'PersonUser', 'user_id'),
+            'senderBizorganization' => array(self::BELONGS_TO, 'Govorganization', 'sender_id'),
+            'senderUser' => array(self::BELONGS_TO, 'PersonUser', 'sender_id'),
+            'senderOrganization' => array(self::BELONGS_TO, 'Organization', 'sender_id'),
+            'receiverGovorganization' => array(self::BELONGS_TO, 'Govorganization', 'receiver_id'),
             'responseFile' => array(self::HAS_ONE, 'Infofile', 'inforequest_id'),
+            'requestFiles' => array(self::HAS_MANY, 'Infofile', 'inforequest_id'),
             'categories' => array(self::MANY_MANY, 'Infocategory', 'org_inforequest_infocategory(inforequest_id, infocategory_id)'),
-            'receiver' => array(self::BELONGS_TO, 'Govorganization', 'receiver_id'),
         );
     }
 
@@ -116,11 +167,11 @@ class Inforequest extends CActiveRecord
             'user' => 'Автор',
             'sender_text' => 'Отправитель',
             'sender_type' => 'Тип Отправителя',
-            'senderUser' => 'Отправитель',
-            'senderOrganization' => 'Отправитель',
-            'senderBizorganization' => 'Отправитель',
+            'senderUser' => 'Отправитель Пользователь',
+            'senderOrganization' => 'Отправитель Общественная Организация',
+            'senderBizorganization' => 'Отправитель Коммерческая Организация',
             'receiver_text' => 'Получатель',
-            'receiver' => 'Получатель Государственная Организация',
+            'receiverGovorganization' => 'Получатель Государственная Организация',
         );
     }
 
@@ -152,25 +203,37 @@ class Inforequest extends CActiveRecord
     }
 
     /**
+     * This is invoked when record is populated with the data from database.
+     */
+    protected function afterFind()
+    {
+        parent::afterFind();
+
+        // $this->_oldTags=$this->tags;
+    }
+
+    /**
      * This is invoked before the record is validated.
      */
     public function beforeValidate()
     {
-        // Create dynamic relation based on 'sender_type'.
-        switch ($this->sender_type) {
-            case $this->SenderType->find('USER'):
-                $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'PersonUser', 'sender_id'));
-                $this->sender = $this->senderUser;
-                break;
-            case $this->SenderType->find('ORGANIZATION'):
-                $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'Organization', 'sender_id'));
-                $this->sender = $this->senderOrganization;
-                break;
-            case $this->SenderType->find('BIZORGANIZATION'):
-                $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'Govorganization', 'sender_id'));
-                $this->sender = $this->senderBizorganization;
-                break;
-        }
+        // switch ($this->sender_type) {
+        //     case $this->SenderType->find('USER'):
+        //         $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'PersonUser', 'sender_id'));
+        //         $this->sender = $this->senderUser;
+        //         break;
+        //     case $this->SenderType->find('ORGANIZATION'):
+        //         $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'Organization', 'sender_id'));
+        //         $this->sender = $this->senderOrganization;
+        //         break;
+        //     case $this->SenderType->find('BIZORGANIZATION'):
+        //         $this->senderUser = null;
+        //         $this->senderOrganization = null;
+        //         break;
+        // }
+
+        $this->sender_text = 'test sender text';
+        $this->receiver_text = 'test receiver text';
 
         return parent::beforeValidate();
     }
@@ -187,6 +250,11 @@ class Inforequest extends CActiveRecord
 
             // Set the model user as current one.
             $this->user = Yii::app()->user->data()->id;
+        }
+
+        // Allow null date database field.
+        if (empty($this->receive_date)) {
+            $this->receive_date = null;
         }
 
         return parent::beforeSave();

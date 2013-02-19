@@ -12,10 +12,8 @@
         'receive_date',
         'finished_status',
         'user_id',
-        'sender',
         'sender_id',
         'sender_type',
-        'receiver',
         'receiver_id',
     ),
 )); ?>

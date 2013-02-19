@@ -403,6 +403,7 @@ CREATE TABLE `org_inforequest` (
   PRIMARY KEY (`id`),
   KEY `receiver_id` (`receiver_id`),
   KEY `sender_id` (`sender_id`),
+  KEY `user_id` (`user_id`),
   CONSTRAINT `org_inforequest_ibfk_1` FOREIGN KEY (`receiver_id`) REFERENCES `org_govorganization` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
