@@ -57,6 +57,14 @@ class Govorganization extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'type',
+                'application.components.validators.ExistRelationValidator',
+            ),
+            array('profile', 'profileRelationValidator'),
+            // array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
+
+
             array('name, type, action_area, profile', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
@@ -81,7 +89,6 @@ class Govorganization extends CActiveRecord
             ),
             array('phone_num', 'safe'),
             array('action_area', 'in', 'range' => self::model()->ActionArea->rule),
-            array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
 
             // array('directions, problems, id, name, type_group, type, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
@@ -246,28 +253,31 @@ class Govorganization extends CActiveRecord
      * Relations with new models 'TabularBehavior' handler.
      * @return array of relation models or single model.
      */
-    public function profileTabular()
+    public function profileRelationValidator($attribute, $params)
     {
         $tabular = null;
+        $valid = true;
 
-        if (!empty($this->profile)) {
-            if (is_object($this->profile)) {
-                $model = $this->profile;
+        if (!empty($this->$attribute)) {
+            if (is_object($this->$attribute)) {
+                $model = $this->$attribute;
             } else {
                 $model = Govprofile::model()->findByAttributes(array(
-                    'id' => $this->profile['id'],
+                    'id' => $this->$attribute['id'],
                     'organization_id' => $this->id,
                 ));
                 if (is_null($model)) {
                     $model = new Govprofile;
                 }
 
-                $model->attributes = $this->profile;
+                $model->attributes = $this->$attribute;
             }
 
             $tabular = $model;
+            $valid = $model->validate() && $valid;
         }
 
-        return $tabular;
+        $this->$attribute = $tabular;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $object->getAttributeLabel($attribute));
     }
 }

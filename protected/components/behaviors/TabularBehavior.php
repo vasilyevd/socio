@@ -10,40 +10,6 @@ class TabularBehavior extends CActiveRecordBehavior
     private $_settings;
 
     /**
-     * Calls Tabular method for all relations, finds and validates relation
-     * models. Models from new relation attributes is not affected by
-     * 'EActiveRecordRelationBehavior' because this method is called after it.
-     */
-    public function beforeValidate()
-    {
-        // Find relations settings once.
-        if (!isset($this->_settings)) {
-            $this->_settings = $this->owner->relations();
-        }
-
-        foreach ($this->relations as $rel) {
-            // Call owners tabular method.
-            $method = $rel['name'] . 'Tabular';
-            $tabular = $this->owner->$method();
-
-            $this->owner->$rel['name'] = $tabular;
-
-            // Check for validation errors.
-            $valid = true;
-            if (is_array($tabular)) {
-                foreach ($tabular as $m) {
-                    $valid = $m->validate() && $valid;
-                }
-            } elseif(is_object($tabular)) {
-                $valid = $tabular->validate() && $valid;
-            }
-            if (!$valid) {
-                $this->owner->addError($rel['name'], 'Неверно задано поле ' . $this->owner->getAttributeLabel($rel['name']));
-            }
-        }
-    }
-
-    /**
      * Saves all 'MANY_MANY' and 'HAS_MANY' related models. Their link ID
      * attribute is set to null, because owner is new and don't have ID yet.
      * Relation link creation is handled by 'EActiveRecordRelationBehavior'
@@ -52,7 +18,17 @@ class TabularBehavior extends CActiveRecordBehavior
      */
     public function beforeSave()
     {
+        // Find relations settings once.
+        if (!isset($this->_settings)) {
+            $this->_settings = $this->owner->relations();
+        }
+
         foreach ($this->relations as $rel) {
+            // Skip not loaded relations.
+            if (!$this->owner->hasRelated($rel['name'])) {
+                continue;
+            }
+
             if ($this->_settings[$rel['name']][0] === CActiveRecord::MANY_MANY ||
                 $this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY
             ) {
@@ -83,6 +59,11 @@ class TabularBehavior extends CActiveRecordBehavior
     public function afterSave()
     {
         foreach ($this->relations as $rel) {
+            // Skip not loaded relations.
+            if (!$this->owner->hasRelated($rel['name'])) {
+                continue;
+            }
+
             if ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY ||
                 $this->_settings[$rel['name']][0] === CActiveRecord::HAS_ONE
             ) {
