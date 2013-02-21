@@ -65,7 +65,7 @@ class Govorganization extends CActiveRecord
             // array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
 
 
-            array('name, type, action_area, profile', 'required'),
+            array('name, type, action_area', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
             array(
@@ -125,7 +125,11 @@ class Govorganization extends CActiveRecord
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
                 'relations' => array(
-                    array('name' => 'profile', 'delete' => true),
+                    // array('name' => 'profile', 'delete' => true),
+
+                    'organization' => array(),
+                    'type' => array(),
+                    'profile' => array('method' => 'profileTabular', 'save' => true, 'delete' => true),
                 ),
             ),
             // Upload handler.
@@ -255,7 +259,7 @@ class Govorganization extends CActiveRecord
      */
     public function profileRelationValidator($attribute, $params)
     {
-        $tabular = null;
+        $relation = null;
         $valid = true;
 
         if (!empty($this->$attribute)) {
@@ -263,7 +267,7 @@ class Govorganization extends CActiveRecord
                 $model = $this->$attribute;
             } else {
                 $model = Govprofile::model()->findByAttributes(array(
-                    'id' => $this->$attribute['id'],
+                    'id' => $this->{$attribute}['id'],
                     'organization_id' => $this->id,
                 ));
                 if (is_null($model)) {
@@ -273,11 +277,11 @@ class Govorganization extends CActiveRecord
                 $model->attributes = $this->$attribute;
             }
 
-            $tabular = $model;
+            $relation = $model;
             $valid = $model->validate() && $valid;
         }
 
-        $this->$attribute = $tabular;
-        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $object->getAttributeLabel($attribute));
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 }

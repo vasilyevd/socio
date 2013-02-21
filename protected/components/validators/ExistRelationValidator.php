@@ -11,13 +11,15 @@ class ExistRelationValidator extends CValidator
             $tabular = array();
 
             foreach ($object->$attribute as $data) {
-                if ($data instanceof CActiveRecord) {
+                if (is_object($data)) {
                     $model = $data;
                 } else {
                     // Get relation model name from relation settings.
                     $settings = $object->relations();
-                    $model = $settings[$attribute][1]::model()->findByPk($data);
+                    $model = CActiveRecord::model($settings[$attribute][1])->findByPk($data);
 
+                    // Related record with given PK does not exist.
+                    // Set model as invalid.
                     if (is_null($model)) {
                         $valid = false;
                     }
@@ -30,13 +32,15 @@ class ExistRelationValidator extends CValidator
             $tabular = null;
 
             if (!empty($object->$attribute)) {
-                if ($object->$attribute instanceof CActiveRecord) {
+                if (is_object($object->$attribute)) {
                     $model = $object->$attribute;
                 } else {
                     // Get relation model name from relation settings.
                     $settings = $object->relations();
-                    $model = $settings[$attribute][1]::model()->findByPk($object->$attribute);
+                    $model = CActiveRecord::model($settings[$attribute][1])->findByPk($object->$attribute);
 
+                    // Related record with given PK does not exist.
+                    // Set model as invalid.
                     if (is_null($model)) {
                         $valid = false;
                     }

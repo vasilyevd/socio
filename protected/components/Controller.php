@@ -98,7 +98,7 @@ class Controller extends CController
      */
     public function loadModelByName($id, $name)
     {
-        $model = $name::model()->findByPk($id);
+        $model = CActiveRecord::model($name)->findByPk($id);
 
         if ($model === null) {
             throw new CHttpException(404, 'Запрашиваемая страница не существует.');

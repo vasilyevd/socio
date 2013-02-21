@@ -28,6 +28,7 @@ class TabularBehavior extends CActiveRecordBehavior
             if (!$this->owner->hasRelated($rel['name'])) {
                 continue;
             }
+            // TODO: skip not objects relations?
 
             if ($this->_settings[$rel['name']][0] === CActiveRecord::MANY_MANY ||
                 $this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY
@@ -63,6 +64,7 @@ class TabularBehavior extends CActiveRecordBehavior
             if (!$this->owner->hasRelated($rel['name'])) {
                 continue;
             }
+            // TODO: skip not objects relations?
 
             if ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_MANY ||
                 $this->_settings[$rel['name']][0] === CActiveRecord::HAS_ONE
