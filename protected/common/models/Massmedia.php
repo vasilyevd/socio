@@ -48,6 +48,14 @@ class Massmedia extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'organization',
+                'application.components.validators.ExistRelationValidator',
+                'on' => 'insert',
+            ),
+            array('tags', 'tagsRelationValidator'),
+            array('links', 'linksRelationValidator'),
+            array('files', 'filesRelationValidator'),
             array('title, content, tags, links, category, direction, files', 'required'),
             array('title', 'length', 'max'=>128),
             array('content','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
@@ -235,45 +243,54 @@ class Massmedia extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * Can be used as 'TabularBehavior' handler.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function tagsTabular()
+    public function tagsRelationValidator($attribute, $params)
     {
-        $tabular = array();
+        $relation = array();
+        $valid = true;
 
-        if (is_string($this->tags)) {
-            $tagsNames = explode(',', $this->tags);
-
-            foreach ($tagsNames as $n) {
-                $model = Mmtag::model()->find(
-                    'name=:name',
-                    array(':name' => $n)
-                );
-                if ($model === null) {
-                    $model = new Mmtag;
-                    $model->name = $n;
-                }
-
-                $tabular[] = $model;
-            }
-        } elseif (is_array($this->tags)) {
-            // Relations object array.
-            $tabular = $this->tags;
+        // Transform tag string to tabular data array.
+        if (is_string($this->$attribute)) {
+            $this->$attribute = explode(',', $this->$attribute);
         }
 
-        return $tabular;
+        foreach ($this->$attribute as $data) {
+            if (is_object($data)) {
+                $model = $data;
+            } else {
+                $model = Mmtag::model()->findByAttributes(array(
+                    'name' => $data,
+                ));
+                if (is_null($model)) {
+                    $model = new Mmtag;
+                    $model->name = $data;
+                }
+            }
+
+            $relation[] = $model;
+            $valid = $model->validate() && $valid;
+        }
+
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * Can be used as 'TabularBehavior' handler.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function linksTabular()
+    public function linksRelationValidator($attribute, $params)
     {
-        $tabular = array();
+        $relation = array();
+        $valid = true;
 
-        foreach ($this->links as $data) {
+        foreach ($this->$attribute as $data) {
             if (is_object($data)) {
                 $model = $data;
             } else {
@@ -288,21 +305,26 @@ class Massmedia extends CActiveRecord
                 $model->attributes = $data;
             }
 
-            $tabular[] = $model;
+            $relation[] = $model;
+            $valid = $model->validate() && $valid;
         }
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * Can be used as 'TabularBehavior' handler.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function filesTabular()
+    public function filesRelationValidator($attribute, $params)
     {
-        $tabular = array();
+        $relation = array();
+        $valid = true;
 
-        foreach ($this->files as $i => $data) {
+        foreach ($this->$attribute as $i => $data) {
             if (is_object($data)) {
                 $model = $data;
             } else {
@@ -319,10 +341,12 @@ class Massmedia extends CActiveRecord
                 $model->name = CUploadedFile::getInstance($model, "[$i]name");
             }
 
-            $tabular[] = $model;
+            $relation[] = $model;
+            $valid = $model->validate() && $valid;
         }
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 
     /**

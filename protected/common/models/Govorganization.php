@@ -62,10 +62,7 @@ class Govorganization extends CActiveRecord
                 'application.components.validators.ExistRelationValidator',
             ),
             array('profile', 'profileRelationValidator'),
-            // array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
-
-
-            array('name, type, action_area', 'required'),
+            array('name, type, action_area, profile', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
             array(
@@ -125,11 +122,7 @@ class Govorganization extends CActiveRecord
             'TabularBehavior' => array(
                 'class' => 'application.components.behaviors.TabularBehavior',
                 'relations' => array(
-                    // array('name' => 'profile', 'delete' => true),
-
-                    'organization' => array(),
-                    'type' => array(),
-                    'profile' => array('method' => 'profileTabular', 'save' => true, 'delete' => true),
+                    array('name' => 'profile', 'delete' => true),
                 ),
             ),
             // Upload handler.
@@ -254,8 +247,10 @@ class Govorganization extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * Can be used as 'TabularBehavior' handler.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
     public function profileRelationValidator($attribute, $params)
     {

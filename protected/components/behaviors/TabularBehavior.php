@@ -24,7 +24,8 @@ class TabularBehavior extends CActiveRecordBehavior
         }
 
         foreach ($this->relations as $rel) {
-            // Skip not loaded relations.
+            // Skip not loaded relations. Used to prevent work on relations
+            // form another scenarios.
             if (!$this->owner->hasRelated($rel['name'])) {
                 continue;
             }
@@ -60,7 +61,8 @@ class TabularBehavior extends CActiveRecordBehavior
     public function afterSave()
     {
         foreach ($this->relations as $rel) {
-            // Skip not loaded relations.
+            // Skip not loaded relations. Used to prevent work on relations
+            // form another scenarios.
             if (!$this->owner->hasRelated($rel['name'])) {
                 continue;
             }

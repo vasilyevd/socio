@@ -46,6 +46,12 @@ class Announcement extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'organization',
+                'application.components.validators.ExistRelationValidator',
+                'on' => 'insert',
+            ),
+            array('files', 'filesRelationValidator'),
             array('title, content, publication_time, status, category', 'required', 'on' => 'insert, update'),
             array('status, category', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>128),
@@ -202,12 +208,15 @@ class Announcement extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * Can be used as 'TabularBehavior' handler.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function filesTabular()
+    public function filesRelationValidator($attribute, $params)
     {
-        $tabular = array();
+        $relation = array();
+        $valid = true;
 
         // Upload handler.
         $uploads = CUploadedFile::getInstances($this, 'files');
@@ -215,11 +224,13 @@ class Announcement extends CActiveRecord
             $model = new Annfile;
             $model->name = $file;
 
-            $tabular[] = $model;
+            $relation[] = $model;
+            $valid = $model->validate() && $valid;
         }
-        $tabular = array_merge($this->files, $tabular);
+        $relation = array_merge($this->files, $relation);
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 
     /**
