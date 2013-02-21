@@ -44,68 +44,43 @@ class Inforequest extends CActiveRecord
     public function rules()
     {
         return array(
+            // Relations.
+            array(
+                'receiverGovorganization',
+                'application.components.validators.ExistRelationValidator',
+            ),
+            // Apply validation rules for attributes, based on 'sender_type'.
+            array('sender_type', 'application.components.validators.FSwitchValidator',
+                'cases' => array(
+                    self::model()->SenderType->find('USER') => array(
+                        array('sender_text', 'required'),
+                        array('sender_text', 'length', 'max' => 128),
+                    ),
+                    self::model()->SenderType->find('ORGANIZATION') => array(
+                        array(
+                            'senderOrganization',
+                            'application.components.validators.ExistRelationValidator',
+                        ),
+                        array('senderOrganization', 'required'),
+                    ),
+                    self::model()->SenderType->find('BIZORGANIZATION') => array(
+                        array(
+                            'senderBizorganization',
+                            'application.components.validators.ExistRelationValidator',
+                        ),
+                        array('senderBizorganization', 'required'),
+                    ),
+                ),
+            ),
+
             array('name, type, send_date, sender_type', 'required'),
-            array('type, sender_type, receiverGovorganization', 'numerical', 'integerOnly' => true),
+            array('type, sender_type', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 128),
             array('description', 'safe'),
             array('type', 'in', 'range' => self::model()->Type->rule),
             array('sender_type', 'in', 'range' => self::model()->SenderType->rule),
             array('send_date, receive_date', 'date', 'format' => 'yyyy-MM-dd'),
             array('is_finished', 'boolean'),
-            array('receiverGovorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
-            // Apply validation rules for attributes, based on 'sender_type'.
-            // array(
-            //     'sender_type',
-            //     'application.components.validators.YiiConditionalValidator',
-            //     'if' => array(
-            //         array('sender_type', 'compare', 'compareValue' => self::model()->SenderType->find('USER')),
-            //     ),
-            //     'then' => array(
-            //         array('sender_text', 'required'),
-            //         array('sender_text', 'length', 'max' => 128),
-            //     ),
-            // ),
-            // array(
-            //     'sender_type',
-            //     'application.components.validators.YiiConditionalValidator',
-            //     'if' => array(
-            //         array('sender_type', 'compare', 'compareValue' => self::model()->SenderType->find('ORGANIZATION')),
-            //     ),
-            //     'then' => array(
-            //         array('senderOrganization', 'required'),
-            //         array('senderOrganization', 'numerical', 'integerOnly' => true),
-            //         array('senderOrganization', 'exist', 'attributeName' => 'id', 'className' => 'Organization'),
-            //     ),
-            // ),
-            // array(
-            //     'sender_type',
-            //     'application.components.validators.YiiConditionalValidator',
-            //     'if' => array(
-            //         array('sender_type', 'compare', 'compareValue' => self::model()->SenderType->find('BIZORGANIZATION')),
-            //     ),
-            //     'then' => array(
-            //         array('senderBizorganization', 'required'),
-            //         array('senderBizorganization', 'numerical', 'integerOnly' => true),
-            //         array('senderBizorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
-            //     ),
-            // ),
-            //
-            //
-            //
-           //  array('sender_type', 'application.components.validators.FSwitchValidator',
-           //  'cases'=>array(
-           //     'image'=>array(
-           //          array('file',  'required'),
-           //          array('file',  'file', 'types'=>'jpg,png'),
-           //     ),
-           //     3=>array(
-           //          array('senderBizorganization', 'required'),
-           //          array('senderBizorganization', 'numerical', 'integerOnly' => true),
-           //          array('senderBizorganization', 'exist', 'attributeName' => 'id', 'className' => 'Govorganization'),
-           //     )
-           //  ),
-           //  'default'=>array('url', 'url', 'defaultSchema'=>'http') //simple array if only one validator
-           // ),
 
             // array('id, name, description, type, create_time, send_date, receive_date, user_id', 'safe', 'on' => 'search'),
         );
@@ -118,9 +93,9 @@ class Inforequest extends CActiveRecord
     {
         return array(
             'user' => array(self::BELONGS_TO, 'PersonUser', 'user_id'),
-            'senderBizorganization' => array(self::BELONGS_TO, 'Govorganization', 'sender_id'),
             'senderUser' => array(self::BELONGS_TO, 'PersonUser', 'sender_id'),
             'senderOrganization' => array(self::BELONGS_TO, 'Organization', 'sender_id'),
+            'senderBizorganization' => array(self::BELONGS_TO, 'Govorganization', 'sender_id'),
             'receiverGovorganization' => array(self::BELONGS_TO, 'Govorganization', 'receiver_id'),
             'responseFile' => array(self::HAS_ONE, 'Infofile', 'inforequest_id'),
             'requestFiles' => array(self::HAS_MANY, 'Infofile', 'inforequest_id'),
@@ -200,16 +175,6 @@ class Inforequest extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    /**
-     * This is invoked when record is populated with the data from database.
-     */
-    protected function afterFind()
-    {
-        parent::afterFind();
-
-        // $this->_oldTags=$this->tags;
     }
 
     /**
