@@ -28,10 +28,54 @@
 
     <?php echo $form->radioButtonListRow($model, 'sender_type', $model->SenderType->list); ?>
 
+    <?php echo $form->textFieldRow($model, 'sender_text', array('class' => 'span5', 'maxlength' => 128)); ?>
+
+    <?php echo $form->checkBoxRow($model, 'isSenderUserSelf'); ?>
+
     <?php
-        if (is_numeric($model->senderBizorganization)) {
-            $model->senderBizorganization = Organization::model()->findByPk($model->senderBizorganization);
+        if (is_object($model->senderOrganization)) {
+            $selectText = $model->senderOrganization->name;
+            $model->senderOrganization = $model->senderOrganization->id;
+        } else {
+            $selectText = '';
         }
+    ?>
+    <?php echo $form->select2Row($model, 'senderOrganization', array(
+        'asDropDownList' => false,
+        'prompt' => '',
+        'options' => array(
+            'placeholder' => 'Выбрать...',
+            'allowClear' => true,
+            'width' => '400px',
+            'minimumInputLength' => 1,
+            'ajax' => array(
+                'url' => $this->createUrl('select/organizationSelectSearch'),
+                'quietMillis' => 500,
+                'dataType' => 'json',
+                'data' => 'js:function(term, page) {
+                    return {query : term};
+                }',
+                'results' => 'js:function(data, page) {
+                    return {results : data};
+                }',
+            ),
+            'formatResult' => 'js:function(model) {
+                markup = "<table><tr>";
+                markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
+                markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
+                markup += "</tr></table>";
+                return markup;
+            }',
+            'formatSelection' => 'js:function(model) {
+                return model.name;
+            }',
+            'initSelection' => 'js:function(element, callback) {
+                callback({id : element.val(), name : "' . $selectText . '"});
+            }',
+        ),
+    )); ?>
+
+    <?php
         if (is_object($model->senderBizorganization)) {
             $selectText = $model->senderBizorganization->name;
             $model->senderBizorganization = $model->senderBizorganization->id;

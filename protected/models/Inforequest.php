@@ -20,6 +20,8 @@
  */
 class Inforequest extends CActiveRecord
 {
+    public $isSenderUserSelf;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -44,36 +46,12 @@ class Inforequest extends CActiveRecord
     public function rules()
     {
         return array(
-            // Relations.
+            // General scenario.
             array(
                 'receiverGovorganization',
                 'application.components.validators.ExistRelationValidator',
             ),
-            // Apply validation rules for attributes, based on 'sender_type'.
-            array('sender_type', 'application.components.validators.FSwitchValidator',
-                'cases' => array(
-                    self::model()->SenderType->find('USER') => array(
-                        array('sender_text', 'required'),
-                        array('sender_text', 'length', 'max' => 128),
-                    ),
-                    self::model()->SenderType->find('ORGANIZATION') => array(
-                        array(
-                            'senderOrganization',
-                            'application.components.validators.ExistRelationValidator',
-                        ),
-                        array('senderOrganization', 'required'),
-                    ),
-                    self::model()->SenderType->find('BIZORGANIZATION') => array(
-                        array(
-                            'senderBizorganization',
-                            'application.components.validators.ExistRelationValidator',
-                        ),
-                        array('senderBizorganization', 'required'),
-                    ),
-                ),
-            ),
-
-            array('name, type, send_date, sender_type', 'required'),
+            array('name, type, send_date, sender_type, receiverGovorganization', 'required'),
             array('type, sender_type', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 128),
             array('description', 'safe'),
@@ -81,6 +59,32 @@ class Inforequest extends CActiveRecord
             array('sender_type', 'in', 'range' => self::model()->SenderType->rule),
             array('send_date, receive_date', 'date', 'format' => 'yyyy-MM-dd'),
             array('is_finished', 'boolean'),
+
+            // 'senderUser' scenario.
+            array(
+                'senderUser',
+                'senderUserRelationValidator',
+                'safe' => false,
+                'on' => 'senderUser',
+            ),
+            array('sender_text', 'length', 'max' => 128, 'on' => 'senderUser'),
+            array('isSenderUserSelf', 'boolean', 'on' => 'senderUser'),
+
+            // 'senderOrganization' scenario.
+            array(
+                'senderOrganization',
+                'application.components.validators.ExistRelationValidator',
+                'on' => 'senderOrganization',
+            ),
+            array('senderOrganization', 'required', 'on' => 'senderOrganization'),
+
+            // 'senderBizorganization' scenario.
+            array(
+                'senderBizorganization',
+                'application.components.validators.ExistRelationValidator',
+                'on' => 'senderBizorganization',
+            ),
+            array('senderBizorganization', 'required', 'on' => 'senderBizorganization'),
 
             // array('id, name, description, type, create_time, send_date, receive_date, user_id', 'safe', 'on' => 'search'),
         );
@@ -143,6 +147,7 @@ class Inforequest extends CActiveRecord
             'sender_text' => 'Отправитель',
             'sender_type' => 'Тип Отправителя',
             'senderUser' => 'Отправитель Пользователь',
+            'isSenderUserSelf' => 'Отправитель Текущий Пользователь',
             'senderOrganization' => 'Отправитель Общественная Организация',
             'senderBizorganization' => 'Отправитель Коммерческая Организация',
             'receiver_text' => 'Получатель',
@@ -178,32 +183,6 @@ class Inforequest extends CActiveRecord
     }
 
     /**
-     * This is invoked before the record is validated.
-     */
-    public function beforeValidate()
-    {
-        // switch ($this->sender_type) {
-        //     case $this->SenderType->find('USER'):
-        //         $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'PersonUser', 'sender_id'));
-        //         $this->sender = $this->senderUser;
-        //         break;
-        //     case $this->SenderType->find('ORGANIZATION'):
-        //         $this->metaData->addRelation('sender', array(self::BELONGS_TO, 'Organization', 'sender_id'));
-        //         $this->sender = $this->senderOrganization;
-        //         break;
-        //     case $this->SenderType->find('BIZORGANIZATION'):
-        //         $this->senderUser = null;
-        //         $this->senderOrganization = null;
-        //         break;
-        // }
-
-        $this->sender_text = 'test sender text';
-        $this->receiver_text = 'test receiver text';
-
-        return parent::beforeValidate();
-    }
-
-    /**
      * This is invoked before the record is saved.
      * @return boolean whether the record should be saved.
      */
@@ -214,7 +193,7 @@ class Inforequest extends CActiveRecord
             $this->create_time = new CDbExpression('NOW()');
 
             // Set the model user as current one.
-            $this->user = Yii::app()->user->data()->id;
+            $this->user = Yii::app()->user->id;
         }
 
         // Allow null date database field.
@@ -222,6 +201,46 @@ class Inforequest extends CActiveRecord
             $this->receive_date = null;
         }
 
+        // Set 'sender_text' and 'receiver_text' from relations.
+        switch ($this->sender_type) {
+            case $this->SenderType->find('USER'):
+                if ($this->isSenderUserSelf) {
+                    $this->sender_text = $this->senderUser->fio;
+                }
+                break;
+            case $this->SenderType->find('ORGANIZATION'):
+                $this->sender_text = $this->senderOrganization->name;
+                break;
+            case $this->SenderType->find('BIZORGANIZATION'):
+                $this->sender_text = $this->senderBizorganization->name;
+                break;
+        }
+        $this->receiver_text = $this->receiverGovorganization->name;
+
         return parent::beforeSave();
+    }
+
+    /**
+     * Transforms attribute data to relation and validates it.
+     * Can be used as 'TabularBehavior' handler.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
+     */
+    public function senderUserRelationValidator($attribute, $params)
+    {
+        $relation = null;
+        $valid = true;
+
+        // If 'isSenderUserSelf' set 'senderUser' as current user.
+        if ($this->isSenderUserSelf) {
+            $relation = Yii::app()->user->data();
+
+            if (is_null($relation)) {
+                $valid = false;
+            }
+        }
+
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 }

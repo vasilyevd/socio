@@ -80,6 +80,19 @@ class InforequestController extends Controller
         $this->performAjaxValidation($model);
 
         if (isset($_POST['Inforequest'])) {
+            // Set custom scenario for model based on 'sender_type' value.
+            switch ($_POST['Inforequest']['sender_type']) {
+                case $model->SenderType->find('USER'):
+                    $model->scenario = 'senderUser';
+                    break;
+                case $model->SenderType->find('ORGANIZATION'):
+                    $model->scenario = 'senderOrganization';
+                    break;
+                case $model->SenderType->find('BIZORGANIZATION'):
+                    $model->scenario = 'senderBizorganization';
+                    break;
+            }
+
             $model->attributes = $_POST['Inforequest'];
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
@@ -104,6 +117,19 @@ class InforequestController extends Controller
         $this->performAjaxValidation($model);
 
         if (isset($_POST['Inforequest'])) {
+            // Set custom scenario for model based on 'sender_type' value.
+            switch ($_POST['Inforequest']['sender_type']) {
+                case $model->SenderType->find('USER'):
+                    $model->scenario = 'senderUser';
+                    break;
+                case $model->SenderType->find('ORGANIZATION'):
+                    $model->scenario = 'senderOrganization';
+                    break;
+                case $model->SenderType->find('BIZORGANIZATION'):
+                    $model->scenario = 'senderBizorganization';
+                    break;
+            }
+
             $model->attributes = $_POST['Inforequest'];
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));

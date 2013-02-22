@@ -40,15 +40,16 @@ class TabularBehavior extends CActiveRecordBehavior
             } elseif ($this->_settings[$rel['name']][0] === CActiveRecord::HAS_ONE) {
                 $this->owner->{$rel['name']}->save();
             } elseif ($this->_settings[$rel['name']][0] === CActiveRecord::BELONGS_TO) {
-                if ($this->owner->$rel['name'] === null) {
-                    // Set link ID attribute of owner model as null.
-                    $this->owner->setAttribute($this->_settings[$rel['name']][2], null);
-                } else {
-                    // Save related model.
-                    $this->owner->{$rel['name']}->save();
-                    // Set link ID attribute of owner model as new relation ID.
-                    $this->owner->setAttribute($this->_settings[$rel['name']][2], $this->owner->{$rel['name']}->id);
-                }
+                $foo = true;
+                // if ($this->owner->$rel['name'] === null) {
+                //     // Set link ID attribute of owner model as null.
+                //     $this->owner->setAttribute($this->_settings[$rel['name']][2], null);
+                // } else {
+                //     // Save related model.
+                //     $this->owner->{$rel['name']}->save();
+                //     // Set link ID attribute of owner model as new relation ID.
+                //     $this->owner->setAttribute($this->_settings[$rel['name']][2], $this->owner->{$rel['name']}->id);
+                // }
             }
         }
     }
