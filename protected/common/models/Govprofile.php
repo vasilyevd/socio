@@ -38,7 +38,10 @@ class Govprofile extends CActiveRecord
     public function rules()
     {
         return array(
-            array('parent', 'numerical', 'integerOnly'=>true),
+            array(
+                'parent',
+                'application.components.validators.ExistRelationValidator',
+            ),
 
             // array('id, organization_id, parent_id', 'safe', 'on'=>'search'),
         );

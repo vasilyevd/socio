@@ -57,6 +57,11 @@ class Govorganization extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'type',
+                'application.components.validators.ExistRelationValidator',
+            ),
+            array('profile', 'profileRelationValidator'),
             array('name, type, action_area, profile', 'required'),
             array('action_area, city_id, address_id, foundation_year, staff_size', 'numerical', 'integerOnly'=>true),
             array('name, website, email', 'length', 'max'=>128),
@@ -81,7 +86,6 @@ class Govorganization extends CActiveRecord
             ),
             array('phone_num', 'safe'),
             array('action_area', 'in', 'range' => self::model()->ActionArea->rule),
-            array('type', 'exist', 'attributeName' => 'id', 'className' => 'Orgtype'),
 
             // array('directions, problems, id, name, type_group, type, action_area, city_id, address_id, foundation_year, staff_size, website, email, author_id, create_time, status, verified', 'safe', 'on'=>'search'),
         );
@@ -101,6 +105,7 @@ class Govorganization extends CActiveRecord
                 array('parent_id' => 'id'),
                 'through' => 'profile',
             ),
+            'inforequests' => array(self::HAS_MANY, 'Inforequest', 'govorganization_id'),
         );
     }
 
@@ -113,12 +118,6 @@ class Govorganization extends CActiveRecord
             // Advanced relations
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
-            ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'profile', 'delete' => true),
-                ),
             ),
             // Upload handler.
             'UploadBehavior' => array(
@@ -214,6 +213,9 @@ class Govorganization extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        if (!is_null($this->profile)) $this->profile->save();
+
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
@@ -242,31 +244,47 @@ class Govorganization extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * This is invoked after the record is saved.
      */
-    public function profileTabular()
+    public function afterSave()
     {
-        $tabular = null;
+        parent::afterSave();
 
-        if (!empty($this->profile)) {
-            if (is_object($this->profile)) {
-                $model = $this->profile;
+        // Relations handler.
+        $del = Govprofile::model()->findAllByAttributes(array('organization_id' => null));
+        foreach ($del as $m) $m->delete();
+    }
+
+    /**
+     * Transforms attribute data to relation and validates it.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
+     */
+    public function profileRelationValidator($attribute, $params)
+    {
+        $relation = null;
+        $valid = true;
+
+        if (!empty($this->$attribute)) {
+            if (is_object($this->$attribute)) {
+                $model = $this->$attribute;
             } else {
                 $model = Govprofile::model()->findByAttributes(array(
-                    'id' => $this->profile['id'],
+                    'id' => $this->{$attribute}['id'],
                     'organization_id' => $this->id,
                 ));
                 if (is_null($model)) {
                     $model = new Govprofile;
                 }
 
-                $model->attributes = $this->profile;
+                $model->attributes = $this->$attribute;
             }
 
-            $tabular = $model;
+            $relation = $model;
+            $valid = $model->validate() && $valid;
         }
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 }

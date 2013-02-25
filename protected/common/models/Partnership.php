@@ -48,6 +48,12 @@ class Partnership extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'organization',
+                'application.components.validators.ExistRelationValidator',
+                'on' => 'insert',
+            ),
+            array('files', 'filesRelationValidator', 'on' => 'insert, updateVerification'),
             array('link, description, source, type, email', 'required', 'on' => 'insert, update'),
             array('source, type', 'numerical', 'integerOnly'=>true, 'on' => 'insert, update'),
             array('link, email, contact_name, website', 'length', 'max'=>128, 'on' => 'insert, update'),
@@ -76,7 +82,7 @@ class Partnership extends CActiveRecord
             array('email', 'email', 'on' => 'insert, update'),
             array('website', 'url', 'on' => 'insert, update'),
 
-            array('verification_description, files', 'safe', 'on' => 'insert, updateVerification'),
+            array('verification_description', 'safe', 'on' => 'insert, updateVerification'),
 
             // array('id, name, description, create_time, organization_id', 'safe', 'on'=>'search'),
         );
@@ -103,12 +109,6 @@ class Partnership extends CActiveRecord
             // Advanced relations
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
-            ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'files'),
-                ),
             ),
             // Upload handler.
             'UploadBehavior' => array(
@@ -195,6 +195,9 @@ class Partnership extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        foreach ($this->files as $m) $m->save();
+
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
@@ -212,12 +215,14 @@ class Partnership extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function filesTabular()
+    public function filesRelationValidator($attribute, $params)
     {
-        $tabular = array();
+        $relation = array();
+        $valid = true;
 
         // Upload handler.
         $uploads = CUploadedFile::getInstances($this, 'files');
@@ -225,10 +230,12 @@ class Partnership extends CActiveRecord
             $model = new Partfile;
             $model->name = $file;
 
-            $tabular[] = $model;
+            $relation[] = $model;
+            $valid = $model->validate() && $valid;
         }
-        $tabular = array_merge($this->files, $tabular);
+        $relation = array_merge($this->files, $relation);
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 }
