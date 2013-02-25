@@ -119,12 +119,6 @@ class Govorganization extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'profile', 'delete' => true),
-                ),
-            ),
             // Upload handler.
             'UploadBehavior' => array(
                 'class' => 'application.components.behaviors.UploadBehavior',
@@ -219,6 +213,9 @@ class Govorganization extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        if (!is_null($this->profile)) $this->profile->save();
+
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
@@ -247,8 +244,19 @@ class Govorganization extends CActiveRecord
     }
 
     /**
+     * This is invoked after the record is saved.
+     */
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        // Relations handler.
+        $del = Govprofile::model()->findAllByAttributes(array('organization_id' => null));
+        foreach ($del as $m) $m->delete();
+    }
+
+    /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */

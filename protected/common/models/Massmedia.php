@@ -121,14 +121,6 @@ class Massmedia extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'tags'),
-                    array('name' => 'links', 'delete' => true),
-                    array('name' => 'files', 'delete' => true),
-                ),
-            ),
         );
     }
 
@@ -216,6 +208,11 @@ class Massmedia extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        foreach ($this->tags as $m) $m->save();
+        foreach ($this->links as $m) $m->save();
+        foreach ($this->files as $m) $m->save();
+
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
@@ -236,6 +233,12 @@ class Massmedia extends CActiveRecord
     {
         parent::afterSave();
 
+        // Relations handler.
+        $del = Mmlink::model()->findAllByAttributes(array('massmedia_id' => null));
+        foreach ($del as $m) $m->delete();
+        $del = Mmfile::model()->findAllByAttributes(array('massmedia_id' => null));
+        foreach ($del as $m) $m->delete();
+
         // Update date ranges ('min_date' and 'max_date') for company.
         if (!empty($this->company)) {
             $this->company->updateDateRange();
@@ -244,7 +247,6 @@ class Massmedia extends CActiveRecord
 
     /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */
@@ -253,7 +255,7 @@ class Massmedia extends CActiveRecord
         $relation = array();
         $valid = true;
 
-        // Transform tag string to tabular data array.
+        // Transform tag string to data array.
         if (is_string($this->$attribute)) {
             $this->$attribute = explode(',', $this->$attribute);
         }
@@ -281,7 +283,6 @@ class Massmedia extends CActiveRecord
 
     /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */
@@ -315,7 +316,6 @@ class Massmedia extends CActiveRecord
 
     /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */

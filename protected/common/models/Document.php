@@ -94,12 +94,6 @@ class Document extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'docauthor'),
-                ),
-            ),
         );
     }
 
@@ -145,6 +139,9 @@ class Document extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        if (!is_null($this->docauthor)) $this->docauthor->save();
+
         // Allow null date database field.
         if (empty($this->publication_date)) {
             $this->publication_date = null;
@@ -155,7 +152,6 @@ class Document extends CActiveRecord
 
     /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */

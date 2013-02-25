@@ -222,7 +222,6 @@ class Inforequest extends CActiveRecord
 
     /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */

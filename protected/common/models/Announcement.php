@@ -90,12 +90,6 @@ class Announcement extends CActiveRecord
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
             ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'files'),
-                ),
-            ),
         );
     }
 
@@ -188,6 +182,9 @@ class Announcement extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        foreach ($this->files as $m) $m->save();
+
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
@@ -209,7 +206,6 @@ class Announcement extends CActiveRecord
 
     /**
      * Transforms attribute data to relation and validates it.
-     * Can be used as 'TabularBehavior' handler.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.
      */
