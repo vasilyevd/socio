@@ -73,6 +73,11 @@ return array(
             'errorAction'=>'site/error',
         ),
 
+        // Load translation messages from default 'application.messages'.
+        'coreMessages' => array(
+            'basePath' => null,
+        ),
+
         // Twitter bootstrap setup.
         'bootstrap'=>array(
             'class'=>'ext.bootstrap.components.Bootstrap',

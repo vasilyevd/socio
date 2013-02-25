@@ -47,6 +47,12 @@ class Donorship extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'organization',
+                'application.components.validators.ExistRelationValidator',
+                'on' => 'insert',
+            ),
+            array('donor', 'donorRelationValidator'),
             array('donor, description, source, type, delivery_year, funds', 'required'),
             array('source, type, delivery_year, funds, funds_specific', 'numerical', 'integerOnly'=>true),
             array('source', 'in', 'range' => array(
@@ -87,12 +93,6 @@ class Donorship extends CActiveRecord
             // Advanced relations.
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
-            ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'donor'),
-                ),
             ),
         );
     }
@@ -162,6 +162,9 @@ class Donorship extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        if (!is_null($this->donor)) $this->donor->save();
+
         if ($this->isNewRecord) {
             // Save current time.
             $this->create_time = new CDbExpression('NOW()');
@@ -171,26 +174,34 @@ class Donorship extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function donorTabular()
+    public function donorRelationValidator($attribute, $params)
     {
-        $tabular = null;
+        $relation = null;
+        $valid = true;
 
-        if (!empty($this->donor)) {
-            $model = Donor::model()->findByAttributes(array(
-                'name' => $this->donor,
-            ));
-            if ($model === null) {
-                $model = new Donor;
-                $model->name = $this->donor;
-                $model->source = $this->source;
+        if (!empty($this->$attribute)) {
+            if (is_object($this->$attribute)) {
+                $model = $this->$attribute;
+            } else {
+                $model = Donor::model()->findByAttributes(array(
+                    'name' => $this->$attribute,
+                ));
+                if (is_null($model)) {
+                    $model = new Donor;
+                    $model->name = $this->donor;
+                    $model->source = $this->source;
+                }
             }
 
-            $tabular = $model;
+            $relation = $model;
+            $valid = $model->validate() && $valid;
         }
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 }
