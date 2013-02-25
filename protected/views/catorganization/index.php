@@ -11,6 +11,7 @@
         array(
             'name' => 'registration_date',
             'class' => 'bootstrap.widgets.TbEditableColumn',
+	          'value'=> '$data->registration_date=="0000-00-00"?"нет":$data->registration_date',
             'editable' => array(
                 'type' => 'date',
                 'url' => $this->createUrl('dynamicAdminUpdate'),

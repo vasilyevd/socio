@@ -37,7 +37,7 @@ $('#" . CHtml::activeId($model, 'link') . "').change(function() {
     )); ?>
 
     <?php echo $form->labelEx($model, 'link'); ?>
-    <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+    <?php  $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
         'model' => $model,
         'attribute' => 'link',
         'source' => $this->createUrl('select/organizationAutoComplete'),
@@ -64,6 +64,8 @@ $('#" . CHtml::activeId($model, 'link') . "').change(function() {
         <?php echo $form->fileFieldRow($model,'logo'); ?>
     </div>
 
+
+
     <?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>128)); ?>
 
     <?php echo $form->textFieldRow($model,'website',array('class'=>'span5','maxlength'=>128)); ?>
@@ -79,5 +81,6 @@ $('#" . CHtml::activeId($model, 'link') . "').change(function() {
             'label'=>$model->isNewRecord ? 'Добавить' : 'Сохранить',
         )); ?>
     </div>
+
 
 <?php $this->endWidget(); ?>

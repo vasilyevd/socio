@@ -525,3 +525,12 @@ ul.columns2 li {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.input-full {
+  width: 100%;
+}
+div.hr {
+  height: 1px;
+  margin: 5px 0;
+  background-color: #b8b8b8;
+  box-shadow: 0 0 0 1px #ffffff;
+}

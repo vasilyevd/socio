@@ -1,4 +1,6 @@
 <?php
+Yii::import('application.modules.person.models.*');
+
 class WebUserPerson extends CWebUser
 {
 	public $loginUrl = array('/Person/');
@@ -6,7 +8,7 @@ class WebUserPerson extends CWebUser
 	private $_data;
 	
 	/** TODO 
-	 * сделать нормальный кеш данных пользователя не завязанный на ActiveRecords 
+	 * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ActiveRecords 
 	 */
 	public function data() {
 		if($this->_data instanceof PersonUser)
@@ -17,7 +19,7 @@ class WebUserPerson extends CWebUser
 			return new PersonUser();
 	}
 	
-	// переписываем свой метод входа
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	public function login($identity,$duration=0)
 	{
 	    $id=$identity->getId();	 

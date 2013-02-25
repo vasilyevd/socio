@@ -1998,7 +1998,9 @@
                 this.search.val("").removeClass("select2-default");
             } else {
                 // work around for the space character we set to avoid firefox caret bug
-                if (this.search.val() === " ") this.search.val("");
+                if (this.search.val() === " ") {
+									this.search.val("");
+								}
             }
         },
 
@@ -2007,7 +2009,7 @@
             this.parent.opening.apply(this, arguments);
 
             this.clearPlaceholder();
-			this.resizeSearch();
+				this.resizeSearch();
             this.focusSearch();
         },
 
@@ -2336,7 +2338,9 @@
 
         // lsd - likeinput
         fillLikeInput: function() {
+            if (this.opts.likeinput === true) {
             this.likeinputelement.val($.trim(this.search.val()));
+            }
         }
     });
 

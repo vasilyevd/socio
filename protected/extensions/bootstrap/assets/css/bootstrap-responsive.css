@@ -1189,6 +1189,12 @@ div#imm {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
+  [class*="offset"],
+  .row-fluid [class*="offset"],
+	.row-fluid [class*="offset"]:first-child	{
+    margin-left: auto;
+    *margin-left: auto;
+  }
   .input-large,
   .input-xlarge,
   .input-xxlarge,

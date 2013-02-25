@@ -57,16 +57,18 @@ class BaseCatorganization extends CActiveRecord
     public function rules()
     {
         return array(
-            array('name, registration_date, address', 'required'),
+            array('name', 'required', 'on'=>'insert, update'),
+	          array('address', 'safe', 'on'=>'cultivate'),
+	          array('name', 'safe', 'on'=>'cultivate'),
             array('address_id, city_id, region_id, action_area', 'numerical', 'integerOnly'=>true),
-            array('chief_fio, registration_num, phone, website, email, directions_more, branch_master', 'length', 'max'=>128),
-            array('registration_date', 'date', 'format' => 'yyyy-MM-dd'),
+            array('chief_fio, registration_num, phone, website, email, directions_more, branch_master', 'length', 'max'=>255),
+            array('registration_date', 'date', 'format' => 'yyyy-MM-dd', 'allowEmpty'=>true),
             array('action_area', 'in', 'range' => array(
                 Organization::ACTION_AREA_NATION, Organization::ACTION_AREA_REGION,
                 Organization::ACTION_AREA_DISTRICT, Organization::ACTION_AREA_CITY,
                 Organization::ACTION_AREA_COUNTRY,
             )),
-            array('email', 'email'),
+            //array('email', 'email'),
             array('website', 'url'),
             array('is_legal, is_branch, is_verified', 'boolean'),
             // Upload handler.
@@ -90,6 +92,7 @@ class BaseCatorganization extends CActiveRecord
                     'className' => 'Direction',
                 ),
             ),
+	          array('word_name', 'safe', 'on' => 'search' ),
         );
     }
 
@@ -131,25 +134,25 @@ class BaseCatorganization extends CActiveRecord
             'id' => 'ID',
             'name' => 'Название',
             'registration_date' => 'Дата Регистрации',
-            'address' => 'Точный Адрес',
+            'address' => 'Адрес',
             'address_id' => 'Адрес',
             'city_id' => 'Город',
             'region_id' => 'Область',
-            'chief_fio' => 'ФИО Главы',
+            'chief_fio' => 'Руководство',
             'registration_num' => 'Регистрационный Номер',
-            'phone' => 'Номер Телефона',
-            'website' => 'Сайт',
-            'email' => 'Емейл',
+            'phone' => 'Телефоны',
+            'website' => 'Сайт организации',
+            'email' => 'Емейл организации',
             'organization_id' => 'Организация',
             'is_legal' => 'Легальная',
             'action_area' => 'Масштаб Деятельности',
-            'directions_more' => 'Дополнительные Направления',
-            'logo' => 'Лого',
-            'is_branch' => 'Является Веткой Организации',
+            'directions_more' => 'Доп. направления',
+            'logo' => 'Логотип',
+            'is_branch' => 'Осередок',
             'branch_master' => 'Название Главной Организации',
             'is_verified' => 'Проверенно',
             'organization' => 'Связанная Организация',
-            'directions' => 'Направления',
+            'directions' => 'Направления деятельности',
         );
     }
 
@@ -157,7 +160,7 @@ class BaseCatorganization extends CActiveRecord
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search()
+    public function search($opt=array())
     {
         $criteria = new CDbCriteria;
 
@@ -182,7 +185,8 @@ class BaseCatorganization extends CActiveRecord
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-        ));
+	          'pagination'=>(isset($opt['pagination'])) ? $opt['pagination'] : array(),
+	      ));
     }
 
     /**

@@ -257,6 +257,11 @@
 	M: <? echo round(memory_get_peak_usage()/(1024*1024),2)."MB"?>,
 	DB: <?php print_r(Yii::app()->db->getStats()); ?>
 </div>
+<div>
+	<?php
+echo Yii::app()->user->data()->fio;
+	?>
+</div>
 
 </body>
 </html>

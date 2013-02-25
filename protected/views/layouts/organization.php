@@ -9,12 +9,11 @@ $this->breadcrumbs = array_merge(array(
     CHtml::encode($this->menu_org->name) => array('organization/view', 'id' => $this->menu_org->id),
 ), $this->breadcrumbs);
 ?>
+
+<?php $this->beginContent('//layouts/main'); ?>
 <style type="text/css">
 	.content{ background-color: #F2F2F2; }
 </style>
-
-<?php $this->beginContent('//layouts/main'); ?>
-
 <!-- HEADER FOR ORGANIZATION -->
 <div class="row">
     <div class="span12">

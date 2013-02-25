@@ -20,7 +20,7 @@ class TbInputHorizontal extends TbInput
 	 */
 	public function run()
 	{
-		echo CHtml::openTag('div', array('class' => 'control-group ' . $this->getContainerCssClass()));
+		echo CHtml::openTag('div', array('class' => 'control-group row-fluid ' . $this->getContainerCssClass()));
 		parent::run();
 		echo '</div>';
 	}
@@ -32,9 +32,9 @@ class TbInputHorizontal extends TbInput
 	protected function getLabel()
 	{
 		if (isset($this->labelOptions['class']))
-			$this->labelOptions['class'] .= ' control-label';
+			$this->labelOptions['class'] .= ' control-label span4';
 		else
-			$this->labelOptions['class'] = 'control-label';
+			$this->labelOptions['class'] = 'control-label span4';
 
 		return parent::getLabel();
 	}
@@ -46,12 +46,13 @@ class TbInputHorizontal extends TbInput
 	protected function checkBox()
 	{
 		$attribute = $this->attribute;
-		echo '<div class="controls">';
+		echo $this->getOpenControls(false);
 		echo '<label class="checkbox" for="' . $this->getAttributeId($attribute) . '">';
 		echo $this->form->checkBox($this->model, $attribute, $this->htmlOptions) . PHP_EOL;
 		echo $this->model->getAttributeLabel($attribute);
 		echo $this->getError() . $this->getHint();
-		echo '</label></div>';
+		echo '</label>';
+		echo $this->getCloseControls();
 	}
 
 	/**
@@ -165,10 +166,10 @@ class TbInputHorizontal extends TbInput
 	protected function radioButtonList()
 	{
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo $this->getOpenControls();
 		echo $this->form->radioButtonList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo $this->getCloseControls();
 	}
 
 	/**
@@ -188,10 +189,10 @@ class TbInputHorizontal extends TbInput
 	protected function textArea()
 	{
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo $this->getOpenControls();
 		echo $this->form->textArea($this->model, $this->attribute, $this->htmlOptions);
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo $this->getCloseControls();
 	}
 
 	/**
@@ -201,12 +202,12 @@ class TbInputHorizontal extends TbInput
 	protected function textField()
 	{
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo $this->getOpenControls();
 		echo $this->getPrepend();
 		echo $this->form->textField($this->model, $this->attribute, $this->htmlOptions);
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo $this->getCloseControls();
 	}
 
 	/**
@@ -256,7 +257,7 @@ class TbInputHorizontal extends TbInput
 		}
 
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo $this->getOpenControls();
 		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbDatePicker', array(
 			'model' => $this->model,
@@ -267,7 +268,7 @@ class TbInputHorizontal extends TbInput
 		));
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo $this->getCloseControls();
 	}
 
 	/**
@@ -533,7 +534,7 @@ class TbInputHorizontal extends TbInput
 		}
 
 		echo $this->getLabel();
-		echo '<div class="controls">';
+		echo $this->getOpenControls();
 		echo $this->getPrepend();
 		$this->widget('bootstrap.widgets.TbSelect2', array(
 			'model' => $this->model,
@@ -547,6 +548,17 @@ class TbInputHorizontal extends TbInput
 		));
 		echo $this->getAppend();
 		echo $this->getError() . $this->getHint();
-		echo '</div>';
+		echo $this->getCloseControls();
+	}
+
+	protected function getOpenControls($hasLabel=true){
+		//return "<div class="controls">";
+		if($hasLabel)
+			return '<div class="controls span8"><div class="span11">';
+		return '<div class="controls span8 offset4"><div class="span11">';
+	}
+	protected function getCloseControls(){
+		//return '</div>';
+		return '</div></div>';
 	}
 }
