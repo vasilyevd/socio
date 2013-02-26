@@ -99,6 +99,32 @@ class InforequestController extends Controller
             }
         }
 
+        // Select default 'sender_type'.
+        if (is_null($model->sender_type)) {
+            $model->sender_type = $model->SenderType->find('USER');
+        }
+        // Prepare model attributes based on 'sender_type'.
+        switch ($model->sender_type) {
+            case $model->SenderType->find('USER'):
+                if (!empty($model->senderUser)) {
+                    $model->isSenderUserSelf = true;
+                }
+
+                $model->senderOrganization = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('ORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('BIZORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderOrganization = null;
+                break;
+        }
+
         $this->render('create', array(
             'model' => $model,
         ));
@@ -134,6 +160,32 @@ class InforequestController extends Controller
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
+        }
+
+        // Select default 'sender_type'.
+        if (is_null($model->sender_type)) {
+            $model->sender_type = $model->SenderType->find('USER');
+        }
+        // Prepare model attributes based on 'sender_type'.
+        switch ($model->sender_type) {
+            case $model->SenderType->find('USER'):
+                if (!empty($model->senderUser)) {
+                    $model->isSenderUserSelf = true;
+                }
+
+                $model->senderOrganization = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('ORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('BIZORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderOrganization = null;
+                break;
         }
 
         $this->render('update', array(
