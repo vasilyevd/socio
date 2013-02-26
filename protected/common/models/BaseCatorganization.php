@@ -57,6 +57,10 @@ class BaseCatorganization extends CActiveRecord
     public function rules()
     {
         return array(
+		        array(
+			        'organization, directions',
+			        'application.components.validators.ExistRelationValidator',
+		        ),
             array('name', 'required', 'on'=>'insert, update'),
 	          array('address', 'safe', 'on'=>'cultivate'),
 	          array('name', 'safe', 'on'=>'cultivate'),
@@ -81,16 +85,6 @@ class BaseCatorganization extends CActiveRecord
                 'minSize' => 1024, //1KB
                 'types' => 'jpeg, jpg, gif, png',
                 // 'mimeTypes' => 'image/jpeg, image/gif, image/png',
-            ),
-            array('organization', 'exist', 'attributeName' => 'id', 'className' => 'Organization'),
-            array(
-                'directions',
-                'application.components.validators.ArrayValidator',
-                'validator' => 'exist',
-                'params' => array(
-                    'attributeName' => 'id',
-                    'className' => 'Direction',
-                ),
             ),
 	          array('word_name', 'safe', 'on' => 'search' ),
         );

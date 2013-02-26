@@ -52,8 +52,13 @@ class Document extends CActiveRecord
     public function rules()
     {
         return array(
+            array(
+                'doctype',
+                'application.components.validators.ExistRelationValidator',
+            ),
+            array('docauthor', 'docauthorRelationValidator'),
             array('name, content, doc_date, geography', 'required'),
-            array('geography, doctype, is_active', 'numerical', 'integerOnly'=>true),
+            array('geography, is_active', 'numerical', 'integerOnly'=>true),
             array('name, registration_num', 'length', 'max'=>128),
             array('doc_date, publication_date', 'date', 'format' => 'yyyy-MM-dd'),
             array('geography', 'in', 'range' => array(
@@ -61,10 +66,8 @@ class Document extends CActiveRecord
                 self::GEOGRAPHY_CITY, self::GEOGRAPHY_REGIONAL,
                 self::GEOGRAPHY_COUNTRY, self::GEOGRAPHY_DISTRICT,
             )),
-            array('doctype', 'exist', 'attributeName' => 'id', 'className' => 'Doctype'),
             array('is_active', 'boolean'),
             array('content', 'filter', 'filter' => array($obj = new CHtmlPurifier(), 'purify')),
-            array('docauthor', 'safe'),
 
             // array('id, name, content, doc_date, geography, registration_num, docauthor_id, doctype_id, publication_date, is_active', 'safe', 'on'=>'search'),
         );
@@ -90,12 +93,6 @@ class Document extends CActiveRecord
             // Advanced relations.
             'EActiveRecordRelationBehavior' => array(
                 'class' => 'application.components.behaviors.EActiveRecordRelationBehavior'
-            ),
-            'TabularBehavior' => array(
-                'class' => 'application.components.behaviors.TabularBehavior',
-                'relations' => array(
-                    array('name' => 'docauthor'),
-                ),
             ),
         );
     }
@@ -142,6 +139,9 @@ class Document extends CActiveRecord
      */
     public function beforeSave()
     {
+        // Relations handler.
+        if (!is_null($this->docauthor)) $this->docauthor->save();
+
         // Allow null date database field.
         if (empty($this->publication_date)) {
             $this->publication_date = null;
@@ -151,29 +151,33 @@ class Document extends CActiveRecord
     }
 
     /**
-     * Relations with new models 'TabularBehavior' handler.
-     * @return array of relation models or single model.
+     * Transforms attribute data to relation and validates it.
+     * @param string $attribute the attribute being validated.
+     * @param array $params the list of validation parameters.
      */
-    public function docauthorTabular()
+    public function docauthorRelationValidator($attribute, $params)
     {
-        $tabular = null;
+        $relation = null;
+        $valid = true;
 
-        if (!empty($this->docauthor)) {
-            if (is_object($this->docauthor)) {
-                $model = $this->docauthor;
+        if (!empty($this->$attribute)) {
+            if (is_object($this->$attribute)) {
+                $model = $this->$attribute;
             } else {
                 $model = Docauthor::model()->findByAttributes(array(
-                    'name' => $this->docauthor,
+                    'name' => $this->$attribute,
                 ));
                 if (is_null($model)) {
                     $model = new Docauthor;
-                    $model->name = $this->docauthor;
+                    $model->name = $this->$attribute;
                 }
             }
 
-            $tabular = $model;
+            $relation = $model;
+            $valid = $model->validate() && $valid;
         }
 
-        return $tabular;
+        $this->$attribute = $relation;
+        if (!$valid) $this->addError($attribute, 'Неверно задано поле ' . $this->getAttributeLabel($attribute));
     }
 }

@@ -26,7 +26,8 @@ class TabularBehavior extends CActiveRecordBehavior
             $method = $rel['name'] . 'Tabular';
             $tabular = $this->owner->$method();
 
-           $this->owner->$rel['name'] = $tabular;
+            $this->owner->$rel['name'] = $tabular;
+
             // Check for validation errors.
             $valid = true;
             if (is_array($tabular)) {

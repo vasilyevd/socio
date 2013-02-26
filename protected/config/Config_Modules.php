@@ -6,7 +6,8 @@ $conf_modules=array(
             'password'=>'reverse',
             'ipFilters'=>array('127.0.0.1','::1'),
             'generatorPaths'=>array(
-                'bootstrap.gii',
+                'application.gii',
+                // 'bootstrap.gii',
             ),
     ),
 
