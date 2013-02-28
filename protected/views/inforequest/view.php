@@ -8,19 +8,20 @@
     'class' => 'btn btn-warning',
 )); ?>
 
-<h1>Inforequest #<?php echo $model->id; ?></h1>
+<h1><?php echo $model->name; ?></h1>
 
 <?php $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
-        'id',
-        'name',
         'description',
-        'type',
+        array(
+            'name' => 'type',
+            'value' => $model->Type->text,
+        ),
         'create_time',
         'send_date',
         'receive_date',
-        'finished_status',
+        'is_finished',
         'user_id',
         'sender_id',
         'sender_type',
