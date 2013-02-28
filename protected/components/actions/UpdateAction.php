@@ -14,7 +14,7 @@ class UpdateAction extends CAction
         $model = $controller->loadModel($_GET['id']);
 
         // Uncomment the following line if AJAX validation is needed
-        $controller->performAjaxValidation($model);
+        // $controller->performAjaxValidation($model);
 
         if (isset($_POST[$modelName])) {
             $model->attributes = $_POST[$modelName];
