@@ -70,17 +70,25 @@ class GovorganizationController extends Controller
         $model=new Govorganization;
 
         // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
+        // $this->performAjaxValidation($model);
 
         if(isset($_POST['Govorganization']))
         {
+            // Tabular input.
+            unset($_POST['Govorganization']['profile']);
+            if (isset($_POST['Govprofile'])) {
+                $_POST['Govorganization']['profile'] = $_POST['Govprofile'];
+                $_POST['Govorganization']['profile']['id'] = null;
+            }
+
             $model->attributes=$_POST['Govorganization'];
-
-            // Relations.
-            $model->profile = $_POST['Govprofile'];
-
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
+        }
+
+        // Default empty profile.
+        if (empty($model->profile)) {
+            $model->profile = new Govprofile;
         }
 
         $this->render('create',array(
@@ -98,17 +106,25 @@ class GovorganizationController extends Controller
         $model=$this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
+        // $this->performAjaxValidation($model);
 
         if(isset($_POST['Govorganization']))
         {
+            // Tabular input.
+            unset($_POST['Govorganization']['profile']);
+            if (isset($_POST['Govprofile'])) {
+                $_POST['Govorganization']['profile'] = $_POST['Govprofile'];
+                $_POST['Govorganization']['profile']['id'] = $model->profile->id;
+            }
+
             $model->attributes=$_POST['Govorganization'];
-
-            // Relations.
-            $model->profile = $_POST['Govprofile'];
-
             if($model->save())
                 $this->redirect(array('view','id'=>$model->id));
+        }
+
+        // Default empty profile.
+        if (empty($model->profile)) {
+            $model->profile = new Govprofile;
         }
 
         $this->render('update',array(

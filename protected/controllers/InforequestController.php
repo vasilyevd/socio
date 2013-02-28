@@ -77,20 +77,26 @@ class InforequestController extends Controller
         $model = new Inforequest;
 
         // Uncomment the following line if AJAX validation is needed.
-        $this->performAjaxValidation($model);
+        // $this->performAjaxValidation($model);
 
         if (isset($_POST['Inforequest'])) {
             // Set custom scenario for model based on 'sender_type' value.
-            switch ($_POST['Inforequest']['sender_type']) {
-                case $model->SenderType->find('USER'):
-                    $model->scenario = 'senderUser';
-                    break;
-                case $model->SenderType->find('ORGANIZATION'):
-                    $model->scenario = 'senderOrganization';
-                    break;
-                case $model->SenderType->find('BIZORGANIZATION'):
-                    $model->scenario = 'senderBizorganization';
-                    break;
+            if (isset($_POST['Inforequest']['sender_type'])) {
+                switch ($_POST['Inforequest']['sender_type']) {
+                    case $model->SenderType->find('USER'):
+                        if ($_POST['Inforequest']['isSenderUserSelf']) {
+                            $model->scenario = 'senderUserSelf';
+                        } else {
+                            $model->scenario = 'senderUser';
+                        }
+                        break;
+                    case $model->SenderType->find('ORGANIZATION'):
+                        $model->scenario = 'senderOrganization';
+                        break;
+                    case $model->SenderType->find('BIZORGANIZATION'):
+                        $model->scenario = 'senderBizorganization';
+                        break;
+                }
             }
 
             $model->attributes = $_POST['Inforequest'];
@@ -109,7 +115,6 @@ class InforequestController extends Controller
                 if (!empty($model->senderUser)) {
                     $model->isSenderUserSelf = true;
                 }
-
                 $model->senderOrganization = null;
                 $model->senderBizorganization = null;
                 break;
@@ -140,20 +145,26 @@ class InforequestController extends Controller
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed.
-        $this->performAjaxValidation($model);
+        // $this->performAjaxValidation($model);
 
         if (isset($_POST['Inforequest'])) {
             // Set custom scenario for model based on 'sender_type' value.
-            switch ($_POST['Inforequest']['sender_type']) {
-                case $model->SenderType->find('USER'):
-                    $model->scenario = 'senderUser';
-                    break;
-                case $model->SenderType->find('ORGANIZATION'):
-                    $model->scenario = 'senderOrganization';
-                    break;
-                case $model->SenderType->find('BIZORGANIZATION'):
-                    $model->scenario = 'senderBizorganization';
-                    break;
+            if (isset($_POST['Inforequest']['sender_type'])) {
+                switch ($_POST['Inforequest']['sender_type']) {
+                    case $model->SenderType->find('USER'):
+                        if ($_POST['Inforequest']['isSenderUserSelf']) {
+                            $model->scenario = 'senderUserSelf';
+                        } else {
+                            $model->scenario = 'senderUser';
+                        }
+                        break;
+                    case $model->SenderType->find('ORGANIZATION'):
+                        $model->scenario = 'senderOrganization';
+                        break;
+                    case $model->SenderType->find('BIZORGANIZATION'):
+                        $model->scenario = 'senderBizorganization';
+                        break;
+                }
             }
 
             $model->attributes = $_POST['Inforequest'];
@@ -172,7 +183,6 @@ class InforequestController extends Controller
                 if (!empty($model->senderUser)) {
                     $model->isSenderUserSelf = true;
                 }
-
                 $model->senderOrganization = null;
                 $model->senderBizorganization = null;
                 break;

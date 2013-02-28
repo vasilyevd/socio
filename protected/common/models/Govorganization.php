@@ -244,18 +244,6 @@ class Govorganization extends CActiveRecord
     }
 
     /**
-     * This is invoked after the record is saved.
-     */
-    public function afterSave()
-    {
-        parent::afterSave();
-
-        // Relations handler.
-        $del = Govprofile::model()->findAllByAttributes(array('organization_id' => null));
-        foreach ($del as $m) $m->delete();
-    }
-
-    /**
      * Transforms attribute data to relation and validates it.
      * @param string $attribute the attribute being validated.
      * @param array $params the list of validation parameters.

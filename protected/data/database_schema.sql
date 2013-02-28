@@ -132,8 +132,8 @@ CREATE TABLE `org_catorganization_direction` (
   PRIMARY KEY (`id`),
   KEY `album_id` (`catorganization_id`),
   KEY `image_id` (`direction_id`),
-  CONSTRAINT `org_catorganization_direction_ibfk_4` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE
+  CONSTRAINT `org_catorganization_direction_ibfk_2` FOREIGN KEY (`direction_id`) REFERENCES `org_direction` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `org_catorganization_direction_ibfk_4` FOREIGN KEY (`catorganization_id`) REFERENCES `org_catorganization` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `org_company`;

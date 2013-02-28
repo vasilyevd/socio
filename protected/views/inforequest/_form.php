@@ -1,6 +1,7 @@
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'inforequest-form',
-    'enableAjaxValidation' => true,
+    'enableAjaxValidation' => false,
+    'enableClientValidation' => true,
 )); ?>
 
     <p class="help-block">Поля с <span class="required">*</span> обязательны.</p>
@@ -28,50 +29,12 @@
 
     <?php echo $this->renderPartial('_form/sender', array('model' => $model, 'form' => $form)); ?>
 
-    <?php
-        if (is_numeric($model->receiverGovorganization)) {
-            $model->receiverGovorganization = Govorganization::model()->findByPk($model->receiverGovorganization);
-        }
-        if (is_object($model->receiverGovorganization)) {
-            $selectText = $model->receiverGovorganization->name;
-            $model->receiverGovorganization = $model->receiverGovorganization->id;
-        } else {
-            $selectText = '';
-        }
-    ?>
-    <?php echo $form->select2Row($model, 'receiverGovorganization', array(
-        'asDropDownList' => false,
-        'prompt' => '',
-        'options' => array(
-            'placeholder' => 'Выбрать...',
-            'allowClear' => true,
-            'width' => '400px',
-            'minimumInputLength' => 1,
-            'ajax' => array(
-                'url' => $this->createUrl('select/govorganizationSelectSearch'),
-                'quietMillis' => 500,
-                'dataType' => 'json',
-                'data' => 'js:function(term, page) {
-                    return {query : term};
-                }',
-                'results' => 'js:function(data, page) {
-                    return {results : data};
-                }',
-            ),
-            'formatResult' => 'js:function(model) {
-                markup = "<table><tr>";
-                markup += "<td><img style=\"height: 50px;\" src=\"" + model.logo + "\"/></td>";
-                markup += "<td><strong>" + model.name + "</strong><br />" + model.description + "</td>";
-                markup += "</tr></table>";
-                return markup;
-            }',
-            'formatSelection' => 'js:function(model) {
-                return model.name;
-            }',
-            'initSelection' => 'js:function(element, callback) {
-                callback({id : element.val(), name : "' . $selectText . '"});
-            }',
-        ),
+    <?php $this->widget('ext.widgets.RelationAjaxSelect2Row.RelationAjaxSelect2Row', array(
+        'model' => $model,
+        'attribute' => 'receiverGovorganization',
+        'relationAttributeText' => 'name',
+        'form' => $form,
+        'url' => $this->createUrl('select/govorganizationSelectSearch'),
     )); ?>
 
     <?php echo $form->radioButtonListInlineRow($model, 'is_finished', array('' => 'Неизвестно', true => 'Пришел', false => 'Не пришел')); ?>
