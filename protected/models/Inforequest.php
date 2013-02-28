@@ -60,15 +60,16 @@ class Inforequest extends CActiveRecord
             array('send_date, receive_date', 'date', 'format' => 'yyyy-MM-dd'),
             array('is_finished', 'boolean'),
 
-            // 'senderUser' scenario.
+            // 'senderUser', 'senderUserSelf' scenario.
             array(
                 'senderUser',
                 'senderUserRelationValidator',
                 'safe' => false,
-                'on' => 'senderUser',
+                'on' => 'senderUser, senderUserSelf',
             ),
-            array('sender_text', 'length', 'max' => 128, 'on' => 'senderUser'),
-            array('isSenderUserSelf', 'boolean', 'on' => 'senderUser'),
+            array('sender_text', 'required', 'on' => 'senderUser'),
+            array('sender_text', 'length', 'max' => 128, 'on' => 'senderUser, senderUserSelf'),
+            array('isSenderUserSelf', 'boolean', 'on' => 'senderUser, senderUserSelf'),
 
             // 'senderOrganization' scenario.
             array(

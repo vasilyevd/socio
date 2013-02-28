@@ -1,6 +1,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
     'id'=>'govorganization-form',
-    'enableAjaxValidation'=>true,
+    'enableAjaxValidation' => false,
+    'enableClientValidation' => true,
     'type' => 'horizontal',
 )); ?>
 
@@ -58,7 +59,7 @@
 
     <div class="well">
         <?php echo $form->labelEx($model, 'profile'); ?>
-            <?php echo $this->renderPartial('_profile', array('form' => $form, 'model' => $model->profile)); ?>
+            <?php echo $this->renderPartial('_form/profile', array('form' => $form, 'model' => $model->profile)); ?>
         <?php echo $form->error($model, 'profile'); ?>
     </div>
 

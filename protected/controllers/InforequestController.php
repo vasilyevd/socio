@@ -77,26 +77,57 @@ class InforequestController extends Controller
         $model = new Inforequest;
 
         // Uncomment the following line if AJAX validation is needed.
-        $this->performAjaxValidation($model);
+        // $this->performAjaxValidation($model);
 
         if (isset($_POST['Inforequest'])) {
             // Set custom scenario for model based on 'sender_type' value.
-            switch ($_POST['Inforequest']['sender_type']) {
-                case $model->SenderType->find('USER'):
-                    $model->scenario = 'senderUser';
-                    break;
-                case $model->SenderType->find('ORGANIZATION'):
-                    $model->scenario = 'senderOrganization';
-                    break;
-                case $model->SenderType->find('BIZORGANIZATION'):
-                    $model->scenario = 'senderBizorganization';
-                    break;
+            if (isset($_POST['Inforequest']['sender_type'])) {
+                switch ($_POST['Inforequest']['sender_type']) {
+                    case $model->SenderType->find('USER'):
+                        if ($_POST['Inforequest']['isSenderUserSelf']) {
+                            $model->scenario = 'senderUserSelf';
+                        } else {
+                            $model->scenario = 'senderUser';
+                        }
+                        break;
+                    case $model->SenderType->find('ORGANIZATION'):
+                        $model->scenario = 'senderOrganization';
+                        break;
+                    case $model->SenderType->find('BIZORGANIZATION'):
+                        $model->scenario = 'senderBizorganization';
+                        break;
+                }
             }
 
             $model->attributes = $_POST['Inforequest'];
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
+        }
+
+        // Select default 'sender_type'.
+        if (is_null($model->sender_type)) {
+            $model->sender_type = $model->SenderType->find('USER');
+        }
+        // Prepare model attributes based on 'sender_type'.
+        switch ($model->sender_type) {
+            case $model->SenderType->find('USER'):
+                if (!empty($model->senderUser)) {
+                    $model->isSenderUserSelf = true;
+                }
+                $model->senderOrganization = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('ORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('BIZORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderOrganization = null;
+                break;
         }
 
         $this->render('create', array(
@@ -114,26 +145,57 @@ class InforequestController extends Controller
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed.
-        $this->performAjaxValidation($model);
+        // $this->performAjaxValidation($model);
 
         if (isset($_POST['Inforequest'])) {
             // Set custom scenario for model based on 'sender_type' value.
-            switch ($_POST['Inforequest']['sender_type']) {
-                case $model->SenderType->find('USER'):
-                    $model->scenario = 'senderUser';
-                    break;
-                case $model->SenderType->find('ORGANIZATION'):
-                    $model->scenario = 'senderOrganization';
-                    break;
-                case $model->SenderType->find('BIZORGANIZATION'):
-                    $model->scenario = 'senderBizorganization';
-                    break;
+            if (isset($_POST['Inforequest']['sender_type'])) {
+                switch ($_POST['Inforequest']['sender_type']) {
+                    case $model->SenderType->find('USER'):
+                        if ($_POST['Inforequest']['isSenderUserSelf']) {
+                            $model->scenario = 'senderUserSelf';
+                        } else {
+                            $model->scenario = 'senderUser';
+                        }
+                        break;
+                    case $model->SenderType->find('ORGANIZATION'):
+                        $model->scenario = 'senderOrganization';
+                        break;
+                    case $model->SenderType->find('BIZORGANIZATION'):
+                        $model->scenario = 'senderBizorganization';
+                        break;
+                }
             }
 
             $model->attributes = $_POST['Inforequest'];
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
+        }
+
+        // Select default 'sender_type'.
+        if (is_null($model->sender_type)) {
+            $model->sender_type = $model->SenderType->find('USER');
+        }
+        // Prepare model attributes based on 'sender_type'.
+        switch ($model->sender_type) {
+            case $model->SenderType->find('USER'):
+                if (!empty($model->senderUser)) {
+                    $model->isSenderUserSelf = true;
+                }
+                $model->senderOrganization = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('ORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderBizorganization = null;
+                break;
+            case $model->SenderType->find('BIZORGANIZATION'):
+                $model->sender_text = null;
+                $model->isSenderUserSelf = null;
+                $model->senderOrganization = null;
+                break;
         }
 
         $this->render('update', array(
