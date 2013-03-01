@@ -146,6 +146,13 @@ class Organization extends CActiveRecord
                 'class' => 'application.components.behaviors.UploadBehavior',
                 'attributes' => array('logo'),
             ),
+            // Update all 'Inforequest' related records if 'attributeSource'
+            // was changed.
+            'InforequestUpdateBehavior' => array(
+                'class' => 'application.components.behaviors.InforequestUpdateBehavior',
+                'attributeSource' => 'name',
+                'attributeCompare' => 'sender_id',
+            ),
         );
     }
 

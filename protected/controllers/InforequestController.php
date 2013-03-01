@@ -109,6 +109,10 @@ class InforequestController extends Controller
         if (is_null($model->sender_type)) {
             $model->sender_type = $model->SenderType->find('USER');
         }
+        // Select default 'finished_status'.
+        if (is_null($model->finished_status)) {
+            $model->finished_status = $model->FinishedStatus->find('UNKNOWN');
+        }
         // Prepare model attributes based on 'sender_type'.
         switch ($model->sender_type) {
             case $model->SenderType->find('USER'):
@@ -176,6 +180,10 @@ class InforequestController extends Controller
         // Select default 'sender_type'.
         if (is_null($model->sender_type)) {
             $model->sender_type = $model->SenderType->find('USER');
+        }
+        // Select default 'finished_status'.
+        if (is_null($model->finished_status)) {
+            $model->finished_status = $model->FinishedStatus->find('UNKNOWN');
         }
         // Prepare model attributes based on 'sender_type'.
         switch ($model->sender_type) {

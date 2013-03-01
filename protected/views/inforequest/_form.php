@@ -37,7 +37,7 @@
         'url' => $this->createUrl('select/govorganizationSelectSearch'),
     )); ?>
 
-    <?php echo $form->radioButtonListInlineRow($model, 'is_finished', array('' => 'Неизвестно', true => 'Пришел', false => 'Не пришел')); ?>
+    <?php echo $form->radioButtonListInlineRow($model, 'finished_status', $model->FinishedStatus->list); ?>
 
     <?php echo $form->datepickerRow($model, 'receive_date', array(
         'options' => array('format' => 'yyyy-mm-dd', 'weekStart' => 1),

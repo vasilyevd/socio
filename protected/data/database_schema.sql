@@ -393,7 +393,7 @@ CREATE TABLE `org_inforequest` (
   `create_time` datetime NOT NULL,
   `send_date` date NOT NULL,
   `receive_date` date DEFAULT NULL,
-  `is_finished` tinyint(1) DEFAULT NULL,
+  `finished_status` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `sender_text` varchar(128) NOT NULL,
   `sender_id` int(11) DEFAULT NULL,
