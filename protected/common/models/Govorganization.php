@@ -137,6 +137,13 @@ class Govorganization extends CActiveRecord
                 'class' => 'application.components.behaviors.constants.OrtypeGroupBehavior',
                 'attribute' => 'type_group',
             ),
+            // Update all 'Inforequest' related records if 'attributeSource'
+            // was changed.
+            'InforequestUpdateBehavior' => array(
+                'class' => 'application.components.behaviors.InforequestUpdateBehavior',
+                'attributeSource' => 'name',
+                'attributeCompare' => 'receiver_id',
+            ),
         );
     }
 

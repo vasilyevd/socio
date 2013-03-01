@@ -11,7 +11,7 @@
  * @property string $create_time
  * @property string $send_date
  * @property string $receive_date
- * @property integer $is_finished
+ * @property integer $finished_status
  * @property integer $user_id
  *
  * The followings are the available model relations:
@@ -51,14 +51,14 @@ class Inforequest extends CActiveRecord
                 'receiverGovorganization',
                 'application.components.validators.ExistRelationValidator',
             ),
-            array('name, type, send_date, sender_type, receiverGovorganization', 'required'),
+            array('name, type, send_date, sender_type, receiverGovorganization, finished_status', 'required'),
             array('type, sender_type', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 128),
             array('description', 'safe'),
             array('type', 'in', 'range' => self::model()->Type->rule),
             array('sender_type', 'in', 'range' => self::model()->SenderType->rule),
+            array('finished_status', 'in', 'range' => self::model()->FinishedStatus->rule),
             array('send_date, receive_date', 'date', 'format' => 'yyyy-MM-dd'),
-            array('is_finished', 'boolean'),
 
             // 'senderUser', 'senderUserSelf' scenario.
             array(
@@ -127,6 +127,10 @@ class Inforequest extends CActiveRecord
                 'class' => 'application.components.behaviors.constants.InforequestSenderTypeBehavior',
                 'attribute' => 'sender_type',
             ),
+            'FinishedStatus' => array(
+                'class' => 'application.components.behaviors.constants.InforequestFinishedStatusBehavior',
+                'attribute' => 'type',
+            ),
         );
     }
 
@@ -143,7 +147,7 @@ class Inforequest extends CActiveRecord
             'create_time' => 'Время Создания',
             'send_date' => 'Дата Отправки Запроса',
             'receive_date' => 'Дата Получения Ответа',
-            'is_finished' => 'Статус Ответа',
+            'finished_status' => 'Статус Ответа',
             'user' => 'Автор',
             'sender_text' => 'Отправитель',
             'sender_type' => 'Тип Отправителя',
@@ -174,7 +178,7 @@ class Inforequest extends CActiveRecord
         $criteria->compare('create_time', $this->create_time, true);
         $criteria->compare('send_date', $this->send_date, true);
         $criteria->compare('receive_date', $this->receive_date, true);
-        $criteria->compare('is_finished', $this->is_finished);
+        $criteria->compare('finished_status', $this->finished_status);
         $criteria->compare('sender_text', $this->sender_text, true);
         $criteria->compare('receiver_text', $this->receiver_text, true);
 

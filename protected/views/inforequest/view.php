@@ -26,5 +26,7 @@
         'sender_id',
         'sender_type',
         'receiver_id',
+        'sender_text',
+        'receiver_text',
     ),
 )); ?>
